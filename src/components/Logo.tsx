@@ -16,11 +16,13 @@ const Logo: React.FC<LogoProps> = ({ className = '', size = 'md' }) => {
 
   return (
     <div className={`flex items-center ${className}`}>
-      <img 
-        src="/lovable-uploads/50db4b23-adf0-4733-8481-6b3a6c73bf0c.png" 
-        alt="Stravesta" 
-        className={`${sizeMap[size]} h-auto`} 
-      />
+      <div className="bg-white p-2 rounded-md shadow-lg">
+        <img 
+          src="/lovable-uploads/50db4b23-adf0-4733-8481-6b3a6c73bf0c.png" 
+          alt="Stravesta" 
+          className={`${sizeMap[size]} h-auto object-contain`} 
+        />
+      </div>
     </div>
   );
 };

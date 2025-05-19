@@ -16,7 +16,9 @@ const Index = () => {
       
       {/* Header */}
       <header className="relative z-10 pt-8 pb-4 px-4 container">
-        <Logo size="md" className="mx-auto md:mx-0" />
+        <div className="flex justify-start">
+          <Logo size="md" />
+        </div>
       </header>
 
       {/* Main Content */}
