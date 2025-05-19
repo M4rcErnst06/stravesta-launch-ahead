@@ -54,9 +54,6 @@ const EmailSubscribeForm: React.FC = () => {
           {loading ? "Subscribing..." : "Get Early Access"}
         </Button>
       </div>
-      <p className="text-xs text-center sm:text-left text-stravesta-lightGray mt-2">
-        🔒 We'll only send important updates – no spam, we promise!
-      </p>
     </form>
   );
 };
