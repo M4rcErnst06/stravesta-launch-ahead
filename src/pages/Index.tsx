@@ -1,6 +1,5 @@
 
 import React from 'react';
-import Logo from '@/components/Logo';
 import EmailSubscribeForm from '@/components/EmailSubscribeForm';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -16,9 +15,7 @@ const Index = () => {
       
       {/* Header */}
       <header className="relative z-10 pt-8 pb-4 px-4 container">
-        <div className="flex justify-start">
-          <Logo size="md" />
-        </div>
+        {/* Logo has been removed */}
       </header>
 
       {/* Main Content */}
