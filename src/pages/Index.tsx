@@ -48,8 +48,6 @@ const Index = () => {
           &copy; {new Date().getFullYear()} Stravesta. All rights reserved.
         </p>
       </footer>
-      
-      <Toaster />
     </div>
   );
 };
