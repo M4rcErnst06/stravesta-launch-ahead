@@ -1,7 +1,6 @@
 
 import React from 'react';
 import EmailSubscribeForm from '@/components/EmailSubscribeForm';
-import { Toaster } from '@/components/ui/toaster';
 
 const Index = () => {
   return (
