@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 
 const EmailSubscribeForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -26,23 +26,6 @@ const EmailSubscribeForm: React.FC = () => {
     setLoading(true);
     
     try {
-      // Check if the subscribers table exists by trying to select from it
-      const { error: checkError } = await supabase
-        .from('subscribers')
-        .select('count')
-        .limit(1);
-      
-      if (checkError) {
-        console.error('Table check error:', checkError);
-        toast({
-          title: "Setup required",
-          description: "Please make sure you've set up the 'subscribers' table in Supabase.",
-          variant: "destructive"
-        });
-        setLoading(false);
-        return;
-      }
-      
       // Check if subscriber already exists
       const { data: existingSubscriber, error: existingError } = await supabase
         .from('subscribers')
@@ -50,7 +33,7 @@ const EmailSubscribeForm: React.FC = () => {
         .eq('email', email)
         .maybeSingle();
       
-      if (existingError) {
+      if (existingError && existingError.code !== 'PGRST116') {
         console.error('Existing check error:', existingError);
         throw existingError;
       }
@@ -68,7 +51,10 @@ const EmailSubscribeForm: React.FC = () => {
       const { error: insertError } = await supabase
         .from('subscribers')
         .insert([
-          { email: email, subscribed_at: new Date().toISOString() }
+          { 
+            email: email, 
+            subscribers_at: new Date().toISOString()
+          }
         ]);
       
       if (insertError) {
