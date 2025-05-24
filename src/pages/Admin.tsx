@@ -7,11 +7,11 @@ import { toast } from '@/components/ui/use-toast';
 import { Toaster } from '@/components/ui/toaster';
 import { Mail } from 'lucide-react';
 
-// Type for subscriber data
+// Type for subscriber data - fixed to match actual database column name
 interface Subscriber {
   id: string;
   email: string;
-  subscribed_at: string;
+  subscribers_at: string;
   created_at: string;
 }
 
@@ -276,7 +276,7 @@ const Admin = () => {
                     <tr key={subscriber.id}>
                       <td className="py-3 px-4 text-white">{subscriber.email}</td>
                       <td className="py-3 px-4 text-stravesta-lightGray">
-                        {new Date(subscriber.subscribed_at).toLocaleDateString()}
+                        {new Date(subscriber.subscribers_at).toLocaleDateString()}
                       </td>
                     </tr>
                   ))
