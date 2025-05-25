@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -113,7 +112,7 @@ const EmailSubscribeForm: React.FC = () => {
           className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark font-medium teal-glow"
           disabled={loading}
         >
-          {loading ? "Subscribing..." : "Get Early Access"}
+          {loading ? "Subscribing..." : "Subscribe Now"}
         </Button>
       </div>
     </form>
