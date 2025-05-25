@@ -28,21 +28,26 @@ const EmailSubscribeForm: React.FC = () => {
     try {
       console.log('Starting subscription process for email:', email);
       
-      // Check if subscriber already exists
-      const { data: existingSubscriber, error: existingError } = await supabase
+      // Check if subscriber already exists using select() instead of maybeSingle()
+      const { data: existingSubscribers, error: existingError } = await supabase
         .from('subscribers')
         .select('id')
-        .eq('email', email)
-        .maybeSingle();
+        .eq('email', email);
       
-      console.log('Existing subscriber check:', { existingSubscriber, existingError });
+      console.log('Existing subscriber check:', { existingSubscribers, existingError });
       
       if (existingError) {
         console.error('Error checking existing subscriber:', existingError);
-        throw new Error('Database error while checking subscription');
+        toast({
+          title: "Subscription failed",
+          description: "Unable to check subscription status. Please try again.",
+          variant: "destructive"
+        });
+        setLoading(false);
+        return;
       }
       
-      if (existingSubscriber) {
+      if (existingSubscribers && existingSubscribers.length > 0) {
         toast({
           title: "Already subscribed",
           description: "This email is already subscribed to our newsletter.",
@@ -64,7 +69,13 @@ const EmailSubscribeForm: React.FC = () => {
       
       if (insertError) {
         console.error('Insert error:', insertError);
-        throw new Error('Failed to save subscription');
+        toast({
+          title: "Subscription failed",
+          description: "Failed to save subscription. Please try again.",
+          variant: "destructive"
+        });
+        setLoading(false);
+        return;
       }
       
       console.log('Subscriber inserted successfully');
@@ -100,7 +111,7 @@ const EmailSubscribeForm: React.FC = () => {
       console.error('Error in subscription process:', error);
       toast({
         title: "Subscription failed",
-        description: error.message || "There was a problem subscribing to the newsletter. Please try again.",
+        description: "There was a problem subscribing to the newsletter. Please try again.",
         variant: "destructive"
       });
     } finally {
