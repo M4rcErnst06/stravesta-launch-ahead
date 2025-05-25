@@ -29,24 +29,28 @@ const EmailSubscribeForm: React.FC = () => {
       const normalizedEmail = email.toLowerCase().trim();
       console.log('Starting subscription for:', normalizedEmail);
       
-      // Use upsert to handle duplicates gracefully
+      // Insert the subscriber directly
       const { data, error } = await supabase
         .from('subscribers')
-        .upsert(
-          { 
-            email: normalizedEmail,
-            subscribed_at: new Date().toISOString()
-          },
-          { 
-            onConflict: 'email',
-            ignoreDuplicates: false 
-          }
-        )
+        .insert({ 
+          email: normalizedEmail,
+          subscribed_at: new Date().toISOString()
+        })
         .select('email');
       
-      console.log('Upsert result:', { data, error });
+      console.log('Insert result:', { data, error });
       
       if (error) {
+        // Handle duplicate email error specifically
+        if (error.code === '23505' || error.message?.includes('duplicate') || error.message?.includes('unique')) {
+          toast({
+            title: "Already subscribed",
+            description: "This email is already subscribed to our newsletter.",
+          });
+          setEmail('');
+          return;
+        }
+        
         console.error('Subscription error:', error);
         throw error;
       }
@@ -80,25 +84,9 @@ const EmailSubscribeForm: React.FC = () => {
     } catch (error: any) {
       console.error('Subscription failed:', error);
       
-      // Handle specific error types
-      let errorMessage = "An unexpected error occurred. Please try again.";
-      
-      if (error.message?.includes('duplicate') || error.code === '23505') {
-        toast({
-          title: "Already subscribed",
-          description: "This email is already subscribed to our newsletter.",
-        });
-        setEmail('');
-        return;
-      }
-      
-      if (error.message?.includes('network') || error.message?.includes('fetch')) {
-        errorMessage = "Network error. Please check your connection and try again.";
-      }
-      
       toast({
         title: "Subscription failed",
-        description: errorMessage,
+        description: "An unexpected error occurred. Please try again.",
         variant: "destructive"
       });
     } finally {
