@@ -53,7 +53,7 @@ const EmailSubscribeForm: React.FC = () => {
         .insert([
           { 
             email: email, 
-            subscribers_at: new Date().toISOString()
+            subscribed_at: new Date().toISOString()
           }
         ]);
       
@@ -62,9 +62,27 @@ const EmailSubscribeForm: React.FC = () => {
         throw insertError;
       }
       
+      // Send welcome email
+      try {
+        const { error: emailError } = await supabase.functions.invoke('send-welcome-email', {
+          body: { 
+            email: email,
+            user_name: email.split('@')[0] // Use part before @ as name
+          }
+        });
+        
+        if (emailError) {
+          console.error('Welcome email error:', emailError);
+          // Don't throw here - subscription was successful even if email fails
+        }
+      } catch (emailError) {
+        console.error('Failed to send welcome email:', emailError);
+        // Continue - subscription was successful
+      }
+      
       toast({
         title: "Thank you!",
-        description: "You've been added to our newsletter list.",
+        description: "You've been added to our newsletter list. Check your email for a welcome message!",
       });
       setEmail('');
     } catch (error) {
