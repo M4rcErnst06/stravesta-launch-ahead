@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -5,9 +6,11 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
 import { Toaster } from '@/components/ui/toaster';
-import { Mail } from 'lucide-react';
+import { Mail, LogOut } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { User } from '@supabase/supabase-js';
 
-// Type for subscriber data - fixed to match actual database column name
+// Type for subscriber data
 interface Subscriber {
   id: string;
   email: string;
@@ -21,57 +24,44 @@ const Admin = () => {
   const [sending, setSending] = useState(false);
   const [subject, setSubject] = useState('');
   const [content, setContent] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [password, setPassword] = useState('');
-  const [loginAttempt, setLoginAttempt] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
 
-  // Check admin auth on load
   useEffect(() => {
-    checkAuthentication();
+    checkAuthAndLoadData();
   }, []);
 
-  // Simple admin password auth (in a real app, use Supabase Auth)
-  const checkAuthentication = async () => {
-    const session = await supabase.auth.getSession();
-    if (session.data.session) {
-      setIsAuthenticated(true);
-      fetchSubscribers();
-    } else {
-      setIsAuthenticated(false);
-      setLoading(false);
-    }
-  };
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoginAttempt(true);
-    
+  const checkAuthAndLoadData = async () => {
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email: 'admin@stravesta.com', // replace with your admin email when setting up
-        password: password
-      });
+      // Check authentication
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
       
-      if (error) {
-        toast({
-          title: "Authentication failed",
-          description: "Invalid credentials. Please try again.",
-          variant: "destructive",
-        });
+      if (sessionError || !session) {
+        navigate('/auth');
         return;
       }
-      
-      setIsAuthenticated(true);
+
+      // Check if user is admin
+      const { data: isAdminResult, error: adminError } = await supabase
+        .rpc('is_admin', { user_email: session.user.email });
+
+      if (adminError || !isAdminResult) {
+        console.error("Admin check failed:", adminError);
+        toast({
+          title: "Access denied",
+          description: "Admin privileges required.",
+          variant: "destructive",
+        });
+        await supabase.auth.signOut();
+        navigate('/auth');
+        return;
+      }
+
+      setUser(session.user);
       fetchSubscribers();
     } catch (error) {
-      console.error('Login error:', error);
-      toast({
-        title: "Login error",
-        description: "An error occurred during login.",
-        variant: "destructive",
-      });
-    } finally {
-      setLoginAttempt(false);
+      console.error('Auth check error:', error);
+      navigate('/auth');
     }
   };
 
@@ -95,6 +85,20 @@ const Admin = () => {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut();
+      navigate('/auth');
+    } catch (error) {
+      console.error('Sign out error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to sign out.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -144,32 +148,10 @@ const Admin = () => {
     }
   };
 
-  if (!isAuthenticated) {
+  if (!user) {
     return (
-      <div className="min-h-screen bg-stravesta-dark flex flex-col items-center justify-center p-6">
-        <div className="w-full max-w-md space-y-8 p-8 bg-stravesta-navy rounded-lg shadow-xl">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-white mb-6">Admin Access</h1>
-          </div>
-          <form onSubmit={handleLogin} className="space-y-6">
-            <Input
-              type="password"
-              placeholder="Enter admin password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="bg-stravesta-darkGray border-stravesta-darkGray text-white"
-              required
-            />
-            <Button 
-              type="submit" 
-              className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark font-medium w-full"
-              disabled={loginAttempt}
-            >
-              {loginAttempt ? "Logging in..." : "Log In"}
-            </Button>
-          </form>
-        </div>
-        <Toaster />
+      <div className="min-h-screen bg-stravesta-dark flex items-center justify-center">
+        <div className="text-white">Loading...</div>
       </div>
     );
   }
@@ -179,12 +161,16 @@ const Admin = () => {
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-stravesta-dark/90 pointer-events-none"></div>
       <div className="relative z-10 container mx-auto px-4 py-12">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-white">Newsletter Admin</h1>
+          <div>
+            <h1 className="text-3xl font-bold text-white">Newsletter Admin</h1>
+            <p className="text-stravesta-lightGray mt-1">Welcome, {user.email}</p>
+          </div>
           <Button 
-            onClick={() => supabase.auth.signOut().then(() => setIsAuthenticated(false))}
+            onClick={handleSignOut}
             variant="outline"
             className="text-white border-white hover:bg-white/10"
           >
+            <LogOut className="h-4 w-4 mr-2" />
             Sign Out
           </Button>
         </div>
