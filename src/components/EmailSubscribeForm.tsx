@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -25,6 +26,8 @@ const EmailSubscribeForm: React.FC = () => {
     setLoading(true);
     
     try {
+      console.log('Starting subscription process for email:', email);
+      
       // Check if subscriber already exists
       const { data: existingSubscriber, error: existingError } = await supabase
         .from('subscribers')
@@ -32,9 +35,11 @@ const EmailSubscribeForm: React.FC = () => {
         .eq('email', email)
         .maybeSingle();
       
-      if (existingError && existingError.code !== 'PGRST116') {
-        console.error('Existing check error:', existingError);
-        throw existingError;
+      console.log('Existing subscriber check:', { existingSubscriber, existingError });
+      
+      if (existingError) {
+        console.error('Error checking existing subscriber:', existingError);
+        throw new Error('Database error while checking subscription');
       }
       
       if (existingSubscriber) {
@@ -47,6 +52,7 @@ const EmailSubscribeForm: React.FC = () => {
       }
       
       // Insert new subscriber
+      console.log('Inserting new subscriber...');
       const { error: insertError } = await supabase
         .from('subscribers')
         .insert([
@@ -58,11 +64,14 @@ const EmailSubscribeForm: React.FC = () => {
       
       if (insertError) {
         console.error('Insert error:', insertError);
-        throw insertError;
+        throw new Error('Failed to save subscription');
       }
       
-      // Send welcome email
+      console.log('Subscriber inserted successfully');
+      
+      // Send welcome email - don't let this block success
       try {
+        console.log('Sending welcome email...');
         const { error: emailError } = await supabase.functions.invoke('send-welcome-email', {
           body: { 
             email: email,
@@ -73,6 +82,8 @@ const EmailSubscribeForm: React.FC = () => {
         if (emailError) {
           console.error('Welcome email error:', emailError);
           // Don't throw here - subscription was successful even if email fails
+        } else {
+          console.log('Welcome email sent successfully');
         }
       } catch (emailError) {
         console.error('Failed to send welcome email:', emailError);
@@ -81,14 +92,15 @@ const EmailSubscribeForm: React.FC = () => {
       
       toast({
         title: "Thank you!",
-        description: "You've been added to our newsletter list. Check your email for a welcome message!",
+        description: "You've been successfully subscribed to our newsletter!",
       });
       setEmail('');
-    } catch (error) {
-      console.error('Error saving subscriber:', error);
+      
+    } catch (error: any) {
+      console.error('Error in subscription process:', error);
       toast({
         title: "Subscription failed",
-        description: "There was a problem subscribing to the newsletter. Please try again.",
+        description: error.message || "There was a problem subscribing to the newsletter. Please try again.",
         variant: "destructive"
       });
     } finally {
