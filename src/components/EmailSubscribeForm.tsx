@@ -28,79 +28,60 @@ const EmailSubscribeForm: React.FC = () => {
     try {
       console.log('Starting subscription process for email:', email);
       
-      // Check if subscriber already exists using select() instead of maybeSingle()
-      const { data: existingSubscribers, error: existingError } = await supabase
-        .from('subscribers')
-        .select('id')
-        .eq('email', email);
-      
-      console.log('Existing subscriber check:', { existingSubscribers, existingError });
-      
-      if (existingError) {
-        console.error('Error checking existing subscriber:', existingError);
-        toast({
-          title: "Subscription failed",
-          description: "Unable to check subscription status. Please try again.",
-          variant: "destructive"
-        });
-        setLoading(false);
-        return;
-      }
-      
-      if (existingSubscribers && existingSubscribers.length > 0) {
-        toast({
-          title: "Already subscribed",
-          description: "This email is already subscribed to our newsletter.",
-        });
-        setLoading(false);
-        return;
-      }
-      
-      // Insert new subscriber
-      console.log('Inserting new subscriber...');
-      const { error: insertError } = await supabase
+      // Try to insert directly - if it fails due to duplicate, we'll handle it
+      const { data: insertData, error: insertError } = await supabase
         .from('subscribers')
         .insert([
           { 
-            email: email, 
+            email: email.toLowerCase().trim(), // Normalize email
             subscribed_at: new Date().toISOString()
           }
-        ]);
+        ])
+        .select();
       
+      console.log('Insert attempt result:', { insertData, insertError });
+      
+      // Check if error is due to duplicate email (unique constraint violation)
       if (insertError) {
-        console.error('Insert error:', insertError);
-        toast({
-          title: "Subscription failed",
-          description: "Failed to save subscription. Please try again.",
-          variant: "destructive"
-        });
+        if (insertError.code === '23505' || insertError.message?.includes('duplicate') || insertError.message?.includes('already exists')) {
+          toast({
+            title: "Already subscribed",
+            description: "This email is already subscribed to our newsletter.",
+          });
+        } else {
+          console.error('Database insert error:', insertError);
+          toast({
+            title: "Subscription failed",
+            description: "There was a problem with the subscription. Please try again.",
+            variant: "destructive"
+          });
+        }
         setLoading(false);
         return;
       }
       
       console.log('Subscriber inserted successfully');
       
-      // Send welcome email - don't let this block success
+      // Send welcome email - this should not block the success response
       try {
-        console.log('Sending welcome email...');
+        console.log('Attempting to send welcome email...');
         const { error: emailError } = await supabase.functions.invoke('send-welcome-email', {
           body: { 
-            email: email,
+            email: email.toLowerCase().trim(),
             user_name: email.split('@')[0] // Use part before @ as name
           }
         });
         
         if (emailError) {
-          console.error('Welcome email error:', emailError);
-          // Don't throw here - subscription was successful even if email fails
+          console.error('Welcome email error (non-blocking):', emailError);
         } else {
           console.log('Welcome email sent successfully');
         }
       } catch (emailError) {
-        console.error('Failed to send welcome email:', emailError);
-        // Continue - subscription was successful
+        console.error('Failed to send welcome email (non-blocking):', emailError);
       }
       
+      // Success response
       toast({
         title: "Thank you!",
         description: "You've been successfully subscribed to our newsletter!",
@@ -108,10 +89,10 @@ const EmailSubscribeForm: React.FC = () => {
       setEmail('');
       
     } catch (error: any) {
-      console.error('Error in subscription process:', error);
+      console.error('Unexpected error in subscription process:', error);
       toast({
         title: "Subscription failed",
-        description: "There was a problem subscribing to the newsletter. Please try again.",
+        description: "An unexpected error occurred. Please try again.",
         variant: "destructive"
       });
     } finally {
