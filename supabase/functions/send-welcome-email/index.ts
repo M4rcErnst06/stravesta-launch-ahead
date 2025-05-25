@@ -43,7 +43,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`Sending welcome email to: ${email}`);
 
     const emailResponse = await resend.emails.send({
-      from: "Stravesta <noreply@yourdomain.com>", // Replace with your verified domain
+      from: "Stravesta <noreply@stravesta.com>",
       to: [email],
       subject: "Welcome to Stravesta!",
       html: `

@@ -11,7 +11,7 @@ import { Mail } from 'lucide-react';
 interface Subscriber {
   id: string;
   email: string;
-  subscribers_at: string;
+  subscribed_at: string;
   created_at: string;
 }
 
@@ -276,7 +276,7 @@ const Admin = () => {
                     <tr key={subscriber.id}>
                       <td className="py-3 px-4 text-white">{subscriber.email}</td>
                       <td className="py-3 px-4 text-stravesta-lightGray">
-                        {new Date(subscriber.subscribers_at).toLocaleDateString()}
+                        {new Date(subscriber.subscribed_at).toLocaleDateString()}
                       </td>
                     </tr>
                   ))

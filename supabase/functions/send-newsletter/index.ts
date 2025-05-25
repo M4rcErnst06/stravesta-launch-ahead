@@ -100,7 +100,7 @@ const handler = async (req: Request): Promise<Response> => {
     const emailPromises = subscribers.map(async (email) => {
       try {
         const result = await resend.emails.send({
-          from: "Stravesta <noreply@yourdomain.com>", // Replace with your verified domain
+          from: "Stravesta <noreply@stravesta.com>",
           to: [email],
           subject: subject,
           html: `
