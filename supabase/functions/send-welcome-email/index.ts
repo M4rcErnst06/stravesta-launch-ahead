@@ -43,57 +43,40 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`Sending welcome email to: ${email}`);
 
     const emailResponse = await resend.emails.send({
-      from: "Stravesta <onboarding@resend.dev>",
+      from: "Stravesta <noreply@stravesta.com>",
       to: [email],
-      subject: "Welcome to Stravesta - Your Trading Journey Begins!",
+      subject: "Welcome to Stravesta!",
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #0a0f1c;">
-          <div style="background-color: #1a2332; padding: 30px; border-radius: 10px; border: 1px solid #2a3441;">
-            <div style="text-align: center; margin-bottom: 30px;">
-              <h1 style="color: #4fd1c7; margin: 0; font-size: 28px; font-weight: bold;">Welcome to Stravesta!</h1>
-            </div>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
+          <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <h2 style="color: #333; margin-bottom: 20px; text-align: center;">Welcome to Stravesta!</h2>
             
-            <p style="font-size: 16px; line-height: 1.6; color: #e2e8f0; margin-bottom: 15px;">
-              Hi <strong style="color: #4fd1c7;">${userName}</strong>,
+            <p style="font-size: 16px; line-height: 1.6; color: #555; margin-bottom: 15px;">
+              Hi <strong>${userName}</strong>,
             </p>
             
-            <p style="font-size: 16px; line-height: 1.6; color: #e2e8f0; margin-bottom: 15px;">
-              Thank you for subscribing to <strong style="color: #4fd1c7;">Stravesta</strong>!<br>
-              We're excited to have you join our community of traders.
+            <p style="font-size: 16px; line-height: 1.6; color: #555; margin-bottom: 15px;">
+              Thank you for registering with <strong>Stravesta</strong>!<br>
+              We're excited to have you on board.
             </p>
             
-            <p style="font-size: 16px; line-height: 1.6; color: #e2e8f0; margin-bottom: 15px;">
-              Stravesta is your upcoming trading companion with smart journal alerts and powerful analytics designed to elevate your trading game.
+            <p style="font-size: 16px; line-height: 1.6; color: #555; margin-bottom: 15px;">
+              You can now receive the latest updates, offers, and news directly from us.
             </p>
             
-            <div style="background-color: #0f172a; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #4fd1c7;">
-              <p style="font-size: 16px; line-height: 1.6; color: #e2e8f0; margin: 0;">
-                <strong style="color: #4fd1c7;">What's coming:</strong><br>
-                • Smart trading journal with automated alerts<br>
-                • Advanced analytics and performance tracking<br>
-                • Real-time market insights<br>
-                • Risk management tools
-              </p>
-            </div>
-            
-            <p style="font-size: 16px; line-height: 1.6; color: #e2e8f0; margin-bottom: 15px;">
-              You'll be the first to know when we launch and get exclusive early access to our platform.
-            </p>
-            
-            <p style="font-size: 16px; line-height: 1.6; color: #e2e8f0; margin-bottom: 20px;">
+            <p style="font-size: 16px; line-height: 1.6; color: #555; margin-bottom: 20px;">
               If you have any questions, feel free to reply to this email or contact our support team.
             </p>
             
-            <p style="font-size: 16px; line-height: 1.6; color: #e2e8f0; margin-bottom: 10px;">
+            <p style="font-size: 16px; line-height: 1.6; color: #555; margin-bottom: 10px;">
               Best regards,<br>
-              <strong style="color: #4fd1c7;">The Stravesta Team</strong>
+              The Stravesta Team
             </p>
             
-            <hr style="margin: 30px 0; border: none; border-top: 1px solid #2a3441;">
+            <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
             
-            <div style="text-align: center; padding: 20px; background-color: #0f172a; border-radius: 5px;">
-              <h3 style="color: #4fd1c7; margin: 0; font-size: 18px;">Stravesta</h3>
-              <p style="color: #94a3b8; margin: 5px 0 0 0; font-size: 14px;">Your Trading Companion</p>
+            <div style="text-align: center; padding: 20px; background-color: #f8f8f8; border-radius: 5px;">
+              <h3 style="color: #333; margin: 0; font-size: 18px;">Stravesta</h3>
             </div>
           </div>
         </div>
