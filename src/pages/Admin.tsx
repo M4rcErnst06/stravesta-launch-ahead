@@ -200,6 +200,7 @@ const Admin = () => {
           description: "Keine Abonnenten zum Senden ausgewählt.",
           variant: "destructive",
         });
+        setSending(false);
         return;
       }
 
@@ -209,28 +210,35 @@ const Admin = () => {
 
       // Prepare the request body
       const requestBody = {
-        subject,
-        content,
+        subject: subject.trim(),
+        content: content.trim(),
         subscribers: targetEmails
       };
 
-      console.log("Request body prepared:", requestBody);
+      console.log("Request body prepared:", JSON.stringify(requestBody, null, 2));
 
-      // Call Supabase Edge Function to send emails with explicit headers
-      const { data, error } = await supabase.functions.invoke('send-newsletter', {
-        body: requestBody,
+      // Call Supabase Edge Function to send emails
+      const response = await fetch(`https://dgdrllvplplypfvzdcjx.supabase.co/functions/v1/send-newsletter`, {
+        method: 'POST',
         headers: {
-          Authorization: `Bearer ${session.access_token}`,
-          'Content-Type': 'application/json'
-        }
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnZHJsbHZwbHBseXBmdnpkY2p4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc3Njg0MzcsImV4cCI6MjA2MzM0NDQzN30.1UCRX9Wikro-aAC0PD7bdxCEvwxEsfXVl_zMZ2YXlg8'
+        },
+        body: JSON.stringify(requestBody)
       });
+
+      console.log("Response status:", response.status);
+      console.log("Response headers:", Object.fromEntries(response.headers.entries()));
+
+      const responseData = await response.json();
+      console.log("Response data:", responseData);
       
-      if (error) {
-        console.error("Edge function error:", error);
-        throw error;
+      if (!response.ok) {
+        throw new Error(responseData.error || `HTTP ${response.status}`);
       }
       
-      console.log("Newsletter sent successfully:", data);
+      console.log("Newsletter sent successfully:", responseData);
       
       toast({
         title: "Newsletter gesendet",
@@ -246,11 +254,10 @@ const Admin = () => {
       
       // More detailed error handling
       const errorMessage = error?.message || 'Unknown error occurred';
-      const errorDetails = error?.details || '';
       
       toast({
         title: "Newsletter Fehler",
-        description: `Fehler beim Senden: ${errorMessage}${errorDetails ? ` - ${errorDetails}` : ''}`,
+        description: `Fehler beim Senden: ${errorMessage}`,
         variant: "destructive",
       });
     } finally {

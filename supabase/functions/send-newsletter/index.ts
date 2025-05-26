@@ -17,6 +17,8 @@ interface NewsletterRequest {
 }
 
 const handler = async (req: Request): Promise<Response> => {
+  console.log("Newsletter function called, method:", req.method);
+  
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -105,20 +107,30 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Admin verified, processing newsletter request...");
 
-    // Parse request body with error handling
+    // Parse request body with improved error handling
     let requestBody;
     try {
-      const bodyText = await req.text();
-      console.log("Request body received:", bodyText ? "Present" : "Empty");
+      const contentType = req.headers.get('content-type');
+      console.log("Content-Type header:", contentType);
       
-      if (!bodyText) {
-        throw new Error("Empty request body");
+      const bodyText = await req.text();
+      console.log("Raw body text length:", bodyText ? bodyText.length : 0);
+      console.log("Raw body text:", bodyText);
+      
+      if (!bodyText || bodyText.trim() === '') {
+        throw new Error("Empty request body received");
       }
       
       requestBody = JSON.parse(bodyText);
+      console.log("Parsed request body:", requestBody);
     } catch (parseError) {
       console.error("JSON parse error:", parseError);
-      return new Response(JSON.stringify({ error: "Invalid request body", details: parseError.message }), {
+      return new Response(JSON.stringify({ 
+        error: "Invalid request body", 
+        details: parseError.message,
+        receivedContentType: req.headers.get('content-type'),
+        bodyReceived: await req.text()
+      }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
@@ -179,7 +191,9 @@ const handler = async (req: Request): Promise<Response> => {
 
     return new Response(JSON.stringify({ 
       message: `Newsletter sent successfully to ${successful} subscribers${failed > 0 ? `, ${failed} failed` : ''}`,
-      results: results
+      results: results,
+      successful,
+      failed
     }), {
       status: 200,
       headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -187,7 +201,10 @@ const handler = async (req: Request): Promise<Response> => {
 
   } catch (error: any) {
     console.error("Error in send-newsletter function:", error);
-    return new Response(JSON.stringify({ error: error.message || "Unknown error occurred" }), {
+    return new Response(JSON.stringify({ 
+      error: error.message || "Unknown error occurred",
+      stack: error.stack
+    }), {
       status: 500,
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
