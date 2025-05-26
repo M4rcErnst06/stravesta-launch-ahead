@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -168,7 +167,7 @@ const Admin = () => {
           <Button 
             onClick={handleSignOut}
             variant="outline"
-            className="text-white border-white hover:bg-white/10"
+            className="text-stravesta-lightGray border-stravesta-darkGray bg-stravesta-navy/50 hover:bg-stravesta-navy hover:text-white hover:border-stravesta-teal"
           >
             <LogOut className="h-4 w-4 mr-2" />
             Sign Out
@@ -229,7 +228,7 @@ const Admin = () => {
               onClick={fetchSubscribers}
               variant="outline"
               size="sm"
-              className="text-white border-white hover:bg-white/10"
+              className="text-stravesta-lightGray border-stravesta-darkGray bg-stravesta-navy/50 hover:bg-stravesta-navy hover:text-white hover:border-stravesta-teal"
               disabled={loading}
             >
               {loading ? "Loading..." : "Refresh"}
