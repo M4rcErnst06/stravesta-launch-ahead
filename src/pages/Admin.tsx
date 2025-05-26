@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -196,7 +195,6 @@ const Admin = () => {
     setSending(true);
     
     try {
-      // Get current session
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session) {
@@ -207,7 +205,6 @@ const Admin = () => {
       console.log("Send to all:", sendToAll);
       console.log("Selected subscribers:", selectedSubscribers.length);
 
-      // Prepare request data
       const requestData = {
         subject: subject.trim(),
         content: content.trim(),
@@ -217,32 +214,24 @@ const Admin = () => {
 
       console.log("Request data:", requestData);
 
-      // Call edge function with direct fetch to have more control
-      const response = await fetch(`https://dgdrllvplplypfvzdcjx.supabase.co/functions/v1/send-newsletter`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify(requestData)
+      // Use supabase.functions.invoke instead of direct fetch
+      const { data, error } = await supabase.functions.invoke('send-newsletter', {
+        body: requestData
       });
 
-      console.log("Response status:", response.status);
-      console.log("Response headers:", Object.fromEntries(response.headers.entries()));
+      console.log("Response data:", data);
+      console.log("Response error:", error);
 
-      const responseData = await response.json();
-      console.log("Response data:", responseData);
-
-      if (!response.ok) {
-        throw new Error(responseData.error || `HTTP ${response.status}`);
+      if (error) {
+        throw new Error(error.message || 'Unbekannter Fehler');
       }
 
-      if (responseData.success) {
+      if (data && data.success) {
         const targetCount = sendToAll ? subscribers.length : selectedSubscribers.length;
         
         toast({
           title: "Newsletter gesendet!",
-          description: `Erfolgreich an ${responseData.successful || targetCount} Abonnenten gesendet.`,
+          description: `Erfolgreich an ${data.successful || targetCount} Abonnenten gesendet.`,
         });
         
         // Reset form
@@ -251,7 +240,7 @@ const Admin = () => {
         setSelectedSubscribers([]);
         setSendToAll(true);
       } else {
-        throw new Error(responseData.error || 'Unbekannter Fehler');
+        throw new Error(data?.error || 'Unbekannter Fehler');
       }
       
     } catch (error: any) {
@@ -283,7 +272,7 @@ const Admin = () => {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-white">Newsletter Admin</h1>
-            <p className="text-stravesta-lightGray mt-1">Willkommen, {user.email}</p>
+            <p className="text-stravesta-lightGray mt-1">Willkommen, {user?.email}</p>
           </div>
           <Button 
             onClick={handleSignOut}
