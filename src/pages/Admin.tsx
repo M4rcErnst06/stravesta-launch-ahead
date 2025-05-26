@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -181,21 +182,41 @@ const Admin = () => {
     setSending(true);
     
     try {
+      // Get current session to ensure we have the latest token
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        throw new Error("No active session");
+      }
+
       // Use selected subscribers if any are selected, otherwise send to all
       const targetEmails = selectedSubscribers.length > 0 
         ? subscribers.filter(s => selectedSubscribers.includes(s.id)).map(s => s.email)
         : subscribers.map(s => s.email);
 
-      // Call Supabase Edge Function to send emails
-      const { error } = await supabase.functions.invoke('send-newsletter', {
+      console.log("Sending newsletter request...");
+      console.log("Target emails:", targetEmails.length);
+      console.log("Session token present:", !!session.access_token);
+
+      // Call Supabase Edge Function to send emails with explicit headers
+      const { data, error } = await supabase.functions.invoke('send-newsletter', {
         body: {
           subject,
           content,
           subscribers: targetEmails
+        },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json'
         }
       });
       
-      if (error) throw error;
+      if (error) {
+        console.error("Edge function error:", error);
+        throw error;
+      }
+      
+      console.log("Newsletter sent successfully:", data);
       
       toast({
         title: "Newsletter gesendet",
@@ -210,7 +231,7 @@ const Admin = () => {
       console.error('Error sending newsletter:', error);
       toast({
         title: "Send error",
-        description: "Failed to send newsletter. Please try again.",
+        description: `Failed to send newsletter: ${error.message}. Please try again.`,
         variant: "destructive",
       });
     } finally {

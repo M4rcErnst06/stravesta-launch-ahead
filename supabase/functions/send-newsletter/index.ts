@@ -32,6 +32,8 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     // Get the authorization header
     const authHeader = req.headers.get('Authorization');
+    console.log("Auth header received:", authHeader ? "Present" : "Missing");
+    
     if (!authHeader) {
       return new Response(JSON.stringify({ error: "No authorization header" }), {
         status: 401,
@@ -39,7 +41,7 @@ const handler = async (req: Request): Promise<Response> => {
       });
     }
 
-    // Create Supabase client
+    // Create Supabase client with proper configuration
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
@@ -50,15 +52,28 @@ const handler = async (req: Request): Promise<Response> => {
       }
     );
 
+    console.log("Supabase client created, checking user auth...");
+
     // Verify user is authenticated
     const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
-    if (userError || !user) {
-      console.error("User authentication failed:", userError);
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+    
+    if (userError) {
+      console.error("User authentication error:", userError);
+      return new Response(JSON.stringify({ error: "Authentication failed", details: userError.message }), {
         status: 401,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
+
+    if (!user) {
+      console.error("No user found");
+      return new Response(JSON.stringify({ error: "User not found" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
+    console.log("User authenticated:", user.email);
 
     // Check if user is admin
     const { data: isAdminResult, error: adminError } = await supabaseClient
@@ -66,18 +81,21 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (adminError) {
       console.error("Admin check failed:", adminError);
-      return new Response(JSON.stringify({ error: "Admin verification failed" }), {
+      return new Response(JSON.stringify({ error: "Admin verification failed", details: adminError.message }), {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
 
     if (!isAdminResult) {
+      console.error("User is not admin:", user.email);
       return new Response(JSON.stringify({ error: "Insufficient privileges" }), {
         status: 403,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
+
+    console.log("Admin verified, processing newsletter request...");
 
     const { subject, content, subscribers }: NewsletterRequest = await req.json();
 
