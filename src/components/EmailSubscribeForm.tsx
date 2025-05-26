@@ -29,20 +29,46 @@ const EmailSubscribeForm: React.FC = () => {
       const normalizedEmail = email.toLowerCase().trim();
       console.log('Starting subscription for:', normalizedEmail);
       
-      // Insert the subscriber directly
+      // First check if email already exists
+      const { data: existingSubscriber, error: checkError } = await supabase
+        .from('subscribers')
+        .select('email')
+        .eq('email', normalizedEmail)
+        .maybeSingle();
+      
+      console.log('Existing subscriber check:', { existingSubscriber, checkError });
+      
+      if (checkError) {
+        console.error('Error checking existing subscriber:', checkError);
+        throw new Error('Database connection failed');
+      }
+      
+      if (existingSubscriber) {
+        toast({
+          title: "Already subscribed",
+          description: "This email is already subscribed to our newsletter.",
+        });
+        setEmail('');
+        return;
+      }
+      
+      // Insert the new subscriber
       const { data, error } = await supabase
         .from('subscribers')
         .insert({ 
           email: normalizedEmail,
           subscribed_at: new Date().toISOString()
         })
-        .select('email');
+        .select('email')
+        .single();
       
       console.log('Insert result:', { data, error });
       
       if (error) {
-        // Handle duplicate email error specifically
-        if (error.code === '23505' || error.message?.includes('duplicate') || error.message?.includes('unique')) {
+        console.error('Subscription error:', error);
+        
+        // More specific error handling
+        if (error.message?.includes('duplicate') || error.message?.includes('unique')) {
           toast({
             title: "Already subscribed",
             description: "This email is already subscribed to our newsletter.",
@@ -51,11 +77,10 @@ const EmailSubscribeForm: React.FC = () => {
           return;
         }
         
-        console.error('Subscription error:', error);
         throw error;
       }
       
-      console.log('Subscription successful');
+      console.log('Subscription successful for:', data?.email);
       
       // Send welcome email in background (non-blocking)
       supabase.functions.invoke('send-welcome-email', {
@@ -63,11 +88,11 @@ const EmailSubscribeForm: React.FC = () => {
           email: normalizedEmail,
           user_name: normalizedEmail.split('@')[0]
         }
-      }).then(({ error: emailError }) => {
+      }).then(({ data: emailData, error: emailError }) => {
         if (emailError) {
           console.warn('Welcome email failed (non-critical):', emailError);
         } else {
-          console.log('Welcome email sent');
+          console.log('Welcome email sent successfully:', emailData);
         }
       }).catch((emailError) => {
         console.warn('Welcome email error (non-critical):', emailError);
@@ -84,9 +109,18 @@ const EmailSubscribeForm: React.FC = () => {
     } catch (error: any) {
       console.error('Subscription failed:', error);
       
+      // Show detailed error for debugging
+      const errorMessage = error?.message || 'An unexpected error occurred';
+      console.error('Detailed error:', {
+        message: error?.message,
+        code: error?.code,
+        details: error?.details,
+        hint: error?.hint
+      });
+      
       toast({
         title: "Subscription failed",
-        description: "An unexpected error occurred. Please try again.",
+        description: `Error: ${errorMessage}. Please try again.`,
         variant: "destructive"
       });
     } finally {
