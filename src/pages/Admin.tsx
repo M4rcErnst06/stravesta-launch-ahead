@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from '@/components/ui/use-toast';
 import { Toaster } from '@/components/ui/toaster';
-import { Mail, LogOut, Trash2, Send } from 'lucide-react';
+import { Mail, LogOut, Trash2, Send, Users, UserCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { User } from '@supabase/supabase-js';
 
@@ -28,6 +28,7 @@ const Admin = () => {
   const [content, setContent] = useState('');
   const [user, setUser] = useState<User | null>(null);
   const [selectedSubscribers, setSelectedSubscribers] = useState<string[]>([]);
+  const [sendToAll, setSendToAll] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -107,17 +108,17 @@ const Admin = () => {
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      setSelectedSubscribers(subscribers.map(s => s.id));
+      setSelectedSubscribers(subscribers.map(s => s.email));
     } else {
       setSelectedSubscribers([]);
     }
   };
 
-  const handleSelectSubscriber = (subscriberId: string, checked: boolean) => {
+  const handleSelectSubscriber = (subscriberEmail: string, checked: boolean) => {
     if (checked) {
-      setSelectedSubscribers(prev => [...prev, subscriberId]);
+      setSelectedSubscribers(prev => [...prev, subscriberEmail]);
     } else {
-      setSelectedSubscribers(prev => prev.filter(id => id !== subscriberId));
+      setSelectedSubscribers(prev => prev.filter(email => email !== subscriberEmail));
     }
   };
 
@@ -140,10 +141,14 @@ const Admin = () => {
     setDeleting(true);
 
     try {
+      // Get subscriber IDs from emails
+      const subscribersToDelete = subscribers.filter(s => selectedSubscribers.includes(s.email));
+      const idsToDelete = subscribersToDelete.map(s => s.id);
+
       const { error } = await supabase
         .from('subscribers')
         .delete()
-        .in('id', selectedSubscribers);
+        .in('id', idsToDelete);
 
       if (error) throw error;
 
@@ -178,78 +183,84 @@ const Admin = () => {
       });
       return;
     }
+
+    if (!sendToAll && selectedSubscribers.length === 0) {
+      toast({
+        title: "Keine Empfänger",
+        description: "Bitte wählen Sie Empfänger aus oder aktivieren Sie 'An alle senden'.",
+        variant: "destructive",
+      });
+      return;
+    }
     
     setSending(true);
     
     try {
-      // Get current session to ensure we have the latest token
+      // Get current session
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session) {
         throw new Error("Keine aktive Sitzung");
       }
 
-      // Use selected subscribers if any are selected, otherwise send to all
-      const targetEmails = selectedSubscribers.length > 0 
-        ? subscribers.filter(s => selectedSubscribers.includes(s.id)).map(s => s.email)
-        : subscribers.map(s => s.email);
+      console.log("=== Sending newsletter request ===");
+      console.log("Send to all:", sendToAll);
+      console.log("Selected subscribers:", selectedSubscribers.length);
 
-      if (targetEmails.length === 0) {
-        toast({
-          title: "Keine Empfänger",
-          description: "Keine Abonnenten zum Senden ausgewählt.",
-          variant: "destructive",
-        });
-        setSending(false);
-        return;
-      }
-
-      console.log("Sending newsletter request...");
-      console.log("Target emails count:", targetEmails.length);
-      console.log("Session token present:", !!session.access_token);
-
-      // Prepare the request body
-      const requestBody = {
+      // Prepare request data
+      const requestData = {
         subject: subject.trim(),
         content: content.trim(),
-        subscribers: targetEmails
+        sendToAll: sendToAll,
+        selectedSubscribers: sendToAll ? [] : selectedSubscribers
       };
 
-      console.log("Request body prepared:", requestBody);
+      console.log("Request data:", requestData);
 
-      // Call Supabase Edge Function using the client method
-      const { data, error } = await supabase.functions.invoke('send-newsletter', {
-        body: requestBody,
+      // Call edge function with direct fetch to have more control
+      const response = await fetch(`https://dgdrllvplplypfvzdcjx.supabase.co/functions/v1/send-newsletter`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-        }
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify(requestData)
       });
 
-      if (error) {
-        console.error('Newsletter sending error:', error);
-        throw new Error(error.message || 'Fehler beim Senden des Newsletters');
+      console.log("Response status:", response.status);
+      console.log("Response headers:", Object.fromEntries(response.headers.entries()));
+
+      const responseData = await response.json();
+      console.log("Response data:", responseData);
+
+      if (!response.ok) {
+        throw new Error(responseData.error || `HTTP ${response.status}`);
+      }
+
+      if (responseData.success) {
+        const targetCount = sendToAll ? subscribers.length : selectedSubscribers.length;
+        
+        toast({
+          title: "Newsletter gesendet!",
+          description: `Erfolgreich an ${responseData.successful || targetCount} Abonnenten gesendet.`,
+        });
+        
+        // Reset form
+        setSubject('');
+        setContent('');
+        setSelectedSubscribers([]);
+        setSendToAll(true);
+      } else {
+        throw new Error(responseData.error || 'Unbekannter Fehler');
       }
       
-      console.log("Newsletter sent successfully:", data);
-      
-      toast({
-        title: "Newsletter gesendet",
-        description: `Erfolgreich an ${targetEmails.length} Abonnenten gesendet.`,
-      });
-      
-      // Reset form and selection
-      setSubject('');
-      setContent('');
-      setSelectedSubscribers([]);
     } catch (error: any) {
-      console.error('Error sending newsletter:', error);
-      
-      // More detailed error handling
-      const errorMessage = error?.message || 'Unbekannter Fehler aufgetreten';
+      console.error('=== Newsletter sending error ===');
+      console.error('Error:', error);
       
       toast({
         title: "Newsletter Fehler",
-        description: `Fehler beim Senden: ${errorMessage}`,
+        description: `Fehler beim Senden: ${error.message}`,
         variant: "destructive",
       });
     } finally {
@@ -293,7 +304,7 @@ const Admin = () => {
             <div>
               <h2 className="text-xl font-medium text-white">Gesamte Abonnenten</h2>
               <p className="text-3xl font-bold text-stravesta-teal">{subscribers.length}</p>
-              {selectedSubscribers.length > 0 && (
+              {!sendToAll && selectedSubscribers.length > 0 && (
                 <p className="text-sm text-stravesta-lightGray">
                   {selectedSubscribers.length} ausgewählt für Newsletter
                 </p>
@@ -325,25 +336,48 @@ const Admin = () => {
                 required
               />
             </div>
-            <div className="bg-stravesta-navy/50 p-4 rounded-lg">
-              <p className="text-stravesta-lightGray text-sm mb-2">
-                {selectedSubscribers.length > 0 
-                  ? `Newsletter wird an ${selectedSubscribers.length} ausgewählte Abonnenten gesendet`
-                  : `Newsletter wird an alle ${subscribers.length} Abonnenten gesendet`
-                }
-              </p>
+            
+            {/* Send options */}
+            <div className="bg-stravesta-navy/50 p-4 rounded-lg space-y-3">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="sendToAll"
+                  checked={sendToAll}
+                  onCheckedChange={(checked) => {
+                    setSendToAll(checked as boolean);
+                    if (checked) {
+                      setSelectedSubscribers([]);
+                    }
+                  }}
+                  className="border-stravesta-darkGray data-[state=checked]:bg-stravesta-teal data-[state=checked]:border-stravesta-teal"
+                />
+                <label htmlFor="sendToAll" className="text-white font-medium cursor-pointer flex items-center">
+                  <Users className="h-4 w-4 mr-2" />
+                  An alle {subscribers.length} Abonnenten senden
+                </label>
+              </div>
+              
+              {!sendToAll && (
+                <div className="flex items-center space-x-2">
+                  <UserCheck className="h-4 w-4 text-stravesta-teal" />
+                  <span className="text-stravesta-lightGray">
+                    An {selectedSubscribers.length} ausgewählte Abonnenten senden
+                  </span>
+                </div>
+              )}
             </div>
+
             <Button 
               type="submit" 
-              className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark font-medium"
+              className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark font-medium w-full"
               disabled={sending || subscribers.length === 0}
             >
               <Send className="h-4 w-4 mr-2" />
               {sending 
                 ? "Wird gesendet..." 
-                : selectedSubscribers.length > 0 
-                  ? `An ${selectedSubscribers.length} Ausgewählte senden`
-                  : `An alle ${subscribers.length} Abonnenten senden`
+                : sendToAll 
+                  ? `An alle ${subscribers.length} Abonnenten senden`
+                  : `An ${selectedSubscribers.length} Ausgewählte senden`
               }
             </Button>
           </form>
@@ -352,7 +386,7 @@ const Admin = () => {
         {/* Subscribers list */}
         <div className="bg-stravesta-navy/30 p-6 rounded-lg">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-white">Abonnenten</h2>
+            <h2 className="text-xl font-semibold text-white">Abonnenten verwalten</h2>
             <div className="flex gap-2">
               {selectedSubscribers.length > 0 && (
                 <Button 
@@ -385,11 +419,12 @@ const Admin = () => {
                   <th className="py-3 px-4 text-stravesta-lightGray font-medium">
                     <div className="flex items-center space-x-2">
                       <Checkbox
-                        checked={selectedSubscribers.length === subscribers.length && subscribers.length > 0}
+                        checked={!sendToAll && selectedSubscribers.length === subscribers.length && subscribers.length > 0}
                         onCheckedChange={handleSelectAll}
+                        disabled={sendToAll}
                         className="border-stravesta-darkGray data-[state=checked]:bg-stravesta-teal data-[state=checked]:border-stravesta-teal"
                       />
-                      <span>Alle auswählen</span>
+                      <span>Auswählen</span>
                     </div>
                   </th>
                   <th className="py-3 px-4 text-stravesta-lightGray font-medium">E-Mail</th>
@@ -414,8 +449,9 @@ const Admin = () => {
                     <tr key={subscriber.id}>
                       <td className="py-3 px-4">
                         <Checkbox
-                          checked={selectedSubscribers.includes(subscriber.id)}
-                          onCheckedChange={(checked) => handleSelectSubscriber(subscriber.id, checked as boolean)}
+                          checked={selectedSubscribers.includes(subscriber.email)}
+                          onCheckedChange={(checked) => handleSelectSubscriber(subscriber.email, checked as boolean)}
+                          disabled={sendToAll}
                           className="border-stravesta-darkGray data-[state=checked]:bg-stravesta-teal data-[state=checked]:border-stravesta-teal"
                         />
                       </td>

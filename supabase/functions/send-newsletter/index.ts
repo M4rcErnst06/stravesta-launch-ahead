@@ -10,21 +10,19 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-interface NewsletterRequest {
-  subject: string;
-  content: string;
-  subscribers: string[];
-}
-
 const handler = async (req: Request): Promise<Response> => {
-  console.log("Newsletter function called, method:", req.method);
+  console.log("=== Newsletter function started ===");
+  console.log("Method:", req.method);
+  console.log("URL:", req.url);
   
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
+    console.log("Handling OPTIONS request");
     return new Response(null, { headers: corsHeaders });
   }
 
   if (req.method !== "POST") {
+    console.log("Method not allowed:", req.method);
     return new Response("Method not allowed", { 
       status: 405, 
       headers: corsHeaders 
@@ -32,52 +30,36 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    // Get the authorization header
+    // Get authorization header
     const authHeader = req.headers.get('Authorization');
-    console.log("Auth header received:", authHeader ? "Present" : "Missing");
+    console.log("Auth header present:", !!authHeader);
     
     if (!authHeader) {
+      console.log("No authorization header");
       return new Response(JSON.stringify({ error: "No authorization header" }), {
         status: 401,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
 
-    // Extract the JWT token from the Authorization header
-    const token = authHeader.replace('Bearer ', '');
-    console.log("Token extracted:", token ? "Present" : "Missing");
-
-    // Create Supabase client with the JWT token
+    // Create Supabase client
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
       {
         global: {
           headers: { Authorization: authHeader },
-        },
-        auth: {
-          autoRefreshToken: false,
-          persistSession: false
         }
       }
     );
 
-    console.log("Supabase client created, checking user auth...");
-
-    // Set the session using the JWT token
+    // Verify user authentication
+    const token = authHeader.replace('Bearer ', '');
     const { data: { user }, error: userError } = await supabaseClient.auth.getUser(token);
     
-    if (userError) {
-      console.error("User authentication error:", userError);
-      return new Response(JSON.stringify({ error: "Authentication failed", details: userError.message }), {
-        status: 401,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      });
-    }
-
-    if (!user) {
-      console.error("No user found");
-      return new Response(JSON.stringify({ error: "User not found" }), {
+    if (userError || !user) {
+      console.log("User authentication failed:", userError);
+      return new Response(JSON.stringify({ error: "Authentication failed" }), {
         status: 401,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
@@ -89,74 +71,88 @@ const handler = async (req: Request): Promise<Response> => {
     const { data: isAdminResult, error: adminError } = await supabaseClient
       .rpc('is_admin', { user_email: user.email });
 
-    if (adminError) {
-      console.error("Admin check failed:", adminError);
-      return new Response(JSON.stringify({ error: "Admin verification failed", details: adminError.message }), {
-        status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      });
-    }
-
-    if (!isAdminResult) {
-      console.error("User is not admin:", user.email);
+    if (adminError || !isAdminResult) {
+      console.log("Admin check failed or user not admin");
       return new Response(JSON.stringify({ error: "Insufficient privileges" }), {
         status: 403,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
 
-    console.log("Admin verified, processing newsletter request...");
+    console.log("Admin verified");
 
-    // Read the request body ONCE and store it
-    const bodyText = await req.text();
-    console.log("Request body received, length:", bodyText.length);
-    console.log("Request body content:", bodyText);
-
-    if (!bodyText || bodyText.trim() === '') {
-      console.error("Empty request body");
-      return new Response(JSON.stringify({ 
-        error: "Empty request body received"
-      }), {
-        status: 400,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      });
-    }
-
-    let requestBody: NewsletterRequest;
+    // Parse request body
+    let requestData;
     try {
-      requestBody = JSON.parse(bodyText);
-      console.log("Parsed request body:", requestBody);
+      const bodyText = await req.text();
+      console.log("Raw body:", bodyText);
+      
+      if (!bodyText || bodyText.trim() === '') {
+        console.log("Empty body received");
+        return new Response(JSON.stringify({ error: "Empty request body" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        });
+      }
+
+      requestData = JSON.parse(bodyText);
+      console.log("Parsed data:", JSON.stringify(requestData, null, 2));
     } catch (parseError) {
-      console.error("JSON parse error:", parseError);
-      return new Response(JSON.stringify({ 
-        error: "Invalid JSON in request body", 
-        details: parseError.message
-      }), {
+      console.log("JSON parse error:", parseError);
+      return new Response(JSON.stringify({ error: "Invalid JSON" }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
 
-    const { subject, content, subscribers }: NewsletterRequest = requestBody;
+    const { subject, content, sendToAll, selectedSubscribers } = requestData;
 
-    if (!subject || !content || !subscribers || subscribers.length === 0) {
-      return new Response(JSON.stringify({ error: "Missing required fields: subject, content, and subscribers" }), {
+    if (!subject || !content) {
+      console.log("Missing subject or content");
+      return new Response(JSON.stringify({ error: "Subject and content are required" }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
 
-    console.log(`Sending newsletter to ${subscribers.length} subscribers`);
+    // Get target emails
+    let targetEmails: string[] = [];
+    
+    if (sendToAll) {
+      console.log("Sending to all subscribers");
+      const { data: allSubscribers, error: subscribersError } = await supabaseClient
+        .from('subscribers')
+        .select('email');
+      
+      if (subscribersError) {
+        console.log("Error fetching subscribers:", subscribersError);
+        throw subscribersError;
+      }
+      
+      targetEmails = allSubscribers?.map(s => s.email) || [];
+    } else if (selectedSubscribers && selectedSubscribers.length > 0) {
+      console.log("Sending to selected subscribers:", selectedSubscribers.length);
+      targetEmails = selectedSubscribers;
+    } else {
+      console.log("No target emails specified");
+      return new Response(JSON.stringify({ error: "No recipients specified" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
 
-    // Convert markdown-like content to basic HTML
+    console.log(`Sending newsletter to ${targetEmails.length} recipients`);
+
+    // Convert content to HTML
     const htmlContent = content
       .replace(/\n/g, '<br>')
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>');
 
-    // Send emails to all subscribers
-    const emailPromises = subscribers.map(async (email) => {
+    // Send emails
+    const emailPromises = targetEmails.map(async (email) => {
       try {
+        console.log(`Sending email to: ${email}`);
         const result = await resend.emails.send({
           from: "Stravesta <noreply@stravesta.com>",
           to: [email],
@@ -169,14 +165,15 @@ const handler = async (req: Request): Promise<Response> => {
               </div>
               <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
               <p style="font-size: 12px; color: #888; text-align: center;">
-                You're receiving this email because you subscribed to Stravesta updates.<br>
-                Best regards,<br>
-                The Stravesta Team
+                Sie erhalten diese E-Mail, weil Sie sich für Stravesta-Updates angemeldet haben.<br>
+                Mit freundlichen Grüßen,<br>
+                Das Stravesta Team
               </p>
             </div>
           `,
         });
-        console.log(`Email sent successfully to ${email}:`, result);
+        
+        console.log(`Email sent successfully to ${email}`);
         return { email, success: true, id: result.data?.id };
       } catch (error) {
         console.error(`Failed to send email to ${email}:`, error);
@@ -191,7 +188,8 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`Newsletter sending completed. Successful: ${successful}, Failed: ${failed}`);
 
     return new Response(JSON.stringify({ 
-      message: `Newsletter sent successfully to ${successful} subscribers${failed > 0 ? `, ${failed} failed` : ''}`,
+      success: true,
+      message: `Newsletter erfolgreich an ${successful} Abonnenten gesendet${failed > 0 ? `, ${failed} fehlgeschlagen` : ''}`,
       results: results,
       successful,
       failed
@@ -201,10 +199,13 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
   } catch (error: any) {
-    console.error("Error in send-newsletter function:", error);
+    console.error("=== Newsletter function error ===");
+    console.error("Error:", error);
+    console.error("Stack:", error.stack);
+    
     return new Response(JSON.stringify({ 
-      error: error.message || "Unknown error occurred",
-      stack: error.stack
+      error: "Server error occurred",
+      details: error.message
     }), {
       status: 500,
       headers: { "Content-Type": "application/json", ...corsHeaders },
