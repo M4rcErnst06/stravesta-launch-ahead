@@ -107,29 +107,30 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Admin verified, processing newsletter request...");
 
-    // Parse request body with improved error handling
-    let requestBody;
+    // Read the request body ONCE and store it
+    const bodyText = await req.text();
+    console.log("Request body received, length:", bodyText.length);
+    console.log("Request body content:", bodyText);
+
+    if (!bodyText || bodyText.trim() === '') {
+      console.error("Empty request body");
+      return new Response(JSON.stringify({ 
+        error: "Empty request body received"
+      }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
+    let requestBody: NewsletterRequest;
     try {
-      const contentType = req.headers.get('content-type');
-      console.log("Content-Type header:", contentType);
-      
-      const bodyText = await req.text();
-      console.log("Raw body text length:", bodyText ? bodyText.length : 0);
-      console.log("Raw body text:", bodyText);
-      
-      if (!bodyText || bodyText.trim() === '') {
-        throw new Error("Empty request body received");
-      }
-      
       requestBody = JSON.parse(bodyText);
       console.log("Parsed request body:", requestBody);
     } catch (parseError) {
       console.error("JSON parse error:", parseError);
       return new Response(JSON.stringify({ 
-        error: "Invalid request body", 
-        details: parseError.message,
-        receivedContentType: req.headers.get('content-type'),
-        bodyReceived: await req.text()
+        error: "Invalid JSON in request body", 
+        details: parseError.message
       }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
