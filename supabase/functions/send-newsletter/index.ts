@@ -81,20 +81,22 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Admin verified");
 
-    // Parse request body
+    // Get request body as text first
+    const bodyText = await req.text();
+    console.log("Raw body length:", bodyText.length);
+    console.log("Raw body:", bodyText);
+    
+    if (!bodyText || bodyText.trim() === '') {
+      console.log("Empty body received");
+      return new Response(JSON.stringify({ error: "Empty request body" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
+    // Parse JSON
     let requestData;
     try {
-      const bodyText = await req.text();
-      console.log("Raw body:", bodyText);
-      
-      if (!bodyText || bodyText.trim() === '') {
-        console.log("Empty body received");
-        return new Response(JSON.stringify({ error: "Empty request body" }), {
-          status: 400,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        });
-      }
-
       requestData = JSON.parse(bodyText);
       console.log("Parsed data:", JSON.stringify(requestData, null, 2));
     } catch (parseError) {
@@ -149,12 +151,40 @@ const handler = async (req: Request): Promise<Response> => {
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>');
 
-    // Send emails
+    // Test Resend API key first
+    console.log("Testing Resend API key...");
+    const testResult = await resend.emails.send({
+      from: "Acme <onboarding@resend.dev>", // Using Resend's test domain
+      to: [user.email], // Send test to admin first
+      subject: "Test Email - Resend API Working",
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <h2>Resend API Test Erfolgreich!</h2>
+          <p>Ihre Resend API funktioniert korrekt. Dies ist eine Test-E-Mail.</p>
+          <p>API Key Status: ✅ Funktioniert</p>
+        </div>
+      `,
+    });
+
+    console.log("Test email result:", testResult);
+
+    if (testResult.error) {
+      console.error("Resend API test failed:", testResult.error);
+      return new Response(JSON.stringify({ 
+        error: "Resend API Fehler",
+        details: testResult.error
+      }), {
+        status: 500,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
+    // If test successful, send to all targets
     const emailPromises = targetEmails.map(async (email) => {
       try {
         console.log(`Sending email to: ${email}`);
         const result = await resend.emails.send({
-          from: "Stravesta <noreply@stravesta.com>",
+          from: "Stravesta <onboarding@resend.dev>", // Using Resend test domain
           to: [email],
           subject: subject,
           html: `
@@ -173,7 +203,7 @@ const handler = async (req: Request): Promise<Response> => {
           `,
         });
         
-        console.log(`Email sent successfully to ${email}`);
+        console.log(`Email sent successfully to ${email}:`, result);
         return { email, success: true, id: result.data?.id };
       } catch (error) {
         console.error(`Failed to send email to ${email}:`, error);
@@ -192,7 +222,8 @@ const handler = async (req: Request): Promise<Response> => {
       message: `Newsletter erfolgreich an ${successful} Abonnenten gesendet${failed > 0 ? `, ${failed} fehlgeschlagen` : ''}`,
       results: results,
       successful,
-      failed
+      failed,
+      testEmailSent: true
     }), {
       status: 200,
       headers: { "Content-Type": "application/json", ...corsHeaders },
