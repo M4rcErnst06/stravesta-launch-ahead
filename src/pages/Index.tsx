@@ -30,10 +30,6 @@ const Index = () => {
               <span className="text-gradient">Stravesta</span> is Coming
             </h1>
             
-            <p className="text-xl md:text-2xl text-stravesta-lightGray mb-8 max-w-3xl mx-auto">
-              Your upcoming trading companion with smart journal alerts and powerful analytics to elevate your trading game.
-            </p>
-            
             {/* Email subscription form */}
             <div className="mt-10">
               <h2 className="text-xl font-semibold mb-4">
