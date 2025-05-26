@@ -194,17 +194,31 @@ const Admin = () => {
         ? subscribers.filter(s => selectedSubscribers.includes(s.id)).map(s => s.email)
         : subscribers.map(s => s.email);
 
+      if (targetEmails.length === 0) {
+        toast({
+          title: "Keine Empfänger",
+          description: "Keine Abonnenten zum Senden ausgewählt.",
+          variant: "destructive",
+        });
+        return;
+      }
+
       console.log("Sending newsletter request...");
       console.log("Target emails:", targetEmails.length);
       console.log("Session token present:", !!session.access_token);
 
+      // Prepare the request body
+      const requestBody = {
+        subject,
+        content,
+        subscribers: targetEmails
+      };
+
+      console.log("Request body prepared:", requestBody);
+
       // Call Supabase Edge Function to send emails with explicit headers
       const { data, error } = await supabase.functions.invoke('send-newsletter', {
-        body: {
-          subject,
-          content,
-          subscribers: targetEmails
-        },
+        body: requestBody,
         headers: {
           Authorization: `Bearer ${session.access_token}`,
           'Content-Type': 'application/json'
@@ -227,11 +241,16 @@ const Admin = () => {
       setSubject('');
       setContent('');
       setSelectedSubscribers([]);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error sending newsletter:', error);
+      
+      // More detailed error handling
+      const errorMessage = error?.message || 'Unknown error occurred';
+      const errorDetails = error?.details || '';
+      
       toast({
-        title: "Send error",
-        description: `Failed to send newsletter: ${error.message}. Please try again.`,
+        title: "Newsletter Fehler",
+        description: `Fehler beim Senden: ${errorMessage}${errorDetails ? ` - ${errorDetails}` : ''}`,
         variant: "destructive",
       });
     } finally {
@@ -277,7 +296,7 @@ const Admin = () => {
               <p className="text-3xl font-bold text-stravesta-teal">{subscribers.length}</p>
               {selectedSubscribers.length > 0 && (
                 <p className="text-sm text-stravesta-lightGray">
-                  {selectedSubscribers.length} ausgewählt
+                  {selectedSubscribers.length} ausgewählt für Newsletter
                 </p>
               )}
             </div>
@@ -300,21 +319,31 @@ const Admin = () => {
             </div>
             <div>
               <Textarea
-                placeholder="Newsletter Content (Supports Markdown)"
+                placeholder="Newsletter Content (Supports **bold** and *italic* text)"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 className="min-h-[200px] bg-stravesta-navy/70 border-stravesta-darkGray text-white placeholder:text-stravesta-lightGray/60 focus:border-stravesta-teal focus:ring-stravesta-teal focus-visible:ring-stravesta-teal"
                 required
               />
             </div>
+            <div className="bg-stravesta-navy/50 p-4 rounded-lg">
+              <p className="text-stravesta-lightGray text-sm mb-2">
+                {selectedSubscribers.length > 0 
+                  ? `Newsletter wird an ${selectedSubscribers.length} ausgewählte Abonnenten gesendet`
+                  : `Newsletter wird an alle ${subscribers.length} Abonnenten gesendet`
+                }
+              </p>
+            </div>
             <Button 
               type="submit" 
               className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark font-medium"
-              disabled={sending}
+              disabled={sending || subscribers.length === 0}
             >
-              {sending ? "Sending..." : selectedSubscribers.length > 0 
-                ? `Send to ${selectedSubscribers.length} Selected Subscribers`
-                : `Send to ${subscribers.length} Subscribers`
+              {sending 
+                ? "Sending..." 
+                : selectedSubscribers.length > 0 
+                  ? `Send to ${selectedSubscribers.length} Selected`
+                  : `Send to All ${subscribers.length} Subscribers`
               }
             </Button>
           </form>

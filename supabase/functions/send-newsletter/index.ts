@@ -105,10 +105,29 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Admin verified, processing newsletter request...");
 
-    const { subject, content, subscribers }: NewsletterRequest = await req.json();
+    // Parse request body with error handling
+    let requestBody;
+    try {
+      const bodyText = await req.text();
+      console.log("Request body received:", bodyText ? "Present" : "Empty");
+      
+      if (!bodyText) {
+        throw new Error("Empty request body");
+      }
+      
+      requestBody = JSON.parse(bodyText);
+    } catch (parseError) {
+      console.error("JSON parse error:", parseError);
+      return new Response(JSON.stringify({ error: "Invalid request body", details: parseError.message }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
+    const { subject, content, subscribers }: NewsletterRequest = requestBody;
 
     if (!subject || !content || !subscribers || subscribers.length === 0) {
-      return new Response(JSON.stringify({ error: "Missing required fields" }), {
+      return new Response(JSON.stringify({ error: "Missing required fields: subject, content, and subscribers" }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
@@ -168,7 +187,7 @@ const handler = async (req: Request): Promise<Response> => {
 
   } catch (error: any) {
     console.error("Error in send-newsletter function:", error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ error: error.message || "Unknown error occurred" }), {
       status: 500,
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
