@@ -3,9 +3,10 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from '@/components/ui/use-toast';
 import { Toaster } from '@/components/ui/toaster';
-import { Mail, LogOut } from 'lucide-react';
+import { Mail, LogOut, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { User } from '@supabase/supabase-js';
 
@@ -21,9 +22,11 @@ const Admin = () => {
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [subject, setSubject] = useState('');
   const [content, setContent] = useState('');
   const [user, setUser] = useState<User | null>(null);
+  const [selectedSubscribers, setSelectedSubscribers] = useState<string[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -101,6 +104,68 @@ const Admin = () => {
     }
   };
 
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedSubscribers(subscribers.map(s => s.id));
+    } else {
+      setSelectedSubscribers([]);
+    }
+  };
+
+  const handleSelectSubscriber = (subscriberId: string, checked: boolean) => {
+    if (checked) {
+      setSelectedSubscribers(prev => [...prev, subscriberId]);
+    } else {
+      setSelectedSubscribers(prev => prev.filter(id => id !== subscriberId));
+    }
+  };
+
+  const handleDeleteSelected = async () => {
+    if (selectedSubscribers.length === 0) {
+      toast({
+        title: "Keine Auswahl",
+        description: "Bitte wählen Sie mindestens einen Abonnenten aus.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `Sind Sie sicher, dass Sie ${selectedSubscribers.length} Abonnent(en) löschen möchten?`
+    );
+
+    if (!confirmed) return;
+
+    setDeleting(true);
+
+    try {
+      const { error } = await supabase
+        .from('subscribers')
+        .delete()
+        .in('id', selectedSubscribers);
+
+      if (error) throw error;
+
+      toast({
+        title: "Erfolgreich gelöscht",
+        description: `${selectedSubscribers.length} Abonnent(en) wurden gelöscht.`,
+      });
+
+      // Refresh subscribers list and clear selection
+      setSelectedSubscribers([]);
+      fetchSubscribers();
+    } catch (error) {
+      console.error('Error deleting subscribers:', error);
+      toast({
+        title: "Löschfehler",
+        description: "Fehler beim Löschen der Abonnenten. Bitte versuchen Sie es erneut.",
+        variant: "destructive",
+      });
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   const handleSendNewsletter = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -116,25 +181,31 @@ const Admin = () => {
     setSending(true);
     
     try {
+      // Use selected subscribers if any are selected, otherwise send to all
+      const targetEmails = selectedSubscribers.length > 0 
+        ? subscribers.filter(s => selectedSubscribers.includes(s.id)).map(s => s.email)
+        : subscribers.map(s => s.email);
+
       // Call Supabase Edge Function to send emails
       const { error } = await supabase.functions.invoke('send-newsletter', {
         body: {
           subject,
           content,
-          subscribers: subscribers.map(s => s.email)
+          subscribers: targetEmails
         }
       });
       
       if (error) throw error;
       
       toast({
-        title: "Newsletter sent",
-        description: `Successfully sent to ${subscribers.length} subscribers.`,
+        title: "Newsletter gesendet",
+        description: `Erfolgreich an ${targetEmails.length} Abonnenten gesendet.`,
       });
       
-      // Reset form
+      // Reset form and selection
       setSubject('');
       setContent('');
+      setSelectedSubscribers([]);
     } catch (error) {
       console.error('Error sending newsletter:', error);
       toast({
@@ -183,6 +254,11 @@ const Admin = () => {
             <div>
               <h2 className="text-xl font-medium text-white">Total Subscribers</h2>
               <p className="text-3xl font-bold text-stravesta-teal">{subscribers.length}</p>
+              {selectedSubscribers.length > 0 && (
+                <p className="text-sm text-stravesta-lightGray">
+                  {selectedSubscribers.length} ausgewählt
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -215,7 +291,10 @@ const Admin = () => {
               className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark font-medium"
               disabled={sending}
             >
-              {sending ? "Sending..." : `Send to ${subscribers.length} Subscribers`}
+              {sending ? "Sending..." : selectedSubscribers.length > 0 
+                ? `Send to ${selectedSubscribers.length} Selected Subscribers`
+                : `Send to ${subscribers.length} Subscribers`
+              }
             </Button>
           </form>
         </div>
@@ -224,21 +303,45 @@ const Admin = () => {
         <div className="bg-stravesta-navy/30 p-6 rounded-lg">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold text-white">Subscribers</h2>
-            <Button 
-              onClick={fetchSubscribers}
-              variant="outline"
-              size="sm"
-              className="text-stravesta-lightGray border-stravesta-darkGray bg-stravesta-navy/50 hover:bg-stravesta-navy hover:text-white hover:border-stravesta-teal"
-              disabled={loading}
-            >
-              {loading ? "Loading..." : "Refresh"}
-            </Button>
+            <div className="flex gap-2">
+              {selectedSubscribers.length > 0 && (
+                <Button 
+                  onClick={handleDeleteSelected}
+                  variant="outline"
+                  size="sm"
+                  className="text-red-400 border-red-400/50 bg-red-500/10 hover:bg-red-500/20 hover:text-red-300 hover:border-red-300"
+                  disabled={deleting}
+                >
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  {deleting ? "Deleting..." : `Delete ${selectedSubscribers.length}`}
+                </Button>
+              )}
+              <Button 
+                onClick={fetchSubscribers}
+                variant="outline"
+                size="sm"
+                className="text-stravesta-lightGray border-stravesta-darkGray bg-stravesta-navy/50 hover:bg-stravesta-navy hover:text-white hover:border-stravesta-teal"
+                disabled={loading}
+              >
+                {loading ? "Loading..." : "Refresh"}
+              </Button>
+            </div>
           </div>
           
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead className="border-b border-stravesta-darkGray">
                 <tr>
+                  <th className="py-3 px-4 text-stravesta-lightGray font-medium">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        checked={selectedSubscribers.length === subscribers.length && subscribers.length > 0}
+                        onCheckedChange={handleSelectAll}
+                        className="border-stravesta-darkGray data-[state=checked]:bg-stravesta-teal data-[state=checked]:border-stravesta-teal"
+                      />
+                      <span>Select All</span>
+                    </div>
+                  </th>
                   <th className="py-3 px-4 text-stravesta-lightGray font-medium">Email</th>
                   <th className="py-3 px-4 text-stravesta-lightGray font-medium">Subscribed On</th>
                 </tr>
@@ -246,19 +349,26 @@ const Admin = () => {
               <tbody className="divide-y divide-stravesta-darkGray">
                 {loading ? (
                   <tr>
-                    <td colSpan={2} className="py-4 px-4 text-center text-stravesta-lightGray">
+                    <td colSpan={3} className="py-4 px-4 text-center text-stravesta-lightGray">
                       Loading subscribers...
                     </td>
                   </tr>
                 ) : subscribers.length === 0 ? (
                   <tr>
-                    <td colSpan={2} className="py-4 px-4 text-center text-stravesta-lightGray">
+                    <td colSpan={3} className="py-4 px-4 text-center text-stravesta-lightGray">
                       No subscribers yet.
                     </td>
                   </tr>
                 ) : (
                   subscribers.map((subscriber) => (
                     <tr key={subscriber.id}>
+                      <td className="py-3 px-4">
+                        <Checkbox
+                          checked={selectedSubscribers.includes(subscriber.id)}
+                          onCheckedChange={(checked) => handleSelectSubscriber(subscriber.id, checked as boolean)}
+                          className="border-stravesta-darkGray data-[state=checked]:bg-stravesta-teal data-[state=checked]:border-stravesta-teal"
+                        />
+                      </td>
                       <td className="py-3 px-4 text-white">{subscriber.email}</td>
                       <td className="py-3 px-4 text-stravesta-lightGray">
                         {new Date(subscriber.subscribed_at).toLocaleDateString()}
