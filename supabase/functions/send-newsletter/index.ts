@@ -41,7 +41,11 @@ const handler = async (req: Request): Promise<Response> => {
       });
     }
 
-    // Create Supabase client with proper configuration
+    // Extract the JWT token from the Authorization header
+    const token = authHeader.replace('Bearer ', '');
+    console.log("Token extracted:", token ? "Present" : "Missing");
+
+    // Create Supabase client with the JWT token
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
@@ -49,13 +53,17 @@ const handler = async (req: Request): Promise<Response> => {
         global: {
           headers: { Authorization: authHeader },
         },
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false
+        }
       }
     );
 
     console.log("Supabase client created, checking user auth...");
 
-    // Verify user is authenticated
-    const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
+    // Set the session using the JWT token
+    const { data: { user }, error: userError } = await supabaseClient.auth.getUser(token);
     
     if (userError) {
       console.error("User authentication error:", userError);
