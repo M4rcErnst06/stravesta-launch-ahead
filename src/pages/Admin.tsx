@@ -198,7 +198,7 @@ const Admin = () => {
                 placeholder="Newsletter Subject"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                className="bg-stravesta-navy border-stravesta-darkGray text-white"
+                className="bg-stravesta-navy/70 border-stravesta-darkGray text-white placeholder:text-stravesta-lightGray/60 focus:border-stravesta-teal focus:ring-stravesta-teal"
                 required
               />
             </div>
@@ -207,7 +207,7 @@ const Admin = () => {
                 placeholder="Newsletter Content (Supports Markdown)"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                className="min-h-[200px] bg-stravesta-navy border-stravesta-darkGray text-white"
+                className="min-h-[200px] bg-stravesta-navy/70 border-stravesta-darkGray text-white placeholder:text-stravesta-lightGray/60 focus:border-stravesta-teal focus:ring-stravesta-teal"
                 required
               />
             </div>
