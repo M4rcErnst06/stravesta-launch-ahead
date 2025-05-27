@@ -81,23 +81,22 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Admin verified");
 
-    // Get request body
-    const bodyText = await req.text();
-    console.log("Raw body length:", bodyText.length);
-    
-    if (!bodyText || bodyText.trim() === '') {
-      console.log("Empty body received");
-      return new Response(JSON.stringify({ error: "Empty request body" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      });
-    }
-
-    // Parse JSON
+    // Parse request body
     let requestData;
     try {
+      const bodyText = await req.text();
+      console.log("Raw body:", bodyText);
+      
+      if (!bodyText || bodyText.trim() === '') {
+        console.log("Empty body received");
+        return new Response(JSON.stringify({ error: "Empty request body" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        });
+      }
+
       requestData = JSON.parse(bodyText);
-      console.log("Parsed data successfully");
+      console.log("Parsed data:", JSON.stringify(requestData, null, 2));
     } catch (parseError) {
       console.log("JSON parse error:", parseError);
       return new Response(JSON.stringify({ error: "Invalid JSON" }), {
@@ -127,10 +126,7 @@ const handler = async (req: Request): Promise<Response> => {
       
       if (subscribersError) {
         console.log("Error fetching subscribers:", subscribersError);
-        return new Response(JSON.stringify({ error: "Failed to fetch subscribers" }), {
-          status: 500,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        });
+        throw subscribersError;
       }
       
       targetEmails = allSubscribers?.map(s => s.email) || [];
@@ -147,26 +143,18 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`Sending newsletter to ${targetEmails.length} recipients`);
 
-    if (targetEmails.length === 0) {
-      console.log("No subscribers found");
-      return new Response(JSON.stringify({ error: "No subscribers found" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      });
-    }
-
     // Convert content to HTML
     const htmlContent = content
       .replace(/\n/g, '<br>')
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>');
 
-    // Send emails without test email - directly to all targets
+    // Send emails
     const emailPromises = targetEmails.map(async (email) => {
       try {
         console.log(`Sending email to: ${email}`);
         const result = await resend.emails.send({
-          from: "Stravesta <noreply@stravesta.com>", // Using your domain again
+          from: "Stravesta <noreply@stravesta.com>",
           to: [email],
           subject: subject,
           html: `
@@ -185,12 +173,7 @@ const handler = async (req: Request): Promise<Response> => {
           `,
         });
         
-        if (result.error) {
-          console.error(`Resend error for ${email}:`, result.error);
-          return { email, success: false, error: result.error.message };
-        }
-        
-        console.log(`Email sent successfully to ${email}:`, result.data?.id);
+        console.log(`Email sent successfully to ${email}`);
         return { email, success: true, id: result.data?.id };
       } catch (error) {
         console.error(`Failed to send email to ${email}:`, error);
@@ -204,7 +187,6 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`Newsletter sending completed. Successful: ${successful}, Failed: ${failed}`);
 
-    // Always return success response with details
     return new Response(JSON.stringify({ 
       success: true,
       message: `Newsletter erfolgreich an ${successful} Abonnenten gesendet${failed > 0 ? `, ${failed} fehlgeschlagen` : ''}`,

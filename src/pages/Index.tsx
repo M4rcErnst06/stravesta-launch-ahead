@@ -3,8 +3,6 @@ import React from 'react';
 import EmailSubscribeForm from '@/components/EmailSubscribeForm';
 
 const Index = () => {
-  console.log("Index page is loading correctly");
-
   return (
     <div className="min-h-screen flex flex-col bg-stravesta-dark bg-tech-pattern relative overflow-hidden">
       {/* Decorative gradient overlay */}
@@ -34,7 +32,7 @@ const Index = () => {
             
             {/* Email subscription form */}
             <div className="mt-10">
-              <h2 className="text-xl font-semibold mb-4 text-white">
+              <h2 className="text-xl font-semibold mb-4">
                 Want to be the first to know when we go live?
               </h2>
               <EmailSubscribeForm />
