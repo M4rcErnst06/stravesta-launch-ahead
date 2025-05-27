@@ -12,7 +12,9 @@ import Auth from "./pages/Auth";
 const queryClient = new QueryClient();
 
 const App = () => {
-  console.log("App is starting up correctly");
+  console.log("App is starting up correctly - timestamp:", new Date().toISOString());
+  console.log("Current URL:", window.location.href);
+  console.log("User Agent:", navigator.userAgent);
   
   return (
     <QueryClientProvider client={queryClient}>
