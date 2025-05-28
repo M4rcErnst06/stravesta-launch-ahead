@@ -7,11 +7,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from '@/components/ui/use-toast';
 import { Toaster } from '@/components/ui/toaster';
-import { Mail, LogOut, Trash2, Send, Users, UserCheck } from 'lucide-react';
+import { Mail, LogOut, Trash2, Send, Users, UserCheck, RefreshCw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { User } from '@supabase/supabase-js';
 
-// Type for subscriber data
 interface Subscriber {
   id: string;
   email: string;
@@ -37,7 +36,6 @@ const Admin = () => {
 
   const checkAuthAndLoadData = async () => {
     try {
-      // Check authentication
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
       
       if (sessionError || !session) {
@@ -45,7 +43,6 @@ const Admin = () => {
         return;
       }
 
-      // Check if user is admin
       const { data: isAdminResult, error: adminError } = await supabase
         .rpc('is_admin', { user_email: session.user.email });
 
@@ -80,6 +77,7 @@ const Admin = () => {
       if (error) throw error;
       
       setSubscribers(data || []);
+      console.log(`Loaded ${data?.length || 0} subscribers`);
     } catch (error) {
       console.error('Error fetching subscribers:', error);
       toast({
@@ -141,7 +139,6 @@ const Admin = () => {
     setDeleting(true);
 
     try {
-      // Get subscriber IDs from emails
       const subscribersToDelete = subscribers.filter(s => selectedSubscribers.includes(s.email));
       const idsToDelete = subscribersToDelete.map(s => s.id);
 
@@ -157,14 +154,13 @@ const Admin = () => {
         description: `${selectedSubscribers.length} Abonnent(en) wurden gelöscht.`,
       });
 
-      // Refresh subscribers list and clear selection
       setSelectedSubscribers([]);
       fetchSubscribers();
     } catch (error) {
       console.error('Error deleting subscribers:', error);
       toast({
         title: "Löschfehler",
-        description: "Fehler beim Löschen der Abonnenten. Bitte versuchen Sie es erneut.",
+        description: "Fehler beim Löschen der Abonnenten.",
         variant: "destructive",
       });
     } finally {
@@ -177,7 +173,7 @@ const Admin = () => {
     
     if (!subject.trim() || !content.trim()) {
       toast({
-        title: "Validierungsfehler",
+        title: "Fehlende Angaben",
         description: "Betreff und Inhalt sind erforderlich.",
         variant: "destructive",
       });
@@ -196,18 +192,12 @@ const Admin = () => {
     setSending(true);
     
     try {
-      // Get current session
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session) {
         throw new Error("Keine aktive Sitzung");
       }
 
-      console.log("=== Sending newsletter request ===");
-      console.log("Send to all:", sendToAll);
-      console.log("Selected subscribers:", selectedSubscribers.length);
-
-      // Prepare request data
       const requestData = {
         subject: subject.trim(),
         content: content.trim(),
@@ -215,34 +205,27 @@ const Admin = () => {
         selectedSubscribers: sendToAll ? [] : selectedSubscribers
       };
 
+      console.log("=== Sending newsletter ===");
       console.log("Request data:", requestData);
+      console.log("Target count:", sendToAll ? subscribers.length : selectedSubscribers.length);
 
-      // Call edge function with direct fetch to have more control
-      const response = await fetch(`https://dgdrllvplplypfvzdcjx.supabase.co/functions/v1/send-newsletter`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify(requestData)
+      const { data, error } = await supabase.functions.invoke('send-newsletter', {
+        body: requestData,
       });
 
-      console.log("Response status:", response.status);
-      console.log("Response headers:", Object.fromEntries(response.headers.entries()));
+      console.log("Function response:", { data, error });
 
-      const responseData = await response.json();
-      console.log("Response data:", responseData);
-
-      if (!response.ok) {
-        throw new Error(responseData.error || `HTTP ${response.status}`);
+      if (error) {
+        console.error("Function error:", error);
+        throw new Error(error.message || 'Newsletter function failed');
       }
 
-      if (responseData.success) {
+      if (data?.success) {
         const targetCount = sendToAll ? subscribers.length : selectedSubscribers.length;
         
         toast({
           title: "Newsletter gesendet!",
-          description: `Erfolgreich an ${responseData.successful || targetCount} Abonnenten gesendet.`,
+          description: data.message || `Erfolgreich an ${data.successful || targetCount} Abonnenten gesendet.`,
         });
         
         // Reset form
@@ -251,12 +234,11 @@ const Admin = () => {
         setSelectedSubscribers([]);
         setSendToAll(true);
       } else {
-        throw new Error(responseData.error || 'Unbekannter Fehler');
+        throw new Error(data?.error || data?.details || 'Unbekannter Fehler beim Senden');
       }
       
     } catch (error: any) {
-      console.error('=== Newsletter sending error ===');
-      console.error('Error:', error);
+      console.error('Newsletter sending error:', error);
       
       toast({
         title: "Newsletter Fehler",
@@ -295,27 +277,42 @@ const Admin = () => {
           </Button>
         </div>
         
-        {/* Subscriber count */}
+        {/* Subscriber Stats */}
         <div className="bg-stravesta-navy/50 p-6 rounded-lg mb-8">
-          <div className="flex items-center space-x-4">
-            <div className="p-3 bg-stravesta-teal/20 rounded-full">
-              <Mail className="h-6 w-6 text-stravesta-teal" />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="p-3 bg-stravesta-teal/20 rounded-full">
+                <Mail className="h-6 w-6 text-stravesta-teal" />
+              </div>
+              <div>
+                <h2 className="text-xl font-medium text-white">Newsletter Abonnenten</h2>
+                <p className="text-3xl font-bold text-stravesta-teal">{subscribers.length}</p>
+                {!sendToAll && selectedSubscribers.length > 0 && (
+                  <p className="text-sm text-stravesta-lightGray">
+                    {selectedSubscribers.length} für Newsletter ausgewählt
+                  </p>
+                )}
+              </div>
             </div>
-            <div>
-              <h2 className="text-xl font-medium text-white">Gesamte Abonnenten</h2>
-              <p className="text-3xl font-bold text-stravesta-teal">{subscribers.length}</p>
-              {!sendToAll && selectedSubscribers.length > 0 && (
-                <p className="text-sm text-stravesta-lightGray">
-                  {selectedSubscribers.length} ausgewählt für Newsletter
-                </p>
-              )}
-            </div>
+            <Button 
+              onClick={fetchSubscribers}
+              variant="outline"
+              size="sm"
+              className="text-stravesta-lightGray border-stravesta-darkGray bg-stravesta-navy/50 hover:bg-stravesta-navy hover:text-white hover:border-stravesta-teal"
+              disabled={loading}
+            >
+              <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+              {loading ? "Lädt..." : "Aktualisieren"}
+            </Button>
           </div>
         </div>
         
-        {/* Send newsletter form */}
+        {/* Newsletter Form */}
         <div className="bg-stravesta-navy/30 p-6 rounded-lg mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4">Newsletter senden</h2>
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
+            <Send className="h-5 w-5 mr-2" />
+            Newsletter erstellen und senden
+          </h2>
           <form onSubmit={handleSendNewsletter} className="space-y-4">
             <div>
               <Input
@@ -325,6 +322,7 @@ const Admin = () => {
                 onChange={(e) => setSubject(e.target.value)}
                 className="bg-stravesta-navy/70 border-stravesta-darkGray text-white placeholder:text-stravesta-lightGray/60 focus:border-stravesta-teal focus:ring-stravesta-teal focus-visible:ring-stravesta-teal"
                 required
+                disabled={sending}
               />
             </div>
             <div>
@@ -334,10 +332,11 @@ const Admin = () => {
                 onChange={(e) => setContent(e.target.value)}
                 className="min-h-[200px] bg-stravesta-navy/70 border-stravesta-darkGray text-white placeholder:text-stravesta-lightGray/60 focus:border-stravesta-teal focus:ring-stravesta-teal focus-visible:ring-stravesta-teal"
                 required
+                disabled={sending}
               />
             </div>
             
-            {/* Send options */}
+            {/* Send Options */}
             <div className="bg-stravesta-navy/50 p-4 rounded-lg space-y-3">
               <div className="flex items-center space-x-2">
                 <Checkbox
@@ -349,6 +348,7 @@ const Admin = () => {
                       setSelectedSubscribers([]);
                     }
                   }}
+                  disabled={sending}
                   className="border-stravesta-darkGray data-[state=checked]:bg-stravesta-teal data-[state=checked]:border-stravesta-teal"
                 />
                 <label htmlFor="sendToAll" className="text-white font-medium cursor-pointer flex items-center">
@@ -362,6 +362,7 @@ const Admin = () => {
                   <UserCheck className="h-4 w-4 text-stravesta-teal" />
                   <span className="text-stravesta-lightGray">
                     An {selectedSubscribers.length} ausgewählte Abonnenten senden
+                    {selectedSubscribers.length === 0 && " (Bitte wählen Sie unten Empfänger aus)"}
                   </span>
                 </div>
               )}
@@ -370,11 +371,11 @@ const Admin = () => {
             <Button 
               type="submit" 
               className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark font-medium w-full"
-              disabled={sending || subscribers.length === 0}
+              disabled={sending || subscribers.length === 0 || (!sendToAll && selectedSubscribers.length === 0)}
             >
               <Send className="h-4 w-4 mr-2" />
               {sending 
-                ? "Wird gesendet..." 
+                ? "Newsletter wird gesendet..." 
                 : sendToAll 
                   ? `An alle ${subscribers.length} Abonnenten senden`
                   : `An ${selectedSubscribers.length} Ausgewählte senden`
@@ -383,33 +384,22 @@ const Admin = () => {
           </form>
         </div>
         
-        {/* Subscribers list */}
+        {/* Subscribers Management */}
         <div className="bg-stravesta-navy/30 p-6 rounded-lg">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold text-white">Abonnenten verwalten</h2>
-            <div className="flex gap-2">
-              {selectedSubscribers.length > 0 && (
-                <Button 
-                  onClick={handleDeleteSelected}
-                  variant="outline"
-                  size="sm"
-                  className="text-red-400 border-red-400/50 bg-red-500/10 hover:bg-red-500/20 hover:text-red-300 hover:border-red-300"
-                  disabled={deleting}
-                >
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  {deleting ? "Wird gelöscht..." : `${selectedSubscribers.length} löschen`}
-                </Button>
-              )}
+            {selectedSubscribers.length > 0 && (
               <Button 
-                onClick={fetchSubscribers}
+                onClick={handleDeleteSelected}
                 variant="outline"
                 size="sm"
-                className="text-stravesta-lightGray border-stravesta-darkGray bg-stravesta-navy/50 hover:bg-stravesta-navy hover:text-white hover:border-stravesta-teal"
-                disabled={loading}
+                className="text-red-400 border-red-400/50 bg-red-500/10 hover:bg-red-500/20 hover:text-red-300 hover:border-red-300"
+                disabled={deleting}
               >
-                {loading ? "Lädt..." : "Aktualisieren"}
+                <Trash2 className="h-4 w-4 mr-2" />
+                {deleting ? "Wird gelöscht..." : `${selectedSubscribers.length} löschen`}
               </Button>
-            </div>
+            )}
           </div>
           
           <div className="overflow-x-auto">
@@ -421,7 +411,7 @@ const Admin = () => {
                       <Checkbox
                         checked={!sendToAll && selectedSubscribers.length === subscribers.length && subscribers.length > 0}
                         onCheckedChange={handleSelectAll}
-                        disabled={sendToAll}
+                        disabled={sendToAll || loading}
                         className="border-stravesta-darkGray data-[state=checked]:bg-stravesta-teal data-[state=checked]:border-stravesta-teal"
                       />
                       <span>Auswählen</span>
@@ -434,30 +424,38 @@ const Admin = () => {
               <tbody className="divide-y divide-stravesta-darkGray">
                 {loading ? (
                   <tr>
-                    <td colSpan={3} className="py-4 px-4 text-center text-stravesta-lightGray">
+                    <td colSpan={3} className="py-8 px-4 text-center text-stravesta-lightGray">
+                      <RefreshCw className="h-6 w-6 animate-spin mx-auto mb-2" />
                       Lade Abonnenten...
                     </td>
                   </tr>
                 ) : subscribers.length === 0 ? (
                   <tr>
-                    <td colSpan={3} className="py-4 px-4 text-center text-stravesta-lightGray">
-                      Noch keine Abonnenten.
+                    <td colSpan={3} className="py-8 px-4 text-center text-stravesta-lightGray">
+                      <Mail className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                      Noch keine Abonnenten vorhanden.
                     </td>
                   </tr>
                 ) : (
                   subscribers.map((subscriber) => (
-                    <tr key={subscriber.id}>
+                    <tr key={subscriber.id} className="hover:bg-stravesta-navy/20 transition-colors">
                       <td className="py-3 px-4">
                         <Checkbox
                           checked={selectedSubscribers.includes(subscriber.email)}
                           onCheckedChange={(checked) => handleSelectSubscriber(subscriber.email, checked as boolean)}
-                          disabled={sendToAll}
+                          disabled={sendToAll || deleting}
                           className="border-stravesta-darkGray data-[state=checked]:bg-stravesta-teal data-[state=checked]:border-stravesta-teal"
                         />
                       </td>
-                      <td className="py-3 px-4 text-white">{subscriber.email}</td>
+                      <td className="py-3 px-4 text-white font-medium">{subscriber.email}</td>
                       <td className="py-3 px-4 text-stravesta-lightGray">
-                        {new Date(subscriber.subscribed_at).toLocaleDateString('de-DE')}
+                        {new Date(subscriber.subscribed_at).toLocaleDateString('de-DE', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}
                       </td>
                     </tr>
                   ))

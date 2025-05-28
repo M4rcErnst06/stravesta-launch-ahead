@@ -13,7 +13,7 @@ const corsHeaders = {
 const handler = async (req: Request): Promise<Response> => {
   console.log("=== Newsletter function started ===");
   console.log("Method:", req.method);
-  console.log("URL:", req.url);
+  console.log("Headers:", Object.fromEntries(req.headers.entries()));
   
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -23,9 +23,9 @@ const handler = async (req: Request): Promise<Response> => {
 
   if (req.method !== "POST") {
     console.log("Method not allowed:", req.method);
-    return new Response("Method not allowed", { 
+    return new Response(JSON.stringify({ error: "Method not allowed" }), { 
       status: 405, 
-      headers: corsHeaders 
+      headers: { "Content-Type": "application/json", ...corsHeaders }
     });
   }
 
@@ -72,8 +72,8 @@ const handler = async (req: Request): Promise<Response> => {
       .rpc('is_admin', { user_email: user.email });
 
     if (adminError || !isAdminResult) {
-      console.log("Admin check failed or user not admin");
-      return new Response(JSON.stringify({ error: "Insufficient privileges" }), {
+      console.log("Admin check failed or user not admin:", adminError);
+      return new Response(JSON.stringify({ error: "Admin privileges required" }), {
         status: 403,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
@@ -85,10 +85,9 @@ const handler = async (req: Request): Promise<Response> => {
     let requestData;
     try {
       const bodyText = await req.text();
-      console.log("Raw body:", bodyText);
+      console.log("Raw body received:", bodyText);
       
       if (!bodyText || bodyText.trim() === '') {
-        console.log("Empty body received");
         return new Response(JSON.stringify({ error: "Empty request body" }), {
           status: 400,
           headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -96,10 +95,10 @@ const handler = async (req: Request): Promise<Response> => {
       }
 
       requestData = JSON.parse(bodyText);
-      console.log("Parsed data:", JSON.stringify(requestData, null, 2));
+      console.log("Parsed request data:", requestData);
     } catch (parseError) {
       console.log("JSON parse error:", parseError);
-      return new Response(JSON.stringify({ error: "Invalid JSON" }), {
+      return new Response(JSON.stringify({ error: "Invalid JSON in request body" }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
@@ -107,8 +106,9 @@ const handler = async (req: Request): Promise<Response> => {
 
     const { subject, content, sendToAll, selectedSubscribers } = requestData;
 
+    // Validate required fields
     if (!subject || !content) {
-      console.log("Missing subject or content");
+      console.log("Missing required fields - subject:", !!subject, "content:", !!content);
       return new Response(JSON.stringify({ error: "Subject and content are required" }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -119,80 +119,134 @@ const handler = async (req: Request): Promise<Response> => {
     let targetEmails: string[] = [];
     
     if (sendToAll) {
-      console.log("Sending to all subscribers");
+      console.log("Fetching all subscribers");
       const { data: allSubscribers, error: subscribersError } = await supabaseClient
         .from('subscribers')
-        .select('email');
+        .select('email')
+        .order('created_at', { ascending: false });
       
       if (subscribersError) {
         console.log("Error fetching subscribers:", subscribersError);
-        throw subscribersError;
+        throw new Error(`Database error: ${subscribersError.message}`);
       }
       
       targetEmails = allSubscribers?.map(s => s.email) || [];
-    } else if (selectedSubscribers && selectedSubscribers.length > 0) {
-      console.log("Sending to selected subscribers:", selectedSubscribers.length);
+      console.log(`Found ${targetEmails.length} subscribers total`);
+    } else if (selectedSubscribers && Array.isArray(selectedSubscribers) && selectedSubscribers.length > 0) {
       targetEmails = selectedSubscribers;
+      console.log(`Sending to ${targetEmails.length} selected subscribers`);
     } else {
-      console.log("No target emails specified");
-      return new Response(JSON.stringify({ error: "No recipients specified" }), {
+      console.log("No recipients specified");
+      return new Response(JSON.stringify({ error: "No recipients specified. Either enable 'send to all' or select specific subscribers." }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
 
-    console.log(`Sending newsletter to ${targetEmails.length} recipients`);
+    if (targetEmails.length === 0) {
+      console.log("No target emails found");
+      return new Response(JSON.stringify({ error: "No email addresses found to send to" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
 
-    // Convert content to HTML
+    console.log(`Preparing to send newsletter to ${targetEmails.length} recipients`);
+    console.log("Subject:", subject);
+    console.log("Content preview:", content.substring(0, 100));
+
+    // Validate Resend API key
+    const resendKey = Deno.env.get("RESEND_API_KEY");
+    if (!resendKey) {
+      console.log("RESEND_API_KEY not configured");
+      return new Response(JSON.stringify({ error: "Email service not configured" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
+    console.log("Resend API key is configured");
+
+    // Convert content to HTML with better formatting
     const htmlContent = content
+      .replace(/\n\n/g, '</p><p>')
       .replace(/\n/g, '<br>')
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>');
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/^/, '<p>')
+      .replace(/$/, '</p>');
 
-    // Send emails
-    const emailPromises = targetEmails.map(async (email) => {
+    // Send emails with better error handling
+    const emailResults = [];
+    let successCount = 0;
+    let failCount = 0;
+
+    for (const email of targetEmails) {
       try {
         console.log(`Sending email to: ${email}`);
+        
         const result = await resend.emails.send({
           from: "Stravesta <noreply@stravesta.com>",
           to: [email],
           subject: subject,
           html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-              <h2 style="color: #333; margin-bottom: 20px;">${subject}</h2>
-              <div style="line-height: 1.6; color: #555;">
-                ${htmlContent}
+            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
+              <div style="text-align: center; margin-bottom: 30px;">
+                <h1 style="color: #1a1a1a; font-size: 24px; margin: 0; font-weight: 600;">Stravesta</h1>
               </div>
-              <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
-              <p style="font-size: 12px; color: #888; text-align: center;">
-                Sie erhalten diese E-Mail, weil Sie sich für Stravesta-Updates angemeldet haben.<br>
-                Mit freundlichen Grüßen,<br>
-                Das Stravesta Team
-              </p>
+              
+              <div style="background-color: #f8fafc; padding: 30px; border-radius: 8px; margin-bottom: 30px;">
+                <h2 style="color: #1e293b; margin: 0 0 20px 0; font-size: 20px; font-weight: 600;">${subject}</h2>
+                <div style="line-height: 1.6; color: #334155; font-size: 16px;">
+                  ${htmlContent}
+                </div>
+              </div>
+              
+              <div style="text-align: center; padding: 20px 0; border-top: 1px solid #e2e8f0;">
+                <p style="font-size: 14px; color: #64748b; margin: 0 0 10px 0;">
+                  Sie erhalten diese E-Mail, weil Sie sich für Stravesta-Updates angemeldet haben.
+                </p>
+                <p style="font-size: 14px; color: #64748b; margin: 0;">
+                  Mit freundlichen Grüßen,<br>
+                  <strong>Das Stravesta Team</strong>
+                </p>
+              </div>
             </div>
           `,
+          text: `${subject}\n\n${content}\n\n---\nSie erhalten diese E-Mail, weil Sie sich für Stravesta-Updates angemeldet haben.\n\nMit freundlichen Grüßen,\nDas Stravesta Team`
         });
         
-        console.log(`Email sent successfully to ${email}`);
-        return { email, success: true, id: result.data?.id };
+        console.log(`Email sent successfully to ${email}, ID: ${result.data?.id}`);
+        emailResults.push({ email, success: true, id: result.data?.id });
+        successCount++;
+        
+        // Small delay to avoid rate limiting
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
       } catch (error) {
         console.error(`Failed to send email to ${email}:`, error);
-        return { email, success: false, error: error.message };
+        emailResults.push({ 
+          email, 
+          success: false, 
+          error: error.message || 'Unknown error'
+        });
+        failCount++;
       }
-    });
+    }
 
-    const results = await Promise.all(emailPromises);
-    const successful = results.filter(r => r.success).length;
-    const failed = results.filter(r => !r.success).length;
+    console.log(`Newsletter sending completed. Success: ${successCount}, Failed: ${failCount}`);
 
-    console.log(`Newsletter sending completed. Successful: ${successful}, Failed: ${failed}`);
+    const responseMessage = failCount > 0 
+      ? `Newsletter erfolgreich an ${successCount} von ${targetEmails.length} Abonnenten gesendet. ${failCount} fehlgeschlagen.`
+      : `Newsletter erfolgreich an alle ${successCount} Abonnenten gesendet!`;
 
     return new Response(JSON.stringify({ 
       success: true,
-      message: `Newsletter erfolgreich an ${successful} Abonnenten gesendet${failed > 0 ? `, ${failed} fehlgeschlagen` : ''}`,
-      results: results,
-      successful,
-      failed
+      message: responseMessage,
+      results: emailResults,
+      successful: successCount,
+      failed: failCount,
+      total: targetEmails.length
     }), {
       status: 200,
       headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -200,12 +254,14 @@ const handler = async (req: Request): Promise<Response> => {
 
   } catch (error: any) {
     console.error("=== Newsletter function error ===");
-    console.error("Error:", error);
-    console.error("Stack:", error.stack);
+    console.error("Error message:", error.message);
+    console.error("Error stack:", error.stack);
+    console.error("Error details:", error);
     
     return new Response(JSON.stringify({ 
-      error: "Server error occurred",
-      details: error.message
+      success: false,
+      error: "Newsletter sending failed",
+      details: error.message || "Unknown server error"
     }), {
       status: 500,
       headers: { "Content-Type": "application/json", ...corsHeaders },
