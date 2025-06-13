@@ -1,12 +1,12 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { Toaster } from '@/components/ui/toaster';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, TrendingUp, BarChart3, Settings } from 'lucide-react';
+import { LogOut, User, TrendingUp, BarChart3, Settings, Brain, Bot, Calendar, MessageSquare, FileText, Target } from 'lucide-react';
 import { User as SupabaseUser, Session } from '@supabase/supabase-js';
+import ToolCard from '@/components/ToolCard';
 
 interface UserProfile {
   id: string;
@@ -95,6 +95,110 @@ const Dashboard = () => {
     }
   };
 
+  const tools = [
+    {
+      icon: <Brain className="h-8 w-8" />,
+      title: "AI Setup-Erkennung",
+      description: "Automatische Erkennung von Trading-Setups durch KI-Analyse",
+      status: 'beta' as const,
+      features: [
+        "Chart-Pattern Erkennung",
+        "Support/Resistance Levels",
+        "Trend-Analyse",
+        "Signal-Konfidenz Score"
+      ],
+      onUse: () => toast({ title: "AI Setup-Erkennung", description: "Tool wird gestartet..." })
+    },
+    {
+      icon: <Bot className="h-8 w-8" />,
+      title: "Trading Bot",
+      description: "Personalisierte AI-Bots für automatisches Trading",
+      status: 'coming-soon' as const,
+      features: [
+        "Personalisierte Strategien",
+        "Risk Management",
+        "24/7 Marktüberwachung",
+        "Performance Tracking"
+      ]
+    },
+    {
+      icon: <FileText className="h-8 w-8" />,
+      title: "Trading Journal",
+      description: "Detaillierte Aufzeichnung und Analyse Ihrer Trades",
+      status: 'active' as const,
+      features: [
+        "Trade-Logging",
+        "Performance-Metriken",
+        "Emotion Tracking",
+        "Export-Funktionen"
+      ],
+      onUse: () => toast({ title: "Trading Journal", description: "Journal wird geöffnet..." })
+    },
+    {
+      icon: <BarChart3 className="h-8 w-8" />,
+      title: "Portfolio Analyse",
+      description: "Umfassende Analyse Ihres Trading-Portfolios",
+      status: 'beta' as const,
+      features: [
+        "Risk/Reward Analyse",
+        "Diversifikation Metrics",
+        "Drawdown Analyse",
+        "Benchmark Vergleich"
+      ],
+      onUse: () => toast({ title: "Portfolio Analyse", description: "Analyse wird geladen..." })
+    },
+    {
+      icon: <MessageSquare className="h-8 w-8" />,
+      title: "Community Chat",
+      description: "Austausch mit anderen Tradern und Experten",
+      status: 'active' as const,
+      features: [
+        "Live Diskussionen",
+        "Experten-Tipps",
+        "Trade-Ideen teilen",
+        "Mentoring Programme"
+      ],
+      onUse: () => toast({ title: "Community Chat", description: "Chat wird geöffnet..." })
+    },
+    {
+      icon: <Calendar className="h-8 w-8" />,
+      title: "Economic Calendar",
+      description: "Wichtige Wirtschaftsereignisse und deren Impact",
+      status: 'coming-soon' as const,
+      features: [
+        "Live News Feed",
+        "Impact Bewertung",
+        "Custom Alerts",
+        "Historical Data"
+      ]
+    },
+    {
+      icon: <Target className="h-8 w-8" />,
+      title: "Backtesting Engine",
+      description: "Teste deine Strategien mit historischen Daten",
+      status: 'coming-soon' as const,
+      features: [
+        "Strategy Builder",
+        "Historical Simulation",
+        "Performance Metrics",
+        "Optimization Tools"
+      ]
+    },
+    {
+      icon: <TrendingUp className="h-8 w-8" />,
+      title: "Market Scanner",
+      description: "Scanne Märkte nach Trading-Gelegenheiten",
+      status: 'beta' as const,
+      features: [
+        "Multi-Timeframe Scan",
+        "Custom Screener",
+        "Alert System",
+        "Watchlist Management"
+      ],
+      onUse: () => toast({ title: "Market Scanner", description: "Scanner wird gestartet..." })
+    }
+  ];
+
   if (loading) {
     return (
       <div className="min-h-screen bg-stravesta-dark flex items-center justify-center">
@@ -150,61 +254,37 @@ const Dashboard = () => {
               Willkommen zurück, {profile?.first_name || displayName}!
             </h2>
             <p className="text-xl text-stravesta-lightGray">
-              Bereit für Ihr Trading mit KI-Power? Hier ist Ihr persönliches Dashboard.
+              Hier ist Ihre persönliche Tool-Übersicht. Entdecken Sie alle verfügbaren Features.
             </p>
           </div>
 
-          {/* Dashboard Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            <div className="bg-stravesta-navy/50 p-6 rounded-lg border border-stravesta-teal/10 hover:border-stravesta-teal/30 transition-all">
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-stravesta-teal/20 rounded-full">
-                  <TrendingUp className="h-6 w-6 text-stravesta-teal" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-white">Trading Performance</h3>
-                  <p className="text-stravesta-lightGray">Bald verfügbar</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-stravesta-navy/50 p-6 rounded-lg border border-stravesta-teal/10 hover:border-stravesta-teal/30 transition-all">
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-stravesta-teal/20 rounded-full">
-                  <BarChart3 className="h-6 w-6 text-stravesta-teal" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-white">AI-Analyse</h3>
-                  <p className="text-stravesta-lightGray">Wird entwickelt</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-stravesta-navy/50 p-6 rounded-lg border border-stravesta-teal/10 hover:border-stravesta-teal/30 transition-all">
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-stravesta-teal/20 rounded-full">
-                  <Settings className="h-6 w-6 text-stravesta-teal" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-white">Einstellungen</h3>
-                  <p className="text-stravesta-lightGray">Profil verwalten</p>
-                </div>
-              </div>
-            </div>
+          {/* Tools Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+            {tools.map((tool, index) => (
+              <ToolCard
+                key={index}
+                icon={tool.icon}
+                title={tool.title}
+                description={tool.description}
+                status={tool.status}
+                features={tool.features}
+                onUse={tool.onUse}
+              />
+            ))}
           </div>
 
           {/* Beta Notice */}
           <div className="bg-gradient-to-r from-stravesta-teal/10 to-stravesta-navy/30 p-6 rounded-lg border border-stravesta-teal/20">
             <h3 className="text-xl font-semibold text-white mb-2">🚀 Beta-Zugang aktiv</h3>
             <p className="text-stravesta-lightGray mb-4">
-              Sie haben frühen Zugang zu Stravesta! Weitere Features werden in Kürze freigeschaltet.
+              Sie haben frühen Zugang zu Stravesta! Weitere Tools werden kontinuierlich freigeschaltet.
             </p>
             <div className="flex space-x-4">
               <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark">
-                Features entdecken
+                Feedback geben
               </Button>
               <Button variant="outline" className="border-stravesta-teal text-stravesta-teal hover:bg-stravesta-teal hover:text-stravesta-dark">
-                Feedback geben
+                Roadmap ansehen
               </Button>
             </div>
           </div>
