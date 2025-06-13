@@ -27,11 +27,6 @@ const HeroSection = () => {
                 Anmelden
               </Button>
             </Link>
-            <Link to="/auth">
-              <Button variant="outline" className="border-stravesta-darkGray text-stravesta-lightGray hover:bg-stravesta-navy hover:text-white">
-                Admin
-              </Button>
-            </Link>
           </div>
         </nav>
 
@@ -90,7 +85,7 @@ const HeroSection = () => {
             <Button 
               size="lg" 
               variant="outline" 
-              className="border-stravesta-darkGray text-white hover:bg-stravesta-navy hover:border-stravesta-teal px-8 py-4 text-lg group"
+              className="border-stravesta-teal text-stravesta-teal hover:bg-stravesta-teal hover:text-stravesta-dark px-8 py-4 text-lg group"
             >
               <Play className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
               Demo ansehen
