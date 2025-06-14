@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -7,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { LogOut, User, TrendingUp, BarChart3, Settings, Brain, Bot, Calendar, MessageSquare, FileText, Target } from 'lucide-react';
 import { User as SupabaseUser, Session } from '@supabase/supabase-js';
 import ToolCard from '@/components/ToolCard';
+import DashboardSkeleton from '@/components/DashboardSkeleton';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface UserProfile {
   id: string;
@@ -22,6 +25,7 @@ const Dashboard = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [profileLoading, setProfileLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -57,6 +61,7 @@ const Dashboard = () => {
   }, [navigate]);
 
   const fetchUserProfile = async (userId: string) => {
+    setProfileLoading(true);
     try {
       const { data, error } = await supabase
         .from('profiles')
@@ -74,6 +79,7 @@ const Dashboard = () => {
       console.error('Profile fetch error:', error);
     } finally {
       setLoading(false);
+      setProfileLoading(false);
     }
   };
 
@@ -199,12 +205,9 @@ const Dashboard = () => {
     }
   ];
 
+  // Show full skeleton during initial load
   if (loading) {
-    return (
-      <div className="min-h-screen bg-stravesta-dark flex items-center justify-center">
-        <div className="text-white text-xl">Lädt Dashboard...</div>
-      </div>
-    );
+    return <DashboardSkeleton />;
   }
 
   const displayName = profile?.display_name || 
@@ -229,7 +232,11 @@ const Dashboard = () => {
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2 text-white">
                   <User className="h-5 w-5 text-stravesta-teal" />
-                  <span className="font-medium">{displayName}</span>
+                  {profileLoading ? (
+                    <LoadingSpinner size="sm" />
+                  ) : (
+                    <span className="font-medium">{displayName}</span>
+                  )}
                 </div>
                 
                 <Button 
@@ -250,10 +257,10 @@ const Dashboard = () => {
         <main className="container mx-auto px-4 py-12">
           {/* Welcome Section */}
           <div className="mb-12">
-            <h2 className="text-4xl font-bold text-white mb-4">
+            <h2 className="text-4xl font-bold text-white mb-4 animate-fade-in">
               Willkommen zurück, {profile?.first_name || displayName}!
             </h2>
-            <p className="text-xl text-stravesta-lightGray">
+            <p className="text-xl text-stravesta-lightGray animate-fade-in" style={{ animationDelay: '0.1s' }}>
               Hier ist Ihre persönliche Tool-Übersicht. Entdecken Sie alle verfügbaren Features.
             </p>
           </div>
@@ -261,29 +268,34 @@ const Dashboard = () => {
           {/* Tools Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
             {tools.map((tool, index) => (
-              <ToolCard
-                key={index}
-                icon={tool.icon}
-                title={tool.title}
-                description={tool.description}
-                status={tool.status}
-                features={tool.features}
-                onUse={tool.onUse}
-              />
+              <div 
+                key={index} 
+                className="animate-fade-in" 
+                style={{ animationDelay: `${0.1 * (index + 2)}s` }}
+              >
+                <ToolCard
+                  icon={tool.icon}
+                  title={tool.title}
+                  description={tool.description}
+                  status={tool.status}
+                  features={tool.features}
+                  onUse={tool.onUse}
+                />
+              </div>
             ))}
           </div>
 
           {/* Beta Notice */}
-          <div className="bg-stravesta-navy/50 border border-stravesta-teal/20 p-6 rounded-lg backdrop-blur-sm">
+          <div className="bg-stravesta-navy/50 border border-stravesta-teal/20 p-6 rounded-lg backdrop-blur-sm animate-fade-in" style={{ animationDelay: '1s' }}>
             <h3 className="text-xl font-semibold text-white mb-2">🚀 Beta-Zugang aktiv</h3>
             <p className="text-stravesta-lightGray mb-4">
               Sie haben frühen Zugang zu Stravesta! Weitere Tools werden kontinuierlich freigeschaltet.
             </p>
             <div className="flex space-x-4">
-              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark font-semibold">
+              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark font-semibold transition-all duration-300 hover:scale-105">
                 Feedback geben
               </Button>
-              <Button variant="outline" className="border-stravesta-teal text-stravesta-teal hover:bg-stravesta-teal hover:text-stravesta-dark">
+              <Button variant="outline" className="border-stravesta-teal text-stravesta-teal hover:bg-stravesta-teal hover:text-stravesta-dark transition-all duration-300 hover:scale-105">
                 Roadmap ansehen
               </Button>
             </div>
