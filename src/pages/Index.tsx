@@ -144,57 +144,6 @@ const Index = () => {
     }
   ];
 
-  // Marktplatz & Zukunft
-  const marketplaceFeatures = [
-    {
-      icon: <div className="text-4xl">🛒</div>,
-      title: "AI-Charaktere Marktplatz",
-      description: "Kaufe, verkaufe und teile Trading-Bots mit der Community",
-      features: [
-        "Bot-Marktplatz",
-        "Community-Entwicklung",
-        "Bewertungssystem",
-        "Monetarisierung"
-      ]
-    },
-    {
-      icon: <div className="text-4xl">💎</div>,
-      title: "Strategy-Sharing",
-      description: "Monetarisiere deine erfolgreichen Trading-Strategien",
-      features: [
-        "Strategie-Verkauf",
-        "Backtesting-Berichte",
-        "Performance-Nachweis",
-        "Abonnement-Modelle"
-      ],
-      badge: "Geplant"
-    },
-    {
-      icon: <div className="text-4xl">🏷️</div>,
-      title: "White-Label Solution",
-      description: "Erstelle deine eigene branded Trading-Plattform",
-      features: [
-        "Custom Branding",
-        "Schüler-Management",
-        "Kurs-Integration",
-        "Analytics Dashboard"
-      ],
-      badge: "Geplant"
-    },
-    {
-      icon: <div className="text-4xl">📱</div>,
-      title: "Mobile App",
-      description: "Trading-Power für unterwegs mit nativer Mobile App",
-      features: [
-        "iOS & Android App",
-        "Offline-Journaling",
-        "Push-Notifications",
-        "Touch-optimierte UI"
-      ],
-      badge: "Geplant"
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-stravesta-dark">
       {/* Hero Section */}
@@ -232,14 +181,6 @@ const Index = () => {
       
       {/* Pricing Section */}
       <PricingSection />
-      
-      {/* Marktplatz & Zukunft */}
-      <FeatureSection
-        title="💡 Marktplatz & Zukunft"
-        subtitle="Monetarisiere dein Trading-Wissen und erschließe neue Möglichkeiten"
-        features={marketplaceFeatures}
-        className="bg-stravesta-navy"
-      />
       
       {/* Final CTA */}
       <CTASection />
