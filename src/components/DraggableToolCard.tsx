@@ -38,10 +38,24 @@ const DraggableToolCard: React.FC<DraggableToolCardProps> = ({
     <div
       ref={setNodeRef}
       style={style}
-      {...attributes}
-      {...listeners}
-      className="cursor-grab active:cursor-grabbing"
+      className="relative"
     >
+      {/* Drag Handle - nur ein kleiner Bereich zum Ziehen */}
+      <div
+        {...attributes}
+        {...listeners}
+        className="absolute top-2 right-2 w-8 h-8 cursor-grab active:cursor-grabbing z-10 bg-stravesta-navy/80 rounded-full flex items-center justify-center hover:bg-stravesta-teal/20 transition-colors"
+        title="Ziehen zum Verschieben"
+      >
+        <div className="grid grid-cols-2 gap-0.5">
+          <div className="w-1 h-1 bg-stravesta-lightGray rounded-full"></div>
+          <div className="w-1 h-1 bg-stravesta-lightGray rounded-full"></div>
+          <div className="w-1 h-1 bg-stravesta-lightGray rounded-full"></div>
+          <div className="w-1 h-1 bg-stravesta-lightGray rounded-full"></div>
+        </div>
+      </div>
+      
+      {/* Tool Card - kann normal geklickt werden */}
       <ToolCard
         icon={icon}
         title={title}
