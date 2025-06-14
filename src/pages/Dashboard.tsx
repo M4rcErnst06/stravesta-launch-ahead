@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -121,8 +122,7 @@ const Dashboard = () => {
     {
       icon: <BarChart3 className="h-8 w-8" />,
       title: "Portfolio Analyse",
-      status: 'beta' as const,
-      onUse: () => toast({ title: "Portfolio Analyse", description: "Analyse wird geladen..." })
+      status: 'coming-soon' as const,
     },
     {
       icon: <MessageSquare className="h-8 w-8" />,
@@ -133,7 +133,8 @@ const Dashboard = () => {
     {
       icon: <Calendar className="h-8 w-8" />,
       title: "Economic Calendar",
-      status: 'coming-soon' as const,
+      status: 'active' as const,
+      onUse: () => toast({ title: "Economic Calendar", description: "Kalender wird geladen..." })
     },
     {
       icon: <Target className="h-8 w-8" />,
@@ -143,8 +144,7 @@ const Dashboard = () => {
     {
       icon: <TrendingUp className="h-8 w-8" />,
       title: "Market Scanner",
-      status: 'beta' as const,
-      onUse: () => toast({ title: "Market Scanner", description: "Scanner wird gestartet..." })
+      status: 'coming-soon' as const,
     }
   ];
 
