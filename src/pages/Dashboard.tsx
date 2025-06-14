@@ -213,8 +213,8 @@ const Dashboard = () => {
                      'Benutzer';
 
   return (
-    <div className="min-h-screen bg-stravesta-dark bg-tech-pattern relative">
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-stravesta-dark/90 pointer-events-none"></div>
+    <div className="min-h-screen bg-stravesta-dark relative">
+      <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/5 via-transparent to-stravesta-navy/20"></div>
       
       <div className="relative z-10">
         {/* Header */}
@@ -274,13 +274,13 @@ const Dashboard = () => {
           </div>
 
           {/* Beta Notice */}
-          <div className="bg-gradient-to-r from-stravesta-teal/10 to-stravesta-navy/30 p-6 rounded-lg border border-stravesta-teal/20">
+          <div className="bg-stravesta-navy/50 border border-stravesta-teal/20 p-6 rounded-lg backdrop-blur-sm">
             <h3 className="text-xl font-semibold text-white mb-2">🚀 Beta-Zugang aktiv</h3>
             <p className="text-stravesta-lightGray mb-4">
               Sie haben frühen Zugang zu Stravesta! Weitere Tools werden kontinuierlich freigeschaltet.
             </p>
             <div className="flex space-x-4">
-              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark">
+              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark font-semibold">
                 Feedback geben
               </Button>
               <Button variant="outline" className="border-stravesta-teal text-stravesta-teal hover:bg-stravesta-teal hover:text-stravesta-dark">
