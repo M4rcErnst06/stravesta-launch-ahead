@@ -100,14 +100,14 @@ const Dashboard = () => {
       icon: <Brain className="h-8 w-8" />,
       title: "AI Setup-Erkennung",
       description: "Automatische Erkennung von Trading-Setups durch KI-Analyse",
-      status: 'beta' as const,
+      status: 'active' as const,
       features: [
         "Chart-Pattern Erkennung",
         "Support/Resistance Levels",
         "Trend-Analyse",
         "Signal-Konfidenz Score"
       ],
-      onUse: () => toast({ title: "AI Setup-Erkennung", description: "Tool wird gestartet..." })
+      onUse: () => navigate('/ai-setup-recognition')
     },
     {
       icon: <Bot className="h-8 w-8" />,
