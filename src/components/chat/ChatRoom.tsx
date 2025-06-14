@@ -27,7 +27,7 @@ interface ChatMessage {
     first_name: string | null;
     last_name: string | null;
     avatar_url: string | null;
-  };
+  } | null;
 }
 
 interface ChatRoomProps {
@@ -76,25 +76,15 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ group, user, onBack }) => {
 
   const fetchMessages = async () => {
     try {
-      const { data, error } = await supabase
+      // First get the messages
+      const { data: messagesData, error: messagesError } = await supabase
         .from('chat_messages')
-        .select(`
-          id,
-          content,
-          created_at,
-          user_id,
-          profiles (
-            display_name,
-            first_name,
-            last_name,
-            avatar_url
-          )
-        `)
+        .select('id, content, created_at, user_id')
         .eq('group_id', group.id)
         .order('created_at', { ascending: true });
 
-      if (error) {
-        console.error('Error fetching messages:', error);
+      if (messagesError) {
+        console.error('Error fetching messages:', messagesError);
         toast({
           title: "Fehler",
           description: "Konnte Nachrichten nicht laden.",
@@ -103,7 +93,24 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ group, user, onBack }) => {
         return;
       }
 
-      setMessages(data || []);
+      // Then get the unique user IDs and fetch their profiles
+      const userIds = [...new Set(messagesData?.map(msg => msg.user_id) || [])];
+      const { data: profilesData, error: profilesError } = await supabase
+        .from('profiles')
+        .select('id, display_name, first_name, last_name, avatar_url')
+        .in('id', userIds);
+
+      if (profilesError) {
+        console.error('Error fetching profiles:', profilesError);
+      }
+
+      // Combine messages with profiles
+      const messagesWithProfiles: ChatMessage[] = messagesData?.map(message => ({
+        ...message,
+        profiles: profilesData?.find(profile => profile.id === message.user_id) || null
+      })) || [];
+
+      setMessages(messagesWithProfiles);
     } catch (error) {
       console.error('Error:', error);
     } finally {
