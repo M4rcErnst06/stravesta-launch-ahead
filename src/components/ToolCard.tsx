@@ -8,7 +8,7 @@ import { ArrowRight } from 'lucide-react';
 interface ToolCardProps {
   icon: React.ReactNode;
   title: string;
-  description: string;
+  description?: string;
   status: 'active' | 'coming-soon' | 'beta';
   features?: string[];
   onUse?: () => void;
@@ -17,9 +17,7 @@ interface ToolCardProps {
 const ToolCard: React.FC<ToolCardProps> = ({ 
   icon, 
   title, 
-  description, 
   status, 
-  features = [], 
   onUse 
 }) => {
   const getStatusBadge = () => {
@@ -45,22 +43,8 @@ const ToolCard: React.FC<ToolCardProps> = ({
           {getStatusBadge()}
         </div>
         <CardTitle className="text-xl text-white">{title}</CardTitle>
-        <CardDescription className="text-stravesta-lightGray">
-          {description}
-        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {features.length > 0 && (
-          <ul className="space-y-2">
-            {features.map((feature, idx) => (
-              <li key={idx} className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-stravesta-teal rounded-full mt-2 flex-shrink-0"></div>
-                <span className="text-sm text-stravesta-lightGray">{feature}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-        
         <Button 
           onClick={onUse}
           disabled={isDisabled}

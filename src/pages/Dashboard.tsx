@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -105,102 +104,46 @@ const Dashboard = () => {
     {
       icon: <Brain className="h-8 w-8" />,
       title: "AI Setup-Erkennung",
-      description: "Automatische Erkennung von Trading-Setups durch KI-Analyse",
       status: 'active' as const,
-      features: [
-        "Chart-Pattern Erkennung",
-        "Support/Resistance Levels",
-        "Trend-Analyse",
-        "Signal-Konfidenz Score"
-      ],
       onUse: () => navigate('/ai-setup-recognition')
     },
     {
       icon: <Bot className="h-8 w-8" />,
       title: "Trading Bot",
-      description: "Personalisierte AI-Bots für automatisches Trading",
       status: 'coming-soon' as const,
-      features: [
-        "Personalisierte Strategien",
-        "Risk Management",
-        "24/7 Marktüberwachung",
-        "Performance Tracking"
-      ]
     },
     {
       icon: <FileText className="h-8 w-8" />,
       title: "Trading Journal",
-      description: "Detaillierte Aufzeichnung und Analyse Ihrer Trades",
       status: 'active' as const,
-      features: [
-        "Trade-Logging",
-        "Performance-Metriken",
-        "Emotion Tracking",
-        "Export-Funktionen"
-      ],
       onUse: () => navigate('/trading-journal')
     },
     {
       icon: <BarChart3 className="h-8 w-8" />,
       title: "Portfolio Analyse",
-      description: "Umfassende Analyse Ihres Trading-Portfolios",
       status: 'beta' as const,
-      features: [
-        "Risk/Reward Analyse",
-        "Diversifikation Metrics",
-        "Drawdown Analyse",
-        "Benchmark Vergleich"
-      ],
       onUse: () => toast({ title: "Portfolio Analyse", description: "Analyse wird geladen..." })
     },
     {
       icon: <MessageSquare className="h-8 w-8" />,
       title: "Community Chat",
-      description: "Austausch mit anderen Tradern und Experten",
       status: 'active' as const,
-      features: [
-        "Live Diskussionen",
-        "Experten-Tipps",
-        "Trade-Ideen teilen",
-        "Mentoring Programme"
-      ],
       onUse: () => navigate('/community-chat')
     },
     {
       icon: <Calendar className="h-8 w-8" />,
       title: "Economic Calendar",
-      description: "Wichtige Wirtschaftsereignisse und deren Impact",
       status: 'coming-soon' as const,
-      features: [
-        "Live News Feed",
-        "Impact Bewertung",
-        "Custom Alerts",
-        "Historical Data"
-      ]
     },
     {
       icon: <Target className="h-8 w-8" />,
       title: "Backtesting Engine",
-      description: "Teste deine Strategien mit historischen Daten",
       status: 'coming-soon' as const,
-      features: [
-        "Strategy Builder",
-        "Historical Simulation",
-        "Performance Metrics",
-        "Optimization Tools"
-      ]
     },
     {
       icon: <TrendingUp className="h-8 w-8" />,
       title: "Market Scanner",
-      description: "Scanne Märkte nach Trading-Gelegenheiten",
       status: 'beta' as const,
-      features: [
-        "Multi-Timeframe Scan",
-        "Custom Screener",
-        "Alert System",
-        "Watchlist Management"
-      ],
       onUse: () => toast({ title: "Market Scanner", description: "Scanner wird gestartet..." })
     }
   ];
@@ -276,9 +219,7 @@ const Dashboard = () => {
                 <ToolCard
                   icon={tool.icon}
                   title={tool.title}
-                  description={tool.description}
                   status={tool.status}
-                  features={tool.features}
                   onUse={tool.onUse}
                 />
               </div>
