@@ -25,7 +25,7 @@ const TestimonialSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-stravesta-dark">
+    <section className="py-20 bg-stravesta-navy">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">
@@ -38,7 +38,7 @@ const TestimonialSection = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {testimonials.map((testimonial, index) => (
-            <Card key={index} className="bg-stravesta-navy/30 border-stravesta-teal/20 hover:border-stravesta-teal/40 transition-all duration-300 hover:scale-105">
+            <Card key={index} className="bg-stravesta-dark/50 border-stravesta-teal/20 hover:border-stravesta-teal/40 transition-all duration-300 hover:scale-105">
               <CardContent className="p-6">
                 <div className="flex items-center mb-4">
                   <div className="text-2xl mr-3">{testimonial.avatar}</div>

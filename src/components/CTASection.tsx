@@ -5,10 +5,9 @@ import EmailSubscribeForm from '@/components/EmailSubscribeForm';
 
 const CTASection = () => {
   return (
-    <section className="py-20 relative overflow-hidden">
+    <section className="py-20 bg-stravesta-dark relative overflow-hidden">
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/10 via-transparent to-blue-500/10"></div>
-      <div className="absolute top-0 left-0 w-full h-full bg-tech-pattern opacity-20"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/5 via-transparent to-stravesta-navy/20"></div>
       
       <div className="relative z-10 container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto">

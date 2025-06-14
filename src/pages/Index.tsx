@@ -207,7 +207,7 @@ const Index = () => {
         title="🤖 AI & Automatisierung"
         subtitle="Lass künstliche Intelligenz dein Trading auf das nächste Level bringen"
         features={aiFeatures}
-        className="bg-gradient-to-b from-stravesta-dark to-stravesta-navy"
+        className="bg-stravesta-navy"
       />
       
       {/* Analyse & Lernen */}
@@ -215,7 +215,7 @@ const Index = () => {
         title="📘 Analyse & Lernen"
         subtitle="Verstehe dein Trading besser und entwickle dich kontinuierlich weiter"
         features={analysisFeatures}
-        className="bg-stravesta-navy"
+        className="bg-stravesta-dark"
       />
       
       {/* Testimonials */}
@@ -226,7 +226,7 @@ const Index = () => {
         title="🛠️ Integrationen & Erweiterungen"
         subtitle="Verbinde Stravesta nahtlos mit deinen bestehenden Trading-Tools"
         features={integrationFeatures}
-        className="bg-gradient-to-b from-stravesta-dark to-stravesta-navy"
+        className="bg-stravesta-dark"
       />
       
       {/* Marktplatz & Zukunft */}
@@ -241,7 +241,7 @@ const Index = () => {
       <CTASection />
       
       {/* Footer */}
-      <footer className="bg-stravesta-dark border-t border-stravesta-teal/20 py-12">
+      <footer className="bg-stravesta-navy border-t border-stravesta-teal/20 py-12">
         <div className="container mx-auto px-4 text-center">
           <div className="mb-8">
             <h3 className="text-2xl font-bold text-gradient mb-2">Stravesta</h3>
