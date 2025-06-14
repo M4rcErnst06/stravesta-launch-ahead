@@ -132,7 +132,7 @@ const Dashboard = () => {
         "Emotion Tracking",
         "Export-Funktionen"
       ],
-      onUse: () => toast({ title: "Trading Journal", description: "Journal wird geöffnet..." })
+      onUse: () => navigate('/trading-journal')
     },
     {
       icon: <BarChart3 className="h-8 w-8" />,
