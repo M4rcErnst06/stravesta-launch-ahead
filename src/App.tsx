@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import TradingJournal from "./pages/TradingJournal";
 import AISetupRecognition from "./pages/AISetupRecognition";
+import CommunityChat from "./pages/CommunityChat";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/trading-journal" element={<TradingJournal />} />
           <Route path="/ai-setup-recognition" element={<AISetupRecognition />} />
+          <Route path="/community-chat" element={<CommunityChat />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />

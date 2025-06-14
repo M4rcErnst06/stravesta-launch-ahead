@@ -158,7 +158,7 @@ const Dashboard = () => {
         "Trade-Ideen teilen",
         "Mentoring Programme"
       ],
-      onUse: () => toast({ title: "Community Chat", description: "Chat wird geöffnet..." })
+      onUse: () => navigate('/community-chat')
     },
     {
       icon: <Calendar className="h-8 w-8" />,
