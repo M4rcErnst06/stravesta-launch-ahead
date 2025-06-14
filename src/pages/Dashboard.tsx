@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -7,9 +6,24 @@ import { Toaster } from '@/components/ui/toaster';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, User, TrendingUp, BarChart3, Settings, Brain, Bot, Calendar, MessageSquare, FileText, Target } from 'lucide-react';
 import { User as SupabaseUser, Session } from '@supabase/supabase-js';
-import ToolCard from '@/components/ToolCard';
 import DashboardSkeleton from '@/components/DashboardSkeleton';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import DraggableToolCard from '@/components/DraggableToolCard';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  rectSortingStrategy,
+} from '@dnd-kit/sortable';
 
 interface UserProfile {
   id: string;
@@ -20,6 +34,14 @@ interface UserProfile {
   avatar_url?: string;
 }
 
+interface Tool {
+  id: string;
+  icon: React.ReactNode;
+  title: string;
+  status: 'active' | 'coming-soon' | 'beta';
+  onUse?: () => void;
+}
+
 const Dashboard = () => {
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [session, setSession] = useState<Session | null>(null);
@@ -27,6 +49,68 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [profileLoading, setProfileLoading] = useState(false);
   const navigate = useNavigate();
+
+  const [tools, setTools] = useState<Tool[]>([
+    {
+      id: 'ai-setup',
+      icon: <Brain className="h-8 w-8" />,
+      title: "AI Setup-Erkennung",
+      status: 'active' as const,
+      onUse: () => navigate('/ai-setup-recognition')
+    },
+    {
+      id: 'trading-bot',
+      icon: <Bot className="h-8 w-8" />,
+      title: "Trading Bot",
+      status: 'coming-soon' as const,
+    },
+    {
+      id: 'trading-journal',
+      icon: <FileText className="h-8 w-8" />,
+      title: "Trading Journal",
+      status: 'active' as const,
+      onUse: () => navigate('/trading-journal')
+    },
+    {
+      id: 'portfolio-analyse',
+      icon: <BarChart3 className="h-8 w-8" />,
+      title: "Portfolio Analyse",
+      status: 'coming-soon' as const,
+    },
+    {
+      id: 'community-chat',
+      icon: <MessageSquare className="h-8 w-8" />,
+      title: "Community Chat",
+      status: 'active' as const,
+      onUse: () => navigate('/community-chat')
+    },
+    {
+      id: 'economic-calendar',
+      icon: <Calendar className="h-8 w-8" />,
+      title: "Economic Calendar",
+      status: 'active' as const,
+      onUse: () => toast({ title: "Economic Calendar", description: "Kalender wird geladen..." })
+    },
+    {
+      id: 'backtesting',
+      icon: <Target className="h-8 w-8" />,
+      title: "Backtesting Engine",
+      status: 'coming-soon' as const,
+    },
+    {
+      id: 'market-scanner',
+      icon: <TrendingUp className="h-8 w-8" />,
+      title: "Market Scanner",
+      status: 'coming-soon' as const,
+    }
+  ]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   useEffect(() => {
     // Set up auth state listener
@@ -59,6 +143,27 @@ const Dashboard = () => {
 
     return () => subscription.unsubscribe();
   }, [navigate]);
+
+  // Load saved tool order from localStorage
+  useEffect(() => {
+    const savedOrder = localStorage.getItem('dashboard-tool-order');
+    if (savedOrder && user) {
+      try {
+        const orderIds = JSON.parse(savedOrder);
+        const reorderedTools = orderIds.map((id: string) => 
+          tools.find(tool => tool.id === id)
+        ).filter(Boolean);
+        
+        // Add any new tools that weren't in the saved order
+        const existingIds = orderIds;
+        const newTools = tools.filter(tool => !existingIds.includes(tool.id));
+        
+        setTools([...reorderedTools, ...newTools]);
+      } catch (error) {
+        console.error('Error loading tool order:', error);
+      }
+    }
+  }, [user]);
 
   const fetchUserProfile = async (userId: string) => {
     setProfileLoading(true);
@@ -101,52 +206,24 @@ const Dashboard = () => {
     }
   };
 
-  const tools = [
-    {
-      icon: <Brain className="h-8 w-8" />,
-      title: "AI Setup-Erkennung",
-      status: 'active' as const,
-      onUse: () => navigate('/ai-setup-recognition')
-    },
-    {
-      icon: <Bot className="h-8 w-8" />,
-      title: "Trading Bot",
-      status: 'coming-soon' as const,
-    },
-    {
-      icon: <FileText className="h-8 w-8" />,
-      title: "Trading Journal",
-      status: 'active' as const,
-      onUse: () => navigate('/trading-journal')
-    },
-    {
-      icon: <BarChart3 className="h-8 w-8" />,
-      title: "Portfolio Analyse",
-      status: 'coming-soon' as const,
-    },
-    {
-      icon: <MessageSquare className="h-8 w-8" />,
-      title: "Community Chat",
-      status: 'active' as const,
-      onUse: () => navigate('/community-chat')
-    },
-    {
-      icon: <Calendar className="h-8 w-8" />,
-      title: "Economic Calendar",
-      status: 'active' as const,
-      onUse: () => toast({ title: "Economic Calendar", description: "Kalender wird geladen..." })
-    },
-    {
-      icon: <Target className="h-8 w-8" />,
-      title: "Backtesting Engine",
-      status: 'coming-soon' as const,
-    },
-    {
-      icon: <TrendingUp className="h-8 w-8" />,
-      title: "Market Scanner",
-      status: 'coming-soon' as const,
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (active.id !== over?.id) {
+      setTools((items) => {
+        const oldIndex = items.findIndex(item => item.id === active.id);
+        const newIndex = items.findIndex(item => item.id === over?.id);
+        
+        const newOrder = arrayMove(items, oldIndex, newIndex);
+        
+        // Save new order to localStorage
+        const orderIds = newOrder.map(tool => tool.id);
+        localStorage.setItem('dashboard-tool-order', JSON.stringify(orderIds));
+        
+        return newOrder;
+      });
     }
-  ];
+  };
 
   // Show full skeleton during initial load
   if (loading) {
@@ -206,25 +283,40 @@ const Dashboard = () => {
             <p className="text-xl text-stravesta-lightGray animate-fade-in" style={{ animationDelay: '0.1s' }}>
               Hier ist Ihre persönliche Tool-Übersicht. Entdecken Sie alle verfügbaren Features.
             </p>
+            <p className="text-sm text-stravesta-lightGray mt-2 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              💡 Tipp: Sie können die Kacheln per Drag & Drop neu anordnen!
+            </p>
           </div>
 
-          {/* Tools Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-            {tools.map((tool, index) => (
-              <div 
-                key={index} 
-                className="animate-fade-in" 
-                style={{ animationDelay: `${0.1 * (index + 2)}s` }}
-              >
-                <ToolCard
-                  icon={tool.icon}
-                  title={tool.title}
-                  status={tool.status}
-                  onUse={tool.onUse}
-                />
+          {/* Tools Grid with Drag and Drop */}
+          <DndContext 
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext 
+              items={tools.map(tool => tool.id)}
+              strategy={rectSortingStrategy}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+                {tools.map((tool, index) => (
+                  <div 
+                    key={tool.id} 
+                    className="animate-fade-in" 
+                    style={{ animationDelay: `${0.1 * (index + 2)}s` }}
+                  >
+                    <DraggableToolCard
+                      id={tool.id}
+                      icon={tool.icon}
+                      title={tool.title}
+                      status={tool.status}
+                      onUse={tool.onUse}
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </SortableContext>
+          </DndContext>
 
           {/* Beta Notice */}
           <div className="bg-stravesta-navy/50 border border-stravesta-teal/20 p-6 rounded-lg backdrop-blur-sm animate-fade-in" style={{ animationDelay: '1s' }}>
