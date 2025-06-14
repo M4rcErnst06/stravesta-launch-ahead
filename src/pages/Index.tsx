@@ -1,17 +1,18 @@
 
 import React from 'react';
-import HeroSection from '@/components/HeroSection';
+import AnimatedBackground from '@/components/AnimatedBackground';
+import ModernHeroSection from '@/components/ModernHeroSection';
 import StatsSection from '@/components/StatsSection';
-import FeatureSection from '@/components/FeatureSection';
+import EnhancedFeatureSection from '@/components/EnhancedFeatureSection';
 import TestimonialSection from '@/components/TestimonialSection';
 import PricingSection from '@/components/PricingSection';
 import CTASection from '@/components/CTASection';
 
 const Index = () => {
-  // AI & Automatisierung Features
+  // AI & Automatisierung Features mit Gradienten
   const aiFeatures = [
     {
-      icon: <div className="text-5xl animate-bounce">🤖</div>,
+      icon: <div className="text-5xl">🤖</div>,
       title: "AI-Setup-Erkennung",
       description: "Intelligente Mustererkennung für deine erfolgreichen Trading-Strategien",
       features: [
@@ -20,10 +21,11 @@ const Index = () => {
         "Realtime Setup-Scanning",
         "Historische Datenanalyse"
       ],
-      badge: "KI-Power"
+      badge: "KI-Power",
+      gradient: "bg-gradient-to-br from-blue-500/20 to-cyan-500/20"
     },
     {
-      icon: <div className="text-5xl animate-pulse">🎯</div>,
+      icon: <div className="text-5xl">🎯</div>,
       title: "Persönliche AI-Bots",
       description: "Maßgeschneiderte Trading-Assistenten die deinen Stil verstehen",
       features: [
@@ -32,10 +34,11 @@ const Index = () => {
         "Adaptives Verhalten",
         "24/7 Marktüberwachung"
       ],
-      badge: "Smart"
+      badge: "Smart",
+      gradient: "bg-gradient-to-br from-purple-500/20 to-pink-500/20"
     },
     {
-      icon: <div className="text-5xl animate-pulse">⚡</div>,
+      icon: <div className="text-5xl">⚡</div>,
       title: "Live-Scan & Backtesting",
       description: "Echtzeitanalyse kombiniert mit historischer Strategiebewertung",
       features: [
@@ -44,10 +47,11 @@ const Index = () => {
         "Performance-Validierung",
         "Risiko-Assessment"
       ],
-      badge: "Live"
+      badge: "Live",
+      gradient: "bg-gradient-to-br from-yellow-500/20 to-orange-500/20"
     },
     {
-      icon: <div className="text-5xl animate-bounce">🔔</div>,
+      icon: <div className="text-5xl">🔔</div>,
       title: "Smart Alerts",
       description: "Intelligente Benachrichtigungen für perfekte Entry-Points",
       features: [
@@ -56,14 +60,15 @@ const Index = () => {
         "Telegram/Discord Integration",
         "Mobile Push-Notifications"
       ],
-      badge: "Instant"
+      badge: "Instant",
+      gradient: "bg-gradient-to-br from-green-500/20 to-emerald-500/20"
     }
   ];
 
   // Analyse & Lernen Features
   const analysisFeatures = [
     {
-      icon: <div className="text-5xl animate-float">📊</div>,
+      icon: <div className="text-5xl">📊</div>,
       title: "Trading-Journal",
       description: "Vollautomatische Erfassung und Analyse deiner Trades",
       features: [
@@ -73,10 +78,11 @@ const Index = () => {
         "Screenshot-Integration",
         "Performance-Tracking"
       ],
-      badge: "Automatisch"
+      badge: "Automatisch",
+      gradient: "bg-gradient-to-br from-indigo-500/20 to-blue-500/20"
     },
     {
-      icon: <div className="text-5xl animate-pulse-slow">👥</div>,
+      icon: <div className="text-5xl">👥</div>,
       title: "Community-Modul",
       description: "Vernetze dich mit gleichgesinnten Tradern und teile Strategien",
       features: [
@@ -86,10 +92,11 @@ const Index = () => {
         "Gruppenchats",
         "Kommentar-System"
       ],
-      badge: "Social"
+      badge: "Social",
+      gradient: "bg-gradient-to-br from-pink-500/20 to-red-500/20"
     },
     {
-      icon: <div className="text-5xl animate-float">🎓</div>,
+      icon: <div className="text-5xl">🎓</div>,
       title: "Coach-Dashboard",
       description: "Professionelle Tools für Trading-Coaches und Mentoren",
       features: [
@@ -99,14 +106,15 @@ const Index = () => {
         "Individuelle Analyse",
         "Coaching-Tools"
       ],
-      badge: "Pro"
+      badge: "Pro",
+      gradient: "bg-gradient-to-br from-violet-500/20 to-purple-500/20"
     }
   ];
 
   // Integrationen & Erweiterungen
   const integrationFeatures = [
     {
-      icon: <div className="text-5xl animate-bounce">🔗</div>,
+      icon: <div className="text-5xl">🔗</div>,
       title: "Broker-Anbindung",
       description: "Nahtlose Integration mit deinen bestehenden Trading-Plattformen",
       features: [
@@ -115,10 +123,11 @@ const Index = () => {
         "Automatische Trade-Erfassung",
         "Multi-Broker Support"
       ],
-      badge: "Connect"
+      badge: "Connect",
+      gradient: "bg-gradient-to-br from-teal-500/20 to-cyan-500/20"
     },
     {
-      icon: <div className="text-5xl animate-pulse">📈</div>,
+      icon: <div className="text-5xl">📈</div>,
       title: "TradingView Integration",
       description: "Direkte Chartanalyse und Setup-Visualisierung",
       features: [
@@ -127,10 +136,11 @@ const Index = () => {
         "Indikator-Synchronisation",
         "One-Click Trading"
       ],
-      badge: "Charts"
+      badge: "Charts",
+      gradient: "bg-gradient-to-br from-emerald-500/20 to-green-500/20"
     },
     {
-      icon: <div className="text-5xl animate-bounce">📱</div>,
+      icon: <div className="text-5xl">📱</div>,
       title: "Multi-Platform Alerts",
       description: "Erhalte wichtige Signale auf allen deinen Geräten",
       features: [
@@ -139,10 +149,11 @@ const Index = () => {
         "Email Alerts",
         "Mobile App Notifications"
       ],
-      badge: "Überall"
+      badge: "Überall",
+      gradient: "bg-gradient-to-br from-orange-500/20 to-yellow-500/20"
     },
     {
-      icon: <div className="text-5xl animate-float">🌍</div>,
+      icon: <div className="text-5xl">🌍</div>,
       title: "Marktdaten & Sentiment",
       description: "Umfassende Marktanalyse für bessere Trading-Entscheidungen",
       features: [
@@ -151,115 +162,117 @@ const Index = () => {
         "News-Integration",
         "Market-Flow Daten"
       ],
-      badge: "Data"
+      badge: "Data",
+      gradient: "bg-gradient-to-br from-slate-500/20 to-gray-500/20"
     }
   ];
 
   return (
     <div className="min-h-screen bg-stravesta-dark overflow-hidden">
-      {/* Animated Background */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute top-10 left-10 w-96 h-96 bg-stravesta-teal/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-stravesta-teal/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }}></div>
-      </div>
+      {/* Enhanced Animated Background */}
+      <AnimatedBackground />
 
       <div className="relative z-10">
-        {/* Hero Section */}
-        <HeroSection />
+        {/* Modern Hero Section */}
+        <ModernHeroSection />
         
-        {/* Stats Section */}
-        <StatsSection />
+        {/* Enhanced Stats Section */}
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-stravesta-dark via-stravesta-navy/50 to-stravesta-dark"></div>
+          <div className="relative z-10">
+            <StatsSection />
+          </div>
+        </div>
         
         {/* AI & Automatisierung */}
-        <section className="py-20 bg-stravesta-navy relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal/5 via-transparent to-stravesta-teal/5"></div>
-          <div className="relative z-10">
-            <FeatureSection
-              title="🤖 AI & Automatisierung"
-              subtitle="Lass künstliche Intelligenz dein Trading auf das nächste Level bringen"
-              features={aiFeatures}
-            />
-          </div>
-        </section>
+        <EnhancedFeatureSection
+          title="🤖 AI & Automatisierung"
+          subtitle="Lass künstliche Intelligenz dein Trading auf das nächste Level bringen"
+          features={aiFeatures}
+          className="bg-gradient-to-br from-stravesta-navy via-stravesta-dark to-stravesta-navy"
+        />
         
         {/* Analyse & Lernen */}
-        <section className="py-20 bg-stravesta-dark relative">
-          <div className="absolute inset-0">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-stravesta-teal to-transparent"></div>
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-stravesta-teal to-transparent"></div>
-          </div>
-          <div className="relative z-10">
-            <FeatureSection
-              title="📘 Analyse & Lernen"
-              subtitle="Verstehe dein Trading besser und entwickle dich kontinuierlich weiter"
-              features={analysisFeatures}
-            />
-          </div>
-        </section>
+        <EnhancedFeatureSection
+          title="📘 Analyse & Lernen"
+          subtitle="Verstehe dein Trading besser und entwickle dich kontinuierlich weiter"
+          features={analysisFeatures}
+          className="bg-gradient-to-br from-stravesta-dark via-stravesta-navy/80 to-stravesta-dark"
+        />
         
-        {/* Testimonials */}
-        <TestimonialSection />
+        {/* Enhanced Testimonials */}
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-stravesta-navy via-stravesta-dark to-stravesta-navy"></div>
+          <div className="relative z-10">
+            <TestimonialSection />
+          </div>
+        </div>
         
         {/* Integrationen */}
-        <section className="py-20 bg-stravesta-dark relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-stravesta-navy/20 to-transparent"></div>
+        <EnhancedFeatureSection
+          title="🛠️ Integrationen & Erweiterungen"
+          subtitle="Verbinde Stravesta nahtlos mit deinen bestehenden Trading-Tools"
+          features={integrationFeatures}
+          className="bg-gradient-to-br from-stravesta-dark via-stravesta-navy/60 to-stravesta-dark"
+        />
+        
+        {/* Enhanced Pricing Section */}
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-stravesta-navy via-stravesta-dark/80 to-stravesta-navy"></div>
           <div className="relative z-10">
-            <FeatureSection
-              title="🛠️ Integrationen & Erweiterungen"
-              subtitle="Verbinde Stravesta nahtlos mit deinen bestehenden Trading-Tools"
-              features={integrationFeatures}
-            />
+            <PricingSection />
           </div>
-        </section>
+        </div>
         
-        {/* Pricing Section */}
-        <PricingSection />
+        {/* Enhanced Final CTA */}
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-stravesta-dark via-stravesta-navy/40 to-stravesta-dark"></div>
+          <div className="relative z-10">
+            <CTASection />
+          </div>
+        </div>
         
-        {/* Final CTA */}
-        <CTASection />
-        
-        {/* Footer */}
-        <footer className="bg-stravesta-navy border-t border-stravesta-teal/20 py-12 relative">
-          <div className="absolute inset-0 bg-gradient-to-t from-stravesta-dark/50 to-transparent"></div>
-          <div className="container mx-auto px-4 text-center relative z-10">
-            <div className="mb-8 animate-fade-in">
-              <h3 className="text-2xl font-bold text-gradient mb-2">Stravesta</h3>
-              <p className="text-stravesta-lightGray">Trading mit KI-Power für höhere Ziele</p>
+        {/* Enhanced Footer */}
+        <footer className="bg-gradient-to-br from-stravesta-navy via-stravesta-dark to-stravesta-navy border-t border-stravesta-teal/30 py-16 relative overflow-hidden">
+          <div className="absolute inset-0 bg-tech-pattern opacity-5"></div>
+          <div className="container mx-auto px-6 text-center relative z-10">
+            <div className="mb-12 animate-fade-in">
+              <h3 className="text-3xl font-bold text-gradient mb-4">Stravesta</h3>
+              <p className="text-stravesta-lightGray text-lg">Trading mit KI-Power für höhere Ziele</p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 max-w-4xl mx-auto">
               <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                <h4 className="font-semibold text-white mb-4">Produkt</h4>
-                <ul className="space-y-2 text-sm text-stravesta-lightGray">
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Features</li>
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Preise</li>
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Beta-Zugang</li>
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Roadmap</li>
+                <h4 className="font-semibold text-white mb-6 text-lg">Produkt</h4>
+                <ul className="space-y-3 text-stravesta-lightGray">
+                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer transform hover:scale-105 duration-300">Features</li>
+                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer transform hover:scale-105 duration-300">Preise</li>
+                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer transform hover:scale-105 duration-300">Beta-Zugang</li>
+                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer transform hover:scale-105 duration-300">Roadmap</li>
                 </ul>
               </div>
               <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
-                <h4 className="font-semibold text-white mb-4">Community</h4>
-                <ul className="space-y-2 text-sm text-stravesta-lightGray">
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Discord</li>
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Telegram</li>
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Trading Forum</li>
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Beta-Tester</li>
+                <h4 className="font-semibold text-white mb-6 text-lg">Community</h4>
+                <ul className="space-y-3 text-stravesta-lightGray">
+                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer transform hover:scale-105 duration-300">Discord</li>
+                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer transform hover:scale-105 duration-300">Telegram</li>
+                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer transform hover:scale-105 duration-300">Trading Forum</li>
+                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer transform hover:scale-105 duration-300">Beta-Tester</li>
                 </ul>
               </div>
               <div className="animate-fade-in" style={{ animationDelay: '0.6s' }}>
-                <h4 className="font-semibold text-white mb-4">Legal</h4>
-                <ul className="space-y-2 text-sm text-stravesta-lightGray">
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Datenschutz</li>
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Impressum</li>
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">AGB</li>
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Risikohinweis</li>
+                <h4 className="font-semibold text-white mb-6 text-lg">Legal</h4>
+                <ul className="space-y-3 text-stravesta-lightGray">
+                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer transform hover:scale-105 duration-300">Datenschutz</li>
+                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer transform hover:scale-105 duration-300">Impressum</li>
+                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer transform hover:scale-105 duration-300">AGB</li>
+                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer transform hover:scale-105 duration-300">Risikohinweis</li>
                 </ul>
               </div>
             </div>
             
-            <div className="border-t border-stravesta-teal/20 pt-8 animate-fade-in" style={{ animationDelay: '0.8s' }}>
-              <p className="text-sm text-stravesta-lightGray">
+            <div className="border-t border-stravesta-teal/30 pt-12 animate-fade-in" style={{ animationDelay: '0.8s' }}>
+              <p className="text-stravesta-lightGray leading-relaxed">
                 &copy; {new Date().getFullYear()} Stravesta. Alle Rechte vorbehalten. 
                 <br className="md:hidden" />
                 <span className="md:ml-2">Keine Finanzberatung • Nur für Bildungszwecke • Risiko-Disclaimer beachten</span>
