@@ -4,6 +4,7 @@ import HeroSection from '@/components/HeroSection';
 import StatsSection from '@/components/StatsSection';
 import FeatureSection from '@/components/FeatureSection';
 import TestimonialSection from '@/components/TestimonialSection';
+import PricingSection from '@/components/PricingSection';
 import CTASection from '@/components/CTASection';
 
 const Index = () => {
@@ -228,6 +229,9 @@ const Index = () => {
         features={integrationFeatures}
         className="bg-stravesta-dark"
       />
+      
+      {/* Pricing Section */}
+      <PricingSection />
       
       {/* Marktplatz & Zukunft */}
       <FeatureSection
