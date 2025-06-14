@@ -93,7 +93,7 @@
   background-size: 20px 20px;
 }
 
-/* Button hover animations */
+/* Enhanced Button hover animations */
 .hover-lift {
   transition: all 0.3s ease;
 }
@@ -103,7 +103,7 @@
   box-shadow: 0 10px 25px rgba(0, 245, 212, 0.3);
 }
 
-/* Loading animations */
+/* Enhanced Loading animations */
 @keyframes pulse-glow {
   0%, 100% {
     box-shadow: 0 0 5px rgba(0, 245, 212, 0.5);
@@ -124,6 +124,69 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Enhanced Fade In Animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Gradient Shift Animation */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-shift {
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Pulse Slow Animation */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
 /* Sidebar styles */
 .sidebar {
   --sidebar-background: var(--stravesta-navy);
@@ -134,4 +197,54 @@
   --sidebar-accent-foreground: white;
   --sidebar-border: rgba(0, 245, 212, 0.2);
   --sidebar-ring: var(--stravesta-teal);
+}
+
+/* Enhanced Hover Effects */
+.feature-card {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-card:hover {
+  transform: translateY(-8px) rotateX(5deg);
+  box-shadow: 0 20px 40px rgba(0, 245, 212, 0.2);
+}
+
+/* Staggered Animation Classes */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+
+/* Glow Effect */
+.glow-on-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-on-hover::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(transparent, rgba(0, 245, 212, 0.3), transparent);
+  animation: rotate 4s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glow-on-hover:hover::before {
+  opacity: 1;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
