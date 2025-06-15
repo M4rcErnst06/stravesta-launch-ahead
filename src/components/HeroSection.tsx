@@ -101,10 +101,10 @@ const HeroSection = () => {
               Sie haben frühen Zugang zu Stravesta! Weitere Tools werden kontinuierlich freigeschaltet.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-white font-semibold">
+              <Button className="bg-stravesta-teal text-black font-semibold border-none hover:bg-stravesta-teal/90"> 
                 Feedback geben
               </Button>
-              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold">
+              <Button className="bg-stravesta-teal text-black font-semibold border-none hover:bg-stravesta-teal/90">
                 Roadmap ansehen
               </Button>
             </div>
