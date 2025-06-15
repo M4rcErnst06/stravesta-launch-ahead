@@ -248,8 +248,6 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-stravesta-dark relative">
-      <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/5 via-transparent to-stravesta-navy/20"></div>
-      
       <div className="relative z-10">
         {/* Header */}
         <header className="bg-stravesta-navy/80 backdrop-blur-sm border-b border-stravesta-teal/20">

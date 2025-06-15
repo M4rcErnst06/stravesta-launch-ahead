@@ -86,8 +86,6 @@ const TradingJournal = () => {
 
   return (
     <div className="min-h-screen bg-stravesta-dark relative">
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-stravesta-dark/90 pointer-events-none"></div>
-      
       <div className="relative z-10">
         {/* Header */}
         <header className="bg-stravesta-navy/80 backdrop-blur-sm border-b border-stravesta-teal/20">
