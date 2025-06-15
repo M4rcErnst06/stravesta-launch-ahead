@@ -153,9 +153,9 @@ const AISetupRecognition = () => {
               </Card>
 
               {/* Beta Notice */}
-              <Card className="bg-gradient-to-r from-stravesta-teal/10 to-stravesta-navy/30 border-stravesta-teal/20">
+              <Card className="bg-stravesta-navy/70 border-stravesta-teal/20">
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-white mb-2">🚀 Beta Feature</h3>
+                  <h3 className="text-lg font-semibold text-stravesta-teal mb-2">🚀 Beta Feature</h3>
                   <p className="text-stravesta-lightGray text-sm">
                     Die AI Setup-Erkennung befindet sich in der Beta-Phase. 
                     Analyseergebnisse sollten immer mit eigener technischer Analyse verifiziert werden.
