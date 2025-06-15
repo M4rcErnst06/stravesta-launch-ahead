@@ -268,6 +268,11 @@ const WatchlistManagement = () => {
     }
   };
 
+  const getSubscriptionTierDisplay = () => {
+    const tier = limits[0]?.subscription_tier || 'basic';
+    return tier.charAt(0).toUpperCase() + tier.slice(1);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-stravesta-dark flex items-center justify-center">
@@ -284,29 +289,37 @@ const WatchlistManagement = () => {
         {/* Header */}
         <header className="bg-stravesta-navy/80 backdrop-blur-sm border-b border-stravesta-teal/20">
           <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center space-x-4">
-              <Button
-                onClick={() => navigate('/dashboard')}
-                variant="ghost"
-                size="sm"
-                className="text-stravesta-lightGray hover:text-white"
-              >
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Zurück
-              </Button>
-              <h1 className="text-2xl font-bold text-gradient">Watchlist verwalten</h1>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <Button
+                  onClick={() => navigate('/dashboard')}
+                  variant="ghost"
+                  size="sm"
+                  className="text-stravesta-lightGray hover:text-white"
+                >
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Zurück
+                </Button>
+                <h1 className="text-2xl font-bold text-gradient">Watchlist verwalten</h1>
+              </div>
+              <Badge variant="secondary" className="bg-stravesta-teal/20 text-stravesta-teal border-stravesta-teal/30">
+                {getSubscriptionTierDisplay()} Abo
+              </Badge>
             </div>
           </div>
         </header>
 
         <main className="container mx-auto px-4 py-8">
-          {/* Feature Limits Overview */}
+          {/* Feature Credits Overview */}
           <div className="mb-8">
-            <h2 className="text-xl font-semibold text-white mb-4">Feature-Limits (Basic Abo)</h2>
+            <h2 className="text-xl font-semibold text-white mb-4">Verfügbare Credits</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {limits.map(limit => {
                 const config = featureConfig[limit.feature_name];
                 if (!config) return null;
+
+                const remainingCredits = limit.limit_count - limit.current_count;
+                const usagePercentage = (limit.current_count / limit.limit_count) * 100;
 
                 return (
                   <Card key={limit.feature_name} className="bg-stravesta-navy/50 border-stravesta-teal/20">
@@ -317,13 +330,35 @@ const WatchlistManagement = () => {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-stravesta-teal">
-                          {limit.current_count}/{limit.limit_count}
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-stravesta-lightGray">Verwendet:</span>
+                          <span className="text-sm font-medium text-white">
+                            {limit.current_count}/{limit.limit_count}
+                          </span>
                         </div>
-                        <p className="text-xs text-stravesta-lightGray mt-1">
-                          {config.description}
-                        </p>
+                        <div className="w-full bg-stravesta-darkGray rounded-full h-2">
+                          <div 
+                            className={`h-2 rounded-full transition-all duration-300 ${
+                              usagePercentage >= 100 
+                                ? 'bg-red-500' 
+                                : usagePercentage >= 80 
+                                  ? 'bg-yellow-500' 
+                                  : 'bg-stravesta-teal'
+                            }`}
+                            style={{ width: `${Math.min(usagePercentage, 100)}%` }}
+                          />
+                        </div>
+                        <div className="text-center">
+                          <div className={`text-lg font-bold ${
+                            remainingCredits === 0 ? 'text-red-400' : 'text-stravesta-teal'
+                          }`}>
+                            {remainingCredits}
+                          </div>
+                          <p className="text-xs text-stravesta-lightGray">
+                            {remainingCredits === 0 ? 'Keine Credits' : 'Credits verfügbar'}
+                          </p>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
@@ -403,9 +438,10 @@ const WatchlistManagement = () => {
                           const limit = limits.find(l => l.feature_name === featureName);
                           const isAssigned = asset.assignments.includes(featureName);
                           const canAssign = !isAssigned && limit && limit.current_count < limit.limit_count;
+                          const remainingCredits = limit ? limit.limit_count - limit.current_count : 0;
 
                           return (
-                            <div key={featureName} className="flex items-center space-x-3 p-2 bg-stravesta-navy/30 rounded">
+                            <div key={featureName} className="flex items-center space-x-3 p-3 bg-stravesta-navy/30 rounded border border-stravesta-teal/10">
                               <Checkbox
                                 checked={isAssigned}
                                 onCheckedChange={(checked) => 
@@ -413,17 +449,27 @@ const WatchlistManagement = () => {
                                 }
                                 disabled={!isAssigned && !canAssign}
                               />
-                              <div className="flex items-center space-x-2 flex-1">
-                                {config.icon}
-                                <span className={`text-sm ${isAssigned ? 'text-stravesta-teal' : 'text-stravesta-lightGray'}`}>
-                                  {config.name}
-                                </span>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center space-x-2 mb-1">
+                                  {config.icon}
+                                  <span className={`text-sm font-medium ${
+                                    isAssigned ? 'text-stravesta-teal' : 'text-stravesta-lightGray'
+                                  }`}>
+                                    {config.name}
+                                  </span>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  {!canAssign && !isAssigned ? (
+                                    <Badge variant="secondary" className="text-xs bg-red-500/20 text-red-400 border-red-500/30">
+                                      Keine Credits
+                                    </Badge>
+                                  ) : (
+                                    <Badge variant="secondary" className="text-xs">
+                                      {remainingCredits} verfügbar
+                                    </Badge>
+                                  )}
+                                </div>
                               </div>
-                              {!canAssign && !isAssigned && (
-                                <Badge variant="secondary" className="text-xs">
-                                  Limit erreicht
-                                </Badge>
-                              )}
                             </div>
                           );
                         })}
