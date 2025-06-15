@@ -329,10 +329,10 @@ const Dashboard = () => {
               Sie haben frühen Zugang zu Stravesta! Weitere Tools werden kontinuierlich freigeschaltet.
             </p>
             <div className="flex space-x-4">
-              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark font-semibold transition-all duration-300">
+              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold border-none">
                 Feedback geben
               </Button>
-              <Button variant="outline" className="border-stravesta-teal text-stravesta-teal hover:bg-stravesta-teal hover:text-stravesta-dark transition-all duration-300">
+              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold border-none">
                 Roadmap ansehen
               </Button>
             </div>
