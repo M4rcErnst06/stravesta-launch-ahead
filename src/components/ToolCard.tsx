@@ -51,7 +51,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
           className={`w-full group/btn ${
             isDisabled 
               ? 'bg-stravesta-darkGray text-stravesta-lightGray cursor-not-allowed' 
-              : 'bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark'
+              : 'bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold'
           }`}
         >
           {isDisabled ? 'Bald verfügbar' : 'Tool öffnen'}

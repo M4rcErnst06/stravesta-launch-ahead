@@ -114,11 +114,7 @@ const PricingSection = () => {
                 </ul>
                 
                 <Button 
-                  className={`w-full ${
-                    plan.popular 
-                      ? 'bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark' 
-                      : 'bg-stravesta-navy border border-stravesta-teal text-stravesta-teal hover:bg-stravesta-teal hover:text-stravesta-dark'
-                  }`}
+                  className="w-full bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold"
                 >
                   {plan.buttonText}
                 </Button>
