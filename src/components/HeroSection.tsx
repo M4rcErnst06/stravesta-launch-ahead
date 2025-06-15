@@ -8,9 +8,8 @@ import EmailSubscribeForm from './EmailSubscribeForm';
 
 const HeroSection = () => {
   return (
-    <section className="min-h-screen bg-gradient-to-br from-stravesta-dark via-stravesta-navy to-stravesta-dark relative overflow-hidden">
-      {/* Static background elements */}
-      <div className="absolute inset-0 bg-tech-pattern opacity-10"></div>
+    <section className="min-h-screen bg-stravesta-dark bg-gradient-to-br from-stravesta-dark via-stravesta-navy to-stravesta-dark relative overflow-hidden">
+      {/* Entfernte bg-tech-pattern */}
       <div className="absolute top-20 left-10 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-stravesta-teal/5 rounded-full blur-3xl"></div>
       
@@ -141,3 +140,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+
