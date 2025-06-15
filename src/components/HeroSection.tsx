@@ -1,15 +1,27 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Play, Star, Zap } from 'lucide-react';
 import CountdownTimer from './CountdownTimer';
 import EmailSubscribeForm from './EmailSubscribeForm';
+import FeedbackModal from './FeedbackModal';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleFeedbackClick = () => {
+    setFeedbackOpen(true);
+  };
+
+  const handleRoadmapClick = () => {
+    navigate('/roadmap');
+  };
+
   return (
     <section className="min-h-screen bg-stravesta-dark bg-gradient-to-br from-stravesta-dark via-stravesta-navy to-stravesta-dark relative overflow-hidden">
-      {/* Entfernte bg-tech-pattern */}
       <div className="absolute top-20 left-10 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-stravesta-teal/5 rounded-full blur-3xl"></div>
       
@@ -100,10 +112,16 @@ const HeroSection = () => {
               Sie haben frühen Zugang zu Stravesta! Weitere Tools werden kontinuierlich freigeschaltet.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-stravesta-teal text-black font-semibold border-none hover:bg-stravesta-teal/90"> 
+              <Button 
+                onClick={handleFeedbackClick}
+                className="bg-stravesta-teal text-black font-semibold border-none hover:bg-stravesta-teal/90"
+              > 
                 Feedback geben
               </Button>
-              <Button className="bg-stravesta-teal text-black font-semibold border-none hover:bg-stravesta-teal/90">
+              <Button 
+                onClick={handleRoadmapClick}
+                className="bg-stravesta-teal text-black font-semibold border-none hover:bg-stravesta-teal/90"
+              >
                 Roadmap ansehen
               </Button>
             </div>
@@ -135,9 +153,11 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Feedback Modal */}
+      <FeedbackModal open={feedbackOpen} onOpenChange={setFeedbackOpen} />
     </section>
   );
 };
 
 export default HeroSection;
-

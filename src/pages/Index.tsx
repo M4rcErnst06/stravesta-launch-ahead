@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import HeroSection from '@/components/HeroSection';
 import StatsSection from '@/components/StatsSection';
@@ -5,13 +6,8 @@ import FeatureSection from '@/components/FeatureSection';
 import TestimonialSection from '@/components/TestimonialSection';
 import PricingSection from '@/components/PricingSection';
 import CTASection from '@/components/CTASection';
-import FeedbackModal from "@/components/FeedbackModal";
-import { useNavigate } from "react-router-dom";
 
 const Index = () => {
-  const [feedbackOpen, setFeedbackOpen] = useState(false);
-  const navigate = useNavigate();
-
   // AI & Automatisierung Features
   const aiFeatures = [
     {
@@ -289,36 +285,7 @@ const Index = () => {
             </div>
           </div>
         </footer>
-
-        {/* --- FeedbackModal & "Feedback/Roadmap" Button overrides --- */}
-        <FeedbackModal open={feedbackOpen} onOpenChange={setFeedbackOpen} />
-
-        {/* Overlay buttons für Feedback/Roadmap im Beta Access Bereich überschreiben */}
-        <style>{`
-          /* Optional: Passe z.B. Z-Indexes für das Modal an, falls es verdeckt wird */
-        `}</style>
       </div>
-      
-      {/* Skript um Buttons in Hero Section zu ersetzen */}
-      <script dangerouslySetInnerHTML={{__html: `
-        setTimeout(function() {
-          var feedbackBtn = document.querySelector('button:contains("Feedback geben")');
-          if(feedbackBtn) {
-            feedbackBtn.onclick = function(e) {
-              e.preventDefault();
-              window.dispatchEvent(new CustomEvent('openFeedbackModalStravesta'));
-            };
-          }
-          var roadmapBtn = document.querySelector('button:contains("Roadmap ansehen")');
-          if(roadmapBtn) {
-            roadmapBtn.onclick = function(e) {
-              e.preventDefault();
-              window.location.href = "/roadmap";
-            }
-          }
-        }, 1000);
-      `}} />
-      {/* Alternativ, eleganter: Buttons direkt in HeroSection steuern (empfohlen, siehe nächste TODO) */}
     </div>
   );
 };
