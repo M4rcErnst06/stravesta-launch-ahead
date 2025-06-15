@@ -24,6 +24,8 @@ import {
   sortableKeyboardCoordinates,
   rectSortingStrategy,
 } from '@dnd-kit/sortable';
+import FeedbackModal from "@/components/FeedbackModal";
+import { useState as useFeedbackModalState } from "react";
 
 interface UserProfile {
   id: string;
@@ -49,6 +51,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [profileLoading, setProfileLoading] = useState(false);
   const navigate = useNavigate();
+  const [feedbackOpen, setFeedbackOpen] = useFeedbackModalState(false);
 
   const [tools, setTools] = useState<Tool[]>([
     {
@@ -330,30 +333,23 @@ const Dashboard = () => {
             </p>
             <div className="flex space-x-4">
               <Button
-                asChild
+                onClick={() => setFeedbackOpen(true)}
                 className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold border-none"
               >
-                <a href="mailto:contact@stravesta.com?subject=Feedback%20zu%20Stravesta" target="_blank" rel="noopener noreferrer">
-                  Feedback geben
-                </a>
+                Feedback geben
               </Button>
               <Button
                 asChild
                 className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold border-none"
               >
-                <a
-                  href="https://notion.so/stravesta-public-roadmap" // <-- PASST DIESEN LINK AN, falls du eine andere Roadmap hast!
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Roadmap ansehen
-                </a>
+                <a href="/roadmap">Roadmap ansehen</a>
               </Button>
             </div>
           </div>
         </main>
       </div>
       
+      <FeedbackModal open={feedbackOpen} onOpenChange={setFeedbackOpen} />
       <Toaster />
     </div>
   );
