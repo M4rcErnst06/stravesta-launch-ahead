@@ -11,7 +11,7 @@ const Index = () => {
   // AI & Automatisierung Features
   const aiFeatures = [
     {
-      icon: <div className="text-5xl animate-bounce">🤖</div>,
+      icon: <div className="text-5xl">🤖</div>,
       title: "AI-Setup-Erkennung",
       description: "Intelligente Mustererkennung für deine erfolgreichen Trading-Strategien",
       features: [
@@ -23,7 +23,7 @@ const Index = () => {
       badge: "KI-Power"
     },
     {
-      icon: <div className="text-5xl animate-pulse">🎯</div>,
+      icon: <div className="text-5xl">🎯</div>,
       title: "Persönliche AI-Bots",
       description: "Maßgeschneiderte Trading-Assistenten die deinen Stil verstehen",
       features: [
@@ -35,7 +35,7 @@ const Index = () => {
       badge: "Smart"
     },
     {
-      icon: <div className="text-5xl animate-pulse">⚡</div>,
+      icon: <div className="text-5xl">⚡</div>,
       title: "Live-Scan & Backtesting",
       description: "Echtzeitanalyse kombiniert mit historischer Strategiebewertung",
       features: [
@@ -47,7 +47,7 @@ const Index = () => {
       badge: "Live"
     },
     {
-      icon: <div className="text-5xl animate-bounce">🔔</div>,
+      icon: <div className="text-5xl">🔔</div>,
       title: "Smart Alerts",
       description: "Intelligente Benachrichtigungen für perfekte Entry-Points",
       features: [
@@ -63,7 +63,7 @@ const Index = () => {
   // Analyse & Lernen Features
   const analysisFeatures = [
     {
-      icon: <div className="text-5xl animate-float">📊</div>,
+      icon: <div className="text-5xl">📊</div>,
       title: "Trading-Journal",
       description: "Vollautomatische Erfassung und Analyse deiner Trades",
       features: [
@@ -76,7 +76,7 @@ const Index = () => {
       badge: "Automatisch"
     },
     {
-      icon: <div className="text-5xl animate-pulse-slow">👥</div>,
+      icon: <div className="text-5xl">👥</div>,
       title: "Community-Modul",
       description: "Vernetze dich mit gleichgesinnten Tradern und teile Strategien",
       features: [
@@ -89,7 +89,7 @@ const Index = () => {
       badge: "Social"
     },
     {
-      icon: <div className="text-5xl animate-float">🎓</div>,
+      icon: <div className="text-5xl">🎓</div>,
       title: "Coach-Dashboard",
       description: "Professionelle Tools für Trading-Coaches und Mentoren",
       features: [
@@ -106,7 +106,7 @@ const Index = () => {
   // Integrationen & Erweiterungen
   const integrationFeatures = [
     {
-      icon: <div className="text-5xl animate-bounce">🔗</div>,
+      icon: <div className="text-5xl">🔗</div>,
       title: "Broker-Anbindung",
       description: "Nahtlose Integration mit deinen bestehenden Trading-Plattformen",
       features: [
@@ -118,7 +118,7 @@ const Index = () => {
       badge: "Connect"
     },
     {
-      icon: <div className="text-5xl animate-pulse">📈</div>,
+      icon: <div className="text-5xl">📈</div>,
       title: "TradingView Integration",
       description: "Direkte Chartanalyse und Setup-Visualisierung",
       features: [
@@ -130,7 +130,7 @@ const Index = () => {
       badge: "Charts"
     },
     {
-      icon: <div className="text-5xl animate-bounce">📱</div>,
+      icon: <div className="text-5xl">📱</div>,
       title: "Multi-Platform Alerts",
       description: "Erhalte wichtige Signale auf allen deinen Geräten",
       features: [
@@ -142,7 +142,7 @@ const Index = () => {
       badge: "Überall"
     },
     {
-      icon: <div className="text-5xl animate-float">🌍</div>,
+      icon: <div className="text-5xl">🌍</div>,
       title: "Marktdaten & Sentiment",
       description: "Umfassende Marktanalyse für bessere Trading-Entscheidungen",
       features: [
@@ -157,11 +157,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-stravesta-dark overflow-hidden">
-      {/* Animated Background */}
+      {/* Static Background */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute top-10 left-10 w-96 h-96 bg-stravesta-teal/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-stravesta-teal/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }}></div>
+        <div className="absolute top-10 left-10 w-96 h-96 bg-stravesta-teal/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-stravesta-teal/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative z-10">
@@ -223,13 +223,13 @@ const Index = () => {
         <footer className="bg-stravesta-navy border-t border-stravesta-teal/20 py-12 relative">
           <div className="absolute inset-0 bg-gradient-to-t from-stravesta-dark/50 to-transparent"></div>
           <div className="container mx-auto px-4 text-center relative z-10">
-            <div className="mb-8 animate-fade-in">
+            <div className="mb-8">
               <h3 className="text-2xl font-bold text-gradient mb-2">Stravesta</h3>
               <p className="text-stravesta-lightGray">Trading mit KI-Power für höhere Ziele</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-              <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <div>
                 <h4 className="font-semibold text-white mb-4">Produkt</h4>
                 <ul className="space-y-2 text-sm text-stravesta-lightGray">
                   <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Features</li>
@@ -238,7 +238,7 @@ const Index = () => {
                   <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Roadmap</li>
                 </ul>
               </div>
-              <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
+              <div>
                 <h4 className="font-semibold text-white mb-4">Community</h4>
                 <ul className="space-y-2 text-sm text-stravesta-lightGray">
                   <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Discord</li>
@@ -247,7 +247,7 @@ const Index = () => {
                   <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Beta-Tester</li>
                 </ul>
               </div>
-              <div className="animate-fade-in" style={{ animationDelay: '0.6s' }}>
+              <div>
                 <h4 className="font-semibold text-white mb-4">Legal</h4>
                 <ul className="space-y-2 text-sm text-stravesta-lightGray">
                   <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Datenschutz</li>
@@ -258,7 +258,7 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="border-t border-stravesta-teal/20 pt-8 animate-fade-in" style={{ animationDelay: '0.8s' }}>
+            <div className="border-t border-stravesta-teal/20 pt-8">
               <p className="text-sm text-stravesta-lightGray">
                 &copy; {new Date().getFullYear()} Stravesta. Alle Rechte vorbehalten. 
                 <br className="md:hidden" />

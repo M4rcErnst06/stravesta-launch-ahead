@@ -9,10 +9,10 @@ import EmailSubscribeForm from './EmailSubscribeForm';
 const HeroSection = () => {
   return (
     <section className="min-h-screen bg-gradient-to-br from-stravesta-dark via-stravesta-navy to-stravesta-dark relative overflow-hidden">
-      {/* Animated background elements */}
+      {/* Static background elements */}
       <div className="absolute inset-0 bg-tech-pattern opacity-10"></div>
-      <div className="absolute top-20 left-10 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-stravesta-teal/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      <div className="absolute top-20 left-10 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-stravesta-teal/5 rounded-full blur-3xl"></div>
       
       <div className="relative z-10 container mx-auto px-4 py-20">
         {/* Navigation */}
@@ -75,19 +75,19 @@ const HeroSection = () => {
             <Link to="/login">
               <Button 
                 size="lg" 
-                className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark font-semibold px-8 py-4 text-lg group"
+                className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark font-semibold px-8 py-4 text-lg"
               >
                 Jetzt Beta-Zugang sichern
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             
             <Button 
               size="lg" 
               variant="outline" 
-              className="border-stravesta-teal text-stravesta-teal hover:bg-stravesta-teal hover:text-stravesta-dark px-8 py-4 text-lg group"
+              className="border-stravesta-teal text-stravesta-teal hover:bg-stravesta-teal hover:text-stravesta-dark px-8 py-4 text-lg"
             >
-              <Play className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+              <Play className="mr-2 h-5 w-5" />
               Demo ansehen
             </Button>
           </div>

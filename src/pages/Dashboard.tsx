@@ -277,13 +277,13 @@ const Dashboard = () => {
         <main className="container mx-auto px-4 py-12">
           {/* Welcome Section */}
           <div className="mb-12">
-            <h2 className="text-4xl font-bold text-white mb-4 animate-fade-in">
+            <h2 className="text-4xl font-bold text-white mb-4">
               Willkommen zurück, {profile?.first_name || displayName}!
             </h2>
-            <p className="text-xl text-stravesta-lightGray animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <p className="text-xl text-stravesta-lightGray">
               Hier ist Ihre persönliche Tool-Übersicht. Entdecken Sie alle verfügbaren Features.
             </p>
-            <p className="text-sm text-stravesta-lightGray mt-2 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <p className="text-sm text-stravesta-lightGray mt-2">
               💡 Tipp: Sie können die Kacheln per Drag & Drop neu anordnen!
             </p>
           </div>
@@ -299,12 +299,8 @@ const Dashboard = () => {
               strategy={rectSortingStrategy}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-                {tools.map((tool, index) => (
-                  <div 
-                    key={tool.id} 
-                    className="animate-fade-in" 
-                    style={{ animationDelay: `${0.1 * (index + 2)}s` }}
-                  >
+                {tools.map((tool) => (
+                  <div key={tool.id}>
                     <DraggableToolCard
                       id={tool.id}
                       icon={tool.icon}
@@ -319,16 +315,16 @@ const Dashboard = () => {
           </DndContext>
 
           {/* Beta Notice */}
-          <div className="bg-stravesta-navy/50 border border-stravesta-teal/20 p-6 rounded-lg backdrop-blur-sm animate-fade-in" style={{ animationDelay: '1s' }}>
+          <div className="bg-stravesta-navy/50 border border-stravesta-teal/20 p-6 rounded-lg backdrop-blur-sm">
             <h3 className="text-xl font-semibold text-white mb-2">🚀 Beta-Zugang aktiv</h3>
             <p className="text-stravesta-lightGray mb-4">
               Sie haben frühen Zugang zu Stravesta! Weitere Tools werden kontinuierlich freigeschaltet.
             </p>
             <div className="flex space-x-4">
-              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark font-semibold transition-all duration-300 hover:scale-105">
+              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark font-semibold transition-all duration-300">
                 Feedback geben
               </Button>
-              <Button variant="outline" className="border-stravesta-teal text-stravesta-teal hover:bg-stravesta-teal hover:text-stravesta-dark transition-all duration-300 hover:scale-105">
+              <Button variant="outline" className="border-stravesta-teal text-stravesta-teal hover:bg-stravesta-teal hover:text-stravesta-dark transition-all duration-300">
                 Roadmap ansehen
               </Button>
             </div>
