@@ -89,7 +89,7 @@ const Dashboard = () => {
       icon: <Calendar className="h-8 w-8" />,
       title: "Economic Calendar",
       status: 'active' as const,
-      onUse: () => toast({ title: "Economic Calendar", description: "Kalender wird geladen..." })
+      onUse: () => navigate('/economic-calendar')
     },
     {
       id: 'backtesting',
