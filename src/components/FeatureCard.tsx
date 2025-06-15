@@ -22,7 +22,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
     <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/40 transition-all duration-300 group h-full">
       <CardHeader className="relative">
         <div className="flex items-center justify-between mb-4">
-          <div className="text-6xl transition-transform duration-300 group-hover:scale-110 will-change-transform">
+          <div className="text-6xl transition-transform duration-300 group-hover:scale-110">
             {icon}
           </div>
           <Badge className="bg-stravesta-teal/10 text-stravesta-teal border-stravesta-teal/30 shrink-0">
