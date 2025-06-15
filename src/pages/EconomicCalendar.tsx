@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -124,7 +123,6 @@ const EconomicCalendar = () => {
   return (
     <div className="min-h-screen bg-stravesta-dark relative">
       <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/5 via-transparent to-stravesta-navy/20"></div>
-      
       <div className="relative z-10">
         {/* Header */}
         <header className="bg-stravesta-navy/80 backdrop-blur-sm border-b border-stravesta-teal/20">
@@ -160,7 +158,6 @@ const EconomicCalendar = () => {
             </div>
           </div>
         </header>
-
         {/* Main Content */}
         <main className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
