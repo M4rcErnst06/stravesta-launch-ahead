@@ -23,7 +23,7 @@ const HeroSection = () => {
           </div>
           <div className="flex items-center space-x-4">
             <Link to="/login">
-              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-white font-semibold">
+              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold">
                 Anmelden
               </Button>
             </Link>
@@ -49,7 +49,7 @@ const HeroSection = () => {
             Revolutioniere dein Trading mit automatischer Setup-Erkennung, 
             personalisierten AI-Bots und intelligenter Community.
           </p>
-
+          
           {/* Value Proposition */}
           <div className="flex flex-wrap justify-center gap-6 mb-12 text-sm">
             <div className="flex items-center text-stravesta-lightGray">
@@ -75,7 +75,7 @@ const HeroSection = () => {
             <Link to="/login">
               <Button 
                 size="lg" 
-                className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-white font-semibold px-8 py-4 text-lg"
+                className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold px-8 py-4 text-lg"
               >
                 Jetzt Beta-Zugang sichern
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -84,7 +84,7 @@ const HeroSection = () => {
             
             <Button 
               size="lg" 
-              className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-white font-semibold px-8 py-4 text-lg"
+              className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold px-8 py-4 text-lg"
             >
               <Play className="mr-2 h-5 w-5" />
               Demo ansehen
