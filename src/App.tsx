@@ -15,6 +15,7 @@ import AISetupRecognition from "./pages/AISetupRecognition";
 import CommunityChat from "./pages/CommunityChat";
 import EconomicCalendar from "./pages/EconomicCalendar";
 import WatchlistManagement from "./pages/WatchlistManagement";
+import BacktestingEngine from "./pages/BacktestingEngine";
 
 const queryClient = new QueryClient();
 
