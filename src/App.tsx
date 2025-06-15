@@ -33,6 +33,7 @@ const App = () => (
           <Route path="/community-chat" element={<CommunityChat />} />
           <Route path="/economic-calendar" element={<EconomicCalendar />} />
           <Route path="/watchlist-management" element={<WatchlistManagement />} />
+          <Route path="/backtesting-engine" element={<BacktestingEngine />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />

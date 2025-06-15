@@ -102,7 +102,8 @@ const Dashboard = () => {
       id: 'backtesting',
       icon: <Target className="h-8 w-8" />,
       title: "Backtesting Engine",
-      status: 'coming-soon' as const,
+      status: 'active' as const,
+      onUse: () => navigate('/backtesting-engine')
     },
     {
       id: 'market-scanner',
