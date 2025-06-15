@@ -1,4 +1,3 @@
-
 import React from 'react';
 import HeroSection from '@/components/HeroSection';
 import StatsSection from '@/components/StatsSection';
@@ -241,8 +240,26 @@ const Index = () => {
               <div>
                 <h4 className="font-semibold text-white mb-4">Community</h4>
                 <ul className="space-y-2 text-sm text-stravesta-lightGray">
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Discord</li>
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Telegram</li>
+                  <li>
+                    <a 
+                      href="https://discord.gg/eNTjJFJg" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="hover:text-stravesta-teal transition-colors cursor-pointer"
+                    >
+                      Discord
+                    </a>
+                  </li>
+                  <li>
+                    <a 
+                      href="https://t.me/stravesta" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="hover:text-stravesta-teal transition-colors cursor-pointer"
+                    >
+                      Telegram
+                    </a>
+                  </li>
                   <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Trading Forum</li>
                   <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Beta-Tester</li>
                 </ul>
