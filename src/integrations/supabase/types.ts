@@ -169,6 +169,95 @@ export type Database = {
         }
         Relationships: []
       }
+      subscription_feature_limits: {
+        Row: {
+          created_at: string
+          feature_name: string
+          id: string
+          limit_count: number
+          subscription_tier: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          feature_name: string
+          id?: string
+          limit_count?: number
+          subscription_tier?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          feature_name?: string
+          id?: string
+          limit_count?: number
+          subscription_tier?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      watchlist_assets: {
+        Row: {
+          asset_type: string
+          created_at: string
+          id: string
+          name: string
+          symbol: string
+          user_id: string
+        }
+        Insert: {
+          asset_type?: string
+          created_at?: string
+          id?: string
+          name: string
+          symbol: string
+          user_id: string
+        }
+        Update: {
+          asset_type?: string
+          created_at?: string
+          id?: string
+          name?: string
+          symbol?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      watchlist_feature_assignments: {
+        Row: {
+          asset_id: string
+          created_at: string
+          feature_name: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          asset_id: string
+          created_at?: string
+          feature_name: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          asset_id?: string
+          created_at?: string
+          feature_name?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "watchlist_feature_assignments_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "watchlist_assets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

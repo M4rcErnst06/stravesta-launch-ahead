@@ -14,6 +14,7 @@ import TradingJournal from "./pages/TradingJournal";
 import AISetupRecognition from "./pages/AISetupRecognition";
 import CommunityChat from "./pages/CommunityChat";
 import EconomicCalendar from "./pages/EconomicCalendar";
+import WatchlistManagement from "./pages/WatchlistManagement";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/ai-setup-recognition" element={<AISetupRecognition />} />
           <Route path="/community-chat" element={<CommunityChat />} />
           <Route path="/economic-calendar" element={<EconomicCalendar />} />
+          <Route path="/watchlist-management" element={<WatchlistManagement />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />

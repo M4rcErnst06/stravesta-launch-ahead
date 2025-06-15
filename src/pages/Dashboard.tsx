@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, TrendingUp, BarChart3, Settings, Brain, Bot, Calendar, MessageSquare, FileText, Target } from 'lucide-react';
+import { LogOut, User, TrendingUp, BarChart3, Settings, Brain, Bot, Calendar, MessageSquare, FileText, Target, List } from 'lucide-react';
 import { User as SupabaseUser, Session } from '@supabase/supabase-js';
 import DashboardSkeleton from '@/components/DashboardSkeleton';
 import LoadingSpinner from '@/components/LoadingSpinner';
@@ -51,6 +51,13 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const [tools, setTools] = useState<Tool[]>([
+    {
+      id: 'watchlist-management',
+      icon: <List className="h-8 w-8" />,
+      title: "Watchlist verwalten",
+      status: 'active' as const,
+      onUse: () => navigate('/watchlist-management')
+    },
     {
       id: 'ai-setup',
       icon: <Brain className="h-8 w-8" />,
