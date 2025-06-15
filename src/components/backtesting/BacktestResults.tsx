@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, BarChart, Bar, Area, AreaChart } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, BarChart, Bar, Area, AreaChart, Cell } from 'recharts';
 import { TrendingUp, TrendingDown, Target, DollarSign, BarChart3, Award } from 'lucide-react';
 
 interface BacktestResult {
@@ -242,11 +241,11 @@ const BacktestResults: React.FC<BacktestResultsProps> = ({ results, config }) =>
                     content={<ChartTooltipContent />}
                     cursor={{ fill: 'rgba(23, 230, 200, 0.1)' }}
                   />
-                  <Bar 
-                    dataKey="return" 
-                    radius={[4, 4, 0, 0]}
-                    fill={(entry) => entry.return >= 0 ? '#10B981' : '#EF4444'}
-                  />
+                  <Bar dataKey="return" radius={[4, 4, 0, 0]}>
+                    {monthlyReturns.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.fill} />
+                    ))}
+                  </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </ChartContainer>
