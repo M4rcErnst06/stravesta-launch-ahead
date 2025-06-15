@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -72,6 +71,8 @@ const WatchlistManagement = () => {
 
   const fetchWatchlistData = async (userId: string) => {
     try {
+      console.log('Fetching watchlist data for user:', userId);
+
       // Fetch assets with their feature assignments
       const { data: assetsData, error: assetsError } = await supabase
         .from('watchlist_assets')
@@ -87,6 +88,7 @@ const WatchlistManagement = () => {
         .eq('user_id', userId);
 
       if (assetsError) throw assetsError;
+      console.log('Assets data:', assetsData);
 
       // Fetch subscription limits and current counts
       const { data: limitsData, error: limitsError } = await supabase
@@ -95,6 +97,7 @@ const WatchlistManagement = () => {
         .eq('user_id', userId);
 
       if (limitsError) throw limitsError;
+      console.log('Limits data:', limitsData);
 
       // Calculate current counts for each feature
       const limitsWithCounts = await Promise.all(
@@ -105,6 +108,8 @@ const WatchlistManagement = () => {
             .eq('user_id', userId)
             .eq('feature_name', limit.feature_name);
 
+          console.log(`Current count for ${limit.feature_name}:`, count);
+          
           return {
             ...limit,
             current_count: count || 0
@@ -117,6 +122,9 @@ const WatchlistManagement = () => {
         ...asset,
         assignments: asset.watchlist_feature_assignments?.map(a => a.feature_name) || []
       })) || [];
+
+      console.log('Formatted assets:', formattedAssets);
+      console.log('Limits with counts:', limitsWithCounts);
 
       setAssets(formattedAssets);
       setLimits(limitsWithCounts);
