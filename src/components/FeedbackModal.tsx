@@ -25,8 +25,6 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ open, onOpenChange }) => 
     if (!valid) return;
 
     setSubmitting(true);
-    // Sende das Feedback z.B. an Supabase oder zeige als Demo einen Toast/Log
-    // Hier nur Demo:
     setTimeout(() => {
       toast({
         title: "Vielen Dank für dein Feedback!",
@@ -42,10 +40,10 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ open, onOpenChange }) => 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md w-full">
+      <DialogContent className="max-w-md w-full bg-stravesta-navy text-stravesta-lightGray border-stravesta-teal/30 shadow-2xl">
         <DialogHeader>
-          <DialogTitle>Feedback geben</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-white">Feedback geben</DialogTitle>
+          <DialogDescription className="text-stravesta-lightGray">
             Teile uns dein Anliegen, Feature-Wünsche oder Verbesserungsvorschläge mit.
           </DialogDescription>
         </DialogHeader>
@@ -57,6 +55,7 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ open, onOpenChange }) => 
             type="email"
             disabled={submitting}
             required
+            className="bg-stravesta-darkGray border-stravesta-teal/30 text-white placeholder:text-stravesta-lightGray focus-visible:ring-stravesta-teal/40"
           />
           <Textarea
             placeholder="Deine Nachricht an das Stravesta Team..."
@@ -65,15 +64,16 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ open, onOpenChange }) => 
             rows={6}
             disabled={submitting}
             required
+            className="bg-stravesta-darkGray border-stravesta-teal/30 text-white placeholder:text-stravesta-lightGray focus-visible:ring-stravesta-teal/40"
           />
           {touched && !/\S+@\S+\.\S+/.test(email) && (
-            <div className="text-sm text-red-500">Bitte gib eine gültige E-Mail an.</div>
+            <div className="text-sm text-red-400">Bitte gib eine gültige E-Mail an.</div>
           )}
           {touched && message.trim().length === 0 && (
-            <div className="text-sm text-red-500">Bitte gib eine Nachricht ein.</div>
+            <div className="text-sm text-red-400">Bitte gib eine Nachricht ein.</div>
           )}
           <DialogFooter>
-            <Button type="submit" disabled={!valid || submitting} className="w-full">
+            <Button type="submit" disabled={!valid || submitting} className="w-full bg-stravesta-teal text-black hover:bg-stravesta-teal/90 font-semibold">
               {submitting ? "Sende..." : "Abschicken"}
             </Button>
           </DialogFooter>
