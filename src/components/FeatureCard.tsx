@@ -19,17 +19,17 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   badge 
 }) => {
   return (
-    <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/40 transition-all duration-300 group h-full">
+    <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/40 transition-colors duration-300 h-full">
       <CardHeader className="relative">
         <div className="flex items-center justify-between mb-4">
-          <div className="text-6xl transition-transform duration-300 group-hover:scale-110">
+          <div className="text-6xl">
             {icon}
           </div>
           <Badge className="bg-stravesta-teal/10 text-stravesta-teal border-stravesta-teal/30 shrink-0">
             {badge}
           </Badge>
         </div>
-        <CardTitle className="text-xl text-white group-hover:text-stravesta-teal transition-colors duration-300">
+        <CardTitle className="text-xl text-white hover:text-stravesta-teal transition-colors duration-300">
           {title}
         </CardTitle>
         <CardDescription className="text-stravesta-lightGray leading-relaxed">
