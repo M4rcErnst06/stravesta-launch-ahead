@@ -96,10 +96,10 @@ const ChartUpload: React.FC<ChartUploadProps> = ({ onImageUpload }) => {
 
   return (
     <Card 
-      className={`border-2 border-dashed transition-all duration-200 cursor-pointer ${
+      className={`border-2 border-dashed transition-all duration-200 cursor-pointer shadow-none ${
         isDragOver 
           ? 'border-stravesta-teal bg-stravesta-teal/10' 
-          : 'border-stravesta-darkGray hover:border-stravesta-teal/50'
+          : 'border-stravesta-teal/20 bg-stravesta-navy/70 hover:border-stravesta-teal/50'
       }`}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
@@ -124,7 +124,7 @@ const ChartUpload: React.FC<ChartUploadProps> = ({ onImageUpload }) => {
         />
         <label
           htmlFor="chart-upload"
-          className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark px-4 py-2 rounded-lg cursor-pointer inline-flex items-center gap-2"
+          className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark px-4 py-2 rounded-lg cursor-pointer inline-flex items-center gap-2 font-semibold"
         >
           <Image className="h-4 w-4" />
           Datei auswählen
@@ -138,3 +138,4 @@ const ChartUpload: React.FC<ChartUploadProps> = ({ onImageUpload }) => {
 };
 
 export default ChartUpload;
+
