@@ -329,11 +329,25 @@ const Dashboard = () => {
               Sie haben frühen Zugang zu Stravesta! Weitere Tools werden kontinuierlich freigeschaltet.
             </p>
             <div className="flex space-x-4">
-              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold border-none">
-                Feedback geben
+              <Button
+                asChild
+                className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold border-none"
+              >
+                <a href="mailto:contact@stravesta.com?subject=Feedback%20zu%20Stravesta" target="_blank" rel="noopener noreferrer">
+                  Feedback geben
+                </a>
               </Button>
-              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold border-none">
-                Roadmap ansehen
+              <Button
+                asChild
+                className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold border-none"
+              >
+                <a
+                  href="https://notion.so/stravesta-public-roadmap" // <-- PASST DIESEN LINK AN, falls du eine andere Roadmap hast!
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Roadmap ansehen
+                </a>
               </Button>
             </div>
           </div>
