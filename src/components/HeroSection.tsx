@@ -91,6 +91,25 @@ const HeroSection = () => {
             </Button>
           </div>
 
+          {/* Beta Access Notification */}
+          <div className="bg-stravesta-navy/40 backdrop-blur-sm rounded-2xl p-6 border border-stravesta-teal/20 max-w-2xl mx-auto mb-12">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <span className="text-2xl">🚀</span>
+              <h3 className="text-xl font-bold text-white">Beta-Zugang aktiv</h3>
+            </div>
+            <p className="text-stravesta-lightGray mb-6">
+              Sie haben frühen Zugang zu Stravesta! Weitere Tools werden kontinuierlich freigeschaltet.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-white font-semibold">
+                Feedback geben
+              </Button>
+              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-white font-semibold">
+                Roadmap ansehen
+              </Button>
+            </div>
+          </div>
+
           {/* Countdown Timer */}
           <div className="mb-12">
             <h3 className="text-lg font-semibold text-white mb-4">
