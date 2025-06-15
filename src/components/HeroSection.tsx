@@ -104,7 +104,7 @@ const HeroSection = () => {
               <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-white font-semibold">
                 Feedback geben
               </Button>
-              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-white font-semibold">
+              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold">
                 Roadmap ansehen
               </Button>
             </div>
