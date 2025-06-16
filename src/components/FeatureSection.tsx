@@ -36,7 +36,7 @@ const FeatureSection: React.FC<FeatureSectionProps> = ({ title, subtitle, featur
           {features.map((feature, index) => (
             <Card 
               key={index} 
-              className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-colors duration-300 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden"
+              className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden"
               style={{ 
                 backdropFilter: 'blur(10px)'
               }}

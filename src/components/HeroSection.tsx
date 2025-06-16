@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Play, Star, Zap } from 'lucide-react';
+import CountdownTimer from './CountdownTimer';
 import EmailSubscribeForm from './EmailSubscribeForm';
 import FeedbackModal from './FeedbackModal';
 import { useNavigate } from 'react-router-dom';
@@ -126,13 +127,21 @@ const HeroSection = () => {
             </div>
           </div>
 
+          {/* Countdown Timer */}
+          <div className="mb-12">
+            <h3 className="text-lg font-semibold text-white mb-4">
+              🔥 Beta-Launch endet in:
+            </h3>
+            <CountdownTimer />
+          </div>
+
           {/* Email Subscription */}
-          <div className="max-w-md mx-auto mb-16">
+          <div className="max-w-md mx-auto">
             <EmailSubscribeForm />
           </div>
 
           {/* Social Proof */}
-          <div className="text-center">
+          <div className="mt-16 text-center">
             <p className="text-sm text-stravesta-lightGray mb-4">Vertraut von Beta-Testern weltweit</p>
             <div className="flex justify-center items-center space-x-8 opacity-60">
               <div className="text-stravesta-lightGray font-medium">500+ Beta-Tester</div>
