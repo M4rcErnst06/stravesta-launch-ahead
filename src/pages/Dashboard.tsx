@@ -85,7 +85,8 @@ const Dashboard = () => {
       id: 'portfolio-analyse',
       icon: <BarChart3 className="h-8 w-8" />,
       title: "Portfolio Analyse",
-      status: 'coming-soon' as const,
+      status: 'active' as const,
+      onUse: () => navigate('/portfolio-analysis')
     },
     {
       id: 'community-chat',

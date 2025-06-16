@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,6 +16,7 @@ import CommunityChat from "./pages/CommunityChat";
 import EconomicCalendar from "./pages/EconomicCalendar";
 import WatchlistManagement from "./pages/WatchlistManagement";
 import BacktestingEngine from "./pages/BacktestingEngine";
+import PortfolioAnalysis from "./pages/PortfolioAnalysis";
 import Roadmap from "./pages/Roadmap";
 
 const queryClient = new QueryClient();
@@ -35,6 +37,7 @@ const App = () => (
           <Route path="/economic-calendar" element={<EconomicCalendar />} />
           <Route path="/watchlist-management" element={<WatchlistManagement />} />
           <Route path="/backtesting-engine" element={<BacktestingEngine />} />
+          <Route path="/portfolio-analysis" element={<PortfolioAnalysis />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/roadmap" element={<Roadmap />} />
