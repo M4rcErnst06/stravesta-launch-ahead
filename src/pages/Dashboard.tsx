@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, TrendingUp, BarChart3, Settings, Brain, Bot, Calendar, MessageSquare, FileText, Target, List } from 'lucide-react';
+import { LogOut, User, TrendingUp, BarChart3, Settings, Brain, Bot, Calendar, MessageSquare, FileText, Target, List, Rocket } from 'lucide-react';
 import { User as SupabaseUser, Session } from '@supabase/supabase-js';
 import DashboardSkeleton from '@/components/DashboardSkeleton';
 import LoadingSpinner from '@/components/LoadingSpinner';
@@ -294,7 +294,7 @@ const Dashboard = () => {
               Hier ist Ihre persönliche Tool-Übersicht. Entdecken Sie alle verfügbaren Features.
             </p>
             <p className="text-sm text-stravesta-lightGray mt-2">
-              💡 Tipp: Sie können die Kacheln per Drag & Drop neu anordnen!
+              Tipp: Sie können die Kacheln per Drag & Drop neu anordnen!
             </p>
           </div>
 
@@ -326,7 +326,10 @@ const Dashboard = () => {
 
           {/* Beta Notice */}
           <div className="bg-stravesta-navy/50 border border-stravesta-teal/20 p-6 rounded-lg backdrop-blur-sm">
-            <h3 className="text-xl font-semibold text-white mb-2">🚀 Beta-Zugang aktiv</h3>
+            <div className="flex items-center space-x-3 mb-2">
+              <Rocket className="h-6 w-6 text-stravesta-teal" />
+              <h3 className="text-xl font-semibold text-white">Beta-Zugang aktiv</h3>
+            </div>
             <p className="text-stravesta-lightGray mb-4">
               Sie haben frühen Zugang zu Stravesta! Weitere Tools werden kontinuierlich freigeschaltet.
             </p>

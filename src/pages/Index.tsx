@@ -6,12 +6,13 @@ import FeatureSection from '@/components/FeatureSection';
 import TestimonialSection from '@/components/TestimonialSection';
 import PricingSection from '@/components/PricingSection';
 import CTASection from '@/components/CTASection';
+import { Bot, Target, Zap, Bell, BarChart3, Users, GraduationCap, Link, TrendingUp, Smartphone, Globe } from 'lucide-react';
 
 const Index = () => {
   // AI & Automatisierung Features
   const aiFeatures = [
     {
-      icon: <div className="text-5xl">🤖</div>,
+      icon: <Bot className="h-12 w-12 text-stravesta-teal" />,
       title: "AI-Setup-Erkennung",
       description: "Intelligente Mustererkennung für deine erfolgreichen Trading-Strategien",
       features: [
@@ -23,7 +24,7 @@ const Index = () => {
       badge: "KI-Power"
     },
     {
-      icon: <div className="text-5xl">🎯</div>,
+      icon: <Target className="h-12 w-12 text-stravesta-teal" />,
       title: "Persönliche AI-Bots",
       description: "Maßgeschneiderte Trading-Assistenten die deinen Stil verstehen",
       features: [
@@ -35,7 +36,7 @@ const Index = () => {
       badge: "Smart"
     },
     {
-      icon: <div className="text-5xl">⚡</div>,
+      icon: <Zap className="h-12 w-12 text-stravesta-teal" />,
       title: "Live-Scan & Backtesting",
       description: "Echtzeitanalyse kombiniert mit historischer Strategiebewertung",
       features: [
@@ -47,7 +48,7 @@ const Index = () => {
       badge: "Live"
     },
     {
-      icon: <div className="text-5xl">🔔</div>,
+      icon: <Bell className="h-12 w-12 text-stravesta-teal" />,
       title: "Smart Alerts",
       description: "Intelligente Benachrichtigungen für perfekte Entry-Points",
       features: [
@@ -63,7 +64,7 @@ const Index = () => {
   // Analyse & Lernen Features
   const analysisFeatures = [
     {
-      icon: <div className="text-5xl">📊</div>,
+      icon: <BarChart3 className="h-12 w-12 text-stravesta-teal" />,
       title: "Trading-Journal",
       description: "Vollautomatische Erfassung und Analyse deiner Trades",
       features: [
@@ -76,7 +77,7 @@ const Index = () => {
       badge: "Automatisch"
     },
     {
-      icon: <div className="text-5xl">👥</div>,
+      icon: <Users className="h-12 w-12 text-stravesta-teal" />,
       title: "Community-Modul",
       description: "Vernetze dich mit gleichgesinnten Tradern und teile Strategien",
       features: [
@@ -89,7 +90,7 @@ const Index = () => {
       badge: "Social"
     },
     {
-      icon: <div className="text-5xl">🎓</div>,
+      icon: <GraduationCap className="h-12 w-12 text-stravesta-teal" />,
       title: "Coach-Dashboard",
       description: "Professionelle Tools für Trading-Coaches und Mentoren",
       features: [
@@ -106,7 +107,7 @@ const Index = () => {
   // Integrationen & Erweiterungen
   const integrationFeatures = [
     {
-      icon: <div className="text-5xl">🔗</div>,
+      icon: <Link className="h-12 w-12 text-stravesta-teal" />,
       title: "Broker-Anbindung",
       description: "Nahtlose Integration mit deinen bestehenden Trading-Plattformen",
       features: [
@@ -118,7 +119,7 @@ const Index = () => {
       badge: "Connect"
     },
     {
-      icon: <div className="text-5xl">📈</div>,
+      icon: <TrendingUp className="h-12 w-12 text-stravesta-teal" />,
       title: "TradingView Integration",
       description: "Direkte Chartanalyse und Setup-Visualisierung",
       features: [
@@ -130,7 +131,7 @@ const Index = () => {
       badge: "Charts"
     },
     {
-      icon: <div className="text-5xl">📱</div>,
+      icon: <Smartphone className="h-12 w-12 text-stravesta-teal" />,
       title: "Multi-Platform Alerts",
       description: "Erhalte wichtige Signale auf allen deinen Geräten",
       features: [
@@ -142,7 +143,7 @@ const Index = () => {
       badge: "Überall"
     },
     {
-      icon: <div className="text-5xl">🌍</div>,
+      icon: <Globe className="h-12 w-12 text-stravesta-teal" />,
       title: "Marktdaten & Sentiment",
       description: "Umfassende Marktanalyse für bessere Trading-Entscheidungen",
       features: [
@@ -176,7 +177,7 @@ const Index = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal/5 via-transparent to-stravesta-teal/5"></div>
           <div className="relative z-10">
             <FeatureSection
-              title="🤖 AI & Automatisierung"
+              title="AI & Automatisierung"
               subtitle="Lass künstliche Intelligenz dein Trading auf das nächste Level bringen"
               features={aiFeatures}
             />
@@ -191,7 +192,7 @@ const Index = () => {
           </div>
           <div className="relative z-10">
             <FeatureSection
-              title="📘 Analyse & Lernen"
+              title="Analyse & Lernen"
               subtitle="Verstehe dein Trading besser und entwickle dich kontinuierlich weiter"
               features={analysisFeatures}
             />
@@ -206,7 +207,7 @@ const Index = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-stravesta-navy/20 to-transparent"></div>
           <div className="relative z-10">
             <FeatureSection
-              title="🛠️ Integrationen & Erweiterungen"
+              title="Integrationen & Erweiterungen"
               subtitle="Verbinde Stravesta nahtlos mit deinen bestehenden Trading-Tools"
               features={integrationFeatures}
             />

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Play, Star, Zap } from 'lucide-react';
+import { ArrowRight, Play, Star, Zap, Rocket } from 'lucide-react';
 import CountdownTimer from './CountdownTimer';
 import EmailSubscribeForm from './EmailSubscribeForm';
 import FeedbackModal from './FeedbackModal';
@@ -105,7 +105,7 @@ const HeroSection = () => {
           {/* Beta Access Notification */}
           <div className="bg-stravesta-navy/40 backdrop-blur-sm rounded-2xl p-6 border border-stravesta-teal/20 max-w-2xl mx-auto mb-12">
             <div className="flex items-center justify-center gap-2 mb-4">
-              <span className="text-2xl">🚀</span>
+              <Rocket className="h-6 w-6 text-stravesta-teal" />
               <h3 className="text-xl font-bold text-white">Beta-Zugang aktiv</h3>
             </div>
             <p className="text-stravesta-lightGray mb-6">
@@ -125,14 +125,6 @@ const HeroSection = () => {
                 Roadmap ansehen
               </Button>
             </div>
-          </div>
-
-          {/* Countdown Timer */}
-          <div className="mb-12">
-            <h3 className="text-lg font-semibold text-white mb-4">
-              🔥 Beta-Launch endet in:
-            </h3>
-            <CountdownTimer />
           </div>
 
           {/* Email Subscription */}
