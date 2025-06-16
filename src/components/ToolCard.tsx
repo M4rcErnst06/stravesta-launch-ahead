@@ -34,10 +34,10 @@ const ToolCard: React.FC<ToolCardProps> = ({
   const isDisabled = status === 'coming-soon';
 
   return (
-    <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/40 transition-all duration-300 group hover:scale-105 h-full">
+    <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/40 transition-all duration-300 hover:scale-105 h-full">
       <CardHeader>
         <div className="flex items-center justify-between mb-4">
-          <div className="text-stravesta-teal group-hover:scale-110 transition-transform duration-300">
+          <div className="text-stravesta-teal">
             {icon}
           </div>
           {getStatusBadge()}
