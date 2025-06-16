@@ -1,15 +1,161 @@
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import React, { useState } from 'react';
 import HeroSection from '@/components/HeroSection';
 import StatsSection from '@/components/StatsSection';
+import FeatureSection from '@/components/FeatureSection';
 import TestimonialSection from '@/components/TestimonialSection';
 import PricingSection from '@/components/PricingSection';
 import CTASection from '@/components/CTASection';
-import { ArrowRight, Star, TrendingUp, Users, Zap } from 'lucide-react';
+import { Bot, Target, Zap, Bell, BarChart3, Users, GraduationCap, Link, TrendingUp, Smartphone, Globe } from 'lucide-react';
 
 const Index = () => {
+  // AI & Automatisierung Features
+  const aiFeatures = [
+    {
+      icon: <Bot className="h-12 w-12 text-stravesta-teal" />,
+      title: "AI-Setup-Erkennung",
+      description: "Intelligente Mustererkennung für deine erfolgreichen Trading-Strategien",
+      features: [
+        "Automatische Pattern-Erkennung",
+        "Erfolgsbasierte Lernalgorithmen", 
+        "Realtime Setup-Scanning",
+        "Historische Datenanalyse"
+      ],
+      badge: "KI-Power"
+    },
+    {
+      icon: <Target className="h-12 w-12 text-stravesta-teal" />,
+      title: "Persönliche AI-Bots",
+      description: "Maßgeschneiderte Trading-Assistenten die deinen Stil verstehen",
+      features: [
+        "Individuelle Lernalgorithmen",
+        "Kontextbasierte Empfehlungen",
+        "Adaptives Verhalten",
+        "24/7 Marktüberwachung"
+      ],
+      badge: "Smart"
+    },
+    {
+      icon: <Zap className="h-12 w-12 text-stravesta-teal" />,
+      title: "Live-Scan & Backtesting",
+      description: "Echtzeitanalyse kombiniert mit historischer Strategiebewertung",
+      features: [
+        "Realtime Marktscanning",
+        "Automatisches Backtesting",
+        "Performance-Validierung",
+        "Risiko-Assessment"
+      ],
+      badge: "Live"
+    },
+    {
+      icon: <Bell className="h-12 w-12 text-stravesta-teal" />,
+      title: "Smart Alerts",
+      description: "Intelligente Benachrichtigungen für perfekte Entry-Points",
+      features: [
+        "Regelbasierte Alerts",
+        "AI-basierte Signale",
+        "Telegram/Discord Integration",
+        "Mobile Push-Notifications"
+      ],
+      badge: "Instant"
+    }
+  ];
+
+  // Analyse & Lernen Features
+  const analysisFeatures = [
+    {
+      icon: <BarChart3 className="h-12 w-12 text-stravesta-teal" />,
+      title: "Trading-Journal",
+      description: "Vollautomatische Erfassung und Analyse deiner Trades",
+      features: [
+        "Automatische Trade-Erfassung",
+        "KPI-Dashboard",
+        "Emotionale Analyse",
+        "Screenshot-Integration",
+        "Performance-Tracking"
+      ],
+      badge: "Automatisch"
+    },
+    {
+      icon: <Users className="h-12 w-12 text-stravesta-teal" />,
+      title: "Community-Modul",
+      description: "Vernetze dich mit gleichgesinnten Tradern und teile Strategien",
+      features: [
+        "Setup-Sharing Platform",
+        "Community Diskussionen",
+        "Leaderboards",
+        "Gruppenchats",
+        "Kommentar-System"
+      ],
+      badge: "Social"
+    },
+    {
+      icon: <GraduationCap className="h-12 w-12 text-stravesta-teal" />,
+      title: "Coach-Dashboard",
+      description: "Professionelle Tools für Trading-Coaches und Mentoren",
+      features: [
+        "Schüler-Statistiken",
+        "Fortschritts-Tracking",
+        "Performance-Bewertung",
+        "Individuelle Analyse",
+        "Coaching-Tools"
+      ],
+      badge: "Pro"
+    }
+  ];
+
+  // Integrationen & Erweiterungen
+  const integrationFeatures = [
+    {
+      icon: <Link className="h-12 w-12 text-stravesta-teal" />,
+      title: "Broker-Anbindung",
+      description: "Nahtlose Integration mit deinen bestehenden Trading-Plattformen",
+      features: [
+        "MetaTrader Integration",
+        "Binance API-Anbindung",
+        "Automatische Trade-Erfassung",
+        "Multi-Broker Support"
+      ],
+      badge: "Connect"
+    },
+    {
+      icon: <TrendingUp className="h-12 w-12 text-stravesta-teal" />,
+      title: "TradingView Integration",
+      description: "Direkte Chartanalyse und Setup-Visualisierung",
+      features: [
+        "Live-Chart Integration",
+        "Setup-Overlay",
+        "Indikator-Synchronisation",
+        "One-Click Trading"
+      ],
+      badge: "Charts"
+    },
+    {
+      icon: <Smartphone className="h-12 w-12 text-stravesta-teal" />,
+      title: "Multi-Platform Alerts",
+      description: "Erhalte wichtige Signale auf allen deinen Geräten",
+      features: [
+        "Telegram Bot Integration",
+        "Discord Notifications",
+        "Email Alerts",
+        "Mobile App Notifications"
+      ],
+      badge: "Überall"
+    },
+    {
+      icon: <Globe className="h-12 w-12 text-stravesta-teal" />,
+      title: "Marktdaten & Sentiment",
+      description: "Umfassende Marktanalyse für bessere Trading-Entscheidungen",
+      features: [
+        "Sentiment-Analyse",
+        "Wirtschaftskalender",
+        "News-Integration",
+        "Market-Flow Daten"
+      ],
+      badge: "Data"
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-stravesta-dark overflow-hidden">
       {/* Static Background */}
@@ -26,53 +172,47 @@ const Index = () => {
         {/* Stats Section */}
         <StatsSection />
         
-        {/* Feature Preview Section */}
+        {/* AI & Automatisierung */}
         <section className="py-20 bg-stravesta-navy relative">
           <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal/5 via-transparent to-stravesta-teal/5"></div>
-          <div className="container mx-auto px-4 text-center relative z-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gradient">
-              Entdecke unsere Features
-            </h2>
-            <p className="text-xl text-stravesta-lightGray mb-12 max-w-3xl mx-auto">
-              KI-gestützte Tools für professionelles Trading
-            </p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              <div className="bg-stravesta-dark/50 rounded-2xl p-8 border border-stravesta-teal/20 hover:border-stravesta-teal/40 transition-colors">
-                <Zap className="h-12 w-12 text-stravesta-teal mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-white mb-2">AI & Automatisierung</h3>
-                <p className="text-stravesta-lightGray">Intelligente Setup-Erkennung und personalisierte Trading-Bots</p>
-              </div>
-              <div className="bg-stravesta-dark/50 rounded-2xl p-8 border border-stravesta-teal/20 hover:border-stravesta-teal/40 transition-colors">
-                <TrendingUp className="h-12 w-12 text-stravesta-teal mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-white mb-2">Analyse & Tools</h3>
-                <p className="text-stravesta-lightGray">Trading-Journal, Community und professionelle Analyse-Tools</p>
-              </div>
-              <div className="bg-stravesta-dark/50 rounded-2xl p-8 border border-stravesta-teal/20 hover:border-stravesta-teal/40 transition-colors">
-                <Users className="h-12 w-12 text-stravesta-teal mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-white mb-2">Integrationen</h3>
-                <p className="text-stravesta-lightGray">Nahtlose Verbindung zu Brokern und Trading-Plattformen</p>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/features">
-                <Button size="lg" className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold px-8 py-4">
-                  Alle Features entdecken
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Link to="/integrations">
-                <Button size="lg" variant="outline" className="border-stravesta-teal text-stravesta-teal hover:bg-stravesta-teal hover:text-black px-8 py-4">
-                  Integrationen ansehen
-                </Button>
-              </Link>
-            </div>
+          <div className="relative z-10">
+            <FeatureSection
+              title="AI & Automatisierung"
+              subtitle="Lass künstliche Intelligenz dein Trading auf das nächste Level bringen"
+              features={aiFeatures}
+            />
+          </div>
+        </section>
+        
+        {/* Analyse & Lernen */}
+        <section className="py-20 bg-stravesta-dark relative">
+          <div className="absolute inset-0">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-stravesta-teal to-transparent"></div>
+            <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-stravesta-teal to-transparent"></div>
+          </div>
+          <div className="relative z-10">
+            <FeatureSection
+              title="Analyse & Lernen"
+              subtitle="Verstehe dein Trading besser und entwickle dich kontinuierlich weiter"
+              features={analysisFeatures}
+            />
           </div>
         </section>
         
         {/* Testimonials */}
         <TestimonialSection />
+        
+        {/* Integrationen */}
+        <section className="py-20 bg-stravesta-dark relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-stravesta-navy/20 to-transparent"></div>
+          <div className="relative z-10">
+            <FeatureSection
+              title="Integrationen & Erweiterungen"
+              subtitle="Verbinde Stravesta nahtlos mit deinen bestehenden Trading-Tools"
+              features={integrationFeatures}
+            />
+          </div>
+        </section>
         
         {/* Pricing Section */}
         <PricingSection />
@@ -89,23 +229,14 @@ const Index = () => {
               <p className="text-stravesta-lightGray">Trading mit KI-Power für höhere Ziele</p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
               <div>
                 <h4 className="font-semibold text-white mb-4">Produkt</h4>
                 <ul className="space-y-2 text-sm text-stravesta-lightGray">
-                  <li><Link to="/features" className="hover:text-stravesta-teal transition-colors">Features</Link></li>
+                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Features</li>
                   <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Preise</li>
                   <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Beta-Zugang</li>
-                  <li><Link to="/roadmap" className="hover:text-stravesta-teal transition-colors">Roadmap</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold text-white mb-4">Tools</h4>
-                <ul className="space-y-2 text-sm text-stravesta-lightGray">
-                  <li><Link to="/integrations" className="hover:text-stravesta-teal transition-colors">Integrationen</Link></li>
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">AI-Setup</li>
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Trading Journal</li>
-                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Backtesting</li>
+                  <li className="hover:text-stravesta-teal transition-colors cursor-pointer">Roadmap</li>
                 </ul>
               </div>
               <div>

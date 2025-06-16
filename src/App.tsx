@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -17,8 +18,6 @@ import WatchlistManagement from "./pages/WatchlistManagement";
 import BacktestingEngine from "./pages/BacktestingEngine";
 import PortfolioAnalysis from "./pages/PortfolioAnalysis";
 import Roadmap from "./pages/Roadmap";
-import Features from "./pages/Features";
-import Integrations from "./pages/Integrations";
 
 const queryClient = new QueryClient();
 
@@ -30,8 +29,6 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/features" element={<Features />} />
-          <Route path="/integrations" element={<Integrations />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/trading-journal" element={<TradingJournal />} />
