@@ -23,10 +23,10 @@ const FeatureSection: React.FC<FeatureSectionProps> = ({ title, subtitle, featur
     <section className={`py-20 ${className}`}>
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient break-words">
             {title}
           </h2>
-          <p className="text-xl text-stravesta-lightGray max-w-3xl mx-auto">
+          <p className="text-xl text-stravesta-lightGray max-w-3xl mx-auto leading-relaxed">
             {subtitle}
           </p>
           <div className="mt-6 w-24 h-1 bg-gradient-to-r from-stravesta-teal to-transparent mx-auto"></div>
@@ -36,7 +36,7 @@ const FeatureSection: React.FC<FeatureSectionProps> = ({ title, subtitle, featur
           {features.map((feature, index) => (
             <Card 
               key={index} 
-              className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden"
+              className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden h-full"
               style={{ 
                 backdropFilter: 'blur(10px)'
               }}
@@ -47,34 +47,34 @@ const FeatureSection: React.FC<FeatureSectionProps> = ({ title, subtitle, featur
               {/* Background pattern */}
               <div className="absolute inset-0 bg-tech-pattern opacity-5 hover:opacity-10 transition-opacity duration-500"></div>
               
-              <CardHeader className="relative z-10">
+              <CardHeader className="relative z-10 pb-4">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="text-stravesta-teal">
+                  <div className="text-stravesta-teal flex-shrink-0">
                     {feature.icon}
                   </div>
                   {feature.badge && (
-                    <Badge className="bg-stravesta-teal/10 text-stravesta-teal border-stravesta-teal/30">
+                    <Badge className="bg-stravesta-teal/10 text-stravesta-teal border-stravesta-teal/30 text-xs whitespace-nowrap">
                       {feature.badge}
                     </Badge>
                   )}
                 </div>
-                <CardTitle className="text-xl text-white">
+                <CardTitle className="text-lg text-white leading-tight break-words">
                   {feature.title}
                 </CardTitle>
-                <CardDescription className="text-stravesta-lightGray">
+                <CardDescription className="text-stravesta-lightGray text-sm leading-relaxed">
                   {feature.description}
                 </CardDescription>
               </CardHeader>
               
-              <CardContent className="relative z-10">
-                <ul className="space-y-3">
+              <CardContent className="relative z-10 pt-0">
+                <ul className="space-y-2">
                   {feature.features.map((item, idx) => (
                     <li 
                       key={idx} 
-                      className="flex items-start gap-3"
+                      className="flex items-start gap-2"
                     >
-                      <div className="w-2 h-2 bg-stravesta-teal rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-sm text-stravesta-lightGray">
+                      <div className="w-1.5 h-1.5 bg-stravesta-teal rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-xs text-stravesta-lightGray leading-relaxed break-words">
                         {item}
                       </span>
                     </li>
