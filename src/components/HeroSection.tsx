@@ -44,22 +44,6 @@ const HeroSection = () => {
             Revolutioniere dein Trading mit automatischer Setup-Erkennung, 
             personalisierten AI-Bots und intelligenter Community.
           </p>
-          
-          {/* Value Proposition */}
-          <div className="flex flex-wrap justify-center gap-4 mb-8 text-sm">
-            <div className="flex items-center text-stravesta-lightGray">
-              <div className="w-2 h-2 bg-stravesta-teal rounded-full mr-2"></div>
-              AI-Setup-Erkennung
-            </div>
-            <div className="flex items-center text-stravesta-lightGray">
-              <div className="w-2 h-2 bg-stravesta-teal rounded-full mr-2"></div>
-              24/7 Marktüberwachung
-            </div>
-            <div className="flex items-center text-stravesta-lightGray">
-              <div className="w-2 h-2 bg-stravesta-teal rounded-full mr-2"></div>
-              Trading-Journal
-            </div>
-          </div>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
@@ -82,7 +66,7 @@ const HeroSection = () => {
             </Button>
           </div>
 
-          {/* Beta Access Notification - Kompakter */}
+          {/* Beta Access Notification */}
           <div className="bg-stravesta-navy/40 backdrop-blur-sm rounded-xl p-6 border border-stravesta-teal/20 max-w-xl mx-auto mb-8">
             <div className="flex items-center justify-center gap-2 mb-3">
               <Rocket className="h-5 w-5 text-stravesta-teal" />
@@ -110,20 +94,8 @@ const HeroSection = () => {
           </div>
 
           {/* Email Subscription */}
-          <div className="max-w-md mx-auto mb-8">
+          <div className="max-w-md mx-auto">
             <EmailSubscribeForm />
-          </div>
-
-          {/* Social Proof - Kompakter */}
-          <div className="text-center">
-            <p className="text-xs text-stravesta-lightGray mb-3">Vertraut von Beta-Testern weltweit</p>
-            <div className="flex justify-center items-center gap-4 text-sm opacity-60">
-              <div className="text-stravesta-lightGray">500+ Tester</div>
-              <div className="w-1 h-1 bg-stravesta-lightGray rounded-full"></div>
-              <div className="text-stravesta-lightGray">95% Genauigkeit</div>
-              <div className="w-1 h-1 bg-stravesta-lightGray rounded-full"></div>
-              <div className="text-stravesta-lightGray">24/7 Support</div>
-            </div>
           </div>
         </div>
       </div>

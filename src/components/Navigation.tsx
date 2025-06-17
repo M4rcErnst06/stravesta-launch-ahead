@@ -26,6 +26,8 @@ const Navigation = () => {
       ]
     },
     { label: 'Integrationen', path: '/integrations' },
+    { label: 'Community', path: '/community' },
+    { label: 'Über uns', path: '/about' },
     { label: 'Roadmap', path: '/roadmap' },
   ];
 
@@ -44,7 +46,7 @@ const Navigation = () => {
                 {item.dropdown ? (
                   <>
                     <NavigationMenuTrigger 
-                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors bg-transparent border-none ${
                         location.pathname.includes('features') 
                           ? 'text-stravesta-teal bg-stravesta-teal/10' 
                           : 'text-stravesta-lightGray hover:text-stravesta-teal hover:bg-stravesta-teal/5'
@@ -52,7 +54,7 @@ const Navigation = () => {
                     >
                       {item.label}
                     </NavigationMenuTrigger>
-                    <NavigationMenuContent className="bg-stravesta-navy border-stravesta-teal/20 p-4 min-w-[300px]">
+                    <NavigationMenuContent className="bg-stravesta-navy border-stravesta-teal/20 p-4 min-w-[300px] z-50">
                       <div className="grid gap-3">
                         {item.dropdown.map((dropdownItem) => (
                           <Link key={dropdownItem.path} to={dropdownItem.path}>

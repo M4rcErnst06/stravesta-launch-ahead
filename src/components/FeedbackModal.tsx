@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import StarRating from "./StarRating";
 
 interface FeedbackModalProps {
   open: boolean;
@@ -15,10 +16,11 @@ interface FeedbackModalProps {
 const FeedbackModal: React.FC<FeedbackModalProps> = ({ open, onOpenChange }) => {
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
+  const [rating, setRating] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [touched, setTouched] = useState(false);
 
-  const valid = message.trim().length > 0 && /\S+@\S+\.\S+/.test(email);
+  const valid = rating > 0 && /\S+@\S+\.\S+/.test(email);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,11 +31,12 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ open, onOpenChange }) => 
     setTimeout(() => {
       toast({
         title: "Vielen Dank für dein Feedback!",
-        description: "Wir haben dein Feedback erhalten.",
+        description: `Du hast ${rating} Stern${rating !== 1 ? 'e' : ''} gegeben.`,
       });
       setSubmitting(false);
       setMessage("");
       setEmail("");
+      setRating(0);
       setTouched(false);
       onOpenChange(false);
     }, 1200);
@@ -54,12 +57,26 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ open, onOpenChange }) => 
             <div>
               <DialogTitle className="text-white">Feedback geben</DialogTitle>
               <DialogDescription className="text-stravesta-lightGray">
-                Teile uns dein Anliegen, Feature-Wünsche oder Verbesserungsvorschläge mit.
+                Bewerte uns und teile deine Erfahrungen mit.
               </DialogDescription>
             </div>
           </div>
         </DialogHeader>
         <form className="space-y-4" onSubmit={handleSubmit}>
+          <div>
+            <label className="block text-sm font-medium text-white mb-2">
+              Wie zufrieden bist du? *
+            </label>
+            <StarRating 
+              rating={rating} 
+              onRatingChange={setRating} 
+              disabled={submitting}
+            />
+            {touched && rating === 0 && (
+              <div className="text-sm text-red-400 mt-1">Bitte gib eine Bewertung ab.</div>
+            )}
+          </div>
+          
           <Input
             placeholder="Deine E-Mail (für Rückfragen, Pflichtfeld)"
             value={email}
@@ -69,24 +86,23 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ open, onOpenChange }) => 
             required
             className="bg-stravesta-darkGray border-stravesta-teal/30 text-white placeholder:text-stravesta-lightGray focus-visible:ring-stravesta-teal/40"
           />
+          
           <Textarea
-            placeholder="Deine Nachricht an das Stravesta Team..."
+            placeholder="Zusätzliche Kommentare (optional)..."
             value={message}
             onChange={e => setMessage(e.target.value)}
-            rows={6}
+            rows={4}
             disabled={submitting}
-            required
             className="bg-stravesta-darkGray border-stravesta-teal/30 text-white placeholder:text-stravesta-lightGray focus-visible:ring-stravesta-teal/40"
           />
+          
           {touched && !/\S+@\S+\.\S+/.test(email) && (
             <div className="text-sm text-red-400">Bitte gib eine gültige E-Mail an.</div>
           )}
-          {touched && message.trim().length === 0 && (
-            <div className="text-sm text-red-400">Bitte gib eine Nachricht ein.</div>
-          )}
+          
           <DialogFooter>
             <Button type="submit" disabled={!valid || submitting} className="w-full bg-stravesta-teal text-black hover:bg-stravesta-teal/90 font-semibold">
-              {submitting ? "Sende..." : "Abschicken"}
+              {submitting ? "Sende..." : "Feedback abschicken"}
             </Button>
           </DialogFooter>
         </form>
