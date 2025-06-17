@@ -87,15 +87,6 @@ const FeatureSection: React.FC<FeatureSectionProps> = ({ title, subtitle, featur
             </Card>
           ))}
         </div>
-
-        {/* Section bottom decoration */}
-        <div className="mt-16 flex justify-center">
-          <div className="flex space-x-2">
-            <div className="w-2 h-2 bg-stravesta-teal rounded-full"></div>
-            <div className="w-2 h-2 bg-stravesta-teal/60 rounded-full"></div>
-            <div className="w-2 h-2 bg-stravesta-teal/30 rounded-full"></div>
-          </div>
-        </div>
       </div>
     </section>
   );
