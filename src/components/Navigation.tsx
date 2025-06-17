@@ -1,16 +1,14 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Zap } from 'lucide-react';
+import { Zap, ChevronDown } from 'lucide-react';
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navigation = () => {
   const location = useLocation();
@@ -40,6 +38,12 @@ const Navigation = () => {
     { label: 'Roadmap', path: '/roadmap' },
   ];
 
+  const isActiveDropdown = (item: any) => {
+    if (item.label === 'Features' && location.pathname.includes('features')) return true;
+    if (item.label === 'Mehr' && ['/stats', '/testimonials', '/pricing', '/integrations'].includes(location.pathname)) return true;
+    return false;
+  };
+
   return (
     <nav className="flex justify-between items-center py-6 px-4 container mx-auto">
       <Link to="/" className="flex items-center space-x-2">
@@ -48,51 +52,54 @@ const Navigation = () => {
       </Link>
       
       <div className="hidden md:flex items-center space-x-8">
-        <NavigationMenu>
-          <NavigationMenuList>
-            {navItems.map((item) => (
-              <NavigationMenuItem key={item.path}>
-                {item.dropdown ? (
-                  <>
-                    <NavigationMenuTrigger 
-                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors bg-transparent border-none ${
-                        (item.label === 'Features' && location.pathname.includes('features')) ||
-                        (item.label === 'Mehr' && ['/stats', '/testimonials', '/pricing', '/integrations'].includes(location.pathname))
-                          ? 'text-stravesta-teal bg-stravesta-teal/10' 
-                          : 'text-stravesta-lightGray hover:text-stravesta-teal hover:bg-stravesta-teal/5'
-                      }`}
-                    >
-                      {item.label}
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent className="bg-stravesta-navy border-stravesta-teal/20 p-4 min-w-[300px] z-50">
-                      <div className="grid gap-3">
-                        {item.dropdown.map((dropdownItem) => (
-                          <Link key={dropdownItem.path} to={dropdownItem.path}>
-                            <NavigationMenuLink className="block px-3 py-2 rounded-md text-sm font-medium text-stravesta-lightGray hover:text-stravesta-teal hover:bg-stravesta-teal/5 transition-colors">
-                              {dropdownItem.label}
-                            </NavigationMenuLink>
-                          </Link>
-                        ))}
-                      </div>
-                    </NavigationMenuContent>
-                  </>
-                ) : (
-                  <Link to={item.path}>
-                    <NavigationMenuLink 
-                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                        location.pathname === item.path 
-                          ? 'text-stravesta-teal bg-stravesta-teal/10' 
-                          : 'text-stravesta-lightGray hover:text-stravesta-teal hover:bg-stravesta-teal/5'
-                      }`}
-                    >
-                      {item.label}
-                    </NavigationMenuLink>
-                  </Link>
-                )}
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
+        {navItems.map((item) => (
+          <div key={item.path}>
+            {item.dropdown ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button 
+                    className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                      isActiveDropdown(item)
+                        ? 'text-stravesta-teal bg-stravesta-teal/10' 
+                        : 'text-stravesta-lightGray hover:text-stravesta-teal hover:bg-stravesta-teal/5'
+                    }`}
+                  >
+                    {item.label}
+                    <ChevronDown className="ml-1 h-4 w-4" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent 
+                  className="bg-stravesta-navy border-stravesta-teal/20 min-w-[200px] z-50"
+                  align="start"
+                  sideOffset={4}
+                >
+                  {item.dropdown.map((dropdownItem) => (
+                    <DropdownMenuItem key={dropdownItem.path} asChild>
+                      <Link 
+                        to={dropdownItem.path}
+                        className="w-full text-stravesta-lightGray hover:text-stravesta-teal hover:bg-stravesta-teal/5 focus:text-stravesta-teal focus:bg-stravesta-teal/5 cursor-pointer"
+                      >
+                        {dropdownItem.label}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link to={item.path}>
+                <span 
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    location.pathname === item.path 
+                      ? 'text-stravesta-teal bg-stravesta-teal/10' 
+                      : 'text-stravesta-lightGray hover:text-stravesta-teal hover:bg-stravesta-teal/5'
+                  }`}
+                >
+                  {item.label}
+                </span>
+              </Link>
+            )}
+          </div>
+        ))}
       </div>
 
       <div className="flex items-center space-x-4">
