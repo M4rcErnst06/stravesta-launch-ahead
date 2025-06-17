@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,6 +24,9 @@ import PortfolioAnalysis from "./pages/PortfolioAnalysis";
 import Roadmap from "./pages/Roadmap";
 import Community from "./pages/Community";
 import About from "./pages/About";
+import Stats from "./pages/Stats";
+import Testimonials from "./pages/Testimonials";
+import Pricing from "./pages/Pricing";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +41,9 @@ const App = () => (
           <Route path="/features" element={<Features />} />
           <Route path="/ai-features" element={<AIFeatures />} />
           <Route path="/analysis-features" element={<AnalysisFeatures />} />
+          <Route path="/stats" element={<Stats />} />
+          <Route path="/testimonials" element={<Testimonials />} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route path="/integrations" element={<Integrations />} />
           <Route path="/community" element={<Community />} />
           <Route path="/about" element={<About />} />

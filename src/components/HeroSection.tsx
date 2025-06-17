@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Play, Star, Rocket } from 'lucide-react';
+import { ArrowRight, Star, Rocket } from 'lucide-react';
 import EmailSubscribeForm from './EmailSubscribeForm';
 import FeedbackModal from './FeedbackModal';
 import { useNavigate } from 'react-router-dom';
@@ -45,25 +45,17 @@ const HeroSection = () => {
             personalisierten AI-Bots und intelligenter Community.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+          {/* CTA Button */}
+          <div className="flex justify-center items-center mb-12">
             <Link to="/login">
               <Button 
                 size="lg" 
-                className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold px-8 py-4 text-lg w-full sm:w-auto"
+                className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold px-8 py-4 text-lg"
               >
                 Jetzt Beta-Zugang sichern
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
-            
-            <Button 
-              size="lg" 
-              className="bg-stravesta-teal/10 hover:bg-stravesta-teal/20 text-stravesta-teal border border-stravesta-teal/30 font-semibold px-8 py-4 text-lg w-full sm:w-auto"
-            >
-              <Play className="mr-2 h-5 w-5" />
-              Demo ansehen
-            </Button>
           </div>
 
           {/* Beta Access Notification */}

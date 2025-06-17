@@ -25,7 +25,16 @@ const Navigation = () => {
         { label: 'Analyse & Lernen', path: '/analysis-features' }
       ]
     },
-    { label: 'Integrationen', path: '/integrations' },
+    { 
+      label: 'Mehr', 
+      path: '#',
+      dropdown: [
+        { label: 'Statistiken', path: '/stats' },
+        { label: 'Testimonials', path: '/testimonials' },
+        { label: 'Preise', path: '/pricing' },
+        { label: 'Integrationen', path: '/integrations' }
+      ]
+    },
     { label: 'Community', path: '/community' },
     { label: 'Über uns', path: '/about' },
     { label: 'Roadmap', path: '/roadmap' },
@@ -47,7 +56,8 @@ const Navigation = () => {
                   <>
                     <NavigationMenuTrigger 
                       className={`px-3 py-2 rounded-md text-sm font-medium transition-colors bg-transparent border-none ${
-                        location.pathname.includes('features') 
+                        (item.label === 'Features' && location.pathname.includes('features')) ||
+                        (item.label === 'Mehr' && ['/stats', '/testimonials', '/pricing', '/integrations'].includes(location.pathname))
                           ? 'text-stravesta-teal bg-stravesta-teal/10' 
                           : 'text-stravesta-lightGray hover:text-stravesta-teal hover:bg-stravesta-teal/5'
                       }`}
