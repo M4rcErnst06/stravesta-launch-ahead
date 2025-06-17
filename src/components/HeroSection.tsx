@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Play, Star, Zap, Rocket } from 'lucide-react';
+import { ArrowRight, Play, Star, Rocket } from 'lucide-react';
 import CountdownTimer from './CountdownTimer';
 import EmailSubscribeForm from './EmailSubscribeForm';
 import FeedbackModal from './FeedbackModal';
@@ -26,21 +26,6 @@ const HeroSection = () => {
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-stravesta-teal/5 rounded-full blur-3xl"></div>
       
       <div className="relative z-10 container mx-auto px-4 py-20">
-        {/* Navigation */}
-        <nav className="flex justify-between items-center mb-16">
-          <div className="flex items-center space-x-2">
-            <Zap className="h-8 w-8 text-stravesta-teal" />
-            <span className="text-2xl font-bold text-gradient">Stravesta</span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Link to="/login">
-              <Button className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold">
-                Anmelden
-              </Button>
-            </Link>
-          </div>
-        </nav>
-
         <div className="text-center max-w-5xl mx-auto">
           {/* Beta Badge */}
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-stravesta-teal/10 border border-stravesta-teal/20 mb-8">

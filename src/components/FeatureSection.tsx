@@ -36,7 +36,7 @@ const FeatureSection: React.FC<FeatureSectionProps> = ({ title, subtitle, featur
           {features.map((feature, index) => (
             <Card 
               key={index} 
-              className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden"
+              className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden h-full"
               style={{ 
                 backdropFilter: 'blur(10px)'
               }}
@@ -47,26 +47,26 @@ const FeatureSection: React.FC<FeatureSectionProps> = ({ title, subtitle, featur
               {/* Background pattern */}
               <div className="absolute inset-0 bg-tech-pattern opacity-5 hover:opacity-10 transition-opacity duration-500"></div>
               
-              <CardHeader className="relative z-10">
+              <CardHeader className="relative z-10 pb-4">
                 <div className="flex items-center justify-between mb-4">
                   <div className="text-stravesta-teal">
                     {feature.icon}
                   </div>
                   {feature.badge && (
-                    <Badge className="bg-stravesta-teal/10 text-stravesta-teal border-stravesta-teal/30">
+                    <Badge className="bg-stravesta-teal/10 text-stravesta-teal border-stravesta-teal/30 text-xs whitespace-nowrap">
                       {feature.badge}
                     </Badge>
                   )}
                 </div>
-                <CardTitle className="text-xl text-white">
+                <CardTitle className="text-xl text-white leading-tight mb-2">
                   {feature.title}
                 </CardTitle>
-                <CardDescription className="text-stravesta-lightGray">
+                <CardDescription className="text-stravesta-lightGray text-sm leading-relaxed">
                   {feature.description}
                 </CardDescription>
               </CardHeader>
               
-              <CardContent className="relative z-10">
+              <CardContent className="relative z-10 pt-0">
                 <ul className="space-y-3">
                   {feature.features.map((item, idx) => (
                     <li 
@@ -74,7 +74,7 @@ const FeatureSection: React.FC<FeatureSectionProps> = ({ title, subtitle, featur
                       className="flex items-start gap-3"
                     >
                       <div className="w-2 h-2 bg-stravesta-teal rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-sm text-stravesta-lightGray">
+                      <span className="text-sm text-stravesta-lightGray leading-relaxed break-words">
                         {item}
                       </span>
                     </li>

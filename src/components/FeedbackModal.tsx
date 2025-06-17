@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogD
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
+import { ArrowLeft } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 interface FeedbackModalProps {
@@ -42,10 +43,21 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ open, onOpenChange }) => 
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md w-full bg-stravesta-navy text-stravesta-lightGray border-stravesta-teal/30 shadow-2xl">
         <DialogHeader>
-          <DialogTitle className="text-white">Feedback geben</DialogTitle>
-          <DialogDescription className="text-stravesta-lightGray">
-            Teile uns dein Anliegen, Feature-Wünsche oder Verbesserungsvorschläge mit.
-          </DialogDescription>
+          <div className="flex items-center">
+            <Button 
+              onClick={() => onOpenChange(false)}
+              variant="ghost"
+              className="text-stravesta-teal hover:text-stravesta-teal/80 hover:bg-stravesta-teal/10 p-2 mr-2 -ml-2"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+            <div>
+              <DialogTitle className="text-white">Feedback geben</DialogTitle>
+              <DialogDescription className="text-stravesta-lightGray">
+                Teile uns dein Anliegen, Feature-Wünsche oder Verbesserungsvorschläge mit.
+              </DialogDescription>
+            </div>
+          </div>
         </DialogHeader>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <Input
