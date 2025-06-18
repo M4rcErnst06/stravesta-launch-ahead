@@ -100,6 +100,23 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Arrow shape for roadmap */
+.clip-path-arrow {
+  position: relative;
+}
+
+.clip-path-arrow::after {
+  content: '';
+  position: absolute;
+  right: -20px;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-top: 32px solid transparent;
+  border-bottom: 32px solid transparent;
+  border-left: 20px solid currentColor;
+}
+
 /* Sidebar styles */
 .sidebar {
   --sidebar-background: var(--stravesta-navy);
