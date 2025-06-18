@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Zap, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -47,7 +47,14 @@ const Navigation = () => {
   return (
     <nav className="flex justify-between items-center py-6 px-4 container mx-auto">
       <Link to="/" className="flex items-center space-x-2">
-        <Zap className="h-8 w-8 text-stravesta-teal" />
+        <div className="w-8 h-8 flex items-center justify-center">
+          <img 
+            src="/lovable-uploads/8c0f1b4e-0dd3-4e27-a101-eab70c9ba667.png" 
+            alt="Stravesta Logo" 
+            className="w-8 h-8 object-contain"
+            style={{ filter: 'brightness(0) saturate(100%) invert(70%) sepia(52%) saturate(2065%) hue-rotate(142deg) brightness(98%) contrast(101%)' }}
+          />
+        </div>
         <span className="text-2xl font-bold text-gradient">Stravesta</span>
       </Link>
       
