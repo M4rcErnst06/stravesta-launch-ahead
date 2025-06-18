@@ -78,16 +78,24 @@
   --stravesta-lightGray: #B0B0B8;
 }
 
-/* Gradient Text - improved for better text rendering */
+/* Gradient Text - completely redesigned to prevent text clipping */
 .text-gradient {
   background: linear-gradient(135deg, #00F5D4 0%, #00D4F5 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  /* Ensure text is not cut off */
-  padding: 2px 0;
-  line-height: 1.2;
+  /* Increased padding to prevent clipping */
+  padding: 12px 8px;
+  line-height: 1.3;
   overflow: visible;
+  /* Force height to accommodate gradient text */
+  min-height: fit-content;
+  display: block;
+  /* Ensure proper text rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Add margin to prevent overlap */
+  margin: 8px 0;
 }
 
 /* Tech Pattern Background without plus icons */
@@ -104,30 +112,34 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Arrow shape for roadmap - fixed implementation */
+/* Arrow shape for roadmap - improved implementation */
 .roadmap-arrow {
   position: relative;
-  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%);
+  clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 50%, calc(100% - 30px) 100%, 0 100%);
+  background: linear-gradient(135deg, #00F5D4 0%, #00D4F5 100%);
 }
 
-/* Custom scrollbar for roadmap */
+/* Custom scrollbar for roadmap - improved colors */
 .roadmap-scroll::-webkit-scrollbar {
-  height: 8px;
+  height: 10px;
 }
 
 .roadmap-scroll::-webkit-scrollbar-track {
   background: rgba(0, 245, 212, 0.1);
-  border-radius: 4px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 245, 212, 0.2);
 }
 
 .roadmap-scroll::-webkit-scrollbar-thumb {
-  background: linear-gradient(90deg, #00F5D4, rgba(0, 245, 212, 0.8));
-  border-radius: 4px;
-  border: 1px solid rgba(0, 245, 212, 0.3);
+  background: linear-gradient(90deg, #00F5D4 0%, #00D4F5 100%);
+  border-radius: 6px;
+  border: 2px solid rgba(0, 245, 212, 0.3);
+  box-shadow: 0 2px 4px rgba(0, 245, 212, 0.2);
 }
 
 .roadmap-scroll::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(90deg, #00F5D4, #00D4F5);
+  background: linear-gradient(90deg, #00D4F5 0%, #00F5D4 100%);
+  box-shadow: 0 4px 8px rgba(0, 245, 212, 0.4);
 }
 
 /* Firefox scrollbar */
@@ -148,30 +160,47 @@
   --sidebar-ring: var(--stravesta-teal);
 }
 
-/* Fix for text clipping issues across all pages */
+/* Enhanced page title styles to prevent text clipping */
 .page-title {
-  padding: 8px 0;
-  line-height: 1.2;
-  overflow: visible;
+  padding: 16px 12px !important;
+  line-height: 1.3 !important;
+  overflow: visible !important;
   word-wrap: break-word;
   hyphens: none;
+  display: block !important;
+  min-height: fit-content !important;
+  margin: 12px 0 !important;
 }
 
+/* Enhanced container styles */
 .container {
-  padding-left: 1.5rem !important;
-  padding-right: 1.5rem !important;
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
 }
 
 @media (min-width: 640px) {
   .container {
-    padding-left: 2rem !important;
-    padding-right: 2rem !important;
+    padding-left: 2.5rem !important;
+    padding-right: 2.5rem !important;
   }
 }
 
 @media (min-width: 1024px) {
   .container {
-    padding-left: 2.5rem !important;
-    padding-right: 2.5rem !important;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
   }
+}
+
+/* Additional styles for better text rendering */
+h1, h2, h3, h4, h5, h6 {
+  overflow: visible !important;
+  word-wrap: break-word !important;
+}
+
+/* Specific fix for gradient headings */
+h1.text-gradient, h2.text-gradient, h3.text-gradient {
+  padding: 20px 16px !important;
+  margin: 16px 0 !important;
+  line-height: 1.4 !important;
 }
