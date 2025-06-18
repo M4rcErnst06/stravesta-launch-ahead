@@ -102,12 +102,12 @@ const Features = () => {
     <div className="min-h-screen bg-stravesta-dark">
       <Navigation />
       
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gradient">
+      <div className="container mx-auto px-6 py-12">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gradient page-title px-4">
             Stravesta Features
           </h1>
-          <p className="text-xl text-stravesta-lightGray max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-stravesta-lightGray max-w-4xl mx-auto px-4 leading-relaxed">
             Entdecke alle Funktionen die dein Trading revolutionieren werden
           </p>
         </div>

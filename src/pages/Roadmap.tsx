@@ -52,8 +52,8 @@ const Roadmap: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="container mx-auto px-4 py-12 min-h-screen bg-stravesta-dark">
-      <div className="flex items-center mb-12">
+    <div className="container mx-auto px-6 py-12 min-h-screen bg-stravesta-dark">
+      <div className="flex items-center mb-16">
         <Button 
           onClick={() => navigate(-1)}
           variant="ghost"
@@ -61,7 +61,9 @@ const Roadmap: React.FC = () => {
         >
           <ArrowLeft className="h-6 w-6" />
         </Button>
-        <h1 className="text-4xl font-bold text-white">Stravesta Roadmap</h1>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient page-title px-4">
+          Stravesta Roadmap
+        </h1>
       </div>
       
       {/* Timeline Container with custom scrollbar */}
@@ -108,7 +110,7 @@ const Roadmap: React.FC = () => {
         </div>
       </div>
       
-      <div className="mt-12 text-stravesta-lightGray text-sm opacity-70 text-center">
+      <div className="mt-12 text-stravesta-lightGray text-sm opacity-70 text-center px-4">
         Hinweis: Die Roadmap wird laufend ergänzt. Deine Wünsche? Nutze das Feedback-Formular!
       </div>
     </div>

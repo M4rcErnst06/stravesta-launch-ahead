@@ -78,12 +78,16 @@
   --stravesta-lightGray: #B0B0B8;
 }
 
-/* Gradient Text */
+/* Gradient Text - improved for better text rendering */
 .text-gradient {
   background: linear-gradient(135deg, #00F5D4 0%, #00D4F5 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  /* Ensure text is not cut off */
+  padding: 2px 0;
+  line-height: 1.2;
+  overflow: visible;
 }
 
 /* Tech Pattern Background without plus icons */
@@ -142,4 +146,32 @@
   --sidebar-accent-foreground: white;
   --sidebar-border: rgba(0, 245, 212, 0.2);
   --sidebar-ring: var(--stravesta-teal);
+}
+
+/* Fix for text clipping issues across all pages */
+.page-title {
+  padding: 8px 0;
+  line-height: 1.2;
+  overflow: visible;
+  word-wrap: break-word;
+  hyphens: none;
+}
+
+.container {
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 2.5rem !important;
+    padding-right: 2.5rem !important;
+  }
 }
