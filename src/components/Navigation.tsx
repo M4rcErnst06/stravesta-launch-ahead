@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -49,10 +48,9 @@ const Navigation = () => {
       <Link to="/" className="flex items-center space-x-2">
         <div className="w-8 h-8 flex items-center justify-center">
           <img 
-            src="/lovable-uploads/8c0f1b4e-0dd3-4e27-a101-eab70c9ba667.png" 
+            src="/lovable-uploads/76b711be-4dc0-43ce-94db-c08ab34ad46e.png" 
             alt="Stravesta Logo" 
             className="w-8 h-8 object-contain"
-            style={{ filter: 'brightness(0) saturate(100%) invert(70%) sepia(52%) saturate(2065%) hue-rotate(142deg) brightness(98%) contrast(101%)' }}
           />
         </div>
         <span className="text-2xl font-bold text-gradient">Stravesta</span>
