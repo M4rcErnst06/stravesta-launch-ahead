@@ -45,17 +45,12 @@ const roadmapItems = [
 const statusColor = (status: string) => {
   if (status === "verfügbar") return "bg-green-500";
   if (status === "in Entwicklung") return "bg-stravesta-teal";
-  return "bg-stravesta-lightGray";
+  return "bg-gray-500";
 };
 
 const getArrowColor = (index: number) => {
-  const colors = [
-    "bg-gradient-to-r from-stravesta-teal to-cyan-400",
-    "bg-gradient-to-r from-cyan-400 to-blue-400", 
-    "bg-gradient-to-r from-blue-400 to-blue-600",
-    "bg-gradient-to-r from-blue-600 to-indigo-600"
-  ];
-  return colors[index] || "bg-stravesta-lightGray";
+  // Use consistent teal gradient for all arrows
+  return "bg-gradient-to-r from-stravesta-teal to-stravesta-teal/80";
 };
 
 const Roadmap: React.FC = () => {
@@ -101,8 +96,8 @@ const Roadmap: React.FC = () => {
         <div className="flex items-start min-w-max space-x-0 mt-8">
           {roadmapItems.map((item, index) => (
             <div key={`details-${item.step}`} className="flex flex-col items-center min-w-[280px]">
-              {/* Step number circle */}
-              <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg mb-4 ${statusColor(item.status)}`}>
+              {/* Step number circle - unified color */}
+              <div className="w-12 h-12 rounded-full bg-stravesta-teal flex items-center justify-center text-white font-bold text-lg shadow-lg mb-4">
                 {item.step}
               </div>
               
