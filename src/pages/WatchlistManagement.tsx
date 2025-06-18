@@ -299,15 +299,13 @@ const WatchlistManagement = () => {
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <Button
+                <button
                   onClick={() => navigate('/dashboard')}
-                  variant="ghost"
-                  size="sm"
-                  className="text-stravesta-lightGray hover:text-white"
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm text-stravesta-lightGray hover:text-white hover:bg-stravesta-teal/10 rounded-md transition-colors"
                 >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  <ArrowLeft className="h-4 w-4" />
                   Zurück
-                </Button>
+                </button>
                 <h1 className="text-2xl font-bold text-gradient">Watchlist verwalten</h1>
               </div>
               <Badge variant="secondary" className="bg-stravesta-teal/20 text-stravesta-teal border-stravesta-teal/30">
