@@ -100,21 +100,10 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Arrow shape for roadmap */
-.clip-path-arrow {
+/* Arrow shape for roadmap - fixed implementation */
+.roadmap-arrow {
   position: relative;
-}
-
-.clip-path-arrow::after {
-  content: '';
-  position: absolute;
-  right: -20px;
-  top: 0;
-  width: 0;
-  height: 0;
-  border-top: 32px solid transparent;
-  border-bottom: 32px solid transparent;
-  border-left: 20px solid currentColor;
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%);
 }
 
 /* Custom scrollbar for roadmap */

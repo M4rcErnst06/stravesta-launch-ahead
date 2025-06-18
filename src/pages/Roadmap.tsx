@@ -48,11 +48,6 @@ const statusColor = (status: string) => {
   return "bg-gray-500";
 };
 
-const getArrowColor = (index: number) => {
-  // Use consistent teal gradient for all arrows
-  return "bg-gradient-to-r from-stravesta-teal to-stravesta-teal/80";
-};
-
 const Roadmap: React.FC = () => {
   const navigate = useNavigate();
 
@@ -75,19 +70,14 @@ const Roadmap: React.FC = () => {
           {roadmapItems.map((item, index) => (
             <div key={item.step} className="flex items-center">
               {/* Step Arrow */}
-              <div className={`relative ${getArrowColor(index)} text-white px-8 py-4 clip-path-arrow min-w-[280px] shadow-lg`}>
+              <div className="relative bg-gradient-to-r from-stravesta-teal to-stravesta-teal/80 text-white px-8 py-4 roadmap-arrow min-w-[280px] shadow-lg">
                 <div className="relative z-10">
                   <div className="text-lg font-bold mb-1">{item.title}</div>
                   <div className="text-sm opacity-90">{item.date}</div>
                 </div>
-                {/* Arrow point styling */}
-                <div className="absolute right-0 top-0 w-0 h-0 border-l-[20px] border-l-transparent border-t-[32px] border-t-current border-b-[32px] border-b-current transform translate-x-full"></div>
               </div>
               
-              {/* Connection line (except for last item) */}
-              {index < roadmapItems.length - 1 && (
-                <div className="w-8 h-1 bg-stravesta-teal/30"></div>
-              )}
+              {/* Connection line (except for last item) - removed as arrows now connect properly */}
             </div>
           ))}
         </div>
