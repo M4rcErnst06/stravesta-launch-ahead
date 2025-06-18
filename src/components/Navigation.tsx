@@ -1,8 +1,8 @@
+
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ChevronDown } from 'lucide-react';
-import StravellaLogo from './StravellaLogo';
+import { Zap, ChevronDown } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -47,9 +47,7 @@ const Navigation = () => {
   return (
     <nav className="flex justify-between items-center py-6 px-4 container mx-auto">
       <Link to="/" className="flex items-center space-x-2">
-        <div className="w-8 h-8 flex items-center justify-center">
-          <StravellaLogo className="w-8 h-8" />
-        </div>
+        <Zap className="h-8 w-8 text-stravesta-teal" />
         <span className="text-2xl font-bold text-gradient">Stravesta</span>
       </Link>
       
