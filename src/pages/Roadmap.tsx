@@ -69,8 +69,8 @@ const Roadmap: React.FC = () => {
         <h1 className="text-4xl font-bold text-white">Stravesta Roadmap</h1>
       </div>
       
-      {/* Timeline Container */}
-      <div className="relative overflow-x-auto pb-8">
+      {/* Timeline Container with custom scrollbar */}
+      <div className="relative overflow-x-auto pb-8 roadmap-scroll">
         <div className="flex items-center min-w-max space-x-0">
           {roadmapItems.map((item, index) => (
             <div key={item.step} className="flex items-center">

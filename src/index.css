@@ -50,7 +50,7 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+    --input: 214.3 31.8% 91.4%;
     --ring: 212.7 26.8% 83.9%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
@@ -115,6 +115,32 @@
   border-top: 32px solid transparent;
   border-bottom: 32px solid transparent;
   border-left: 20px solid currentColor;
+}
+
+/* Custom scrollbar for roadmap */
+.roadmap-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.roadmap-scroll::-webkit-scrollbar-track {
+  background: rgba(0, 245, 212, 0.1);
+  border-radius: 4px;
+}
+
+.roadmap-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #00F5D4, rgba(0, 245, 212, 0.8));
+  border-radius: 4px;
+  border: 1px solid rgba(0, 245, 212, 0.3);
+}
+
+.roadmap-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #00F5D4, #00D4F5);
+}
+
+/* Firefox scrollbar */
+.roadmap-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #00F5D4 rgba(0, 245, 212, 0.1);
 }
 
 /* Sidebar styles */
