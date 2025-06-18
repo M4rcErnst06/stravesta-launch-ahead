@@ -78,114 +78,6 @@
   --stravesta-lightGray: #B0B0B8;
 }
 
-/* Smooth scrolling for the entire page */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Enhanced animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(0, 245, 212, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(0, 245, 212, 0.5);
-  }
-}
-
-/* Animation classes */
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-.animate-slide-up {
-  animation: slideInUp 0.8s ease-out forwards;
-}
-
-.animate-slide-left {
-  animation: slideInLeft 0.8s ease-out forwards;
-}
-
-.animate-slide-right {
-  animation: slideInRight 0.8s ease-out forwards;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.8s ease-out forwards;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-glow {
-  animation: glow 2s ease-in-out infinite;
-}
-
 /* Gradient Text - completely redesigned to prevent text clipping */
 .text-gradient {
   background: linear-gradient(135deg, #00F5D4 0%, #00D4F5 100%);
@@ -213,27 +105,12 @@ html {
   background-size: 20px 20px;
 }
 
-/* Card glass effect with enhanced animations */
+/* Card glass effect */
 .glass-card {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
 }
-
-.glass-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 245, 212, 0.2);
-}
-
-/* Enhanced delay classes for staggered animations */
-.delay-50 { animation-delay: 50ms; }
-.delay-100 { animation-delay: 100ms; }
-.delay-150 { animation-delay: 150ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-250 { animation-delay: 250ms; }
-.delay-300 { animation-delay: 300ms; }
 
 /* Arrow shape for roadmap - improved implementation */
 .roadmap-arrow {
@@ -326,29 +203,4 @@ h1.text-gradient, h2.text-gradient, h3.text-gradient {
   padding: 20px 16px !important;
   margin: 16px 0 !important;
   line-height: 1.4 !important;
-}
-
-/* Intersection Observer smooth animations */
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease-out;
-}
-
-.animate-on-scroll.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Floating elements */
-.floating {
-  animation: float 6s ease-in-out infinite;
-}
-
-.floating:nth-child(2) {
-  animation-delay: 2s;
-}
-
-.floating:nth-child(3) {
-  animation-delay: 4s;
 }
