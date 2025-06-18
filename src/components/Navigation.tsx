@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
+import StravellaLogo from './StravellaLogo';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -47,11 +48,7 @@ const Navigation = () => {
     <nav className="flex justify-between items-center py-6 px-4 container mx-auto">
       <Link to="/" className="flex items-center space-x-2">
         <div className="w-8 h-8 flex items-center justify-center">
-          <img 
-            src="/lovable-uploads/76b711be-4dc0-43ce-94db-c08ab34ad46e.png" 
-            alt="Stravesta Logo" 
-            className="w-8 h-8 object-contain"
-          />
+          <StravellaLogo className="w-8 h-8" />
         </div>
         <span className="text-2xl font-bold text-gradient">Stravesta</span>
       </Link>
