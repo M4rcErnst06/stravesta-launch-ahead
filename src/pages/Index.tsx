@@ -28,6 +28,28 @@ const Index = () => {
     return () => document.removeEventListener('click', handleSmoothScroll);
   }, []);
 
+  useEffect(() => {
+    // Animation für About Section
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in');
+          entry.target.classList.remove('opacity-0', 'translate-y-8');
+        }
+      });
+    }, observerOptions);
+
+    const animatedElements = document.querySelectorAll('[data-animate]');
+    animatedElements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
   // Gruppierte Features
   const featureGroups = [
     {
@@ -180,22 +202,38 @@ const Index = () => {
         <section id="about" className="py-20 bg-stravesta-navy/30 scroll-mt-20">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gradient">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
                 Die Zukunft des Tradings
               </h2>
               <div className="text-lg text-stravesta-lightGray space-y-6">
-                <p className="opacity-0 translate-y-4 transition-all duration-700 delay-200" data-animate>
+                <p className="opacity-0 translate-y-8 transition-all duration-700 delay-200" data-animate>
                   Stravesta kombiniert modernste KI-Technologie mit bewährten Trading-Strategien, 
                   um dir einen entscheidenden Vorteil an den Märkten zu verschaffen.
                 </p>
-                <p className="opacity-0 translate-y-4 transition-all duration-700 delay-400" data-animate>
+                <p className="opacity-0 translate-y-8 transition-all duration-700 delay-400" data-animate>
                   Unsere Platform lernt von deinem Trading-Stil und hilft dir dabei, 
                   konsistente Gewinne zu erzielen und Risiken zu minimieren.
                 </p>
-                <p className="opacity-0 translate-y-4 transition-all duration-700 delay-600" data-animate>
+                <p className="opacity-0 translate-y-8 transition-all duration-700 delay-600" data-animate>
                   Von der automatischen Setup-Erkennung bis hin zu intelligenten Trading-Bots - 
                   Stravesta ist dein persönlicher Trading-Assistent.
                 </p>
+              </div>
+              
+              {/* Zusätzliche Highlights */}
+              <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="opacity-0 translate-y-8 transition-all duration-700 delay-800" data-animate>
+                  <div className="text-3xl font-bold text-stravesta-teal mb-2">95%</div>
+                  <div className="text-sm text-stravesta-lightGray">Genauigkeit bei Setup-Erkennung</div>
+                </div>
+                <div className="opacity-0 translate-y-8 transition-all duration-700 delay-1000" data-animate>
+                  <div className="text-3xl font-bold text-stravesta-teal mb-2">24/7</div>
+                  <div className="text-sm text-stravesta-lightGray">Marktüberwachung</div>
+                </div>
+                <div className="opacity-0 translate-y-8 transition-all duration-700 delay-1200" data-animate>
+                  <div className="text-3xl font-bold text-stravesta-teal mb-2">500+</div>
+                  <div className="text-sm text-stravesta-lightGray">Zufriedene Beta-Tester</div>
+                </div>
               </div>
             </div>
           </div>
