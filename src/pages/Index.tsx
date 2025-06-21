@@ -148,12 +148,14 @@ const Index = () => {
         
         {/* Features Section */}
         <section id="features" className="scroll-mt-20" data-animate>
-          <FeatureSection
-            title="Revolutionäre Trading-Tools"
-            subtitle="Alles was du für erfolgreiches Trading brauchst - powered by KI"
-            features={mainFeatures}
-            className="py-20 bg-stravesta-dark opacity-0 translate-y-8 transition-all duration-1000"
-          />
+          <div className="opacity-0 translate-y-8 transition-all duration-1000">
+            <FeatureSection
+              title="Revolutionäre Trading-Tools"
+              subtitle="Alles was du für erfolgreiches Trading brauchst - powered by KI"
+              features={mainFeatures}
+              className="py-20 bg-stravesta-dark"
+            />
+          </div>
         </section>
 
         {/* About Section */}
