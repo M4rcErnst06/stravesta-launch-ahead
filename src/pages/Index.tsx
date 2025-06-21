@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
@@ -218,22 +217,6 @@ const Index = () => {
                   Von der automatischen Setup-Erkennung bis hin zu intelligenten Trading-Bots - 
                   Stravesta ist dein persönlicher Trading-Assistent.
                 </p>
-              </div>
-              
-              {/* Zusätzliche Highlights */}
-              <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="opacity-0 translate-y-8 transition-all duration-700 delay-800" data-animate>
-                  <div className="text-3xl font-bold text-stravesta-teal mb-2">95%</div>
-                  <div className="text-sm text-stravesta-lightGray">Genauigkeit bei Setup-Erkennung</div>
-                </div>
-                <div className="opacity-0 translate-y-8 transition-all duration-700 delay-1000" data-animate>
-                  <div className="text-3xl font-bold text-stravesta-teal mb-2">24/7</div>
-                  <div className="text-sm text-stravesta-lightGray">Marktüberwachung</div>
-                </div>
-                <div className="opacity-0 translate-y-8 transition-all duration-700 delay-1200" data-animate>
-                  <div className="text-3xl font-bold text-stravesta-teal mb-2">500+</div>
-                  <div className="text-sm text-stravesta-lightGray">Zufriedene Beta-Tester</div>
-                </div>
               </div>
             </div>
           </div>
