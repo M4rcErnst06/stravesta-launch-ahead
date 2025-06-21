@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import FeatureSection from '@/components/FeatureSection';
@@ -7,6 +7,29 @@ import CTASection from '@/components/CTASection';
 import { Brain, BarChart3, Bot, Target, TrendingUp, Zap, Shield, Users } from 'lucide-react';
 
 const Index = () => {
+  useEffect(() => {
+    // Intersection Observer für Scroll-Animationen
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in-up');
+          entry.target.classList.remove('opacity-0', 'translate-y-8');
+        }
+      });
+    }, observerOptions);
+
+    // Alle animierbaren Elemente beobachten
+    const animatedElements = document.querySelectorAll('[data-animate]');
+    animatedElements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
   const mainFeatures = [
     {
       icon: <Brain className="h-12 w-12" />,
@@ -117,33 +140,39 @@ const Index = () => {
 
       <div className="relative z-10">
         <Navigation />
-        <HeroSection />
+        
+        {/* Hero Section */}
+        <section id="home" className="pt-20">
+          <HeroSection />
+        </section>
         
         {/* Features Section */}
-        <FeatureSection
-          title="Revolutionäre Trading-Tools"
-          subtitle="Alles was du für erfolgreiches Trading brauchst - powered by KI"
-          features={mainFeatures}
-          className="py-20 bg-stravesta-dark"
-        />
+        <section id="features" className="scroll-mt-20" data-animate>
+          <FeatureSection
+            title="Revolutionäre Trading-Tools"
+            subtitle="Alles was du für erfolgreiches Trading brauchst - powered by KI"
+            features={mainFeatures}
+            className="py-20 bg-stravesta-dark opacity-0 translate-y-8 transition-all duration-1000"
+          />
+        </section>
 
         {/* About Section */}
-        <section className="py-20 bg-stravesta-navy/30">
+        <section id="about" className="py-20 bg-stravesta-navy/30 scroll-mt-20 opacity-0 translate-y-8 transition-all duration-1000" data-animate>
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gradient">
                 Die Zukunft des Tradings
               </h2>
               <div className="text-lg text-stravesta-lightGray space-y-6">
-                <p>
+                <p className="opacity-0 translate-y-4 transition-all duration-700 delay-200" data-animate>
                   Stravesta kombiniert modernste KI-Technologie mit bewährten Trading-Strategien, 
                   um dir einen entscheidenden Vorteil an den Märkten zu verschaffen.
                 </p>
-                <p>
+                <p className="opacity-0 translate-y-4 transition-all duration-700 delay-400" data-animate>
                   Unsere Platform lernt von deinem Trading-Stil und hilft dir dabei, 
                   konsistente Gewinne zu erzielen und Risiken zu minimieren.
                 </p>
-                <p>
+                <p className="opacity-0 translate-y-4 transition-all duration-700 delay-600" data-animate>
                   Von der automatischen Setup-Erkennung bis hin zu intelligenten Trading-Bots - 
                   Stravesta ist dein persönlicher Trading-Assistent.
                 </p>
@@ -152,8 +181,10 @@ const Index = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <CTASection />
+        {/* Early Access Section */}
+        <section id="early-access" className="scroll-mt-20 opacity-0 translate-y-8 transition-all duration-1000" data-animate>
+          <CTASection />
+        </section>
       </div>
     </div>
   );
