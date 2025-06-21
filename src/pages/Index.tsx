@@ -2,130 +2,150 @@
 import React, { useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
-import FeatureSection from '@/components/FeatureSection';
+import GroupedFeatureSection from '@/components/GroupedFeatureSection';
 import CTASection from '@/components/CTASection';
 import { Brain, BarChart3, Bot, Target, TrendingUp, Zap, Shield, Users } from 'lucide-react';
 
 const Index = () => {
   useEffect(() => {
-    // Intersection Observer für Scroll-Animationen
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+    // Smooth scrolling für alle Links
+    const handleSmoothScroll = (e: Event) => {
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'A' && target.getAttribute('href')?.startsWith('#')) {
+        e.preventDefault();
+        const id = target.getAttribute('href')?.substring(1);
+        const element = document.getElementById(id || '');
+        if (element) {
+          element.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start' 
+          });
+        }
+      }
     };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-fade-in-up');
-          entry.target.classList.remove('opacity-0', 'translate-y-8');
-        }
-      });
-    }, observerOptions);
-
-    // Alle animierbaren Elemente beobachten
-    const animatedElements = document.querySelectorAll('[data-animate]');
-    animatedElements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    document.addEventListener('click', handleSmoothScroll);
+    return () => document.removeEventListener('click', handleSmoothScroll);
   }, []);
 
-  const mainFeatures = [
+  // Gruppierte Features
+  const featureGroups = [
     {
-      icon: <Brain className="h-12 w-12" />,
-      title: "KI-Setup-Erkennung",
-      description: "Automatische Erkennung deiner Trading-Patterns mit fortschrittlicher KI",
+      groupTitle: "KI & Automatisierung",
+      groupDescription: "Modernste KI-Technologie für intelligentes Trading",
+      color: "#00F5D4",
       features: [
-        "Pattern-Erkennung in Echtzeit",
-        "Personalisierte Setup-Alerts",
-        "Backtesting deiner Strategien",
-        "Performance-Optimierung"
-      ],
-      badge: "AI-Powered"
+        {
+          icon: <Brain className="h-10 w-10" />,
+          title: "KI-Setup-Erkennung",
+          description: "Automatische Erkennung deiner Trading-Patterns mit fortschrittlicher KI",
+          features: [
+            "Pattern-Erkennung in Echtzeit",
+            "Personalisierte Setup-Alerts",
+            "Backtesting deiner Strategien",
+            "Performance-Optimierung"
+          ],
+          badge: "AI-Powered"
+        },
+        {
+          icon: <Bot className="h-10 w-10" />,
+          title: "Trading-Bots",
+          description: "Automatisierte Trading-Assistenten für verschiedene Strategien",
+          features: [
+            "Scalping-Bot",
+            "Swing-Trading Bot",
+            "Risk-Management",
+            "24/7 Monitoring"
+          ],
+          badge: "Automation"
+        },
+        {
+          icon: <Target className="h-10 w-10" />,
+          title: "Setup-Scanner",
+          description: "Automatisches Scannen der Märkte nach deinen bevorzugten Setups",
+          features: [
+            "Multi-Timeframe Analyse",
+            "Custom Setup-Filter",
+            "Alert-System",
+            "Markt-Überwachung"
+          ],
+          badge: "Scanner"
+        }
+      ]
     },
     {
-      icon: <BarChart3 className="h-12 w-12" />,
-      title: "Smart Analytics",
-      description: "Detaillierte Analyse deiner Trading-Performance",
+      groupTitle: "Analyse & Tracking",
+      groupDescription: "Professionelle Tools für detaillierte Marktanalyse",
+      color: "#00D4F5",
       features: [
-        "Erweiterte Statistiken",
-        "Risk-Management Tools",
-        "Performance-Tracking",
-        "Verlust-Analyse"
-      ],
-      badge: "Analytics"
+        {
+          icon: <BarChart3 className="h-10 w-10" />,
+          title: "Smart Analytics",
+          description: "Detaillierte Analyse deiner Trading-Performance",
+          features: [
+            "Erweiterte Statistiken",
+            "Risk-Management Tools",
+            "Performance-Tracking",
+            "Verlust-Analyse"
+          ],
+          badge: "Analytics"
+        },
+        {
+          icon: <TrendingUp className="h-10 w-10" />,
+          title: "Portfolio-Analyse",
+          description: "Umfassende Analyse deines Trading-Portfolios",
+          features: [
+            "Diversifikations-Analyse",
+            "Risk-Reward Optimierung",
+            "Correlation Analysis",
+            "Performance-Benchmarks"
+          ],
+          badge: "Portfolio"
+        },
+        {
+          icon: <Users className="h-10 w-10" />,
+          title: "Trading-Journal",
+          description: "Digitales Journal zur Dokumentation aller Trades",
+          features: [
+            "Automatische Trade-Erfassung",
+            "Screenshot-Integration",
+            "Emotion-Tracking",
+            "Performance-Reports"
+          ],
+          badge: "Journal"
+        }
+      ]
     },
     {
-      icon: <Bot className="h-12 w-12" />,
-      title: "Trading-Bots",
-      description: "Automatisierte Trading-Assistenten für verschiedene Strategien",
+      groupTitle: "Sicherheit & Alerts",
+      groupDescription: "Professionelles Risikomanagement und Echtzeit-Benachrichtigungen",
+      color: "#17E6C8",
       features: [
-        "Scalping-Bot",
-        "Swing-Trading Bot",
-        "Risk-Management",
-        "24/7 Monitoring"
-      ],
-      badge: "Automation"
-    },
-    {
-      icon: <Target className="h-12 w-12" />,
-      title: "Setup-Scanner",
-      description: "Automatisches Scannen der Märkte nach deinen bevorzugten Setups",
-      features: [
-        "Multi-Timeframe Analyse",
-        "Custom Setup-Filter",
-        "Alert-System",
-        "Markt-Überwachung"
-      ],
-      badge: "Scanner"
-    },
-    {
-      icon: <TrendingUp className="h-12 w-12" />,
-      title: "Portfolio-Analyse",
-      description: "Umfassende Analyse deines Trading-Portfolios",
-      features: [
-        "Diversifikations-Analyse",
-        "Risk-Reward Optimierung",
-        "Correlation Analysis",
-        "Performance-Benchmarks"
-      ],
-      badge: "Portfolio"
-    },
-    {
-      icon: <Zap className="h-12 w-12" />,
-      title: "Live-Alerts",
-      description: "Sofortige Benachrichtigungen für Trading-Gelegenheiten",
-      features: [
-        "Push-Notifications",
-        "Email-Alerts",
-        "Custom Trigger",
-        "Multi-Device Sync"
-      ],
-      badge: "Real-time"
-    },
-    {
-      icon: <Shield className="h-12 w-12" />,
-      title: "Risk-Management",
-      description: "Professionelle Tools für optimales Risikomanagement",
-      features: [
-        "Position-Sizing",
-        "Stop-Loss Optimierung",
-        "Drawdown-Kontrolle",
-        "Portfolio-Hedging"
-      ],
-      badge: "Safety"
-    },
-    {
-      icon: <Users className="h-12 w-12" />,
-      title: "Trading-Journal",
-      description: "Digitales Journal zur Dokumentation aller Trades",
-      features: [
-        "Automatische Trade-Erfassung",
-        "Screenshot-Integration",
-        "Emotion-Tracking",
-        "Performance-Reports"
-      ],
-      badge: "Journal"
+        {
+          icon: <Shield className="h-10 w-10" />,
+          title: "Risk-Management",
+          description: "Professionelle Tools für optimales Risikomanagement",
+          features: [
+            "Position-Sizing",
+            "Stop-Loss Optimierung",
+            "Drawdown-Kontrolle",
+            "Portfolio-Hedging"
+          ],
+          badge: "Safety"
+        },
+        {
+          icon: <Zap className="h-10 w-10" />,
+          title: "Live-Alerts",
+          description: "Sofortige Benachrichtigungen für Trading-Gelegenheiten",
+          features: [
+            "Push-Notifications",
+            "Email-Alerts",
+            "Custom Trigger",
+            "Multi-Device Sync"
+          ],
+          badge: "Real-time"
+        }
+      ]
     }
   ];
 
@@ -147,19 +167,17 @@ const Index = () => {
         </section>
         
         {/* Features Section */}
-        <section id="features" className="scroll-mt-20" data-animate>
-          <div className="opacity-0 translate-y-8 transition-all duration-1000">
-            <FeatureSection
-              title="Revolutionäre Trading-Tools"
-              subtitle="Alles was du für erfolgreiches Trading brauchst - powered by KI"
-              features={mainFeatures}
-              className="py-20 bg-stravesta-dark"
-            />
-          </div>
+        <section id="features" className="scroll-mt-20">
+          <GroupedFeatureSection
+            title="Revolutionäre Trading-Tools"
+            subtitle="Alles was du für erfolgreiches Trading brauchst - powered by KI"
+            featureGroups={featureGroups}
+            className="bg-stravesta-dark"
+          />
         </section>
 
         {/* About Section */}
-        <section id="about" className="py-20 bg-stravesta-navy/30 scroll-mt-20 opacity-0 translate-y-8 transition-all duration-1000" data-animate>
+        <section id="about" className="py-20 bg-stravesta-navy/30 scroll-mt-20">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gradient">
@@ -184,7 +202,7 @@ const Index = () => {
         </section>
 
         {/* Early Access Section */}
-        <section id="early-access" className="scroll-mt-20 opacity-0 translate-y-8 transition-all duration-1000" data-animate>
+        <section id="early-access" className="scroll-mt-20">
           <CTASection />
         </section>
       </div>
