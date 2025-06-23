@@ -39,12 +39,6 @@ const Navigation = () => {
             </button>
           ))}
         </div>
-
-        <div className="flex items-center space-x-4">
-          <span className="text-stravesta-teal font-semibold animate-pulse">
-            Early Access verfügbar
-          </span>
-        </div>
       </div>
     </nav>
   );
