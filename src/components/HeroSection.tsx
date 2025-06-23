@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Star, Rocket } from 'lucide-react';
+import { ArrowRight, Rocket } from 'lucide-react';
 import EmailSubscribeForm from './EmailSubscribeForm';
 import FeedbackModal from './FeedbackModal';
 
@@ -29,13 +29,6 @@ const HeroSection = () => {
       
       <div className="relative z-10 container mx-auto px-4 py-20">
         <div className="text-center max-w-4xl mx-auto">
-          {/* Early Access Badge */}
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-stravesta-teal/10 border border-stravesta-teal/20 mb-8 animate-bounce">
-            <Star className="h-4 w-4 text-stravesta-teal mr-2" />
-            <span className="text-sm font-medium text-stravesta-teal">Early Access verfügbar</span>
-            <span className="ml-2 text-xs text-stravesta-lightGray">• Limitierte Plätze</span>
-          </div>
-
           {/* Main Headline */}
           <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight animate-fade-in">
             <span className="text-white">Trading mit</span>
