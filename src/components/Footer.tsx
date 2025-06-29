@@ -1,0 +1,74 @@
+
+import React from 'react';
+import { Facebook, Instagram, Linkedin, Twitter, Mail } from 'lucide-react';
+
+const Footer = () => {
+  const socialLinks = [
+    { icon: <Facebook className="h-5 w-5" />, href: "#", label: "Facebook" },
+    { icon: <Instagram className="h-5 w-5" />, href: "#", label: "Instagram" },
+    { icon: <Linkedin className="h-5 w-5" />, href: "#", label: "LinkedIn" },
+    { icon: <Twitter className="h-5 w-5" />, href: "#", label: "Twitter" },
+    { icon: <Mail className="h-5 w-5" />, href: "mailto:kontakt@stravesta.com", label: "E-Mail" },
+  ];
+
+  return (
+    <footer className="bg-stravesta-navy/80 backdrop-blur-sm border-t border-stravesta-teal/20 py-12">
+      <div className="container mx-auto px-4">
+        <div className="max-w-4xl mx-auto">
+          {/* Main Footer Content */}
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-gradient mb-4">Stravesta</h3>
+            <p className="text-stravesta-lightGray text-lg mb-6">
+              Die Zukunft des Tradings mit KI-Power
+            </p>
+          </div>
+
+          {/* Social Media Links */}
+          <div className="flex justify-center items-center space-x-6 mb-8">
+            {socialLinks.map((social, index) => (
+              <a
+                key={index}
+                href={social.href}
+                className="flex items-center justify-center w-12 h-12 rounded-full bg-stravesta-teal/10 text-stravesta-teal hover:bg-stravesta-teal hover:text-black transition-all duration-300 hover:scale-110"
+                aria-label={social.label}
+              >
+                {social.icon}
+              </a>
+            ))}
+          </div>
+
+          {/* Contact Information */}
+          <div className="text-center space-y-2 mb-8">
+            <p className="text-stravesta-lightGray">
+              <strong className="text-white">Kontakt:</strong> kontakt@stravesta.com
+            </p>
+            <p className="text-stravesta-lightGray">
+              <strong className="text-white">Support:</strong> support@stravesta.com
+            </p>
+          </div>
+
+          {/* Divider */}
+          <div className="w-full h-px bg-stravesta-teal/20 mb-6"></div>
+
+          {/* Footer Bottom */}
+          <div className="flex flex-col md:flex-row justify-between items-center text-sm text-stravesta-lightGray">
+            <p>&copy; 2024 Stravesta. Alle Rechte vorbehalten.</p>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <a href="#" className="hover:text-stravesta-teal transition-colors duration-200">
+                Datenschutz
+              </a>
+              <a href="#" className="hover:text-stravesta-teal transition-colors duration-200">
+                Impressum
+              </a>
+              <a href="#" className="hover:text-stravesta-teal transition-colors duration-200">
+                AGB
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

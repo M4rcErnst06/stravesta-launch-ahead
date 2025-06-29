@@ -1,8 +1,10 @@
+
 import React, { useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import GroupedFeatureSection from '@/components/GroupedFeatureSection';
 import CTASection from '@/components/CTASection';
+import Footer from '@/components/Footer';
 import { Brain, BarChart3, Bot, Target, TrendingUp, Zap, Shield, Users } from 'lucide-react';
 
 const Index = () => {
@@ -226,6 +228,9 @@ const Index = () => {
         <section id="early-access" className="scroll-mt-20">
           <CTASection />
         </section>
+
+        {/* Footer */}
+        <Footer />
       </div>
     </div>
   );
