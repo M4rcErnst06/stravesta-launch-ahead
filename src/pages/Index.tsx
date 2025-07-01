@@ -145,24 +145,24 @@ const IndexContent = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-stravesta-dark overflow-hidden">
+    <div className="min-h-screen bg-stravesta-dark">
       {/* Static Background */}
-      <div className="fixed inset-0 z-0">
+      <div className="fixed inset-0 z-0 bg-stravesta-dark">
         <div className="absolute top-10 left-10 w-96 h-96 bg-stravesta-teal/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-10 right-10 w-96 h-96 bg-stravesta-teal/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl animate-pulse"></div>
       </div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 bg-stravesta-dark">
         <Navigation />
         
         {/* Hero Section */}
-        <section id="home" className="pt-20">
+        <section id="home" className="pt-20 bg-stravesta-dark">
           <HeroSection />
         </section>
         
-        {/* Features Section - Centered */}
-        <section id="features" className="scroll-mt-20">
+        {/* Features Section */}
+        <section id="features" className="scroll-mt-20 bg-stravesta-dark">
           <div className="flex justify-center">
             <div className="w-full max-w-7xl">
               <GroupedFeatureSection
@@ -175,8 +175,8 @@ const IndexContent = () => {
           </div>
         </section>
 
-        {/* About Section - Uniform background */}
-        <section id="about" className="py-20 scroll-mt-20">
+        {/* About Section */}
+        <section id="about" className="py-20 scroll-mt-20 bg-stravesta-dark">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
@@ -197,13 +197,15 @@ const IndexContent = () => {
           </div>
         </section>
 
-        {/* Early Access Section - Uniform background */}
-        <section id="early-access" className="scroll-mt-20">
+        {/* Early Access Section */}
+        <section id="early-access" className="scroll-mt-20 bg-stravesta-dark">
           <CTASection />
         </section>
 
         {/* Footer */}
-        <Footer />
+        <div className="bg-stravesta-dark">
+          <Footer />
+        </div>
       </div>
     </div>
   );
