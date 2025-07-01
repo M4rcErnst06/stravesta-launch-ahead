@@ -5,11 +5,8 @@ import GroupedFeatureSection from '@/components/GroupedFeatureSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import { Brain, BarChart3, Bot, Target, TrendingUp, Users } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 const Index = () => {
-  const { t } = useLanguage();
-
   useEffect(() => {
     // Smooth scrolling für alle Links
     const handleSmoothScroll = (e: Event) => {
@@ -56,8 +53,8 @@ const Index = () => {
   // Gruppierte Features
   const featureGroups = [
     {
-      groupTitle: t('features.ai.title'),
-      groupDescription: t('features.ai.description'),
+      groupTitle: "KI & Automatisierung",
+      groupDescription: "Modernste KI-Technologie für intelligentes Trading",
       color: "#00F5D4",
       features: [
         {
@@ -99,8 +96,8 @@ const Index = () => {
       ]
     },
     {
-      groupTitle: t('features.analysis.title'),
-      groupDescription: t('features.analysis.description'),
+      groupTitle: "Analyse & Tracking",
+      groupDescription: "Professionelle Tools für detaillierte Marktanalyse",
       color: "#00D4F5",
       features: [
         {
@@ -163,8 +160,8 @@ const Index = () => {
         {/* Features Section */}
         <section id="features" className="scroll-mt-20">
           <GroupedFeatureSection
-            title={t('features.title')}
-            subtitle={t('features.subtitle')}
+            title="Revolutionäre Trading-Tools"
+            subtitle="Alles was du für erfolgreiches Trading brauchst - powered by KI"
             featureGroups={featureGroups}
             className="bg-stravesta-dark"
           />
@@ -175,17 +172,20 @@ const Index = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
-                {t('about.title')}
+                Die Zukunft des Tradings
               </h2>
               <div className="text-lg text-stravesta-lightGray space-y-6">
                 <p className="opacity-0 translate-y-8 transition-all duration-700 delay-200" data-animate>
-                  {t('about.text1')}
+                  Stravesta kombiniert modernste KI-Technologie mit bewährten Trading-Strategien, 
+                  um dir einen entscheidenden Vorteil an den Märkten zu verschaffen.
                 </p>
                 <p className="opacity-0 translate-y-8 transition-all duration-700 delay-400" data-animate>
-                  {t('about.text2')}
+                  Unsere Platform lernt von deinem Trading-Stil und hilft dir dabei, 
+                  konsistente Gewinne zu erzielen und Risiken zu minimieren.
                 </p>
                 <p className="opacity-0 translate-y-8 transition-all duration-700 delay-600" data-animate>
-                  {t('about.text3')}
+                  Von der automatischen Setup-Erkennung bis hin zu intelligenten Trading-Bots - 
+                  Stravesta ist dein persönlicher Trading-Assistent.
                 </p>
               </div>
             </div>

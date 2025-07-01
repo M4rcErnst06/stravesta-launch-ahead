@@ -1,17 +1,13 @@
 
 import React from 'react';
 import Logo from './Logo';
-import LanguageToggle from './LanguageToggle';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 const Navigation = () => {
-  const { t } = useLanguage();
-  
   const navItems = [
-    { label: t('nav.home'), href: '#home' },
-    { label: t('nav.features'), href: '#features' },
-    { label: t('nav.about'), href: '#about' },
-    { label: t('nav.contact'), href: '#early-access' },
+    { label: 'Home', href: '#home' },
+    { label: 'Features', href: '#features' },
+    { label: 'Über uns', href: '#about' },
+    { label: 'Kontakt', href: '#early-access' },
   ];
 
   const scrollToSection = (href: string) => {
@@ -38,7 +34,7 @@ const Navigation = () => {
             </button>
           </div>
           
-          {/* Navigation Items + Language Toggle - Right aligned */}
+          {/* Navigation Items - Right aligned */}
           <div className="hidden md:flex items-center space-x-2">
             {navItems.map((item) => (
               <button 
@@ -50,12 +46,10 @@ const Navigation = () => {
                 <span className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-stravesta-teal transition-all duration-200 group-hover:w-full"></span>
               </button>
             ))}
-            <LanguageToggle />
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-2">
-            <LanguageToggle />
+          <div className="md:hidden">
             <button className="text-stravesta-lightGray hover:text-white p-3">
               <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
