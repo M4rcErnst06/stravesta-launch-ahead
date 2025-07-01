@@ -1,11 +1,10 @@
-
 import React, { useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import GroupedFeatureSection from '@/components/GroupedFeatureSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
-import { Brain, BarChart3, Bot, Target, TrendingUp, Zap, Shield, Users } from 'lucide-react';
+import { Brain, BarChart3, Bot, Target, TrendingUp, Users } from 'lucide-react';
 
 const Index = () => {
   useEffect(() => {
@@ -136,37 +135,6 @@ const Index = () => {
             "Performance-Reports"
           ],
           badge: "Journal"
-        }
-      ]
-    },
-    {
-      groupTitle: "Sicherheit & Alerts",
-      groupDescription: "Professionelles Risikomanagement und Echtzeit-Benachrichtigungen",
-      color: "#17E6C8",
-      features: [
-        {
-          icon: <Shield className="h-10 w-10" />,
-          title: "Risk-Management",
-          description: "Professionelle Tools für optimales Risikomanagement",
-          features: [
-            "Position-Sizing",
-            "Stop-Loss Optimierung",
-            "Drawdown-Kontrolle",
-            "Portfolio-Hedging"
-          ],
-          badge: "Safety"
-        },
-        {
-          icon: <Zap className="h-10 w-10" />,
-          title: "Live-Alerts",
-          description: "Sofortige Benachrichtigungen für Trading-Gelegenheiten",
-          features: [
-            "Push-Notifications",
-            "Email-Alerts",
-            "Custom Trigger",
-            "Multi-Device Sync"
-          ],
-          badge: "Real-time"
         }
       ]
     }
