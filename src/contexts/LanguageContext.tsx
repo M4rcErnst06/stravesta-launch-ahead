@@ -22,6 +22,9 @@ const translations = {
     // Hero Section
     'hero.title': 'The Future of Trading',
     'hero.subtitle': 'AI-powered trading tools for consistent profits',
+    'hero.description': 'Experience the next generation of trading with our advanced AI technology. From automatic pattern recognition to intelligent trading bots - everything you need for successful trading.',
+    'hero.cta': 'Get Early Access',
+    'hero.learnMore': 'Learn More',
     
     // Features
     'features.title': 'Revolutionary Trading Tools',
@@ -68,6 +71,9 @@ const translations = {
     // Hero Section
     'hero.title': 'Die Zukunft des Tradings',
     'hero.subtitle': 'KI-gestützte Trading-Tools für konstante Gewinne',
+    'hero.description': 'Erlebe die nächste Generation des Tradings mit unserer fortschrittlichen KI-Technologie. Von automatischer Pattern-Erkennung bis zu intelligenten Trading-Bots - alles was du für erfolgreiches Trading brauchst.',
+    'hero.cta': 'Early Access sichern',
+    'hero.learnMore': 'Mehr erfahren',
     
     // Features
     'features.title': 'Revolutionäre Trading-Tools',
