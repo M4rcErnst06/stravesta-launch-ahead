@@ -2,7 +2,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Play } from 'lucide-react';
-import CountdownTimer from './CountdownTimer';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const HeroSection = () => {
@@ -46,7 +45,7 @@ const HeroSection = () => {
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button 
               onClick={() => scrollToSection('#early-access')}
               className="bg-stravesta-teal hover:bg-stravesta-teal/90 text-black font-semibold px-8 py-4 text-lg rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-stravesta-teal/25"
@@ -63,15 +62,6 @@ const HeroSection = () => {
               <Play className="mr-2 h-5 w-5" />
               {t('hero.learnMore')}
             </Button>
-          </div>
-
-          {/* Countdown Timer */}
-          <div className="bg-stravesta-navy/40 backdrop-blur-sm rounded-2xl p-8 border border-stravesta-teal/20 max-w-2xl mx-auto">
-            <div className="mb-6">
-              <h3 className="text-2xl font-bold text-white mb-2">Early Access Launch</h3>
-              <p className="text-stravesta-lightGray">Sichere dir deinen Platz - limitierte Beta-Phase</p>
-            </div>
-            <CountdownTimer />
           </div>
         </div>
       </div>
