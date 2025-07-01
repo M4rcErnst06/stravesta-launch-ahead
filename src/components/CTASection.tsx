@@ -35,19 +35,19 @@ const CTASection = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-stravesta-teal/5 hover:bg-stravesta-teal/10 transition-colors duration-300">
                   <Crown className="w-5 h-5 text-stravesta-teal flex-shrink-0" />
-                  <span className="text-sm text-stravesta-lightGray">Lifetime 50% Discount</span>
+                  <span className="text-sm text-stravesta-lightGray">25% Launch-Rabatt</span>
                 </div>
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-stravesta-teal/5 hover:bg-stravesta-teal/10 transition-colors duration-300">
                   <Zap className="w-5 h-5 text-stravesta-teal flex-shrink-0" />
-                  <span className="text-sm text-stravesta-lightGray">Exklusive Features</span>
+                  <span className="text-sm text-stravesta-lightGray">Beta-Features zuerst</span>
                 </div>
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-stravesta-teal/5 hover:bg-stravesta-teal/10 transition-colors duration-300">
                   <Users className="w-5 h-5 text-stravesta-teal flex-shrink-0" />
-                  <span className="text-sm text-stravesta-lightGray">Direkter Entwickler-Kontakt</span>
+                  <span className="text-sm text-stravesta-lightGray">Priority Support</span>
                 </div>
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-stravesta-teal/5 hover:bg-stravesta-teal/10 transition-colors duration-300">
                   <Rocket className="w-5 h-5 text-stravesta-teal flex-shrink-0" />
-                  <span className="text-sm text-stravesta-lightGray">Founder Status</span>
+                  <span className="text-sm text-stravesta-lightGray">Community Access</span>
                 </div>
               </div>
             </div>
