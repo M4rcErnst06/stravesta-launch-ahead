@@ -1,13 +1,16 @@
 
 import React from 'react';
-import Logo from './Logo';
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageToggle from './LanguageToggle';
 
 const Navigation = () => {
+  const { t } = useLanguage();
+  
   const navItems = [
-    { label: 'Home', href: '#home' },
-    { label: 'Features', href: '#features' },
-    { label: 'Über uns', href: '#about' },
-    { label: 'Kontakt', href: '#early-access' },
+    { label: t('nav.home'), href: '#home' },
+    { label: t('nav.features'), href: '#features' },
+    { label: t('nav.about'), href: '#about' },
+    { label: t('nav.contact'), href: '#early-access' },
   ];
 
   const scrollToSection = (href: string) => {
@@ -46,6 +49,7 @@ const Navigation = () => {
                 <span className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-stravesta-teal transition-all duration-200 group-hover:w-full"></span>
               </button>
             ))}
+            <LanguageToggle />
           </div>
 
           {/* Mobile Menu Button */}

@@ -1,8 +1,11 @@
 
 import React from 'react';
 import { Facebook, Instagram, Linkedin, Twitter, Mail } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Footer = () => {
+  const { t } = useLanguage();
+  
   const socialLinks = [
     { icon: <Facebook className="h-5 w-5" />, href: "#", label: "Facebook" },
     { icon: <Instagram className="h-5 w-5" />, href: "#", label: "Instagram" },
@@ -17,9 +20,9 @@ const Footer = () => {
         <div className="max-w-4xl mx-auto">
           {/* Main Footer Content */}
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-gradient mb-4">Stravesta</h3>
+            <h3 className="text-2xl font-bold text-gradient mb-4">{t('footer.title')}</h3>
             <p className="text-stravesta-lightGray text-lg mb-6">
-              Die Zukunft des Tradings mit KI-Power
+              {t('footer.tagline')}
             </p>
           </div>
 
@@ -40,10 +43,10 @@ const Footer = () => {
           {/* Contact Information */}
           <div className="text-center space-y-2 mb-8">
             <p className="text-stravesta-lightGray">
-              <strong className="text-white">Kontakt:</strong> kontakt@stravesta.com
+              <strong className="text-white">{t('footer.contact')}:</strong> kontakt@stravesta.com
             </p>
             <p className="text-stravesta-lightGray">
-              <strong className="text-white">Support:</strong> support@stravesta.com
+              <strong className="text-white">{t('footer.support')}:</strong> support@stravesta.com
             </p>
           </div>
 
@@ -52,16 +55,16 @@ const Footer = () => {
 
           {/* Footer Bottom */}
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-stravesta-lightGray">
-            <p>&copy; 2024 Stravesta. Alle Rechte vorbehalten.</p>
+            <p>&copy; {t('footer.copyright')}</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="hover:text-stravesta-teal transition-colors duration-200">
-                Datenschutz
+                {t('footer.privacy')}
               </a>
               <a href="#" className="hover:text-stravesta-teal transition-colors duration-200">
-                Impressum
+                {t('footer.imprint')}
               </a>
               <a href="#" className="hover:text-stravesta-teal transition-colors duration-200">
-                AGB
+                {t('footer.terms')}
               </a>
             </div>
           </div>

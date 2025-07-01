@@ -1,14 +1,18 @@
+
 import React, { useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import GroupedFeatureSection from '@/components/GroupedFeatureSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
+import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 import { Brain, BarChart3, Bot, Target, TrendingUp, Users } from 'lucide-react';
 
-const Index = () => {
+const IndexContent = () => {
+  const { t } = useLanguage();
+
   useEffect(() => {
-    // Smooth scrolling für alle Links
+    // Smooth scrolling for all links
     const handleSmoothScroll = (e: Event) => {
       const target = e.target as HTMLElement;
       if (target.tagName === 'A' && target.getAttribute('href')?.startsWith('#')) {
@@ -29,7 +33,7 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    // Animation für About Section
+    // Animation for About Section
     const observerOptions = {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
@@ -50,89 +54,89 @@ const Index = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Gruppierte Features
+  // Grouped Features
   const featureGroups = [
     {
-      groupTitle: "KI & Automatisierung",
-      groupDescription: "Modernste KI-Technologie für intelligentes Trading",
+      groupTitle: t('features.group1.title'),
+      groupDescription: t('features.group1.description'),
       color: "#00F5D4",
       features: [
         {
           icon: <Brain className="h-10 w-10" />,
-          title: "KI-Setup-Erkennung",
-          description: "Automatische Erkennung deiner Trading-Patterns mit fortschrittlicher KI",
+          title: t('feature.aiSetup.title'),
+          description: t('feature.aiSetup.description'),
           features: [
-            "Pattern-Erkennung in Echtzeit",
-            "Personalisierte Setup-Alerts",
-            "Backtesting deiner Strategien",
-            "Performance-Optimierung"
+            t('feature.aiSetup.feature1'),
+            t('feature.aiSetup.feature2'),
+            t('feature.aiSetup.feature3'),
+            t('feature.aiSetup.feature4')
           ],
           badge: "AI-Powered"
         },
         {
           icon: <Bot className="h-10 w-10" />,
-          title: "Trading-Bots",
-          description: "Automatisierte Trading-Assistenten für verschiedene Strategien",
+          title: t('feature.tradingBots.title'),
+          description: t('feature.tradingBots.description'),
           features: [
-            "Scalping-Bot",
-            "Swing-Trading Bot",
-            "Risk-Management",
-            "24/7 Monitoring"
+            t('feature.tradingBots.feature1'),
+            t('feature.tradingBots.feature2'),
+            t('feature.tradingBots.feature3'),
+            t('feature.tradingBots.feature4')
           ],
           badge: "Automation"
         },
         {
           icon: <Target className="h-10 w-10" />,
-          title: "Setup-Scanner",
-          description: "Automatisches Scannen der Märkte nach deinen bevorzugten Setups",
+          title: t('feature.setupScanner.title'),
+          description: t('feature.setupScanner.description'),
           features: [
-            "Multi-Timeframe Analyse",
-            "Custom Setup-Filter",
-            "Alert-System",
-            "Markt-Überwachung"
+            t('feature.setupScanner.feature1'),
+            t('feature.setupScanner.feature2'),
+            t('feature.setupScanner.feature3'),
+            t('feature.setupScanner.feature4')
           ],
           badge: "Scanner"
         }
       ]
     },
     {
-      groupTitle: "Analyse & Tracking",
-      groupDescription: "Professionelle Tools für detaillierte Marktanalyse",
+      groupTitle: t('features.group2.title'),
+      groupDescription: t('features.group2.description'),
       color: "#00D4F5",
       features: [
         {
           icon: <BarChart3 className="h-10 w-10" />,
-          title: "Smart Analytics",
-          description: "Detaillierte Analyse deiner Trading-Performance",
+          title: t('feature.analytics.title'),
+          description: t('feature.analytics.description'),
           features: [
-            "Erweiterte Statistiken",
-            "Risk-Management Tools",
-            "Performance-Tracking",
-            "Verlust-Analyse"
+            t('feature.analytics.feature1'),
+            t('feature.analytics.feature2'),
+            t('feature.analytics.feature3'),
+            t('feature.analytics.feature4')
           ],
           badge: "Analytics"
         },
         {
           icon: <TrendingUp className="h-10 w-10" />,
-          title: "Portfolio-Analyse",
-          description: "Umfassende Analyse deines Trading-Portfolios",
+          title: t('feature.portfolio.title'),
+          description: t('feature.portfolio.description'),
           features: [
-            "Diversifikations-Analyse",
-            "Risk-Reward Optimierung",
-            "Correlation Analysis",
-            "Performance-Benchmarks"
+            t('feature.portfolio.feature1'),
+            t('feature.portfolio.feature2'),
+            t('feature.portfolio.feature3'),
+            t('feature.portfolio.feature4')
           ],
           badge: "Portfolio"
         },
         {
           icon: <Users className="h-10 w-10" />,
-          title: "Trading-Journal",
-          description: "Digitales Journal zur Dokumentation aller Trades",
+          title: t('feature.journal.title'),
+          description: t('feature.journal.description'),
           features: [
-            "Automatische Trade-Erfassung",
-            "Screenshot-Integration",
-            "Emotion-Tracking",
-            "Performance-Reports"
+            t('feature.journal.feature1'),
+            t('feature.journal.feature2'),
+            t('feature.journal.feature3'),
+            t('feature.journal.feature4')
           ],
           badge: "Journal"
         }
@@ -157,14 +161,18 @@ const Index = () => {
           <HeroSection />
         </section>
         
-        {/* Features Section */}
+        {/* Features Section - Centered */}
         <section id="features" className="scroll-mt-20">
-          <GroupedFeatureSection
-            title="Revolutionäre Trading-Tools"
-            subtitle="Alles was du für erfolgreiches Trading brauchst - powered by KI"
-            featureGroups={featureGroups}
-            className="bg-stravesta-dark"
-          />
+          <div className="flex justify-center">
+            <div className="w-full max-w-7xl">
+              <GroupedFeatureSection
+                title={t('features.title')}
+                subtitle={t('features.subtitle')}
+                featureGroups={featureGroups}
+                className="bg-stravesta-dark"
+              />
+            </div>
+          </div>
         </section>
 
         {/* About Section */}
@@ -172,20 +180,17 @@ const Index = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
-                Die Zukunft des Tradings
+                {t('about.title')}
               </h2>
               <div className="text-lg text-stravesta-lightGray space-y-6">
                 <p className="opacity-0 translate-y-8 transition-all duration-700 delay-200" data-animate>
-                  Stravesta kombiniert modernste KI-Technologie mit bewährten Trading-Strategien, 
-                  um dir einen entscheidenden Vorteil an den Märkten zu verschaffen.
+                  {t('about.paragraph1')}
                 </p>
                 <p className="opacity-0 translate-y-8 transition-all duration-700 delay-400" data-animate>
-                  Unsere Platform lernt von deinem Trading-Stil und hilft dir dabei, 
-                  konsistente Gewinne zu erzielen und Risiken zu minimieren.
+                  {t('about.paragraph2')}
                 </p>
                 <p className="opacity-0 translate-y-8 transition-all duration-700 delay-600" data-animate>
-                  Von der automatischen Setup-Erkennung bis hin zu intelligenten Trading-Bots - 
-                  Stravesta ist dein persönlicher Trading-Assistent.
+                  {t('about.paragraph3')}
                 </p>
               </div>
             </div>
@@ -201,6 +206,14 @@ const Index = () => {
         <Footer />
       </div>
     </div>
+  );
+};
+
+const Index = () => {
+  return (
+    <LanguageProvider>
+      <IndexContent />
+    </LanguageProvider>
   );
 };
 
