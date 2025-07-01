@@ -92,70 +92,72 @@ const GroupedFeatureSection: React.FC<GroupedFeatureSectionProps> = ({
                 ></div>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {group.features.map((feature, featureIndex) => (
-                  <Card 
-                    key={featureIndex}
-                    className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden h-full opacity-0 translate-y-4"
-                    data-animate
-                    style={{ 
-                      backdropFilter: 'blur(10px)',
-                      transitionDelay: `${(groupIndex * 200) + (featureIndex * 100)}ms`
-                    }}
-                  >
-                    {/* Glowing border effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal/0 via-stravesta-teal/20 to-stravesta-teal/0 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
-                    
-                    {/* Background pattern */}
-                    <div className="absolute inset-0 bg-tech-pattern opacity-5 hover:opacity-10 transition-opacity duration-500"></div>
-                    
-                    <CardHeader className="relative z-10 pb-4">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="text-stravesta-teal">
-                          {feature.icon}
+              <div className="flex justify-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl">
+                  {group.features.map((feature, featureIndex) => (
+                    <Card 
+                      key={featureIndex}
+                      className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden h-full opacity-0 translate-y-4"
+                      data-animate
+                      style={{ 
+                        backdropFilter: 'blur(10px)',
+                        transitionDelay: `${(groupIndex * 200) + (featureIndex * 100)}ms`
+                      }}
+                    >
+                      {/* Glowing border effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal/0 via-stravesta-teal/20 to-stravesta-teal/0 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+                      
+                      {/* Background pattern */}
+                      <div className="absolute inset-0 bg-tech-pattern opacity-5 hover:opacity-10 transition-opacity duration-500"></div>
+                      
+                      <CardHeader className="relative z-10 pb-4">
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="text-stravesta-teal">
+                            {feature.icon}
+                          </div>
+                          {feature.badge && (
+                            <Badge className="bg-stravesta-teal/10 text-stravesta-teal border-stravesta-teal/30 text-xs whitespace-nowrap">
+                              {feature.badge}
+                            </Badge>
+                          )}
                         </div>
-                        {feature.badge && (
-                          <Badge className="bg-stravesta-teal/10 text-stravesta-teal border-stravesta-teal/30 text-xs whitespace-nowrap">
-                            {feature.badge}
-                          </Badge>
-                        )}
-                      </div>
-                      <CardTitle className="text-lg text-white leading-tight mb-2">
-                        {feature.title}
-                      </CardTitle>
-                      <CardDescription className="text-stravesta-lightGray text-sm leading-relaxed">
-                        {feature.description}
-                      </CardDescription>
-                    </CardHeader>
-                    
-                    <CardContent className="relative z-10 pt-0">
-                      <ul className="space-y-2">
-                        {feature.features.map((item, idx) => (
-                          <li 
-                            key={idx} 
-                            className="flex items-start gap-2"
-                          >
-                            <div 
-                              className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0"
-                              style={{ backgroundColor: group.color }}
-                            ></div>
-                            <span className="text-xs text-stravesta-lightGray leading-relaxed break-words">
-                              {item}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
+                        <CardTitle className="text-lg text-white leading-tight mb-2">
+                          {feature.title}
+                        </CardTitle>
+                        <CardDescription className="text-stravesta-lightGray text-sm leading-relaxed">
+                          {feature.description}
+                        </CardDescription>
+                      </CardHeader>
+                      
+                      <CardContent className="relative z-10 pt-0">
+                        <ul className="space-y-2">
+                          {feature.features.map((item, idx) => (
+                            <li 
+                              key={idx} 
+                              className="flex items-start gap-2"
+                            >
+                              <div 
+                                className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0"
+                                style={{ backgroundColor: group.color }}
+                              ></div>
+                              <span className="text-xs text-stravesta-lightGray leading-relaxed break-words">
+                                {item}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
 
-                      {/* Bottom border effect */}
-                      <div 
-                        className="absolute bottom-0 left-0 right-0 h-1 opacity-70"
-                        style={{ 
-                          background: `linear-gradient(to right, transparent, ${group.color}, transparent)` 
-                        }}
-                      ></div>
-                    </CardContent>
-                  </Card>
-                ))}
+                        {/* Bottom border effect */}
+                        <div 
+                          className="absolute bottom-0 left-0 right-0 h-1 opacity-70"
+                          style={{ 
+                            background: `linear-gradient(to right, transparent, ${group.color}, transparent)` 
+                          }}
+                        ></div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
