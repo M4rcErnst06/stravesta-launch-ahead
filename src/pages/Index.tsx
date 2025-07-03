@@ -1,10 +1,10 @@
-
 import React, { useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import GroupedFeatureSection from '@/components/GroupedFeatureSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
+import SetupScannerSection from '@/components/setup-scanner/SetupScannerSection';
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 import { Brain, BarChart3, Bot, Target, TrendingUp, Users } from 'lucide-react';
 
@@ -54,7 +54,7 @@ const IndexContent = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Grouped Features
+  // Update featureGroups to remove Setup Scanner from the first group
   const featureGroups = [
     {
       groupTitle: t('features.group1.title'),
@@ -84,18 +84,6 @@ const IndexContent = () => {
             t('feature.tradingBots.feature4')
           ],
           badge: "Automation"
-        },
-        {
-          icon: <Target className="h-10 w-10" />,
-          title: t('feature.setupScanner.title'),
-          description: t('feature.setupScanner.description'),
-          features: [
-            t('feature.setupScanner.feature1'),
-            t('feature.setupScanner.feature2'),
-            t('feature.setupScanner.feature3'),
-            t('feature.setupScanner.feature4')
-          ],
-          badge: "Scanner"
         }
       ]
     },
@@ -159,6 +147,11 @@ const IndexContent = () => {
         {/* Hero Section */}
         <section id="home" className="pt-20 bg-stravesta-dark">
           <HeroSection />
+        </section>
+        
+        {/* Setup Scanner Section - NEW */}
+        <section id="setup-scanner" className="scroll-mt-20">
+          <SetupScannerSection />
         </section>
         
         {/* Features Section */}
