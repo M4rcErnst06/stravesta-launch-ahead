@@ -43,10 +43,7 @@ const Footer = () => {
           {/* Contact Information */}
           <div className="text-center space-y-2 mb-8">
             <p className="text-stravesta-lightGray">
-              <strong className="text-white">{t('footer.contact')}:</strong> kontakt@stravesta.com
-            </p>
-            <p className="text-stravesta-lightGray">
-              <strong className="text-white">{t('footer.support')}:</strong> support@stravesta.com
+              <strong className="text-white">Contact:</strong> kontakt@stravesta.com
             </p>
           </div>
 
