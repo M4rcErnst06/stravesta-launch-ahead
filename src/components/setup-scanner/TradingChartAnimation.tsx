@@ -14,6 +14,7 @@ const TradingChartAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [animationStep, setAnimationStep] = useState(0);
   const [missedEntry, setMissedEntry] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(false);
 
   // Realistic trading data based on the uploaded image
   const candleData: CandleData[] = [
@@ -189,30 +190,51 @@ const TradingChartAnimation = () => {
   }, [animationStep, missedEntry]);
 
   useEffect(() => {
+    if (animationComplete) return;
+
     const timer = setInterval(() => {
       setAnimationStep(prev => {
         if (prev < 10) {
           return prev + 1;
         } else {
+          // Animation reached the end - mark as missed and stop
           setMissedEntry(true);
-          return 0;
+          setAnimationComplete(true);
+          return prev; // Keep the final state
         }
       });
     }, 800);
 
+    // Set missed state after 5 seconds regardless of animation step
     const missedTimer = setTimeout(() => {
-      setMissedEntry(true);
+      if (!animationComplete) {
+        setMissedEntry(true);
+        setAnimationComplete(true);
+      }
     }, 5000);
 
     return () => {
       clearInterval(timer);
       clearTimeout(missedTimer);
     };
-  }, []);
+  }, [animationComplete]);
+
+  // Reset animation after showing missed state for 3 seconds
+  useEffect(() => {
+    if (missedEntry && animationComplete) {
+      const resetTimer = setTimeout(() => {
+        setAnimationStep(0);
+        setMissedEntry(false);
+        setAnimationComplete(false);
+      }, 3000);
+
+      return () => clearTimeout(resetTimer);
+    }
+  }, [missedEntry, animationComplete]);
 
   return (
     <div className="relative w-full max-w-2xl mx-auto">
-      <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-lg p-6 border border-stravesta-teal/20">
+      <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-lg p-6 border border-stravesta-teal/20" style={{ minHeight: '500px' }}>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-stravesta-teal" />
@@ -237,11 +259,13 @@ const TradingChartAnimation = () => {
           </div>
         </div>
 
-        <canvas 
-          ref={canvasRef}
-          className="w-full h-auto border border-stravesta-teal/10 rounded"
-          style={{ maxWidth: '100%', height: 'auto' }}
-        />
+        <div style={{ height: '400px' }}>
+          <canvas 
+            ref={canvasRef}
+            className="w-full h-auto border border-stravesta-teal/10 rounded"
+            style={{ maxWidth: '100%', height: 'auto' }}
+          />
+        </div>
 
         <div className="mt-4 grid grid-cols-3 gap-4 text-center">
           <div className="bg-stravesta-dark/50 rounded p-3">
