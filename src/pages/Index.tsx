@@ -5,6 +5,7 @@ import GroupedFeatureSection from '@/components/GroupedFeatureSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import SetupScannerSection from '@/components/setup-scanner/SetupScannerSection';
+import TradeAnalyticsSection from '@/components/trading-journal/TradeAnalyticsSection';
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 import { Brain, BarChart3, Bot, Target, TrendingUp, Users } from 'lucide-react';
 
@@ -149,9 +150,14 @@ const IndexContent = () => {
           <HeroSection />
         </section>
         
-        {/* Setup Scanner Section - NEW */}
+        {/* Setup Scanner Section */}
         <section id="setup-scanner" className="scroll-mt-20">
           <SetupScannerSection />
+        </section>
+        
+        {/* Trading Journal Analytics Section - NEW */}
+        <section id="journal-analytics" className="scroll-mt-20">
+          <TradeAnalyticsSection />
         </section>
         
         {/* Features Section */}
