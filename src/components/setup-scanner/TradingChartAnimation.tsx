@@ -113,7 +113,7 @@ const TradingChartAnimation = () => {
                   stroke="#FFB800" 
                   strokeWidth={2}
                   strokeDasharray="5 5"
-                  label={{ value: "61.8% Fibonacci", position: "topRight", fill: "#FFB800" }}
+                  label={{ value: "61.8% Fibonacci", position: "top", fill: "#FFB800" }}
                 />
               )}
               
@@ -124,7 +124,7 @@ const TradingChartAnimation = () => {
                   stroke="#17E6C8" 
                   strokeWidth={2}
                   strokeDasharray="5 5"
-                  label={{ value: "Widerstand", position: "topRight", fill: "#17E6C8" }}
+                  label={{ value: "Widerstand", position: "top", fill: "#17E6C8" }}
                 />
               )}
               
