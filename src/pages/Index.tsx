@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import SetupScannerSection from '@/components/setup-scanner/SetupScannerSection';
 import FundamentalResearchSection from '@/components/fundamental-research/FundamentalResearchSection';
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
+import StackedCardsSection from '@/components/stacked-cards/StackedCardsSection';
 
 const IndexContent = () => {
   const { t } = useLanguage();
@@ -74,19 +75,14 @@ const IndexContent = () => {
           <HeroSection />
         </section>
         
-        {/* Setup Scanner Section */}
-        <section id="setup-scanner" className="scroll-mt-20">
-          <SetupScannerSection />
-        </section>
-        
-        {/* Fundamental Research Section */}
-        <section id="fundamental-research" className="scroll-mt-20">
-          <FundamentalResearchSection />
+        {/* Stacked Cards Section - All Features Combined */}
+        <section id="features" className="scroll-mt-20">
+          <StackedCardsSection />
         </section>
         
         {/* Features Section - Hidden since featureGroups is empty */}
         {featureGroups.length > 0 && (
-          <section id="features" className="scroll-mt-20 bg-stravesta-dark">
+          <section id="features-old" className="scroll-mt-20 bg-stravesta-dark">
             <div className="flex justify-center">
               <div className="w-full max-w-7xl">
                 <GroupedFeatureSection
