@@ -5,9 +5,9 @@ import GroupedFeatureSection from '@/components/GroupedFeatureSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import SetupScannerSection from '@/components/setup-scanner/SetupScannerSection';
-import FundamentalResearchSection from '@/components/fundamental-research/FundamentalResearchSection';
+import TradeAnalyticsSection from '@/components/trading-journal/TradeAnalyticsSection';
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
-import StackedCardsSection from '@/components/stacked-cards/StackedCardsSection';
+import { Brain, BarChart3, Bot, Target, TrendingUp, Users } from 'lucide-react';
 
 const IndexContent = () => {
   const { t } = useLanguage();
@@ -55,8 +55,83 @@ const IndexContent = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Empty featureGroups array to remove the sections
-  const featureGroups: any[] = [];
+  // Update featureGroups to remove Setup Scanner from the first group
+  const featureGroups = [
+    {
+      groupTitle: t('features.group1.title'),
+      groupDescription: t('features.group1.description'),
+      color: "#00F5D4",
+      features: [
+        {
+          icon: <Brain className="h-10 w-10" />,
+          title: t('feature.aiSetup.title'),
+          description: t('feature.aiSetup.description'),
+          features: [
+            t('feature.aiSetup.feature1'),
+            t('feature.aiSetup.feature2'),
+            t('feature.aiSetup.feature3'),
+            t('feature.aiSetup.feature4')
+          ],
+          badge: "AI-Powered"
+        },
+        {
+          icon: <Bot className="h-10 w-10" />,
+          title: t('feature.tradingBots.title'),
+          description: t('feature.tradingBots.description'),
+          features: [
+            t('feature.tradingBots.feature1'),
+            t('feature.tradingBots.feature2'),
+            t('feature.tradingBots.feature3'),
+            t('feature.tradingBots.feature4')
+          ],
+          badge: "Automation"
+        }
+      ]
+    },
+    {
+      groupTitle: t('features.group2.title'),
+      groupDescription: t('features.group2.description'),
+      color: "#00D4F5",
+      features: [
+        {
+          icon: <BarChart3 className="h-10 w-10" />,
+          title: t('feature.analytics.title'),
+          description: t('feature.analytics.description'),
+          features: [
+            t('feature.analytics.feature1'),
+            t('feature.analytics.feature2'),
+            t('feature.analytics.feature3'),
+            t('feature.analytics.feature4')
+          ],
+          badge: "Analytics"
+        },
+        {
+          icon: <TrendingUp className="h-10 w-10" />,
+          title: t('feature.portfolio.title'),
+          description: t('feature.portfolio.description'),
+          features: [
+            t('feature.portfolio.feature1'),
+            t('feature.portfolio.feature2'),
+            t('feature.portfolio.feature3'),
+            t('feature.portfolio.feature4')
+          ],
+          badge: "Portfolio"
+        },
+        {
+          icon: <Users className="h-10 w-10" />,
+          title: t('feature.journal.title'),
+          description: t('feature.journal.description'),
+          features: [
+            t('feature.journal.feature1'),
+            t('feature.journal.feature2'),
+            t('feature.journal.feature3'),
+            t('feature.journal.feature4')
+          ],
+          badge: "Journal"
+        }
+      ]
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-stravesta-dark">
@@ -75,26 +150,29 @@ const IndexContent = () => {
           <HeroSection />
         </section>
         
-        {/* Stacked Cards Section - All Features Combined */}
-        <section id="features" className="scroll-mt-20">
-          <StackedCardsSection />
+        {/* Setup Scanner Section */}
+        <section id="setup-scanner" className="scroll-mt-20">
+          <SetupScannerSection />
         </section>
         
-        {/* Features Section - Hidden since featureGroups is empty */}
-        {featureGroups.length > 0 && (
-          <section id="features-old" className="scroll-mt-20 bg-stravesta-dark">
-            <div className="flex justify-center">
-              <div className="w-full max-w-7xl">
-                <GroupedFeatureSection
-                  title={t('features.title')}
-                  subtitle={t('features.subtitle')}
-                  featureGroups={featureGroups}
-                  className="bg-stravesta-dark"
-                />
-              </div>
+        {/* Trading Journal Analytics Section - NEW */}
+        <section id="journal-analytics" className="scroll-mt-20">
+          <TradeAnalyticsSection />
+        </section>
+        
+        {/* Features Section */}
+        <section id="features" className="scroll-mt-20 bg-stravesta-dark">
+          <div className="flex justify-center">
+            <div className="w-full max-w-7xl">
+              <GroupedFeatureSection
+                title={t('features.title')}
+                subtitle={t('features.subtitle')}
+                featureGroups={featureGroups}
+                className="bg-stravesta-dark"
+              />
             </div>
-          </section>
-        )}
+          </div>
+        </section>
 
         {/* About Section */}
         <section id="about" className="py-20 scroll-mt-20 bg-stravesta-dark">
