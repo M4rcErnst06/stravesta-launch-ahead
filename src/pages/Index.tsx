@@ -4,10 +4,8 @@ import HeroSection from '@/components/HeroSection';
 import GroupedFeatureSection from '@/components/GroupedFeatureSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
-import SetupScannerSection from '@/components/setup-scanner/SetupScannerSection';
-import FundamentalResearchSection from '@/components/fundamental-research/FundamentalResearchSection';
-import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 import StackedCardsSection from '@/components/stacked-cards/StackedCardsSection';
+import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 
 const IndexContent = () => {
   const { t } = useLanguage();
@@ -75,14 +73,14 @@ const IndexContent = () => {
           <HeroSection />
         </section>
         
-        {/* Stacked Cards Section - All Features Combined */}
-        <section id="features" className="scroll-mt-20">
+        {/* NEW: Stacked Cards Section replacing the old individual sections */}
+        <section id="stacked-features" className="scroll-mt-20">
           <StackedCardsSection />
         </section>
         
         {/* Features Section - Hidden since featureGroups is empty */}
         {featureGroups.length > 0 && (
-          <section id="features-old" className="scroll-mt-20 bg-stravesta-dark">
+          <section id="features" className="scroll-mt-20 bg-stravesta-dark">
             <div className="flex justify-center">
               <div className="w-full max-w-7xl">
                 <GroupedFeatureSection

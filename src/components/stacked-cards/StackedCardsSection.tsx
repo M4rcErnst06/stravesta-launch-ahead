@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Brain, Target, TrendingUp, AlertTriangle, Globe, BarChart3 } from 'lucide-react';
+import { Brain, Target, TrendingUp } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
@@ -13,92 +13,12 @@ interface CardData {
   color: string;
   bgGradient: string;
   features: string[];
-  animationType: 'scanner' | 'journal' | 'analysis' | 'news';
 }
 
 const StackedCardsSection = () => {
   const [activeCard, setActiveCard] = useState(0);
-  const [showAnimation, setShowAnimation] = useState(false);
-  const [newsActiveAlert, setNewsActiveAlert] = useState(0);
-  const [scannerSetupActive, setScannerSetupActive] = useState(0);
-  const [journalTradeActive, setJournalTradeActive] = useState(0);
-  const [analysisEmotionActive, setAnalysisEmotionActive] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const newsAlerts = [
-    {
-      id: 'snb-rate',
-      title: 'SNB Zinssenkung auf 1.0%',
-      impact: 'high' as const,
-      category: 'Zentralbank',
-      time: '14:30',
-      currency: 'CHF',
-      description: 'Schweizerische Nationalbank senkt Leitzins um 25 Basispunkte'
-    },
-    {
-      id: 'hormuz-strait',
-      title: 'Hormuz-Straße: Geopolitische Spannungen',
-      impact: 'high' as const,
-      category: 'Geopolitik',
-      time: '16:45',
-      currency: 'USD/EUR',
-      description: 'Iran-Israel Konflikt bedroht wichtige Handelsroute'
-    },
-    {
-      id: 'usdchf-analysis',
-      title: 'USD/CHF Fundamentalanalyse',
-      impact: 'medium' as const,
-      category: 'Währungsanalyse',
-      time: '18:20',
-      currency: 'USD/CHF',
-      description: 'Technische und fundamentale Faktoren für USD/CHF Prognose'
-    }
-  ];
-
-  const fundamentalFactors = [
-    {
-      factor: 'SNB Geldpolitik',
-      impact: 'Bearish CHF',
-      strength: 85,
-      description: 'Zinssenkung schwächt Schweizer Franken'
-    },
-    {
-      factor: 'Geopolitische Risiken',
-      impact: 'Bullish USD',
-      strength: 78,
-      description: 'Safe Haven Nachfrage steigt'
-    },
-    {
-      factor: 'Handelsbilanz',
-      impact: 'Neutral USD/CHF',
-      strength: 45,
-      description: 'Ausgeglichene Handelsdaten'
-    },
-    {
-      factor: 'Inflationsdifferenz',
-      impact: 'Bullish USD',
-      strength: 62,
-      description: 'US Inflation über CH Inflation'
-    }
-  ];
-
-  const scannerSetups = [
-    { title: 'Fibonacci Retracement', status: 'aktiv', accuracy: '94%' },
-    { title: 'Support/Resistance Break', status: 'erkannt', accuracy: '87%' },
-    { title: 'Triangle Breakout', status: 'wartend', accuracy: '91%' }
-  ];
-
-  const journalTrades = [
-    { pair: 'EUR/USD', result: '+125 Pips', emotion: 'Gierig', recommendation: 'Position verkleinern' },
-    { pair: 'GBP/JPY', result: '-45 Pips', emotion: 'Ängstlich', recommendation: 'Stop Loss enger' },
-    { pair: 'USD/CHF', result: '+89 Pips', emotion: 'Diszipliniert', recommendation: 'Setup wiederholen' }
-  ];
-
-  const emotionMetrics = [
-    { emotion: 'Fear & Greed Index', level: 75, color: 'bg-red-500' },
-    { emotion: 'Market Sentiment', level: 60, color: 'bg-yellow-500' },
-    { emotion: 'Volatility Stress', level: 40, color: 'bg-green-500' }
-  ];
+  const cardsRef = useRef<HTMLDivElement[]>([]);
 
   const cardData: CardData[] = [
     {
@@ -114,8 +34,7 @@ const StackedCardsSection = () => {
         '<3s Durchschnittliche Reaktionszeit',
         '24/7 Marktüberwachung',
         'Echtzeit-Alerts per App, E-Mail oder SMS'
-      ],
-      animationType: 'scanner'
+      ]
     },
     {
       id: 'journal-analytics',
@@ -130,8 +49,7 @@ const StackedCardsSection = () => {
         '35% Durchschnittliche Performance-Steigerung',
         'Automatische MetaTrader Synchronisation',
         'Kontinuierliche KI-Analyse'
-      ],
-      animationType: 'journal'
+      ]
     },
     {
       id: 'ai-analysis',
@@ -146,24 +64,7 @@ const StackedCardsSection = () => {
         'Pattern-basierte Optimierungen',
         'Timing-Insights für bessere Entries',
         'Personalisierte Handlungsempfehlungen'
-      ],
-      animationType: 'analysis'
-    },
-    {
-      id: 'news-fundamental',
-      title: 'KI News & Fundamentalanalyse',
-      subtitle: 'Echtzeit-Marktanalyse mit KI-gestützter Fundamentalanalyse',
-      description: 'Live News Integration mit automatischer Bewertung der Marktauswirkungen und fundamentaler Analyse.',
-      icon: <AlertTriangle className="h-8 w-8" />,
-      color: 'text-red-400',
-      bgGradient: 'from-red-500/20 to-orange-500/5',
-      features: [
-        'Live News aus 200+ Quellen',
-        'Automatische Impact-Bewertung',
-        'KI-Fundamentalanalyse',
-        'Geopolitische Risiko-Analyse'
-      ],
-      animationType: 'news'
+      ]
     }
   ];
 
@@ -177,351 +78,19 @@ const StackedCardsSection = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
 
-      // Verbesserte Scroll-Logik
-      const scrollStart = containerTop - windowHeight * 0.3;
-      const scrollEnd = containerTop + containerHeight - windowHeight * 0.7;
-      const scrollProgress = Math.max(0, Math.min(1, (scrollY - scrollStart) / (scrollEnd - scrollStart)));
-      
+      // Calculate which card should be active based on scroll position
+      const scrollProgress = (scrollY - containerTop + windowHeight * 0.5) / containerHeight;
       const cardIndex = Math.floor(scrollProgress * cardData.length);
       const clampedIndex = Math.max(0, Math.min(cardData.length - 1, cardIndex));
 
       setActiveCard(clampedIndex);
-      setShowAnimation(scrollProgress > 0.1);
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll();
+    handleScroll(); // Initial check
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [cardData.length]);
-
-  // Animationen für jede Karte
-  useEffect(() => {
-    if (activeCard === 0) { // Scanner Card
-      const scannerInterval = setInterval(() => {
-        setScannerSetupActive((prev) => (prev + 1) % scannerSetups.length);
-      }, 2500);
-      return () => clearInterval(scannerInterval);
-    }
-  }, [activeCard, scannerSetups.length]);
-
-  useEffect(() => {
-    if (activeCard === 1) { // Journal Card
-      const journalInterval = setInterval(() => {
-        setJournalTradeActive((prev) => (prev + 1) % journalTrades.length);
-      }, 3000);
-      return () => clearInterval(journalInterval);
-    }
-  }, [activeCard, journalTrades.length]);
-
-  useEffect(() => {
-    if (activeCard === 2) { // Analysis Card
-      const analysisInterval = setInterval(() => {
-        setAnalysisEmotionActive((prev) => (prev + 1) % emotionMetrics.length);
-      }, 2000);
-      return () => clearInterval(analysisInterval);
-    }
-  }, [activeCard, emotionMetrics.length]);
-
-  useEffect(() => {
-    if (activeCard === 3) { // News Card
-      const alertInterval = setInterval(() => {
-        setNewsActiveAlert((prev) => (prev + 1) % newsAlerts.length);
-      }, 3000);
-      return () => clearInterval(alertInterval);
-    }
-  }, [activeCard, newsAlerts.length]);
-
-  const getImpactColor = (impact: string) => {
-    switch (impact) {
-      case 'high': return 'text-red-400 bg-red-500/20 border-red-500/30';
-      case 'medium': return 'text-yellow-400 bg-yellow-500/20 border-yellow-500/30';
-      case 'low': return 'text-green-400 bg-green-500/20 border-green-500/30';
-      default: return 'text-stravesta-lightGray bg-stravesta-darkGray/20 border-stravesta-darkGray/30';
-    }
-  };
-
-  const getStrengthColor = (strength: number) => {
-    if (strength >= 70) return 'bg-red-500';
-    if (strength >= 50) return 'bg-yellow-500';
-    return 'bg-green-500';
-  };
-
-  const renderCardContent = (card: CardData) => {
-    const isActive = cardData.indexOf(card) === activeCard;
-
-    switch (card.animationType) {
-      case 'scanner':
-        return (
-          <div className="grid lg:grid-cols-2 gap-8">
-            <div>
-              <h4 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                <div className="w-3 h-3 bg-stravesta-teal rounded-full animate-pulse"></div>
-                Live Setup Erkennung
-              </h4>
-              <div className="space-y-4">
-                {scannerSetups.map((setup, idx) => (
-                  <div 
-                    key={idx}
-                    className={`p-4 rounded-lg border transition-all duration-700 ${
-                      idx === scannerSetupActive && isActive
-                        ? 'border-stravesta-teal/40 bg-stravesta-teal/10 scale-105' 
-                        : 'border-stravesta-darkGray/20 bg-stravesta-darkGray/20'
-                    }`}
-                  >
-                    <div className="flex justify-between items-center mb-2">
-                      <h5 className="font-medium text-white">{setup.title}</h5>
-                      <Badge className={`${
-                        setup.status === 'aktiv' ? 'bg-green-500/20 text-green-400' :
-                        setup.status === 'erkannt' ? 'bg-stravesta-teal/20 text-stravesta-teal' :
-                        'bg-yellow-500/20 text-yellow-400'
-                      } text-xs`}>
-                        {setup.status}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-stravesta-lightGray">Genauigkeit:</span>
-                      <span className="text-stravesta-teal font-semibold">{setup.accuracy}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="bg-stravesta-navy/50 rounded-lg p-6">
-              <h4 className="text-lg font-bold text-white mb-6">Performance Statistiken</h4>
-              <div className="grid grid-cols-1 gap-6">
-                {[
-                  { label: 'Setup-Erkennungsrate', value: '95%', icon: '🎯' },
-                  { label: 'Reaktionszeit', value: '<3s', icon: '⚡' },
-                  { label: 'Marktüberwachung', value: '24/7', icon: '👁️' }
-                ].map((stat, idx) => (
-                  <div key={idx} className="text-center">
-                    <div className="text-2xl mb-2">{stat.icon}</div>
-                    <div className={`text-2xl font-bold text-stravesta-teal mb-1 transition-all duration-700 delay-${idx * 300} ${
-                      isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
-                    }`}>
-                      {stat.value}
-                    </div>
-                    <div className="text-stravesta-lightGray text-sm">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        );
-
-      case 'journal':
-        return (
-          <div className="grid lg:grid-cols-2 gap-8">
-            <div className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 rounded-lg p-6">
-              <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
-                Live Trade Analysis
-              </h4>
-              <div className="space-y-4">
-                {journalTrades.map((trade, idx) => (
-                  <div 
-                    key={idx}
-                    className={`p-4 rounded-lg border transition-all duration-700 ${
-                      idx === journalTradeActive && isActive
-                        ? 'border-blue-400/40 bg-blue-500/10 scale-105' 
-                        : 'border-stravesta-darkGray/20 bg-stravesta-darkGray/20'
-                    }`}
-                  >
-                    <div className="flex justify-between items-start mb-2">
-                      <h5 className="font-medium text-white">{trade.pair}</h5>
-                      <span className={`font-semibold ${
-                        trade.result.startsWith('+') ? 'text-green-400' : 'text-red-400'
-                      }`}>
-                        {trade.result}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Badge className={`${
-                        trade.emotion === 'Gierig' ? 'bg-red-500/20 text-red-400' :
-                        trade.emotion === 'Ängstlich' ? 'bg-yellow-500/20 text-yellow-400' :
-                        'bg-green-500/20 text-green-400'
-                      } text-xs`}>
-                        {trade.emotion}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-blue-400">{trade.recommendation}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h4 className="text-xl font-bold text-white mb-4">KI-Analytics Dashboard</h4>
-              <div className="space-y-4">
-                {[
-                  { metric: 'Win Rate Improvement', value: '+35%', color: 'text-green-400' },
-                  { metric: 'Risk Management Score', value: '8.7/10', color: 'text-blue-400' },
-                  { metric: 'Pattern Recognition', value: '89%', color: 'text-stravesta-teal' },
-                  { metric: 'Emotion Control', value: 'Verbessert', color: 'text-purple-400' }
-                ].map((item, idx) => (
-                  <div 
-                    key={idx}
-                    className={`bg-stravesta-darkGray/30 p-4 rounded-lg transition-all duration-700 delay-${idx * 200} ${
-                      isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-                    }`}
-                  >
-                    <div className="flex justify-between items-center">
-                      <span className="text-stravesta-lightGray">{item.metric}</span>
-                      <span className={`font-bold ${item.color}`}>{item.value}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        );
-
-      case 'analysis':
-        return (
-          <div className="grid lg:grid-cols-2 gap-8">
-            <div>
-              <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                Emotionale Marktanalyse
-              </h4>
-              <div className="space-y-4">
-                {emotionMetrics.map((item, idx) => (
-                  <div 
-                    key={idx}
-                    className={`p-4 rounded-lg border transition-all duration-700 ${
-                      idx === analysisEmotionActive && isActive
-                        ? 'border-green-400/40 bg-green-500/10 scale-105' 
-                        : 'border-stravesta-darkGray/20 bg-stravesta-darkGray/20'
-                    }`}
-                  >
-                    <div className="flex justify-between mb-2">
-                      <span className="text-stravesta-lightGray">{item.emotion}</span>
-                      <span className="text-white font-semibold">{item.level}%</span>
-                    </div>
-                    <div className="h-3 bg-stravesta-darkGray rounded-full overflow-hidden">
-                      <div 
-                        className={`h-full ${item.color} transition-all duration-1000 ${
-                          idx === analysisEmotionActive && isActive ? 'animate-pulse' : ''
-                        }`}
-                        style={{ width: isActive ? `${item.level}%` : '0%' }}
-                      ></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="bg-gradient-to-br from-green-500/10 to-green-500/5 rounded-lg p-6">
-              <h4 className="text-xl font-bold text-white mb-4">KI-Empfehlungen</h4>
-              <div className="space-y-3">
-                {[
-                  { action: 'Position Size', recommendation: 'Reduzieren um 25%', impact: 'high' },
-                  { action: 'Entry Timing', recommendation: 'Warten auf Pullback', impact: 'medium' },
-                  { action: 'Risk Management', recommendation: 'Stop Loss anpassen', impact: 'high' },
-                  { action: 'Market Sentiment', recommendation: 'Vorsichtig bleiben', impact: 'medium' }
-                ].map((rec, idx) => (
-                  <div 
-                    key={idx}
-                    className={`p-3 bg-stravesta-darkGray/30 rounded-lg transition-all duration-500 delay-${idx * 150} ${
-                      isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-                    }`}
-                  >
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h5 className="font-medium text-green-400">{rec.action}</h5>
-                        <p className="text-sm text-stravesta-lightGray">{rec.recommendation}</p>
-                      </div>
-                      <Badge className={`${rec.impact === 'high' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'} text-xs`}>
-                        {rec.impact}
-                      </Badge>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        );
-
-      case 'news':
-        return (
-          <div className="grid lg:grid-cols-2 gap-8">
-            <div>
-              <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                Live Markt-Alerts
-              </h4>
-              <div className="space-y-4">
-                {newsAlerts.map((alert, index) => (
-                  <div
-                    key={alert.id}
-                    className={`p-4 rounded-lg border transition-all duration-700 ${
-                      index === newsActiveAlert && isActive
-                        ? 'opacity-100 scale-105 translate-y-0 border-stravesta-teal/40 bg-stravesta-teal/10' 
-                        : index < newsActiveAlert 
-                          ? 'opacity-40 scale-95 -translate-y-2 border-stravesta-darkGray/20 bg-stravesta-darkGray/20'
-                          : 'opacity-20 scale-105 translate-y-2 border-stravesta-darkGray/10 bg-stravesta-darkGray/10'
-                    }`}
-                  >
-                    <div className="flex items-start gap-3">
-                      <Badge className={`${getImpactColor(alert.impact)} text-xs px-2 py-1`}>
-                        {alert.impact.toUpperCase()}
-                      </Badge>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-sm text-stravesta-lightGray">{alert.time}</span>
-                          <Badge variant="outline" className="text-xs border-stravesta-teal/30 text-stravesta-teal">
-                            {alert.currency}
-                          </Badge>
-                        </div>
-                        <h5 className="font-semibold text-white mb-1">{alert.title}</h5>
-                        <p className="text-sm text-stravesta-lightGray">{alert.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h4 className="text-xl font-bold text-white mb-4">USD/CHF Fundamentalanalyse</h4>
-              <div className="space-y-4">
-                {fundamentalFactors.map((factor, index) => (
-                  <div
-                    key={factor.factor}
-                    className={`p-4 rounded-lg bg-stravesta-darkGray/30 border border-stravesta-darkGray/20 transition-all duration-700 delay-${index * 200} ${
-                      isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <h5 className="font-medium text-white">{factor.factor}</h5>
-                      <Badge className={`${
-                        factor.impact.includes('Bullish') ? 'bg-green-500/20 text-green-400 border-green-500/30' :
-                        factor.impact.includes('Bearish') ? 'bg-red-500/20 text-red-400 border-red-500/30' :
-                        'bg-gray-500/20 text-gray-400 border-gray-500/30'
-                      } text-xs`}>
-                        {factor.impact}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-stravesta-lightGray mb-3">{factor.description}</p>
-                    <div className="flex items-center gap-3">
-                      <span className="text-xs text-stravesta-lightGray min-w-[60px]">Stärke:</span>
-                      <div className="flex-1 h-2 bg-stravesta-darkGray rounded-full overflow-hidden">
-                        <div 
-                          className={`h-full ${getStrengthColor(factor.strength)} transition-all duration-1000 delay-${index * 300}`}
-                          style={{ width: isActive ? `${factor.strength}%` : '0%' }}
-                        ></div>
-                      </div>
-                      <span className="text-xs text-stravesta-lightGray min-w-[30px]">{factor.strength}%</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  };
 
   return (
     <section className="py-20 bg-stravesta-dark relative overflow-hidden" ref={containerRef}>
@@ -533,7 +102,7 @@ const StackedCardsSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16" data-animate>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">
             KI-Powered Trading Features
           </h2>
@@ -545,10 +114,10 @@ const StackedCardsSection = () => {
           </Badge>
         </div>
 
-        {/* Stacked Cards Container - Reduzierte Höhe für besseres Scrollen */}
+        {/* Stacked Cards Container */}
         <div className="relative" style={{ height: '200vh' }}>
           <div className="sticky top-20 h-screen flex items-center justify-center">
-            <div className="relative w-full max-w-6xl mx-auto" style={{ height: '700px' }}>
+            <div className="relative w-full max-w-4xl mx-auto" style={{ height: '600px' }}>
               {cardData.map((card, index) => {
                 const isActive = index === activeCard;
                 const isPast = index < activeCard;
@@ -557,6 +126,7 @@ const StackedCardsSection = () => {
                 return (
                   <Card
                     key={card.id}
+                    ref={el => cardsRef.current[index] = el!}
                     className={`
                       absolute inset-0 transition-all duration-700 ease-out
                       ${isActive ? 'z-30 scale-100 opacity-100' : ''}
@@ -574,7 +144,7 @@ const StackedCardsSection = () => {
                       transformOrigin: 'center center',
                     }}
                   >
-                    <CardContent className="p-8 h-full overflow-y-auto">
+                    <CardContent className="p-8 h-full flex flex-col justify-center">
                       <div className="text-center mb-8">
                         <div className={`inline-flex p-4 rounded-full bg-gradient-to-r ${card.bgGradient} mb-6`}>
                           <div className={card.color}>
@@ -592,8 +162,30 @@ const StackedCardsSection = () => {
                         </p>
                       </div>
 
-                      {/* Dynamic Content based on card type */}
-                      {renderCardContent(card)}
+                      {/* Features Grid */}
+                      <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                        {card.features.map((feature, idx) => (
+                          <div 
+                            key={idx}
+                            className={`
+                              bg-stravesta-dark/50 rounded-lg p-4 text-center
+                              transition-all duration-500 delay-${idx * 100}
+                              ${isActive ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-60'}
+                            `}
+                          >
+                            <div className={`font-bold text-lg ${card.color} mb-1`}>
+                              {feature.includes('%') || feature.includes('<') || feature.includes('/') ? 
+                                feature.split(' ')[0] : '✓'
+                              }
+                            </div>
+                            <div className="text-stravesta-lightGray text-sm">
+                              {feature.includes('%') || feature.includes('<') || feature.includes('/') ? 
+                                feature.split(' ').slice(1).join(' ') : feature
+                              }
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </CardContent>
                   </Card>
                 );
