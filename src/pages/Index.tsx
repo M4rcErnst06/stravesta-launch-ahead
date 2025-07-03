@@ -1,11 +1,10 @@
-
 import React, { useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import GroupedFeatureSection from '@/components/GroupedFeatureSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
-import StackedCardsSection from '@/components/stacked-cards/StackedCardsSection';
+import SetupScannerSection from '@/components/setup-scanner/SetupScannerSection';
 import FundamentalResearchSection from '@/components/fundamental-research/FundamentalResearchSection';
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 
@@ -75,12 +74,12 @@ const IndexContent = () => {
           <HeroSection />
         </section>
         
-        {/* Stacked Cards Section */}
-        <section id="stacked-features" className="scroll-mt-20">
-          <StackedCardsSection />
+        {/* Setup Scanner Section */}
+        <section id="setup-scanner" className="scroll-mt-20">
+          <SetupScannerSection />
         </section>
         
-        {/* NEW: Fundamental Research Section */}
+        {/* Fundamental Research Section */}
         <section id="fundamental-research" className="scroll-mt-20">
           <FundamentalResearchSection />
         </section>
