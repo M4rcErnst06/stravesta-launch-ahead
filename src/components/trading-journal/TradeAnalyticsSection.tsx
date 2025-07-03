@@ -1,9 +1,9 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Brain, Zap, Target, BarChart3 } from 'lucide-react';
+import { Brain, Zap, Target, BarChart3, Download } from 'lucide-react';
 import JournalAnalyticsAnimation from './JournalAnalyticsAnimation';
+import MetaTraderSyncAnimation from './MetaTraderSyncAnimation';
 
 const TradeAnalyticsSection = () => {
   const analyticsFeatures = [
@@ -15,7 +15,7 @@ const TradeAnalyticsSection = () => {
     },
     {
       icon: <Target className="h-6 w-6" />,
-      title: "Emotion-Tracking",
+      title: "Emotion-Tracking", 
       description: "Korrelation zwischen Emotionen und Trading-Performance",
       color: "#10B981"
     },
@@ -65,11 +65,30 @@ const TradeAnalyticsSection = () => {
           </div>
         </div>
 
-        {/* Live Animation Demo */}
+        {/* MetaTrader Sync Demo */}
+        <div className="mb-20" data-animate>
+          <div className="text-center mb-8">
+            <div className="flex justify-center items-center gap-3 mb-4">
+              <div className="bg-blue-500/20 p-3 rounded-full">
+                <Download className="h-8 w-8 text-blue-400" />
+              </div>
+              <h3 className="text-2xl font-bold text-white">
+                Automatische MetaTrader Integration
+              </h3>
+            </div>
+            <p className="text-stravesta-lightGray max-w-2xl mx-auto">
+              Sehen Sie live, wie Ihre MetaTrader Trades automatisch ins Stravesta Journal 
+              synchronisiert und von unserer KI analysiert werden
+            </p>
+          </div>
+          <MetaTraderSyncAnimation />
+        </div>
+
+        {/* Live Analytics Demo */}
         <div className="mb-20" data-animate>
           <div className="text-center mb-8">
             <h3 className="text-2xl font-bold text-white mb-2">
-              Sehen Sie die KI in Aktion
+              KI-Analyse in Aktion
             </h3>
             <p className="text-stravesta-lightGray">
               Live-Demo: Wie unsere KI Ihr Trading Journal analysiert und strategische Insights liefert
