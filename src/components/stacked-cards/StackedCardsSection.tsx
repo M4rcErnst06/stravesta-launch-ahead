@@ -20,6 +20,9 @@ const StackedCardsSection = () => {
   const [activeCard, setActiveCard] = useState(0);
   const [showAnimation, setShowAnimation] = useState(false);
   const [newsActiveAlert, setNewsActiveAlert] = useState(0);
+  const [scannerSetupActive, setScannerSetupActive] = useState(0);
+  const [journalTradeActive, setJournalTradeActive] = useState(0);
+  const [analysisEmotionActive, setAnalysisEmotionActive] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const newsAlerts = [
@@ -77,6 +80,24 @@ const StackedCardsSection = () => {
       strength: 62,
       description: 'US Inflation über CH Inflation'
     }
+  ];
+
+  const scannerSetups = [
+    { title: 'Fibonacci Retracement', status: 'aktiv', accuracy: '94%' },
+    { title: 'Support/Resistance Break', status: 'erkannt', accuracy: '87%' },
+    { title: 'Triangle Breakout', status: 'wartend', accuracy: '91%' }
+  ];
+
+  const journalTrades = [
+    { pair: 'EUR/USD', result: '+125 Pips', emotion: 'Gierig', recommendation: 'Position verkleinern' },
+    { pair: 'GBP/JPY', result: '-45 Pips', emotion: 'Ängstlich', recommendation: 'Stop Loss enger' },
+    { pair: 'USD/CHF', result: '+89 Pips', emotion: 'Diszipliniert', recommendation: 'Setup wiederholen' }
+  ];
+
+  const emotionMetrics = [
+    { emotion: 'Fear & Greed Index', level: 75, color: 'bg-red-500' },
+    { emotion: 'Market Sentiment', level: 60, color: 'bg-yellow-500' },
+    { emotion: 'Volatility Stress', level: 40, color: 'bg-green-500' }
   ];
 
   const cardData: CardData[] = [
@@ -156,7 +177,11 @@ const StackedCardsSection = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
 
-      const scrollProgress = (scrollY - containerTop + windowHeight * 0.5) / containerHeight;
+      // Verbesserte Scroll-Logik
+      const scrollStart = containerTop - windowHeight * 0.3;
+      const scrollEnd = containerTop + containerHeight - windowHeight * 0.7;
+      const scrollProgress = Math.max(0, Math.min(1, (scrollY - scrollStart) / (scrollEnd - scrollStart)));
+      
       const cardIndex = Math.floor(scrollProgress * cardData.length);
       const clampedIndex = Math.max(0, Math.min(cardData.length - 1, cardIndex));
 
@@ -170,9 +195,36 @@ const StackedCardsSection = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [cardData.length]);
 
-  // News alerts rotation for the news card
+  // Animationen für jede Karte
   useEffect(() => {
-    if (activeCard === 3) { // News card is active
+    if (activeCard === 0) { // Scanner Card
+      const scannerInterval = setInterval(() => {
+        setScannerSetupActive((prev) => (prev + 1) % scannerSetups.length);
+      }, 2500);
+      return () => clearInterval(scannerInterval);
+    }
+  }, [activeCard, scannerSetups.length]);
+
+  useEffect(() => {
+    if (activeCard === 1) { // Journal Card
+      const journalInterval = setInterval(() => {
+        setJournalTradeActive((prev) => (prev + 1) % journalTrades.length);
+      }, 3000);
+      return () => clearInterval(journalInterval);
+    }
+  }, [activeCard, journalTrades.length]);
+
+  useEffect(() => {
+    if (activeCard === 2) { // Analysis Card
+      const analysisInterval = setInterval(() => {
+        setAnalysisEmotionActive((prev) => (prev + 1) % emotionMetrics.length);
+      }, 2000);
+      return () => clearInterval(analysisInterval);
+    }
+  }, [activeCard, emotionMetrics.length]);
+
+  useEffect(() => {
+    if (activeCard === 3) { // News Card
       const alertInterval = setInterval(() => {
         setNewsActiveAlert((prev) => (prev + 1) % newsAlerts.length);
       }, 3000);
@@ -203,34 +255,48 @@ const StackedCardsSection = () => {
         return (
           <div className="grid lg:grid-cols-2 gap-8">
             <div>
-              <h4 className="text-xl font-bold text-white mb-4">Intelligente Setup-Erkennung</h4>
+              <h4 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                <div className="w-3 h-3 bg-stravesta-teal rounded-full animate-pulse"></div>
+                Live Setup Erkennung
+              </h4>
               <div className="space-y-4">
-                {[
-                  { title: 'KI-basierte Erkennung', desc: 'Fibonacci-Retracements, Support/Resistance' },
-                  { title: 'Echtzeit-Alerts', desc: 'App, E-Mail oder SMS Benachrichtigungen' },
-                  { title: 'Präzise Entry-Points', desc: 'Exakte Ein- und Ausstiegspunkte' }
-                ].map((feature, idx) => (
+                {scannerSetups.map((setup, idx) => (
                   <div 
                     key={idx}
-                    className={`p-3 bg-stravesta-darkGray/30 rounded-lg transition-all duration-500 delay-${idx * 200} ${
-                      isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+                    className={`p-4 rounded-lg border transition-all duration-700 ${
+                      idx === scannerSetupActive && isActive
+                        ? 'border-stravesta-teal/40 bg-stravesta-teal/10 scale-105' 
+                        : 'border-stravesta-darkGray/20 bg-stravesta-darkGray/20'
                     }`}
                   >
-                    <h5 className="font-medium text-stravesta-teal">{feature.title}</h5>
-                    <p className="text-sm text-stravesta-lightGray">{feature.desc}</p>
+                    <div className="flex justify-between items-center mb-2">
+                      <h5 className="font-medium text-white">{setup.title}</h5>
+                      <Badge className={`${
+                        setup.status === 'aktiv' ? 'bg-green-500/20 text-green-400' :
+                        setup.status === 'erkannt' ? 'bg-stravesta-teal/20 text-stravesta-teal' :
+                        'bg-yellow-500/20 text-yellow-400'
+                      } text-xs`}>
+                        {setup.status}
+                      </Badge>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-stravesta-lightGray">Genauigkeit:</span>
+                      <span className="text-stravesta-teal font-semibold">{setup.accuracy}</span>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
             <div className="bg-stravesta-navy/50 rounded-lg p-6">
               <h4 className="text-lg font-bold text-white mb-6">Performance Statistiken</h4>
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 gap-6">
                 {[
-                  { label: 'Setup-Erkennungsrate', value: '95%' },
-                  { label: 'Reaktionszeit', value: '<3s' },
-                  { label: 'Marktüberwachung', value: '24/7' }
+                  { label: 'Setup-Erkennungsrate', value: '95%', icon: '🎯' },
+                  { label: 'Reaktionszeit', value: '<3s', icon: '⚡' },
+                  { label: 'Marktüberwachung', value: '24/7', icon: '👁️' }
                 ].map((stat, idx) => (
                   <div key={idx} className="text-center">
+                    <div className="text-2xl mb-2">{stat.icon}</div>
                     <div className={`text-2xl font-bold text-stravesta-teal mb-1 transition-all duration-700 delay-${idx * 300} ${
                       isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
                     }`}>
@@ -248,22 +314,38 @@ const StackedCardsSection = () => {
         return (
           <div className="grid lg:grid-cols-2 gap-8">
             <div className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 rounded-lg p-6">
-              <h4 className="text-xl font-bold text-white mb-4">MetaTrader Integration</h4>
-              <div className="space-y-3">
-                {[
-                  'Automatische Synchronisation',
-                  'Echtzeit-Datenübertragung',
-                  'Pattern-Erkennung',
-                  'Performance-Tracking'
-                ].map((feature, idx) => (
+              <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
+                Live Trade Analysis
+              </h4>
+              <div className="space-y-4">
+                {journalTrades.map((trade, idx) => (
                   <div 
                     key={idx}
-                    className={`flex items-center gap-3 transition-all duration-500 delay-${idx * 150} ${
-                      isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+                    className={`p-4 rounded-lg border transition-all duration-700 ${
+                      idx === journalTradeActive && isActive
+                        ? 'border-blue-400/40 bg-blue-500/10 scale-105' 
+                        : 'border-stravesta-darkGray/20 bg-stravesta-darkGray/20'
                     }`}
                   >
-                    <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                    <span className="text-stravesta-lightGray">{feature}</span>
+                    <div className="flex justify-between items-start mb-2">
+                      <h5 className="font-medium text-white">{trade.pair}</h5>
+                      <span className={`font-semibold ${
+                        trade.result.startsWith('+') ? 'text-green-400' : 'text-red-400'
+                      }`}>
+                        {trade.result}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge className={`${
+                        trade.emotion === 'Gierig' ? 'bg-red-500/20 text-red-400' :
+                        trade.emotion === 'Ängstlich' ? 'bg-yellow-500/20 text-yellow-400' :
+                        'bg-green-500/20 text-green-400'
+                      } text-xs`}>
+                        {trade.emotion}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-blue-400">{trade.recommendation}</p>
                   </div>
                 ))}
               </div>
@@ -274,7 +356,8 @@ const StackedCardsSection = () => {
                 {[
                   { metric: 'Win Rate Improvement', value: '+35%', color: 'text-green-400' },
                   { metric: 'Risk Management Score', value: '8.7/10', color: 'text-blue-400' },
-                  { metric: 'Pattern Recognition', value: '89%', color: 'text-stravesta-teal' }
+                  { metric: 'Pattern Recognition', value: '89%', color: 'text-stravesta-teal' },
+                  { metric: 'Emotion Control', value: 'Verbessert', color: 'text-purple-400' }
                 ].map((item, idx) => (
                   <div 
                     key={idx}
@@ -297,26 +380,29 @@ const StackedCardsSection = () => {
         return (
           <div className="grid lg:grid-cols-2 gap-8">
             <div>
-              <h4 className="text-xl font-bold text-white mb-4">Emotionale Analyse</h4>
+              <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                Emotionale Marktanalyse
+              </h4>
               <div className="space-y-4">
-                {[
-                  { emotion: 'Fear & Greed Index', level: 75, color: 'bg-red-500' },
-                  { emotion: 'Market Sentiment', level: 60, color: 'bg-yellow-500' },
-                  { emotion: 'Volatility Stress', level: 40, color: 'bg-green-500' }
-                ].map((item, idx) => (
+                {emotionMetrics.map((item, idx) => (
                   <div 
                     key={idx}
-                    className={`transition-all duration-700 delay-${idx * 200} ${
-                      isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+                    className={`p-4 rounded-lg border transition-all duration-700 ${
+                      idx === analysisEmotionActive && isActive
+                        ? 'border-green-400/40 bg-green-500/10 scale-105' 
+                        : 'border-stravesta-darkGray/20 bg-stravesta-darkGray/20'
                     }`}
                   >
                     <div className="flex justify-between mb-2">
                       <span className="text-stravesta-lightGray">{item.emotion}</span>
-                      <span className="text-white">{item.level}%</span>
+                      <span className="text-white font-semibold">{item.level}%</span>
                     </div>
-                    <div className="h-2 bg-stravesta-darkGray rounded-full overflow-hidden">
+                    <div className="h-3 bg-stravesta-darkGray rounded-full overflow-hidden">
                       <div 
-                        className={`h-full ${item.color} transition-all duration-1000 delay-${idx * 300}`}
+                        className={`h-full ${item.color} transition-all duration-1000 ${
+                          idx === analysisEmotionActive && isActive ? 'animate-pulse' : ''
+                        }`}
                         style={{ width: isActive ? `${item.level}%` : '0%' }}
                       ></div>
                     </div>
@@ -330,7 +416,8 @@ const StackedCardsSection = () => {
                 {[
                   { action: 'Position Size', recommendation: 'Reduzieren um 25%', impact: 'high' },
                   { action: 'Entry Timing', recommendation: 'Warten auf Pullback', impact: 'medium' },
-                  { action: 'Risk Management', recommendation: 'Stop Loss anpassen', impact: 'high' }
+                  { action: 'Risk Management', recommendation: 'Stop Loss anpassen', impact: 'high' },
+                  { action: 'Market Sentiment', recommendation: 'Vorsichtig bleiben', impact: 'medium' }
                 ].map((rec, idx) => (
                   <div 
                     key={idx}
@@ -368,7 +455,7 @@ const StackedCardsSection = () => {
                     key={alert.id}
                     className={`p-4 rounded-lg border transition-all duration-700 ${
                       index === newsActiveAlert && isActive
-                        ? 'opacity-100 scale-100 translate-y-0 border-stravesta-teal/40 bg-stravesta-teal/10' 
+                        ? 'opacity-100 scale-105 translate-y-0 border-stravesta-teal/40 bg-stravesta-teal/10' 
                         : index < newsActiveAlert 
                           ? 'opacity-40 scale-95 -translate-y-2 border-stravesta-darkGray/20 bg-stravesta-darkGray/20'
                           : 'opacity-20 scale-105 translate-y-2 border-stravesta-darkGray/10 bg-stravesta-darkGray/10'
@@ -458,8 +545,8 @@ const StackedCardsSection = () => {
           </Badge>
         </div>
 
-        {/* Stacked Cards Container */}
-        <div className="relative" style={{ height: '300vh' }}>
+        {/* Stacked Cards Container - Reduzierte Höhe für besseres Scrollen */}
+        <div className="relative" style={{ height: '200vh' }}>
           <div className="sticky top-20 h-screen flex items-center justify-center">
             <div className="relative w-full max-w-6xl mx-auto" style={{ height: '700px' }}>
               {cardData.map((card, index) => {
