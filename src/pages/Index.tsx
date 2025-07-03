@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
@@ -5,6 +6,7 @@ import GroupedFeatureSection from '@/components/GroupedFeatureSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import StackedCardsSection from '@/components/stacked-cards/StackedCardsSection';
+import FundamentalResearchSection from '@/components/fundamental-research/FundamentalResearchSection';
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 
 const IndexContent = () => {
@@ -73,9 +75,14 @@ const IndexContent = () => {
           <HeroSection />
         </section>
         
-        {/* NEW: Stacked Cards Section replacing the old individual sections */}
+        {/* Stacked Cards Section */}
         <section id="stacked-features" className="scroll-mt-20">
           <StackedCardsSection />
+        </section>
+        
+        {/* NEW: Fundamental Research Section */}
+        <section id="fundamental-research" className="scroll-mt-20">
+          <FundamentalResearchSection />
         </section>
         
         {/* Features Section - Hidden since featureGroups is empty */}
