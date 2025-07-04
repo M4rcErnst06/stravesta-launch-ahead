@@ -9,13 +9,8 @@ import AnalyticsFeatures from './AnalyticsFeatures';
 
 const TradeAnalyticsSection = () => {
   return (
-    <section className="py-20 bg-stravesta-dark relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-stravesta-teal/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>
-      </div>
-
+    <section className="py-20 relative overflow-hidden">
+      {/* Removed background effects from here as they are now handled by the parent section */}
       <div className="container mx-auto px-4 relative z-10">
         <AnalyticsHeader />
 

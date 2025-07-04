@@ -8,7 +8,9 @@ const Navigation = () => {
   
   const navItems = [
     { label: t('nav.home'), href: '#home' },
-    { label: t('nav.features'), href: '#features' },
+    { label: 'KI Setup Scanner', href: '#setup-scanner' },
+    { label: 'Trading Journal', href: '#journal-analytics' },
+    { label: 'KI-Analyse', href: '#ai-analysis' },
     { label: t('nav.about'), href: '#about' },
     { label: t('nav.contact'), href: '#early-access' },
   ];
