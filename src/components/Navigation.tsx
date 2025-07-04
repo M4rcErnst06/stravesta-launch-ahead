@@ -1,18 +1,17 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageToggle from './LanguageToggle';
 
 const Navigation = () => {
-  const { t } = useLanguage();
+  const [isOpen, setIsOpen] = useState(false);
+  const { t, language, toggleLanguage } = useLanguage();
   
   const navItems = [
-    { label: t('nav.home'), href: '#home' },
-    { label: 'KI Setup Scanner', href: '#setup-scanner' },
-    { label: 'Trading Journal', href: '#journal-analytics' },
-    { label: 'KI-Analyse', href: '#ai-analysis' },
-    { label: t('nav.about'), href: '#about' },
-    { label: t('nav.contact'), href: '#early-access' },
+    { name: t('nav.home'), href: '#home' },
+    { name: 'KI Setup Scanner', href: '#setup-scanner' },
+    { name: 'KI Trading Journal', href: '#journal-analytics' },
+    { name: t('nav.about'), href: '#about' },
+    { name: t('nav.earlyAccess'), href: '#early-access' },
   ];
 
   const scrollToSection = (href: string) => {
@@ -26,7 +25,7 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-stravesta-dark/98 backdrop-blur-lg border-b border-stravesta-teal/10 shadow-lg">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-stravesta-dark/95 backdrop-blur-md border-b border-stravesta-teal/20">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="flex justify-between items-center h-20">
           {/* Logo Section - Logo links vom Text */}
@@ -54,7 +53,7 @@ const Navigation = () => {
                 onClick={() => scrollToSection(item.href)}
                 className="px-6 py-3 rounded-lg text-base font-medium transition-all duration-200 text-stravesta-lightGray hover:text-white hover:bg-stravesta-teal/10 hover:shadow-sm relative group"
               >
-                {item.label}
+                {item.name}
                 <span className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-stravesta-teal transition-all duration-200 group-hover:w-full"></span>
               </button>
             ))}
