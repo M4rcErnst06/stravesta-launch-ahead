@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -146,12 +147,12 @@ const MetaTraderSyncAnimation = () => {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-stravesta-teal/20 min-h-[85vh]">
-      {/* Main content container with increased height */}
-      <div className="grid lg:grid-cols-2 gap-8 h-[70vh]">
+    <div className="max-w-6xl mx-auto bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-6 backdrop-blur-sm border border-stravesta-teal/20 h-[600px]">
+      {/* Main content container */}
+      <div className="grid lg:grid-cols-2 gap-6 h-full">
         {/* MetaTrader History */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3 mb-6">
+        <div className="space-y-4 flex flex-col">
+          <div className="flex items-center gap-3 mb-4">
             <div className="bg-blue-500/20 p-2 rounded-lg">
               <BarChart3 className="h-6 w-6 text-blue-400" />
             </div>
@@ -171,12 +172,12 @@ const MetaTraderSyncAnimation = () => {
             )}
           </div>
 
-          {/* MetaTrader Table - Increased height */}
+          {/* MetaTrader Table */}
           <div className={`
-            bg-stravesta-dark/80 rounded-lg border border-stravesta-darkGray p-4 transition-all duration-700 h-80
+            bg-stravesta-dark/80 rounded-lg border border-stravesta-darkGray p-4 transition-all duration-700 flex-1
             ${currentStep >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
           `}>
-            <div className="space-y-2">
+            <div className="space-y-2 h-full">
               <div className="grid grid-cols-7 gap-2 text-xs text-stravesta-lightGray font-medium border-b border-stravesta-darkGray pb-2">
                 <span>Time</span>
                 <span>Type</span>
@@ -214,16 +215,16 @@ const MetaTraderSyncAnimation = () => {
           </div>
 
           {currentStep === 2 && (
-            <div className="text-center p-4 bg-stravesta-teal/10 rounded-lg border border-stravesta-teal/30 animate-fade-in">
-              <Zap className="h-6 w-6 text-stravesta-teal mx-auto mb-2 animate-pulse" />
-              <p className="text-stravesta-teal font-medium">Automatische Synchronisation gestartet...</p>
+            <div className="text-center p-3 bg-stravesta-teal/10 rounded-lg border border-stravesta-teal/30 animate-fade-in">
+              <Zap className="h-5 w-5 text-stravesta-teal mx-auto mb-2 animate-pulse" />
+              <p className="text-stravesta-teal font-medium text-sm">Automatische Synchronisation gestartet...</p>
             </div>
           )}
         </div>
 
-        {/* Stravesta Journal - Increased height */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3 mb-6">
+        {/* Stravesta Journal */}
+        <div className="space-y-4 flex flex-col">
+          <div className="flex items-center gap-3 mb-4">
             <div className="bg-gradient-to-r from-stravesta-teal to-blue-500 p-2 rounded-lg">
               <TrendingUp className="h-6 w-6 text-white" />
             </div>
@@ -238,8 +239,8 @@ const MetaTraderSyncAnimation = () => {
             )}
           </div>
 
-          {/* Increased height for journal entries */}
-          <div className="h-80 space-y-3 overflow-hidden">
+          {/* Journal entries */}
+          <div className="flex-1 space-y-3 overflow-hidden">
             {journalEntries.map((entry, index) => (
               <Card 
                 key={entry.id}
@@ -323,7 +324,7 @@ const MetaTraderSyncAnimation = () => {
       </div>
 
       {/* Sync Indicator */}
-      <div className="flex justify-center items-center mt-8 pt-6 border-t border-stravesta-darkGray">
+      <div className="flex justify-center items-center mt-6 pt-4 border-t border-stravesta-darkGray">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 text-sm text-stravesta-lightGray">
             <div className="w-3 h-3 rounded-lg bg-blue-500/20 flex items-center justify-center">
@@ -346,7 +347,7 @@ const MetaTraderSyncAnimation = () => {
       </div>
 
       {/* Progress Indicator */}
-      <div className="flex justify-center mt-6 space-x-2">
+      <div className="flex justify-center mt-4 space-x-2">
         {[0, 1, 2, 3, 4].map((step) => (
           <div
             key={step}
