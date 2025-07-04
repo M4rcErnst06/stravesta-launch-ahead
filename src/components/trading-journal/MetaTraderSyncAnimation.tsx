@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -147,9 +146,9 @@ const MetaTraderSyncAnimation = () => {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-stravesta-teal/20">
-      {/* Fixed height container to prevent layout shifts */}
-      <div className="grid lg:grid-cols-2 gap-8 h-[600px]">
+    <div className="max-w-7xl mx-auto bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-stravesta-teal/20 min-h-[85vh]">
+      {/* Main content container with increased height */}
+      <div className="grid lg:grid-cols-2 gap-8 h-[70vh]">
         {/* MetaTrader History */}
         <div className="space-y-4">
           <div className="flex items-center gap-3 mb-6">
@@ -172,9 +171,9 @@ const MetaTraderSyncAnimation = () => {
             )}
           </div>
 
-          {/* MetaTrader Table - Fixed height container */}
+          {/* MetaTrader Table - Increased height */}
           <div className={`
-            bg-stravesta-dark/80 rounded-lg border border-stravesta-darkGray p-4 transition-all duration-700 h-64
+            bg-stravesta-dark/80 rounded-lg border border-stravesta-darkGray p-4 transition-all duration-700 h-80
             ${currentStep >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
           `}>
             <div className="space-y-2">
@@ -192,7 +191,7 @@ const MetaTraderSyncAnimation = () => {
                 <div 
                   key={trade.ticket}
                   className={`
-                    grid grid-cols-7 gap-2 text-xs py-2 px-1 rounded transition-all duration-500
+                    grid grid-cols-7 gap-2 text-xs py-3 px-1 rounded transition-all duration-500
                     ${syncingTrades.includes(trade.ticket) ? 'bg-stravesta-teal/20 border border-stravesta-teal animate-pulse' : ''}
                     ${currentStep >= 1 ? 'opacity-100' : 'opacity-0'}
                   `}
@@ -222,7 +221,7 @@ const MetaTraderSyncAnimation = () => {
           )}
         </div>
 
-        {/* Stravesta Journal - Fixed height container */}
+        {/* Stravesta Journal - Increased height */}
         <div className="space-y-4">
           <div className="flex items-center gap-3 mb-6">
             <div className="bg-gradient-to-r from-stravesta-teal to-blue-500 p-2 rounded-lg">
@@ -239,8 +238,8 @@ const MetaTraderSyncAnimation = () => {
             )}
           </div>
 
-          {/* Fixed height container for journal entries without scroll */}
-          <div className="h-64 space-y-3 overflow-hidden">
+          {/* Increased height for journal entries */}
+          <div className="h-80 space-y-3 overflow-hidden">
             {journalEntries.map((entry, index) => (
               <Card 
                 key={entry.id}
