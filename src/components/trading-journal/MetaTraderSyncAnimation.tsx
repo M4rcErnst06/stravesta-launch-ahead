@@ -159,7 +159,8 @@ const MetaTraderSyncAnimation = () => {
 
   return (
     <div className="max-w-7xl mx-auto bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-stravesta-teal/20">
-      <div className="grid lg:grid-cols-2 gap-8">
+      {/* Fixed height container to prevent layout shifts */}
+      <div className="grid lg:grid-cols-2 gap-8 min-h-[600px]">
         {/* MetaTrader History */}
         <div className="space-y-4">
           <div className="flex items-center gap-3 mb-6">
@@ -182,9 +183,9 @@ const MetaTraderSyncAnimation = () => {
             )}
           </div>
 
-          {/* MetaTrader Table */}
+          {/* MetaTrader Table - Fixed height container */}
           <div className={`
-            bg-stravesta-dark/80 rounded-lg border border-stravesta-darkGray p-4 transition-all duration-700
+            bg-stravesta-dark/80 rounded-lg border border-stravesta-darkGray p-4 transition-all duration-700 h-80 overflow-hidden
             ${currentStep >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
           `}>
             <div className="space-y-2">
@@ -232,7 +233,7 @@ const MetaTraderSyncAnimation = () => {
           )}
         </div>
 
-        {/* Stravesta Journal */}
+        {/* Stravesta Journal - Fixed height container */}
         <div className="space-y-4">
           <div className="flex items-center gap-3 mb-6">
             <div className="bg-gradient-to-r from-stravesta-teal to-blue-500 p-2 rounded-lg">
@@ -249,12 +250,13 @@ const MetaTraderSyncAnimation = () => {
             )}
           </div>
 
-          <div className="space-y-3">
+          {/* Fixed height scrollable container for journal entries */}
+          <div className="h-80 overflow-y-auto space-y-3 pr-2">
             {journalEntries.map((entry, index) => (
               <Card 
                 key={entry.id}
                 className={`
-                  bg-stravesta-dark/50 border-stravesta-darkGray transition-all duration-700
+                  bg-stravesta-dark/50 border-stravesta-darkGray transition-all duration-700 flex-shrink-0
                   ${entry.status === 'syncing' ? 'border-stravesta-teal shadow-lg shadow-stravesta-teal/20 scale-105' : ''}
                   opacity-0 translate-x-8 animate-[fade-in_0.5s_ease-out_forwards]
                 `}
@@ -293,7 +295,7 @@ const MetaTraderSyncAnimation = () => {
             ))}
 
             {showAnalysis && (
-              <Card className="bg-gradient-to-r from-stravesta-teal/10 to-blue-500/10 border-stravesta-teal/30 border-2 animate-fade-in">
+              <Card className="bg-gradient-to-r from-stravesta-teal/10 to-blue-500/10 border-stravesta-teal/30 border-2 animate-fade-in flex-shrink-0">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="bg-stravesta-teal/20 p-2 rounded-lg">
