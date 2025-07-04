@@ -1,268 +1,175 @@
 
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Brain, TrendingUp, TrendingDown, Clock, Target, Zap } from 'lucide-react';
-
-interface TradeEntry {
-  id: string;
-  symbol: string;
-  type: 'long' | 'short';
-  pnl: number;
-  emotion: string;
-  time: string;
-  note: string;
-}
+import React, { useEffect, useState } from 'react';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 const JournalAnalyticsAnimation = () => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [scanningTrade, setScanningTrade] = useState<string | null>(null);
-  const [visibleInsights, setVisibleInsights] = useState<number[]>([]);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [currentView, setCurrentView] = useState(0);
 
-  const mockTrades: TradeEntry[] = [
-    {
-      id: '1',
-      symbol: 'EURUSD',
-      type: 'long',
-      pnl: -45,
-      emotion: 'FOMO',
-      time: '08:30',
-      note: 'Entry zu früh, keine Bestätigung'
-    },
-    {
-      id: '2',
-      symbol: 'GBPUSD',
-      type: 'short',
-      pnl: 120,
-      emotion: 'Discipline',
-      time: '14:15',
-      note: 'Perfect London breakout'
-    },
-    {
-      id: '3',
-      symbol: 'USDJPY',
-      type: 'long',
-      pnl: -32,
-      emotion: 'Fear',
-      time: '20:45',
-      note: 'Stop Loss zu eng gesetzt'
-    },
-    {
-      id: '4',
-      symbol: 'EURUSD',
-      type: 'short',
-      pnl: 89,
-      emotion: 'Discipline',
-      time: '15:30',
-      note: 'Fibonacci 0.618 Retracement'
-    }
+  const performanceData = [
+    { month: 'Jan', profit: 2500, loss: -800 },
+    { month: 'Feb', profit: 3200, loss: -1200 },
+    { month: 'Mar', profit: 1800, loss: -600 },
+    { month: 'Apr', profit: 4100, loss: -900 },
+    { month: 'Mai', profit: 3600, loss: -700 },
+    { month: 'Jun', profit: 4800, loss: -1100 },
   ];
 
-  const aiInsights = [
-    {
-      icon: <Target className="h-4 w-4" />,
-      title: "Pattern erkannt",
-      message: "Ihre besten Trades (89% Winrate) entstehen bei London Session zwischen 14:00-16:00",
-      color: "text-green-400",
-      bgColor: "bg-green-500/10",
-      borderColor: "border-green-500/30"
-    },
-    {
-      icon: <Brain className="h-4 w-4" />,
-      title: "Emotion-Alert",
-      message: "FOMO-Trades haben 73% niedrigere Winrate - warten Sie auf Setup-Bestätigung",
-      color: "text-red-400",
-      bgColor: "bg-red-500/10",
-      borderColor: "border-red-500/30"
-    },
-    {
-      icon: <Zap className="h-4 w-4" />,
-      title: "Optimierung",
-      message: "Stop Loss Optimierung: Bei Breakouts 1.5x ATR statt 1x für bessere RRR",
-      color: "text-stravesta-teal",
-      bgColor: "bg-stravesta-teal/10",
-      borderColor: "border-stravesta-teal/30"
-    },
-    {
-      icon: <Clock className="h-4 w-4" />,
-      title: "Timing-Insight",
-      message: "Fibonacci-Setups: 0.618 Level zeigt 67% höhere Erfolgsrate als 0.5",
-      color: "text-blue-400",
-      bgColor: "bg-blue-500/10",
-      borderColor: "border-blue-500/30"
-    }
+  const strategyData = [
+    { name: 'Breakout', value: 45, color: '#17E6C8' },
+    { name: 'Reversal', value: 30, color: '#FFB800' },
+    { name: 'Trend Following', value: 25, color: '#00C851' },
   ];
 
   useEffect(() => {
-    const animationSequence = async () => {
-      // Step 1: Show journal
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setCurrentStep(1);
-      
-      // Step 2: Start AI analysis
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setCurrentStep(2);
-      setIsAnalyzing(true);
-      
-      // Step 3: Scan each trade
-      for (let i = 0; i < mockTrades.length; i++) {
-        setScanningTrade(mockTrades[i].id);
-        await new Promise(resolve => setTimeout(resolve, 800));
-      }
-      setScanningTrade(null);
-      setIsAnalyzing(false);
-      
-      // Step 4: Show insights one by one
-      setCurrentStep(3);
-      for (let i = 0; i < aiInsights.length; i++) {
-        await new Promise(resolve => setTimeout(resolve, 1200));
-        setVisibleInsights(prev => [...prev, i]);
-      }
-      
-      // Reset animation after 5 seconds
-      await new Promise(resolve => setTimeout(resolve, 5000));
-      setCurrentStep(0);
-      setScanningTrade(null);
-      setVisibleInsights([]);
-      setIsAnalyzing(false);
-    };
-
-    const interval = setInterval(animationSequence, 12000);
-    animationSequence(); // Start immediately
+    const interval = setInterval(() => {
+      setCurrentView((prev) => (prev + 1) % 3);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
 
-  return (
-    <div className="max-w-6xl mx-auto bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-stravesta-teal/20">
-      <div className="grid lg:grid-cols-2 gap-8">
-        {/* Trading Journal */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="bg-stravesta-teal/20 p-2 rounded-lg">
-              <Brain className="h-6 w-6 text-stravesta-teal" />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-white">Trading Journal</h3>
-              <p className="text-stravesta-lightGray text-sm">Ihre letzten Trades</p>
-            </div>
-            {isAnalyzing && (
-              <Badge className="ml-auto bg-stravesta-teal/20 text-stravesta-teal border-stravesta-teal/30 animate-pulse">
-                KI analysiert...
-              </Badge>
-            )}
-          </div>
+  const getViewInfo = () => {
+    switch (currentView) {
+      case 0:
+        return {
+          title: "Performance Übersicht",
+          subtitle: "Monatliche Gewinn- und Verlustentwicklung"
+        };
+      case 1:
+        return {
+          title: "Strategie-Verteilung",
+          subtitle: "Erfolg nach Trading-Strategien"
+        };
+      case 2:
+        return {
+          title: "Risk Management",
+          subtitle: "Optimierte Position Sizing"
+        };
+      default:
+        return {
+          title: "Analytics Dashboard",
+          subtitle: "Vollständige Handelsanalyse"
+        };
+    }
+  };
 
-          <div className="space-y-3">
-            {mockTrades.map((trade) => (
-              <Card 
-                key={trade.id}
-                className={`
-                  bg-stravesta-dark/50 border-stravesta-darkGray transition-all duration-500
-                  ${scanningTrade === trade.id ? 'border-stravesta-teal shadow-lg shadow-stravesta-teal/20 scale-105' : ''}
-                  ${currentStep >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-                `}
-                style={{ transitionDelay: `${mockTrades.indexOf(trade) * 200}ms` }}
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-white">{trade.symbol}</span>
-                      <Badge variant={trade.type === 'long' ? 'default' : 'secondary'} className="text-xs">
-                        {trade.type.toUpperCase()}
-                      </Badge>
-                      <span className="text-xs text-stravesta-lightGray">{trade.time}</span>
-                    </div>
-                    <div className={`font-bold ${trade.pnl >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      ${trade.pnl}
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-stravesta-lightGray">{trade.note}</span>
-                    <Badge 
-                      className={`text-xs ${
-                        trade.emotion === 'Discipline' 
-                          ? 'bg-green-500/20 text-green-400 border-green-500/30' 
-                          : 'bg-red-500/20 text-red-400 border-red-500/30'
-                      }`}
-                    >
-                      {trade.emotion}
-                    </Badge>
-                  </div>
-                  {scanningTrade === trade.id && (
-                    <div className="absolute inset-0 bg-stravesta-teal/10 animate-pulse rounded-lg"></div>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
+  const viewInfo = getViewInfo();
+
+  return (
+    <div className="w-full" style={{ height: '600px' }}>
+      {/* Fixed height container */}
+      <div className="bg-stravesta-navy/50 backdrop-blur-sm rounded-2xl border border-stravesta-teal/20 p-6 h-full">
+        {/* Header with fixed height */}
+        <div className="mb-6" style={{ height: '80px' }}>
+          <div className="flex items-center justify-between mb-2">
+            <h4 className="text-xl font-bold text-white">{viewInfo.title}</h4>
+            <div className="px-3 py-1 rounded-full text-sm bg-green-500/20 text-green-400">
+              LIVE DATA
+            </div>
           </div>
+          <p className="text-stravesta-lightGray">{viewInfo.subtitle}</p>
         </div>
 
-        {/* AI Insights */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="bg-gradient-to-r from-stravesta-teal to-blue-500 p-2 rounded-lg">
-              <Brain className="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-white">KI-Analyse</h3>
-              <p className="text-stravesta-lightGray text-sm">Strategische Insights</p>
-            </div>
-          </div>
+        {/* Chart container with fixed dimensions */}
+        <div className="relative" style={{ height: '400px' }}>
+          {currentView === 0 && (
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={performanceData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+                <XAxis 
+                  dataKey="month" 
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: '#B0B0B8', fontSize: 12 }}
+                />
+                <YAxis 
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: '#B0B0B8', fontSize: 12 }}
+                />
+                <Bar dataKey="profit" fill="#17E6C8" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="loss" fill="#ef4444" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
 
-          <div className="space-y-4">
-            {aiInsights.map((insight, index) => (
-              <Card 
-                key={index}
-                className={`
-                  ${insight.bgColor} ${insight.borderColor} border-2 transition-all duration-700
-                  ${visibleInsights.includes(index) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}
-                `}
-                style={{ transitionDelay: `${index * 300}ms` }}
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-3">
-                    <div className={`${insight.color} mt-1`}>
-                      {insight.icon}
-                    </div>
-                    <div className="flex-1">
-                      <h4 className={`font-semibold ${insight.color} mb-1`}>
-                        {insight.title}
-                      </h4>
-                      <p className="text-stravesta-lightGray text-sm leading-relaxed">
-                        {insight.message}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          {currentView === 1 && (
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={strategyData}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={120}
+                  innerRadius={60}
+                  dataKey="value"
+                  startAngle={90}
+                  endAngle={450}
+                >
+                  {strategyData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+          )}
 
-            {currentStep >= 3 && visibleInsights.length === aiInsights.length && (
-              <div className="text-center pt-4 animate-fade-in">
-                <div className="bg-gradient-to-r from-stravesta-teal/20 to-blue-500/20 rounded-lg p-4 border border-stravesta-teal/30">
-                  <h4 className="text-white font-semibold mb-2">🎯 Performance-Boost erkannt!</h4>
-                  <p className="text-stravesta-lightGray text-sm">
-                    Mit diesen Optimierungen könnten Sie Ihre Winrate um <span className="text-stravesta-teal font-bold">35%</span> steigern
-                  </p>
+          {currentView === 2 && (
+            <div className="h-full flex items-center justify-center">
+              <div className="grid grid-cols-2 gap-8 w-full max-w-md">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-stravesta-teal mb-2">2.5%</div>
+                  <div className="text-stravesta-lightGray text-sm">Risk per Trade</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-green-400 mb-2">1:3</div>
+                  <div className="text-stravesta-lightGray text-sm">Risk/Reward</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-yellow-400 mb-2">68%</div>
+                  <div className="text-stravesta-lightGray text-sm">Win Rate</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-stravesta-teal mb-2">15%</div>
+                  <div className="text-stravesta-lightGray text-sm">Monthly ROI</div>
                 </div>
               </div>
-            )}
-          </div>
-        </div>
-      </div>
+            </div>
+          )}
 
-      {/* Progress Indicator */}
-      <div className="flex justify-center mt-8 space-x-2">
-        {[0, 1, 2, 3].map((step) => (
-          <div
-            key={step}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              currentStep >= step ? 'bg-stravesta-teal' : 'bg-stravesta-darkGray'
-            }`}
-          />
-        ))}
+          {/* Strategy labels for pie chart */}
+          {currentView === 1 && (
+            <div className="absolute bottom-4 left-4 space-y-2">
+              {strategyData.map((strategy, index) => (
+                <div key={index} className="flex items-center space-x-2">
+                  <div 
+                    className="w-3 h-3 rounded-full" 
+                    style={{ backgroundColor: strategy.color }}
+                  />
+                  <span className="text-sm text-stravesta-lightGray">
+                    {strategy.name}: {strategy.value}%
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Bottom info with fixed height */}
+        <div className="mt-4 text-center" style={{ height: '60px' }}>
+          <div className="flex justify-center space-x-1 mb-2">
+            {[0, 1, 2].map((view) => (
+              <div
+                key={view}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  view === currentView ? 'bg-stravesta-teal' : 'bg-gray-600'
+                }`}
+              />
+            ))}
+          </div>
+          <p className="text-sm text-stravesta-lightGray">
+            Automatische Performance-Analyse und Optimierung
+          </p>
+        </div>
       </div>
     </div>
   );

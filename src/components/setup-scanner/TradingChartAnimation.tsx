@@ -1,299 +1,193 @@
 
-import React, { useEffect, useRef, useState } from 'react';
-import { TrendingUp, AlertTriangle, Target } from 'lucide-react';
-
-interface CandleData {
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-  timestamp: number;
-}
+import React, { useEffect, useState } from 'react';
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, ReferenceLine } from 'recharts';
 
 const TradingChartAnimation = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [animationStep, setAnimationStep] = useState(0);
-  const [missedEntry, setMissedEntry] = useState(false);
-  const [animationComplete, setAnimationComplete] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [animationData, setAnimationData] = useState<any[]>([]);
 
-  // Realistic trading data based on the uploaded image
-  const candleData: CandleData[] = [
-    { open: 1.0850, high: 1.0870, low: 1.0845, close: 1.0865, timestamp: 1 },
-    { open: 1.0865, high: 1.0880, low: 1.0860, close: 1.0875, timestamp: 2 },
-    { open: 1.0875, high: 1.0885, low: 1.0870, close: 1.0880, timestamp: 3 },
-    { open: 1.0880, high: 1.0890, low: 1.0875, close: 1.0885, timestamp: 4 },
-    { open: 1.0885, high: 1.0895, low: 1.0880, close: 1.0890, timestamp: 5 },
-    { open: 1.0890, high: 1.0900, low: 1.0885, close: 1.0895, timestamp: 6 },
-    { open: 1.0895, high: 1.0905, low: 1.0890, close: 1.0900, timestamp: 7 },
-    { open: 1.0900, high: 1.0920, low: 1.0895, close: 1.0915, timestamp: 8 },
-    { open: 1.0915, high: 1.0925, low: 1.0910, close: 1.0920, timestamp: 9 },
-    { open: 1.0920, high: 1.0935, low: 1.0915, close: 1.0930, timestamp: 10 },
+  // Base chart data
+  const baseData = [
+    { time: '09:00', price: 1850 },
+    { time: '10:00', price: 1847 },
+    { time: '11:00', price: 1852 },
+    { time: '12:00', price: 1849 },
+    { time: '13:00', price: 1855 },
+    { time: '14:00', price: 1858 },
+    { time: '15:00', price: 1862 },
+    { time: '16:00', price: 1865 },
   ];
 
-  const fibLevels = [
-    { level: 0.618, price: 1.0895, label: '61.8%' },
-    { level: 0.786, price: 1.0885, label: '78.6%' },
-    { level: 0.886, price: 1.0875, label: '88.6%' },
-  ];
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentStep((prev) => (prev + 1) % 4);
+    }, 2000);
 
-  const entryPoint = { price: 1.0890, timestamp: 6 };
-  const targetPoint = { price: 1.0930, timestamp: 10 };
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    // Always show the same data, just highlight different aspects
+    setAnimationData(baseData);
+  }, [currentStep]);
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Set canvas size
-    canvas.width = 600;
-    canvas.height = 400;
-
-    const drawChart = () => {
-      // Clear canvas
-      ctx.fillStyle = '#0A1929';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Chart boundaries
-      const chartLeft = 60;
-      const chartRight = canvas.width - 40;
-      const chartTop = 40;
-      const chartBottom = canvas.height - 60;
-      const chartWidth = chartRight - chartLeft;
-      const chartHeight = chartBottom - chartTop;
-
-      // Price range
-      const minPrice = 1.0840;
-      const maxPrice = 1.0940;
-      const priceRange = maxPrice - minPrice;
-
-      // Helper functions
-      const priceToY = (price: number) => chartBottom - ((price - minPrice) / priceRange) * chartHeight;
-      const timestampToX = (timestamp: number) => chartLeft + ((timestamp - 1) / 9) * chartWidth;
-
-      // Draw grid
-      ctx.strokeStyle = '#1A2A3A';
-      ctx.lineWidth = 1;
-      for (let i = 0; i <= 5; i++) {
-        const y = chartTop + (i * chartHeight) / 5;
-        ctx.beginPath();
-        ctx.moveTo(chartLeft, y);
-        ctx.lineTo(chartRight, y);
-        ctx.stroke();
-      }
-
-      // Draw fibonacci levels
-      ctx.lineWidth = 1;
-      fibLevels.forEach((fib, index) => {
-        if (animationStep > 2) {
-          ctx.strokeStyle = index === 0 ? '#17E6C8' : index === 1 ? '#FFB800' : '#FF6B6B';
-          ctx.setLineDash([5, 5]);
-          const y = priceToY(fib.price);
-          ctx.beginPath();
-          ctx.moveTo(chartLeft, y);
-          ctx.lineTo(chartRight, y);
-          ctx.stroke();
-
-          // Fib labels
-          ctx.fillStyle = ctx.strokeStyle;
-          ctx.font = '12px Arial';
-          ctx.fillText(fib.label, chartRight + 5, y + 4);
-          ctx.fillText(fib.price.toFixed(4), chartRight + 5, y - 8);
-        }
-      });
-      ctx.setLineDash([]);
-
-      // Draw candlesticks
-      const visibleCandles = Math.min(animationStep + 1, candleData.length);
-      for (let i = 0; i < visibleCandles; i++) {
-        const candle = candleData[i];
-        const x = timestampToX(candle.timestamp);
-        const openY = priceToY(candle.open);
-        const closeY = priceToY(candle.close);
-        const highY = priceToY(candle.high);
-        const lowY = priceToY(candle.low);
-
-        const candleWidth = 12;
-        const isGreen = candle.close > candle.open;
-
-        // Draw wick
-        ctx.strokeStyle = isGreen ? '#00C851' : '#FF4444';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(x, highY);
-        ctx.lineTo(x, lowY);
-        ctx.stroke();
-
-        // Draw body
-        ctx.fillStyle = isGreen ? '#00C851' : '#FF4444';
-        const bodyHeight = Math.abs(closeY - openY);
-        const bodyTop = Math.min(openY, closeY);
-        ctx.fillRect(x - candleWidth/2, bodyTop, candleWidth, bodyHeight || 1);
-      }
-
-      // Draw entry point
-      if (animationStep >= 6) {
-        const entryX = timestampToX(entryPoint.timestamp);
-        const entryY = priceToY(entryPoint.price);
-
-        // Entry arrow
-        ctx.fillStyle = missedEntry ? '#FF4444' : '#17E6C8';
-        ctx.beginPath();
-        ctx.moveTo(entryX, entryY);
-        ctx.lineTo(entryX - 8, entryY - 12);
-        ctx.lineTo(entryX + 8, entryY - 12);
-        ctx.closePath();
-        ctx.fill();
-
-        // Entry label
-        ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 12px Arial';
-        ctx.fillText(missedEntry ? 'MISSED!' : 'ENTRY', entryX - 20, entryY - 20);
-        ctx.font = '10px Arial';
-        ctx.fillText(entryPoint.price.toFixed(4), entryX - 15, entryY - 8);
-      }
-
-      // Draw target point
-      if (animationStep >= 10) {
-        const targetX = timestampToX(targetPoint.timestamp);
-        const targetY = priceToY(targetPoint.price);
-
-        ctx.strokeStyle = '#00C851';
-        ctx.lineWidth = 2;
-        ctx.setLineDash([3, 3]);
-        ctx.beginPath();
-        ctx.moveTo(timestampToX(entryPoint.timestamp), priceToY(entryPoint.price));
-        ctx.lineTo(targetX, targetY);
-        ctx.stroke();
-        ctx.setLineDash([]);
-
-        // Target label
-        ctx.fillStyle = '#00C851';
-        ctx.font = 'bold 12px Arial';
-        ctx.fillText('TARGET', targetX - 25, targetY - 15);
-        ctx.font = '10px Arial';
-        ctx.fillText('+40 PIPS', targetX - 20, targetY - 5);
-      }
-
-      // Price labels
-      ctx.fillStyle = '#E0E5EB';
-      ctx.font = '10px Arial';
-      for (let i = 0; i <= 5; i++) {
-        const price = maxPrice - (i * priceRange) / 5;
-        const y = chartTop + (i * chartHeight) / 5;
-        ctx.fillText(price.toFixed(4), 10, y + 4);
-      }
-    };
-
-    drawChart();
-  }, [animationStep, missedEntry]);
-
-  useEffect(() => {
-    if (animationComplete) return;
-
-    const timer = setInterval(() => {
-      setAnimationStep(prev => {
-        if (prev < 10) {
-          return prev + 1;
-        } else {
-          // Animation reached the end - mark as missed and stop
-          setMissedEntry(true);
-          setAnimationComplete(true);
-          return prev; // Keep the final state
-        }
-      });
-    }, 800);
-
-    // Set missed state after 5 seconds regardless of animation step
-    const missedTimer = setTimeout(() => {
-      if (!animationComplete) {
-        setMissedEntry(true);
-        setAnimationComplete(true);
-      }
-    }, 5000);
-
-    return () => {
-      clearInterval(timer);
-      clearTimeout(missedTimer);
-    };
-  }, [animationComplete]);
-
-  // Reset animation after showing missed state for 3 seconds
-  useEffect(() => {
-    if (missedEntry && animationComplete) {
-      const resetTimer = setTimeout(() => {
-        setAnimationStep(0);
-        setMissedEntry(false);
-        setAnimationComplete(false);
-      }, 3000);
-
-      return () => clearTimeout(resetTimer);
+  const getStepInfo = () => {
+    switch (currentStep) {
+      case 0:
+        return {
+          title: "Normaler Markt",
+          subtitle: "Keine besonderen Signale erkennbar",
+          highlight: null
+        };
+      case 1:
+        return {
+          title: "Fibonacci-Retracement erkannt",
+          subtitle: "61.8% Retracement-Level erreicht",
+          highlight: "fibonacci"
+        };
+      case 2:
+        return {
+          title: "Breakout-Signal identifiziert",
+          subtitle: "Ausbruch über Widerstandslinie",
+          highlight: "breakout"
+        };
+      case 3:
+        return {
+          title: "Setup verpasst!",
+          subtitle: "Der Trade ist bereits gelaufen",
+          highlight: "missed"
+        };
+      default:
+        return {
+          title: "Markt-Analyse",
+          subtitle: "Kontinuierliche Überwachung",
+          highlight: null
+        };
     }
-  }, [missedEntry, animationComplete]);
+  };
+
+  const stepInfo = getStepInfo();
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto">
-      <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-lg p-6 border border-stravesta-teal/20" style={{ minHeight: '500px' }}>
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-stravesta-teal" />
-            <span className="text-white font-semibold">EUR/USD • M15</span>
+    <div className="w-full" style={{ height: '600px' }}>
+      {/* Fixed height container to prevent layout shifts */}
+      <div className="bg-stravesta-navy/50 backdrop-blur-sm rounded-2xl border border-stravesta-teal/20 p-6 h-full">
+        {/* Status header with fixed height */}
+        <div className="mb-6" style={{ height: '80px' }}>
+          <div className="flex items-center justify-between mb-2">
+            <h4 className="text-xl font-bold text-white">{stepInfo.title}</h4>
+            <div className={`px-3 py-1 rounded-full text-sm transition-all duration-500 ${
+              currentStep === 3 
+                ? 'bg-red-500/20 text-red-400' 
+                : currentStep > 0 
+                  ? 'bg-green-500/20 text-green-400'
+                  : 'bg-gray-500/20 text-gray-400'
+            }`}>
+              {currentStep === 3 ? 'VERPASST' : currentStep > 0 ? 'SIGNAL' : 'ÜBERWACHUNG'}
+            </div>
           </div>
-          <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${
-            missedEntry 
-              ? 'bg-red-500/20 text-red-400' 
-              : 'bg-stravesta-teal/20 text-stravesta-teal'
-          }`}>
-            {missedEntry ? (
-              <>
-                <AlertTriangle className="h-4 w-4" />
-                <span className="text-sm font-medium">Setup Missed</span>
-              </>
-            ) : (
-              <>
-                <Target className="h-4 w-4" />
-                <span className="text-sm font-medium">Setup Detected</span>
-              </>
+          <p className="text-stravesta-lightGray">{stepInfo.subtitle}</p>
+        </div>
+
+        {/* Chart container with fixed dimensions */}
+        <div className="relative" style={{ height: '400px' }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={animationData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+              <XAxis 
+                dataKey="time" 
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: '#B0B0B8', fontSize: 12 }}
+              />
+              <YAxis 
+                domain={['dataMin - 5', 'dataMax + 5']}
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: '#B0B0B8', fontSize: 12 }}
+              />
+              
+              {/* Fibonacci level */}
+              {stepInfo.highlight === 'fibonacci' && (
+                <ReferenceLine 
+                  y={1856} 
+                  stroke="#FFB800" 
+                  strokeWidth={2}
+                  strokeDasharray="5 5"
+                  label={{ value: "61.8% Fibonacci", position: "top", fill: "#FFB800" }}
+                />
+              )}
+              
+              {/* Resistance level */}
+              {stepInfo.highlight === 'breakout' && (
+                <ReferenceLine 
+                  y={1860} 
+                  stroke="#17E6C8" 
+                  strokeWidth={2}
+                  strokeDasharray="5 5"
+                  label={{ value: "Widerstand", position: "top", fill: "#17E6C8" }}
+                />
+              )}
+              
+              <Line
+                type="monotone"
+                dataKey="price"
+                stroke={currentStep === 3 ? "#ef4444" : currentStep > 0 ? "#17E6C8" : "#6B7280"}
+                strokeWidth={3}
+                dot={false}
+                activeDot={{ 
+                  r: 6, 
+                  fill: currentStep === 3 ? "#ef4444" : currentStep > 0 ? "#17E6C8" : "#6B7280",
+                  strokeWidth: 0
+                }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+
+          {/* Overlay indicators with fixed positioning */}
+          <div className="absolute inset-0 pointer-events-none">
+            {stepInfo.highlight === 'fibonacci' && (
+              <div className="absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2">
+                <div className="bg-yellow-500/20 border border-yellow-500/40 rounded-lg p-2 backdrop-blur-sm">
+                  <div className="text-yellow-400 text-sm font-medium">Fibonacci 61.8%</div>
+                </div>
+              </div>
+            )}
+            
+            {stepInfo.highlight === 'breakout' && (
+              <div className="absolute top-1/4 right-1/4 transform translate-x-1/2 -translate-y-1/2">
+                <div className="bg-stravesta-teal/20 border border-stravesta-teal/40 rounded-lg p-2 backdrop-blur-sm">
+                  <div className="text-stravesta-teal text-sm font-medium">Breakout!</div>
+                </div>
+              </div>
+            )}
+            
+            {stepInfo.highlight === 'missed' && (
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <div className="bg-red-500/20 border border-red-500/40 rounded-lg p-3 backdrop-blur-sm">
+                  <div className="text-red-400 text-lg font-bold">+15% verpasst!</div>
+                </div>
+              </div>
             )}
           </div>
         </div>
 
-        <div style={{ height: '400px' }}>
-          <canvas 
-            ref={canvasRef}
-            className="w-full h-auto border border-stravesta-teal/10 rounded"
-            style={{ maxWidth: '100%', height: 'auto' }}
-          />
-        </div>
-
-        <div className="mt-4 grid grid-cols-3 gap-4 text-center">
-          <div className="bg-stravesta-dark/50 rounded p-3">
-            <div className="text-stravesta-teal text-lg font-bold">78.6%</div>
-            <div className="text-stravesta-lightGray text-xs">Fibonacci Entry</div>
+        {/* Bottom info with fixed height */}
+        <div className="mt-4 text-center" style={{ height: '60px' }}>
+          <div className="flex justify-center space-x-1">
+            {[0, 1, 2, 3].map((step) => (
+              <div
+                key={step}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  step === currentStep ? 'bg-stravesta-teal' : 'bg-gray-600'
+                }`}
+              />
+            ))}
           </div>
-          <div className="bg-stravesta-dark/50 rounded p-3">
-            <div className="text-green-400 text-lg font-bold">+40</div>
-            <div className="text-stravesta-lightGray text-xs">Pips Potential</div>
-          </div>
-          <div className="bg-stravesta-dark/50 rounded p-3">
-            <div className={`text-lg font-bold ${missedEntry ? 'text-red-400' : 'text-stravesta-teal'}`}>
-              {missedEntry ? 'MISSED' : 'ACTIVE'}
-            </div>
-            <div className="text-stravesta-lightGray text-xs">Status</div>
-          </div>
+          <p className="text-sm text-stravesta-lightGray mt-2">
+            Stravesta erkennt profitable Setups automatisch
+          </p>
         </div>
       </div>
-
-      {missedEntry && (
-        <div className="absolute inset-0 bg-red-500/10 rounded-lg border-2 border-red-500/50 flex items-center justify-center backdrop-blur-sm">
-          <div className="text-center">
-            <AlertTriangle className="h-12 w-12 text-red-400 mx-auto mb-2" />
-            <div className="text-red-400 font-bold text-lg">Setup Verpasst!</div>
-            <div className="text-red-300 text-sm">40 Pips Gewinn entgangen</div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
