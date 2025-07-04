@@ -8,7 +8,9 @@ const Navigation = () => {
   
   const navItems = [
     { label: t('nav.home'), href: '#home' },
-    { label: t('nav.features'), href: '#features' },
+    { label: 'KI-Analyse', href: '#ki-analyse' },
+    { label: 'Setup Scanner', href: '#setup-scanner' },
+    { label: 'Journal Analytics', href: '#journal-analytics' },
     { label: t('nav.about'), href: '#about' },
     { label: t('nav.contact'), href: '#early-access' },
   ];
@@ -45,12 +47,12 @@ const Navigation = () => {
           </div>
           
           {/* Navigation Items - Right aligned */}
-          <div className="hidden md:flex items-center space-x-2">
+          <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => (
               <button 
                 key={item.href} 
                 onClick={() => scrollToSection(item.href)}
-                className="px-6 py-3 rounded-lg text-base font-medium transition-all duration-200 text-stravesta-lightGray hover:text-white hover:bg-stravesta-teal/10 hover:shadow-sm relative group"
+                className="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-stravesta-lightGray hover:text-white hover:bg-stravesta-teal/10 hover:shadow-sm relative group"
               >
                 {item.label}
                 <span className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-stravesta-teal transition-all duration-200 group-hover:w-full"></span>

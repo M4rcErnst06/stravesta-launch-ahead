@@ -2,12 +2,14 @@
 import React, { useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
-import GroupedFeatureSection from '@/components/GroupedFeatureSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import SetupScannerSection from '@/components/setup-scanner/SetupScannerSection';
 import TradeAnalyticsSection from '@/components/trading-journal/TradeAnalyticsSection';
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Brain, Activity, BarChart3 } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 const IndexContent = () => {
   const { t } = useLanguage();
@@ -34,7 +36,7 @@ const IndexContent = () => {
   }, []);
 
   useEffect(() => {
-    // Animation for About Section
+    // Animation for sections
     const observerOptions = {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
@@ -55,9 +57,6 @@ const IndexContent = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Empty featureGroups array to remove the sections
-  const featureGroups: any[] = [];
-
   return (
     <div className="min-h-screen bg-stravesta-dark">
       {/* Static Background */}
@@ -74,32 +73,82 @@ const IndexContent = () => {
         <section id="home" className="pt-20 bg-stravesta-dark">
           <HeroSection />
         </section>
+
+        {/* KI-Analyse in Aktion Section */}
+        <section id="ki-analyse" className="py-20 scroll-mt-20 bg-stravesta-dark">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16" data-animate>
+              <div className="flex justify-center mb-6">
+                <div className="bg-stravesta-teal/10 p-4 rounded-full">
+                  <Brain className="h-12 w-12 text-stravesta-teal" />
+                </div>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">
+                KI-Analyse in Aktion
+              </h2>
+              <p className="text-xl text-stravesta-lightGray max-w-3xl mx-auto mb-4">
+                Erleben Sie live, wie unsere künstliche Intelligenz Ihre Trading-Daten analysiert und wertvolle Erkenntnisse liefert
+              </p>
+              <Badge className="bg-stravesta-teal/20 text-stravesta-teal border-stravesta-teal/30">
+                Live-Demo • Echtzeit-Analyse
+              </Badge>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-300">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <Activity className="h-5 w-5 text-stravesta-teal" />
+                    Pattern-Erkennung
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-stravesta-lightGray text-sm">
+                    Automatische Identifikation von profitablen Trading-Mustern in Ihren historischen Daten
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-300">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <BarChart3 className="h-5 w-5 text-stravesta-teal" />
+                    Performance-Optimierung
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-stravesta-lightGray text-sm">
+                    KI-basierte Empfehlungen zur Verbesserung Ihrer Trading-Performance
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-300">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <Brain className="h-5 w-5 text-stravesta-teal" />
+                    Risiko-Management
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-stravesta-lightGray text-sm">
+                    Intelligente Analyse Ihres Risikoprofils mit personalisierten Handlungsempfehlungen
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
         
-        {/* Setup Scanner Section */}
+        {/* KI Setup Scanner Section */}
         <section id="setup-scanner" className="scroll-mt-20">
           <SetupScannerSection />
         </section>
         
-        {/* Trading Journal Analytics Section */}
+        {/* KI Trading Journal Analytics Section */}
         <section id="journal-analytics" className="scroll-mt-20">
           <TradeAnalyticsSection />
         </section>
-        
-        {/* Features Section - Hidden since featureGroups is empty */}
-        {featureGroups.length > 0 && (
-          <section id="features" className="scroll-mt-20 bg-stravesta-dark">
-            <div className="flex justify-center">
-              <div className="w-full max-w-7xl">
-                <GroupedFeatureSection
-                  title={t('features.title')}
-                  subtitle={t('features.subtitle')}
-                  featureGroups={featureGroups}
-                  className="bg-stravesta-dark"
-                />
-              </div>
-            </div>
-          </section>
-        )}
 
         {/* About Section */}
         <section id="about" className="py-20 scroll-mt-20 bg-stravesta-dark">
