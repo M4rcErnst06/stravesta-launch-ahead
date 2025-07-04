@@ -4,6 +4,7 @@ import TradingChartAnimation from './TradingChartAnimation';
 import ScannerHeader from './ScannerHeader';
 import ScannerProblemStatement from './ScannerProblemStatement';
 import ScannerFeatures from './ScannerFeatures';
+import ScannerStats from './ScannerStats';
 
 const SetupScannerSection = () => {
   return (
@@ -34,6 +35,7 @@ const SetupScannerSection = () => {
 
         <ScannerProblemStatement />
         <ScannerFeatures />
+        <ScannerStats />
       </div>
     </section>
   );
