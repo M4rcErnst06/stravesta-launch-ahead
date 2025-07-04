@@ -33,11 +33,11 @@ const Navigation = () => {
               onClick={() => scrollToSection('#home')} 
               className="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200"
             >
-              <div className="w-10 h-10 flex items-center justify-center">
+              <div className="w-14 h-14 flex items-center justify-center">
                 <img 
                   src="/lovable-uploads/7aae54dd-180b-4e05-8895-7cfa403b0a36.png" 
                   alt="Stravesta Logo" 
-                  className="w-8 h-8 object-contain"
+                  className="w-12 h-12 object-contain"
                 />
               </div>
               <span className="text-3xl font-bold text-gradient">Stravesta</span>
