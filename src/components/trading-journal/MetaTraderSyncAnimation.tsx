@@ -35,7 +35,7 @@ const MetaTraderSyncAnimation = () => {
   const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([]);
   const [showAnalysis, setShowAnalysis] = useState(false);
 
-  // Mock MetaTrader trades based on the screenshot
+  // Limit to 3 trades to maintain consistent size
   const metaTraderTrades: MetaTraderTrade[] = [
     {
       ticket: '2024.01.15 08:30:15',
@@ -69,17 +69,6 @@ const MetaTraderSyncAnimation = () => {
       sl: 0.8250,
       tp: 0.8220,
       profit: 2.46
-    },
-    {
-      ticket: '2024.01.15 20:30:21',
-      time: '20:30:21',
-      type: 'sell',
-      size: 1.90,
-      symbol: 'USDCAD',
-      price: 1.3456,
-      sl: 1.3470,
-      tp: 1.3440,
-      profit: 58.69
     }
   ];
 
@@ -160,7 +149,7 @@ const MetaTraderSyncAnimation = () => {
   return (
     <div className="max-w-7xl mx-auto bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-stravesta-teal/20">
       {/* Fixed height container to prevent layout shifts */}
-      <div className="grid lg:grid-cols-2 gap-8 min-h-[600px]">
+      <div className="grid lg:grid-cols-2 gap-8 h-[600px]">
         {/* MetaTrader History */}
         <div className="space-y-4">
           <div className="flex items-center gap-3 mb-6">
@@ -185,7 +174,7 @@ const MetaTraderSyncAnimation = () => {
 
           {/* MetaTrader Table - Fixed height container */}
           <div className={`
-            bg-stravesta-dark/80 rounded-lg border border-stravesta-darkGray p-4 transition-all duration-700 h-80 overflow-hidden
+            bg-stravesta-dark/80 rounded-lg border border-stravesta-darkGray p-4 transition-all duration-700 h-64
             ${currentStep >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
           `}>
             <div className="space-y-2">
@@ -250,13 +239,13 @@ const MetaTraderSyncAnimation = () => {
             )}
           </div>
 
-          {/* Fixed height scrollable container for journal entries */}
-          <div className="h-80 overflow-y-auto space-y-3 pr-2">
+          {/* Fixed height container for journal entries without scroll */}
+          <div className="h-64 space-y-3 overflow-hidden">
             {journalEntries.map((entry, index) => (
               <Card 
                 key={entry.id}
                 className={`
-                  bg-stravesta-dark/50 border-stravesta-darkGray transition-all duration-700 flex-shrink-0
+                  bg-stravesta-dark/50 border-stravesta-darkGray transition-all duration-700
                   ${entry.status === 'syncing' ? 'border-stravesta-teal shadow-lg shadow-stravesta-teal/20 scale-105' : ''}
                   opacity-0 translate-x-8 animate-[fade-in_0.5s_ease-out_forwards]
                 `}
@@ -295,7 +284,7 @@ const MetaTraderSyncAnimation = () => {
             ))}
 
             {showAnalysis && (
-              <Card className="bg-gradient-to-r from-stravesta-teal/10 to-blue-500/10 border-stravesta-teal/30 border-2 animate-fade-in flex-shrink-0">
+              <Card className="bg-gradient-to-r from-stravesta-teal/10 to-blue-500/10 border-stravesta-teal/30 border-2 animate-fade-in">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="bg-stravesta-teal/20 p-2 rounded-lg">
@@ -303,7 +292,7 @@ const MetaTraderSyncAnimation = () => {
                     </div>
                     <div>
                       <h4 className="font-bold text-white">KI-Analyse abgeschlossen</h4>
-                      <p className="text-stravesta-lightGray text-sm">4 Trades analysiert</p>
+                      <p className="text-stravesta-lightGray text-sm">3 Trades analysiert</p>
                     </div>
                   </div>
                   
@@ -311,19 +300,19 @@ const MetaTraderSyncAnimation = () => {
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-green-400"></div>
                       <span className="text-stravesta-lightGray">
-                        <span className="text-green-400 font-medium">USDCAD</span> Trade zeigt beste Performance (+$58.69)
+                        <span className="text-green-400 font-medium">XAUUSD</span> Trade zeigt beste Performance (+$4.72)
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-stravesta-teal"></div>
                       <span className="text-stravesta-lightGray">
-                        <span className="text-stravesta-teal font-medium">Commodity Focus</span> erkannt - 75% Ihrer Trades
+                        <span className="text-stravesta-teal font-medium">Commodity Focus</span> erkannt - 67% Ihrer Trades
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-blue-400"></div>
                       <span className="text-stravesta-lightGray">
-                        <span className="text-blue-400 font-medium">Session-Verteilung:</span> London & NY Sessions bevorzugt
+                        <span className="text-blue-400 font-medium">Session-Verteilung:</span> London Sessions bevorzugt
                       </span>
                     </div>
                   </div>
