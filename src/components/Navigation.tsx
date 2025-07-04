@@ -35,7 +35,7 @@ const Navigation = () => {
             >
               <div className="w-12 h-12 flex items-center justify-center">
                 <img 
-                  src="/lovable-uploads/7aae54dd-180b-4e05-8895-7cfa403b0a36.png" 
+                  src="/lovable-uploads/4df5fbb0-08e5-4f11-8f96-00d559dc86e8.png" 
                   alt="Stravesta Logo" 
                   className="w-10 h-10 object-contain"
                 />
