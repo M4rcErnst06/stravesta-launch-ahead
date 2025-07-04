@@ -27,17 +27,17 @@ const Navigation = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-stravesta-dark/98 backdrop-blur-lg border-b border-stravesta-teal/10 shadow-lg">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="flex justify-between items-center h-20">
-          {/* Logo Section - More to the left */}
+          {/* Logo Section - Logo links vom Text */}
           <div className="flex items-center -ml-4">
             <button 
               onClick={() => scrollToSection('#home')} 
-              className="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200"
+              className="flex items-center space-x-2 hover:opacity-80 transition-opacity duration-200"
             >
-              <div className="w-14 h-14 flex items-center justify-center">
+              <div className="w-12 h-12 flex items-center justify-center">
                 <img 
                   src="/lovable-uploads/7aae54dd-180b-4e05-8895-7cfa403b0a36.png" 
                   alt="Stravesta Logo" 
-                  className="w-12 h-12 object-contain"
+                  className="w-10 h-10 object-contain"
                 />
               </div>
               <span className="text-3xl font-bold text-gradient">Stravesta</span>
