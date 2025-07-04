@@ -1,10 +1,12 @@
+
 import React, { useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import GroupedFeatureSection from '@/components/GroupedFeatureSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
-import StackedCardsSection from '@/components/stacked-cards/StackedCardsSection';
+import SetupScannerSection from '@/components/setup-scanner/SetupScannerSection';
+import TradeAnalyticsSection from '@/components/trading-journal/TradeAnalyticsSection';
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 
 const IndexContent = () => {
@@ -73,9 +75,14 @@ const IndexContent = () => {
           <HeroSection />
         </section>
         
-        {/* NEW: Stacked Cards Section replacing the old individual sections */}
-        <section id="stacked-features" className="scroll-mt-20">
-          <StackedCardsSection />
+        {/* Setup Scanner Section */}
+        <section id="setup-scanner" className="scroll-mt-20">
+          <SetupScannerSection />
+        </section>
+        
+        {/* Trading Journal Analytics Section */}
+        <section id="journal-analytics" className="scroll-mt-20">
+          <TradeAnalyticsSection />
         </section>
         
         {/* Features Section - Hidden since featureGroups is empty */}
