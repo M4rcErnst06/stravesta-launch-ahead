@@ -20,7 +20,7 @@ const Footer = () => {
           <div className="text-center mb-8">
             <h3 className="text-2xl font-bold text-gradient mb-4">{t('footer.title')}</h3>
             <p className="text-stravesta-lightGray text-lg mb-6">
-              {t('footer.tagline')}
+              For traders and investors who aim higher.
             </p>
           </div>
 
@@ -38,13 +38,6 @@ const Footer = () => {
                 {social.icon}
               </a>
             ))}
-          </div>
-
-          {/* Contact Information */}
-          <div className="text-center space-y-2 mb-8">
-            <p className="text-stravesta-lightGray">
-              <strong className="text-white">Contact:</strong> contact@stravesta.com
-            </p>
           </div>
 
           {/* Divider */}
