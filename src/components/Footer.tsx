@@ -1,17 +1,15 @@
 
 import React from 'react';
-import { Facebook, Instagram, Linkedin, Twitter, Mail } from 'lucide-react';
+import { Instagram, Linkedin, Mail } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const Footer = () => {
   const { t } = useLanguage();
   
   const socialLinks = [
-    { icon: <Facebook className="h-5 w-5" />, href: "#", label: "Facebook" },
-    { icon: <Instagram className="h-5 w-5" />, href: "#", label: "Instagram" },
-    { icon: <Linkedin className="h-5 w-5" />, href: "#", label: "LinkedIn" },
-    { icon: <Twitter className="h-5 w-5" />, href: "#", label: "Twitter" },
-    { icon: <Mail className="h-5 w-5" />, href: "mailto:kontakt@stravesta.com", label: "E-Mail" },
+    { icon: <Instagram className="h-5 w-5" />, href: "https://www.instagram.com/stravesta_official", label: "Instagram" },
+    { icon: <Linkedin className="h-5 w-5" />, href: "https://www.linkedin.com/company/stravesta/", label: "LinkedIn" },
+    { icon: <Mail className="h-5 w-5" />, href: "mailto:contact@stravesta.com", label: "E-Mail" },
   ];
 
   return (
@@ -32,6 +30,8 @@ const Footer = () => {
               <a
                 key={index}
                 href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center justify-center w-12 h-12 rounded-full bg-stravesta-teal/10 text-stravesta-teal hover:bg-stravesta-teal hover:text-black transition-all duration-300 hover:scale-110"
                 aria-label={social.label}
               >
@@ -43,7 +43,7 @@ const Footer = () => {
           {/* Contact Information */}
           <div className="text-center space-y-2 mb-8">
             <p className="text-stravesta-lightGray">
-              <strong className="text-white">Contact:</strong> kontakt@stravesta.com
+              <strong className="text-white">Contact:</strong> contact@stravesta.com
             </p>
           </div>
 
