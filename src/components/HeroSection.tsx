@@ -27,14 +27,17 @@ const HeroSection = () => {
 
   return (
     <section className="min-h-screen bg-stravesta-dark bg-gradient-to-br from-stravesta-dark via-stravesta-navy to-stravesta-dark relative overflow-hidden flex items-center">
-      {/* Animated Trading Chart Background - Make it more visible */}
+      {/* Animated Trading Chart Background - Much more visible now */}
       <div className="absolute inset-0 z-0">
         <AnimatedTradingChart />
       </div>
       
+      {/* Subtle overlay to ensure text readability */}
+      <div className="absolute inset-0 z-5 bg-gradient-to-br from-stravesta-dark/80 via-stravesta-navy/70 to-stravesta-dark/80"></div>
+      
       {/* Additional subtle background effects */}
-      <div className="absolute top-20 left-10 w-64 h-64 bg-stravesta-teal/8 rounded-full blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-stravesta-teal/8 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute top-20 left-10 w-64 h-64 bg-stravesta-teal/8 rounded-full blur-3xl animate-pulse z-1"></div>
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-stravesta-teal/8 rounded-full blur-3xl animate-pulse z-1"></div>
       
       <div className="relative z-10 container mx-auto px-4 py-20">
         <div className="text-center max-w-4xl mx-auto">
@@ -62,7 +65,7 @@ const HeroSection = () => {
           </div>
 
           {/* Early Access Notification */}
-          <div className="bg-stravesta-navy/60 backdrop-blur-sm rounded-xl p-6 border border-stravesta-teal/30 max-w-xl mx-auto mb-8 animate-slide-in-up">
+          <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-xl p-6 border border-stravesta-teal/30 max-w-xl mx-auto mb-8 animate-slide-in-up">
             <div className="flex items-center justify-center gap-2 mb-3">
               <Rocket className="h-5 w-5 text-stravesta-teal animate-bounce" />
               <h3 className="text-lg font-bold text-white">{t('hero.earlyAccess.title')}</h3>

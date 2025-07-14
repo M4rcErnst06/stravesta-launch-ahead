@@ -39,7 +39,7 @@ const AnimatedTradingChart = () => {
       high,
       low,
       close,
-      x: id * 20,
+      x: id * 25 + 100, // Start from x=100 and space candles by 25 units
       isBullish
     };
   };
@@ -49,7 +49,7 @@ const AnimatedTradingChart = () => {
     const initialCandles: Candle[] = [];
     let price = 100;
     
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 50; i++) {
       const candle = generateCandle(i, price);
       initialCandles.push(candle);
       price = candle.close;
@@ -73,19 +73,19 @@ const AnimatedTradingChart = () => {
         
         // Move all candles to the left and add new one
         const updatedCandles = prevCandles
-          .map(candle => ({ ...candle, x: candle.x - 20 }))
-          .filter(candle => candle.x > -100);
+          .map(candle => ({ ...candle, x: candle.x - 25 }))
+          .filter(candle => candle.x > -50);
         
         return [...updatedCandles, newCandle];
       });
-    }, 800); // Faster updates to see movement better
+    }, 1000); // Update every second
 
     return () => clearInterval(interval);
   }, []);
 
   const renderCandle = (candle: Candle, index: number) => {
     const isGreen = candle.isBullish;
-    const scale = 300; // Scale factor for better visibility
+    const scale = 400; // Scale factor for better visibility
     
     const bodyHeight = Math.abs(candle.close - candle.open) * scale;
     const bodyTop = Math.min(candle.open, candle.close) * scale;
@@ -99,39 +99,39 @@ const AnimatedTradingChart = () => {
       <g key={`${candle.id}-${index}`} className="candle-group">
         {/* Wick (shadow) */}
         <line
-          x1={candle.x + 8}
+          x1={candle.x + 10}
           y1={baselineY - (wickTop - 80 * scale)}
-          x2={candle.x + 8}
+          x2={candle.x + 10}
           y2={baselineY - (wickBottom - 80 * scale)}
           stroke={isGreen ? '#10B981' : '#EF4444'}
           strokeWidth="2"
-          opacity="0.9"
+          opacity="1"
         />
         
         {/* Body */}
         <rect
           x={candle.x}
           y={baselineY - (bodyTop + bodyHeight - 80 * scale)}
-          width="16"
-          height={Math.max(bodyHeight, 3)}
+          width="20"
+          height={Math.max(bodyHeight, 4)}
           fill={isGreen ? '#10B981' : '#EF4444'}
           stroke={isGreen ? '#059669' : '#DC2626'}
           strokeWidth="1"
-          opacity="0.9"
+          opacity="1"
           className="transition-all duration-300"
           rx="2"
         />
         
         {/* Price labels on some candles */}
-        {index % 20 === 0 && (
+        {index % 10 === 0 && (
           <text
-            x={candle.x + 8}
-            y={baselineY - (bodyTop + bodyHeight - 80 * scale) - 10}
+            x={candle.x + 10}
+            y={baselineY - (bodyTop + bodyHeight - 80 * scale) - 15}
             fill={isGreen ? '#10B981' : '#EF4444'}
-            fontSize="10"
+            fontSize="12"
             textAnchor="middle"
             fontFamily="monospace"
-            opacity="0.7"
+            opacity="1"
           >
             ${candle.close.toFixed(2)}
           </text>
@@ -141,20 +141,18 @@ const AnimatedTradingChart = () => {
   };
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ opacity: 0.4 }}>
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ opacity: 0.8 }}>
       <svg
         width="100%"
         height="100%"
-        viewBox="0 0 2000 400"
+        viewBox="0 0 1400 400"
         className="w-full h-full"
-        style={{ 
-          background: 'transparent',
-        }}
+        preserveAspectRatio="xMidYMid slice"
       >
         {/* Grid lines */}
         <defs>
-          <pattern id="grid" width="80" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 80 0 L 0 0 0 40" fill="none" stroke="rgba(16, 185, 129, 0.1)" strokeWidth="1"/>
+          <pattern id="grid" width="50" height="30" patternUnits="userSpaceOnUse">
+            <path d="M 50 0 L 0 0 0 30" fill="none" stroke="rgba(0, 245, 212, 0.2)" strokeWidth="1"/>
           </pattern>
           
           {/* Glow effect */}
@@ -170,14 +168,14 @@ const AnimatedTradingChart = () => {
         <rect width="100%" height="100%" fill="url(#grid)" />
         
         {/* Horizontal price levels */}
-        {[100, 150, 200, 250, 300].map(level => (
+        {[100, 120, 140, 160, 180].map(level => (
           <line
             key={level}
             x1="0"
-            y1={350 - (level - 80) * 3}
-            x2="2000"
-            y2={350 - (level - 80) * 3}
-            stroke="rgba(16, 185, 129, 0.15)"
+            y1={350 - (level - 80) * 4}
+            x2="1400"
+            y2={350 - (level - 80) * 4}
+            stroke="rgba(0, 245, 212, 0.3)"
             strokeWidth="1"
             strokeDasharray="5,5"
           />
@@ -192,24 +190,24 @@ const AnimatedTradingChart = () => {
         <g className="price-indicator">
           <line
             x1="0"
-            y1={350 - (currentPrice - 80) * 3}
-            x2="2000"
-            y2={350 - (currentPrice - 80) * 3}
-            stroke="#10B981"
-            strokeWidth="2"
+            y1={350 - (currentPrice - 80) * 4}
+            x2="1400"
+            y2={350 - (currentPrice - 80) * 4}
+            stroke="#00F5D4"
+            strokeWidth="3"
             strokeDasharray="10,5"
-            opacity="0.8"
+            opacity="1"
             filter="url(#glow)"
           />
           <text
-            x="1800"
-            y={350 - (currentPrice - 80) * 3 - 5}
-            fill="#10B981"
-            fontSize="12"
+            x="1200"
+            y={350 - (currentPrice - 80) * 4 - 10}
+            fill="#00F5D4"
+            fontSize="14"
             fontFamily="monospace"
             fontWeight="bold"
           >
-            ${currentPrice.toFixed(2)}
+            Current: ${currentPrice.toFixed(2)}
           </text>
         </g>
         
@@ -217,19 +215,19 @@ const AnimatedTradingChart = () => {
         <g className="trading-status">
           <rect
             x="50"
-            y="50"
-            width="300"
-            height="60"
+            y="30"
+            width="280"
+            height="50"
             rx="8"
-            fill="rgba(16, 185, 129, 0.1)"
-            stroke="rgba(16, 185, 129, 0.3)"
+            fill="rgba(0, 245, 212, 0.2)"
+            stroke="rgba(0, 245, 212, 0.5)"
             strokeWidth="2"
           />
           <text
             x="70"
-            y="75"
-            fill="#10B981"
-            fontSize="14"
+            y="50"
+            fill="#00F5D4"
+            fontSize="12"
             fontFamily="monospace"
             fontWeight="bold"
           >
@@ -237,13 +235,13 @@ const AnimatedTradingChart = () => {
           </text>
           <text
             x="70"
-            y="95"
-            fill="#10B981"
-            fontSize="11"
+            y="65"
+            fill="#00F5D4"
+            fontSize="10"
             fontFamily="monospace"
-            opacity="0.8"
+            opacity="0.9"
           >
-            Bullish & Bearish Candles Moving
+            Bullish & Bearish Candles
           </text>
         </g>
       </svg>
