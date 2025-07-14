@@ -17,9 +17,8 @@ const AnimatedTradingChart = () => {
 
   // Generate realistic candlestick data
   const generateCandle = (id: number, prevClose: number): Candle => {
-    // Alternate between bullish and bearish with some randomness
-    const isBullish = Math.random() > 0.4; // 60% chance bullish
-    const volatility = 0.02 + Math.random() * 0.03; // 2-5% volatility
+    const isBullish = Math.random() > 0.5;
+    const volatility = 0.015 + Math.random() * 0.025; // 1.5-4% volatility
     
     let open = prevClose;
     let close: number;
@@ -30,8 +29,8 @@ const AnimatedTradingChart = () => {
       close = open * (1 - Math.random() * volatility);
     }
     
-    const high = Math.max(open, close) * (1 + Math.random() * 0.015);
-    const low = Math.min(open, close) * (1 - Math.random() * 0.015);
+    const high = Math.max(open, close) * (1 + Math.random() * 0.01);
+    const low = Math.min(open, close) * (1 - Math.random() * 0.01);
     
     return {
       id,
@@ -39,7 +38,7 @@ const AnimatedTradingChart = () => {
       high,
       low,
       close,
-      x: id * 25 + 100, // Start from x=100 and space candles by 25 units
+      x: id * 15 + 20, // Start from x=20 and space candles by 15 units
       isBullish
     };
   };
@@ -49,7 +48,7 @@ const AnimatedTradingChart = () => {
     const initialCandles: Candle[] = [];
     let price = 100;
     
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 40; i++) {
       const candle = generateCandle(i, price);
       initialCandles.push(candle);
       price = candle.close;
@@ -68,182 +67,141 @@ const AnimatedTradingChart = () => {
         const lastCandle = prevCandles[prevCandles.length - 1];
         const newCandle = generateCandle(lastCandle.id + 1, lastCandle.close);
         
-        // Update current price
         setCurrentPrice(newCandle.close);
         
         // Move all candles to the left and add new one
         const updatedCandles = prevCandles
-          .map(candle => ({ ...candle, x: candle.x - 25 }))
-          .filter(candle => candle.x > -50);
+          .map(candle => ({ ...candle, x: candle.x - 15 }))
+          .filter(candle => candle.x > -30);
         
         return [...updatedCandles, newCandle];
       });
-    }, 1000); // Update every second
+    }, 800); // Update every 800ms
 
     return () => clearInterval(interval);
   }, []);
 
-  const renderCandle = (candle: Candle, index: number) => {
+  const renderCandle = (candle: Candle) => {
     const isGreen = candle.isBullish;
-    const scale = 400; // Scale factor for better visibility
+    const scale = 300; // Scale factor
     
     const bodyHeight = Math.abs(candle.close - candle.open) * scale;
     const bodyTop = Math.min(candle.open, candle.close) * scale;
     const wickTop = candle.high * scale;
     const wickBottom = candle.low * scale;
     
-    const chartHeight = 400;
-    const baselineY = chartHeight - 50;
+    const chartHeight = 250;
+    const baselineY = chartHeight - 30;
     
     return (
-      <g key={`${candle.id}-${index}`} className="candle-group">
-        {/* Wick (shadow) */}
+      <g key={candle.id} className="transition-all duration-500">
+        {/* Wick */}
         <line
-          x1={candle.x + 10}
-          y1={baselineY - (wickTop - 80 * scale)}
-          x2={candle.x + 10}
-          y2={baselineY - (wickBottom - 80 * scale)}
+          x1={candle.x + 6}
+          y1={baselineY - (wickTop - 90 * scale)}
+          x2={candle.x + 6}
+          y2={baselineY - (wickBottom - 90 * scale)}
           stroke={isGreen ? '#10B981' : '#EF4444'}
-          strokeWidth="2"
-          opacity="1"
+          strokeWidth="1.5"
         />
         
         {/* Body */}
         <rect
           x={candle.x}
-          y={baselineY - (bodyTop + bodyHeight - 80 * scale)}
-          width="20"
-          height={Math.max(bodyHeight, 4)}
+          y={baselineY - (bodyTop + bodyHeight - 90 * scale)}
+          width="12"
+          height={Math.max(bodyHeight, 3)}
           fill={isGreen ? '#10B981' : '#EF4444'}
           stroke={isGreen ? '#059669' : '#DC2626'}
           strokeWidth="1"
-          opacity="1"
-          className="transition-all duration-300"
-          rx="2"
+          rx="1"
+          className="transition-all duration-500"
         />
-        
-        {/* Price labels on some candles */}
-        {index % 10 === 0 && (
-          <text
-            x={candle.x + 10}
-            y={baselineY - (bodyTop + bodyHeight - 80 * scale) - 15}
-            fill={isGreen ? '#10B981' : '#EF4444'}
-            fontSize="12"
-            textAnchor="middle"
-            fontFamily="monospace"
-            opacity="1"
-          >
-            ${candle.close.toFixed(2)}
-          </text>
-        )}
       </g>
     );
   };
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ opacity: 0.8 }}>
+    <div className="w-full h-full relative">
       <svg
         width="100%"
         height="100%"
-        viewBox="0 0 1400 400"
+        viewBox="0 0 700 250"
         className="w-full h-full"
         preserveAspectRatio="xMidYMid slice"
       >
         {/* Grid lines */}
         <defs>
-          <pattern id="grid" width="50" height="30" patternUnits="userSpaceOnUse">
-            <path d="M 50 0 L 0 0 0 30" fill="none" stroke="rgba(0, 245, 212, 0.2)" strokeWidth="1"/>
+          <pattern id="chartGrid" width="25" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 25 0 L 0 0 0 20" fill="none" stroke="rgba(0, 245, 212, 0.15)" strokeWidth="0.5"/>
           </pattern>
-          
-          {/* Glow effect */}
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-            <feMerge> 
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
         </defs>
         
-        <rect width="100%" height="100%" fill="url(#grid)" />
+        <rect width="100%" height="100%" fill="url(#chartGrid)" />
         
         {/* Horizontal price levels */}
-        {[100, 120, 140, 160, 180].map(level => (
-          <line
-            key={level}
-            x1="0"
-            y1={350 - (level - 80) * 4}
-            x2="1400"
-            y2={350 - (level - 80) * 4}
-            stroke="rgba(0, 245, 212, 0.3)"
-            strokeWidth="1"
-            strokeDasharray="5,5"
-          />
+        {[95, 100, 105, 110].map(level => (
+          <g key={level}>
+            <line
+              x1="0"
+              y1={220 - (level - 90) * 3}
+              x2="700"
+              y2={220 - (level - 90) * 3}
+              stroke="rgba(0, 245, 212, 0.2)"
+              strokeWidth="0.5"
+              strokeDasharray="3,3"
+            />
+            <text
+              x="10"
+              y={220 - (level - 90) * 3 - 3}
+              fill="rgba(0, 245, 212, 0.6)"
+              fontSize="8"
+              fontFamily="monospace"
+            >
+              ${level}
+            </text>
+          </g>
         ))}
         
         {/* Candlesticks */}
         <g className="candlesticks">
-          {candles.map((candle, index) => renderCandle(candle, index))}
+          {candles.map(candle => renderCandle(candle))}
         </g>
         
-        {/* Current price indicator */}
-        <g className="price-indicator">
-          <line
-            x1="0"
-            y1={350 - (currentPrice - 80) * 4}
-            x2="1400"
-            y2={350 - (currentPrice - 80) * 4}
-            stroke="#00F5D4"
-            strokeWidth="3"
-            strokeDasharray="10,5"
-            opacity="1"
-            filter="url(#glow)"
-          />
-          <text
-            x="1200"
-            y={350 - (currentPrice - 80) * 4 - 10}
-            fill="#00F5D4"
-            fontSize="14"
-            fontFamily="monospace"
-            fontWeight="bold"
-          >
-            Current: ${currentPrice.toFixed(2)}
-          </text>
-        </g>
+        {/* Current price line */}
+        <line
+          x1="0"
+          y1={220 - (currentPrice - 90) * 3}
+          x2="700"
+          y2={220 - (currentPrice - 90) * 3}
+          stroke="#00F5D4"
+          strokeWidth="2"
+          strokeDasharray="5,3"
+          opacity="0.8"
+        />
         
-        {/* Trading status */}
-        <g className="trading-status">
-          <rect
-            x="50"
-            y="30"
-            width="280"
-            height="50"
-            rx="8"
-            fill="rgba(0, 245, 212, 0.2)"
-            stroke="rgba(0, 245, 212, 0.5)"
-            strokeWidth="2"
-          />
-          <text
-            x="70"
-            y="50"
-            fill="#00F5D4"
-            fontSize="12"
-            fontFamily="monospace"
-            fontWeight="bold"
-          >
-            📈 Live Trading Chart
-          </text>
-          <text
-            x="70"
-            y="65"
-            fill="#00F5D4"
-            fontSize="10"
-            fontFamily="monospace"
-            opacity="0.9"
-          >
-            Bullish & Bearish Candles
-          </text>
-        </g>
+        {/* Price display */}
+        <rect
+          x="580"
+          y="15"
+          width="110"
+          height="25"
+          rx="5"
+          fill="rgba(0, 245, 212, 0.2)"
+          stroke="rgba(0, 245, 212, 0.4)"
+          strokeWidth="1"
+        />
+        <text
+          x="635"
+          y="32"
+          fill="#00F5D4"
+          fontSize="10"
+          fontFamily="monospace"
+          fontWeight="bold"
+          textAnchor="middle"
+        >
+          ${currentPrice.toFixed(2)}
+        </text>
       </svg>
     </div>
   );

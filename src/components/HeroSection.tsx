@@ -27,20 +27,19 @@ const HeroSection = () => {
 
   return (
     <section className="min-h-screen bg-stravesta-dark bg-gradient-to-br from-stravesta-dark via-stravesta-navy to-stravesta-dark relative overflow-hidden flex items-center">
-      {/* Animated Trading Chart Background - Much more visible now */}
-      <div className="absolute inset-0 z-0">
-        <AnimatedTradingChart />
-      </div>
-      
-      {/* Subtle overlay to ensure text readability */}
-      <div className="absolute inset-0 z-5 bg-gradient-to-br from-stravesta-dark/80 via-stravesta-navy/70 to-stravesta-dark/80"></div>
-      
-      {/* Additional subtle background effects */}
-      <div className="absolute top-20 left-10 w-64 h-64 bg-stravesta-teal/8 rounded-full blur-3xl animate-pulse z-1"></div>
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-stravesta-teal/8 rounded-full blur-3xl animate-pulse z-1"></div>
+      {/* Background effects */}
+      <div className="absolute top-20 left-10 w-64 h-64 bg-stravesta-teal/8 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-stravesta-teal/8 rounded-full blur-3xl animate-pulse"></div>
       
       <div className="relative z-10 container mx-auto px-4 py-20">
         <div className="text-center max-w-4xl mx-auto">
+          {/* Trading Chart - positioned above the title */}
+          <div className="mb-8 flex justify-center">
+            <div className="w-full max-w-3xl h-64 bg-stravesta-navy/30 rounded-xl border border-stravesta-teal/20 backdrop-blur-sm overflow-hidden">
+              <AnimatedTradingChart />
+            </div>
+          </div>
+
           {/* Main Headline */}
           <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight animate-fade-in">
             <span className="text-white">{t('hero.title')}</span>
