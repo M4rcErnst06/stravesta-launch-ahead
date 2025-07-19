@@ -12,15 +12,17 @@ interface Candle {
 
 const BackgroundChartAnimation = () => {
   const [candles, setCandles] = useState<Candle[]>([]);
-  const [currentPrice, setCurrentPrice] = useState(100);
 
-  // Generate a single bullish candle with more realistic price movements
+  // Generate realistic bullish candle
   const generateBullishCandle = (id: number, prevClose: number): Candle => {
-    const open = prevClose + (Math.random() - 0.5) * 0.2; // Small gap up/down
-    const change = Math.random() * 2 + 0.3; // Always positive change (0.3 - 2.3)
+    const volatility = 0.8;
+    const trend = 0.3; // Upward trend
+    
+    const open = prevClose + (Math.random() - 0.5) * volatility * 0.3;
+    const change = Math.random() * volatility + trend;
     const close = open + change;
-    const high = close + Math.random() * 0.8; // Wick above
-    const low = Math.max(open - Math.random() * 0.5, open - 0.3); // Small wick below, but not below open too much
+    const high = Math.max(open, close) + Math.random() * volatility * 0.5;
+    const low = Math.min(open, close) - Math.random() * volatility * 0.3;
     
     return {
       id,
@@ -28,159 +30,193 @@ const BackgroundChartAnimation = () => {
       high,
       low,
       close,
-      x: id * 12, // Wider spacing between candles
-      isBullish: true
+      x: id * 16,
+      isBullish: close > open
     };
   };
 
-  // Initialize candles across the full screen width
+  // Initialize with realistic chart data
   useEffect(() => {
     const initialCandles: Candle[] = [];
     let price = 100;
     
-    // Create enough candles to fill the screen width plus some extra for smooth scrolling
-    for (let i = 0; i < 120; i++) {
+    for (let i = 0; i < 100; i++) {
       const candle = generateBullishCandle(i, price);
       initialCandles.push(candle);
       price = candle.close;
     }
     
     setCandles(initialCandles);
-    setCurrentPrice(price);
   }, []);
 
-  // Smooth animation loop - slower and more elegant
+  // Smooth animation
   useEffect(() => {
     const interval = setInterval(() => {
       setCandles(prevCandles => {
         const newCandles = [...prevCandles];
         
-        // Move all candles to the left smoothly
+        // Move all candles left
         newCandles.forEach(candle => {
-          candle.x -= 1; // Slower movement for smoother animation
-          candle.id -= 0.083; // Fractional movement
+          candle.x -= 0.5;
         });
         
-        // Remove candles that have moved off screen
-        const visibleCandles = newCandles.filter(candle => candle.x > -20);
+        // Remove off-screen candles
+        const visibleCandles = newCandles.filter(candle => candle.x > -30);
         
-        // Add new candle when needed
-        if (visibleCandles.length < 120) {
+        // Add new candle
+        if (visibleCandles.length < 100) {
           const lastCandle = visibleCandles[visibleCandles.length - 1];
           const newCandle = generateBullishCandle(
             lastCandle ? lastCandle.id + 1 : 0,
-            lastCandle ? lastCandle.close : currentPrice
+            lastCandle ? lastCandle.close : 100
           );
-          newCandle.x = 1440; // Start from right edge
+          newCandle.x = 1600;
           visibleCandles.push(newCandle);
         }
         
         return visibleCandles;
       });
-    }, 50); // Higher frequency for smoother animation
+    }, 30);
 
     return () => clearInterval(interval);
-  }, [currentPrice]);
+  }, []);
 
-  const renderCandle = (candle: Candle) => {
-    const scale = 3; // Scale factor for better visibility
+  const renderCandle = (candle: Candle, index: number) => {
+    const scale = 4;
+    const baseY = 200;
     const bodyHeight = Math.abs(candle.close - candle.open) * scale;
-    const bodyY = Math.min(candle.open, candle.close) * scale;
-    const wickTop = candle.high * scale;
-    const wickBottom = candle.low * scale;
+    const bodyY = baseY - Math.max(candle.open, candle.close) * scale;
+    const wickTop = baseY - candle.high * scale;
+    const wickBottom = baseY - candle.low * scale;
+    
+    // Opacity based on position for depth effect
+    const opacity = Math.max(0.1, Math.min(0.4, (candle.x / 1600) * 0.4));
 
     return (
-      <g key={`${candle.id}-${candle.x}`} opacity="0.15">
+      <g key={`${candle.id}-${index}`} opacity={opacity}>
         {/* Wick */}
         <line
-          x1={candle.x + 3}
+          x1={candle.x + 6}
           y1={wickTop}
-          x2={candle.x + 3}
+          x2={candle.x + 6}
           y2={wickBottom}
-          stroke="#10b981"
-          strokeWidth="1.5"
+          stroke="#14b8a6"
+          strokeWidth="2"
         />
         
         {/* Body */}
         <rect
-          x={candle.x}
+          x={candle.x + 2}
           y={bodyY}
-          width="6"
-          height={Math.max(bodyHeight, 2)}
-          fill="#10b981"
+          width="8"
+          height={Math.max(bodyHeight, 3)}
+          fill={candle.isBullish ? "#14b8a6" : "#ef4444"}
+          stroke={candle.isBullish ? "#0d9488" : "#dc2626"}
+          strokeWidth="1"
           rx="1"
         />
+        
+        {/* Glow effect for some candles */}
+        {Math.random() > 0.7 && (
+          <rect
+            x={candle.x + 2}
+            y={bodyY}
+            width="8"
+            height={Math.max(bodyHeight, 3)}
+            fill={candle.isBullish ? "#14b8a6" : "#ef4444"}
+            opacity="0.3"
+            rx="1"
+            filter="blur(2px)"
+          />
+        )}
       </g>
     );
   };
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      {/* Gradient overlays to fade the chart at edges */}
-      <div className="absolute inset-0 bg-gradient-to-r from-stravesta-dark via-transparent to-stravesta-dark z-10"></div>
-      <div className="absolute inset-0 bg-gradient-to-b from-stravesta-dark/80 via-transparent to-stravesta-dark/80 z-10"></div>
+      {/* Multiple gradient overlays for depth */}
+      <div className="absolute inset-0 bg-gradient-to-r from-stravesta-dark via-transparent via-transparent to-stravesta-dark z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-stravesta-dark/90 via-transparent to-stravesta-dark/90 z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-stravesta-dark via-transparent to-transparent z-10"></div>
       
+      {/* Multiple chart layers for depth */}
       <svg
         width="100%"
         height="100%"
-        viewBox="0 0 1440 800"
+        viewBox="0 0 1600 800"
         className="absolute inset-0"
         preserveAspectRatio="xMidYMid slice"
       >
-        {/* Subtle grid lines */}
         <defs>
-          <pattern id="trading-grid" width="60" height="60" patternUnits="userSpaceOnUse">
+          {/* Subtle glow effect */}
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge> 
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          
+          {/* Grid pattern */}
+          <pattern id="trading-grid" width="80" height="80" patternUnits="userSpaceOnUse">
             <path 
-              d="M 60 0 L 0 0 0 60" 
+              d="M 80 0 L 0 0 0 80" 
               fill="none" 
-              stroke="#10b981" 
-              strokeWidth="0.3" 
+              stroke="#14b8a6" 
+              strokeWidth="0.5" 
               opacity="0.1"
             />
           </pattern>
-          
-          {/* Subtle gradient for depth */}
-          <linearGradient id="depth-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#10b981" stopOpacity="0.03"/>
-            <stop offset="50%" stopColor="#10b981" stopOpacity="0.01"/>
-            <stop offset="100%" stopColor="#10b981" stopOpacity="0.03"/>
-          </linearGradient>
         </defs>
         
         {/* Background grid */}
         <rect width="100%" height="100%" fill="url(#trading-grid)" />
-        <rect width="100%" height="100%" fill="url(#depth-gradient)" />
         
         {/* Horizontal price levels */}
-        {[150, 200, 250, 300, 350, 400].map((price, index) => (
-          <g key={price} opacity="0.05">
-            <line
-              x1="0"
-              y1={price}
-              x2="1440"
-              y2={price}
-              stroke="#10b981"
-              strokeWidth="1"
-              strokeDasharray="4,8"
-            />
-          </g>
+        {Array.from({length: 8}, (_, i) => (
+          <line
+            key={i}
+            x1="0"
+            y1={100 + i * 80}
+            x2="1600"
+            y2={100 + i * 80}
+            stroke="#14b8a6"
+            strokeWidth="0.5"
+            opacity="0.1"
+            strokeDasharray="10,20"
+          />
         ))}
         
-        {/* Candles - flipped vertically for proper chart orientation */}
-        <g transform="scale(1, -1) translate(0, -500)">
-          {candles.map(renderCandle)}
+        {/* Main candles */}
+        <g>
+          {candles.map((candle, index) => renderCandle(candle, index))}
         </g>
         
-        {/* Trend line overlay */}
+        {/* Trend lines */}
         <path
-          d="M 0,400 Q 360,380 720,360 Q 1080,340 1440,320"
+          d="M 0,600 Q 400,550 800,500 Q 1200,450 1600,400"
           fill="none"
-          stroke="#10b981"
+          stroke="#14b8a6"
           strokeWidth="2"
-          opacity="0.08"
-          strokeDasharray="5,10"
+          opacity="0.15"
+          strokeDasharray="8,16"
+        />
+        
+        <path
+          d="M 0,400 Q 400,350 800,300 Q 1200,250 1600,200"
+          fill="none"
+          stroke="#14b8a6"
+          strokeWidth="1"
+          opacity="0.1"
+          strokeDasharray="4,8"
         />
       </svg>
+      
+      {/* Scattered floating elements for depth */}
+      <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-stravesta-teal/20 rounded-full animate-pulse"></div>
+      <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-stravesta-teal/30 rounded-full animate-pulse"></div>
+      <div className="absolute bottom-1/4 left-1/2 w-1.5 h-1.5 bg-stravesta-teal/20 rounded-full animate-pulse"></div>
     </div>
   );
 };
