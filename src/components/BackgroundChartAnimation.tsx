@@ -13,12 +13,12 @@ const BackgroundChartAnimation = () => {
   const [candles, setCandles] = useState<Candle[]>([]);
 
   const generateCandle = (id: number, prevClose: number): Candle => {
-    const volatility = Math.random() * 8 + 3;
-    const open = prevClose + (Math.random() - 0.5) * 2;
+    const volatility = Math.random() * 12 + 6;
+    const open = prevClose + (Math.random() - 0.5) * 3;
     const change = (Math.random() - 0.5) * volatility;
     const close = open + change;
-    const high = Math.max(open, close) + Math.random() * volatility * 0.5;
-    const low = Math.min(open, close) - Math.random() * volatility * 0.3;
+    const high = Math.max(open, close) + Math.random() * volatility * 0.8;
+    const low = Math.min(open, close) - Math.random() * volatility * 0.5;
     
     return {
       id,
@@ -26,7 +26,7 @@ const BackgroundChartAnimation = () => {
       high,
       low,
       close,
-      x: id * 20
+      x: id * 35
     };
   };
 
@@ -35,9 +35,9 @@ const BackgroundChartAnimation = () => {
     let price = 100;
     
     // Fill screen with candles from right to left
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < 60; i++) {
       const candle = generateCandle(i, price);
-      candle.x = i * 28; // Increase spacing between candles
+      candle.x = i * 35; // Increase spacing between candles
       initialCandles.push(candle);
       price = candle.close;
     }
@@ -51,28 +51,28 @@ const BackgroundChartAnimation = () => {
         // Move all candles to the left
         const movedCandles = prevCandles.map(candle => ({
           ...candle,
-          x: candle.x - 2.5
+          x: candle.x - 3
         }));
         
         // Remove candles that moved off screen
-        const visibleCandles = movedCandles.filter(candle => candle.x > -50);
+        const visibleCandles = movedCandles.filter(candle => candle.x > -60);
         
-        // Add new candle from the right
+        // Add new candle from the right - one at a time
         const lastCandle = visibleCandles[visibleCandles.length - 1];
         const maxX = Math.max(...visibleCandles.map(c => c.x), 0);
         
-        if (maxX < 2000) {
+        if (maxX < 2100) {
           const newCandle = generateCandle(
             Date.now(),
             lastCandle ? lastCandle.close : 100
           );
-          newCandle.x = maxX + 28; // Match spacing
+          newCandle.x = maxX + 35; // Match spacing
           visibleCandles.push(newCandle);
         }
         
         return visibleCandles;
       });
-    }, 80);
+    }, 150); // Slower for individual appearance
 
     return () => clearInterval(interval);
   }, []);
@@ -115,7 +115,7 @@ const BackgroundChartAnimation = () => {
         
         {/* Main candlestick chart - Center screen */}
         {candles.map(candle => {
-          const scale = 4;
+          const scale = 5;
           const centerY = 540;
           const priceOffset = (candle.close - 100) * scale;
           const baseY = centerY - priceOffset;
@@ -129,26 +129,26 @@ const BackgroundChartAnimation = () => {
             <g key={candle.id} filter="url(#glow)">
               {/* Wick */}
               <line
-                x1={candle.x + 10}
+                x1={candle.x + 12}
                 y1={wickTop}
-                x2={candle.x + 10}
+                x2={candle.x + 12}
                 y2={wickBottom}
                 stroke={isBullish ? "#00d4aa" : "#ff6b6b"}
-                strokeWidth="3"
+                strokeWidth="4"
                 opacity="0.9"
               />
               
               {/* Body */}
               <rect
-                x={candle.x + 3}
+                x={candle.x + 4}
                 y={bodyY}
-                width="14"
-                height={Math.max(bodyHeight, 4)}
+                width="16"
+                height={Math.max(bodyHeight, 6)}
                 fill={isBullish ? "url(#candleGradient)" : "url(#candleGradientBear)"}
                 stroke={isBullish ? "#00b894" : "#e55656"}
-                strokeWidth="1.5"
+                strokeWidth="2"
                 opacity="0.95"
-                rx="1"
+                rx="2"
               />
             </g>
           );
