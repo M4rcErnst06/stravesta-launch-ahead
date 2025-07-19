@@ -109,7 +109,7 @@ const BackgroundChartAnimation = () => {
   };
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-stravesta-dark/50"></div>
       <svg
         width="100%"
