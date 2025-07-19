@@ -34,9 +34,9 @@ const BackgroundChartAnimation = () => {
     const initialCandles: Candle[] = [];
     let price = 20;
     
-    for (let i = 0; i < 80; i++) { // More candles for density
+    for (let i = 0; i < 80; i++) {
       const candle = generateCandle(i, price);
-      candle.x = (i * 25) + 200; // Smaller spacing, centered
+      candle.x = (i * 25) + 600; // More centered position
       initialCandles.push(candle);
       price = candle.close;
     }
@@ -53,15 +53,15 @@ const BackgroundChartAnimation = () => {
           candle.x -= 1.5;
         });
         
-        const visibleCandles = newCandles.filter(candle => candle.x > -200); // Keep in center area
+        const visibleCandles = newCandles.filter(candle => candle.x > 400); // Keep centered area visible
         
-        if (visibleCandles.length < 80) { // More candles
+        if (visibleCandles.length < 80) {
           const lastCandle = visibleCandles[visibleCandles.length - 1];
           const newCandle = generateCandle(
             lastCandle ? lastCandle.id + 1 : 0,
             lastCandle ? lastCandle.close : 20
           );
-          newCandle.x = 1920 + 100; // Closer spacing
+          newCandle.x = 1920 + 300; // Enter from right, more centered
           visibleCandles.push(newCandle);
         }
         
