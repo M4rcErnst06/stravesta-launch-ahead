@@ -62,7 +62,9 @@ const IndexContent = () => {
   return (
     <div className="min-h-screen relative">
       {/* Fullscreen Background Chart Animation */}
-      <BackgroundChartAnimation />
+      <div className="fixed inset-0 z-10">
+        <BackgroundChartAnimation />
+      </div>
       
       {/* Static Background for fixed elements */}
       <div className="fixed inset-0 z-0 bg-stravesta-dark">

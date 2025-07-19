@@ -71,13 +71,14 @@ const BackgroundChartAnimation = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0" style={{ zIndex: 1 }}>
+    <div className="absolute inset-0 pointer-events-none w-full h-full">
       <svg
         width="100%"
         height="100%"
         viewBox="0 0 1920 1080"
-        className="absolute inset-0"
-        style={{ opacity: 0.15 }}
+        className="absolute inset-0 w-full h-full"
+        style={{ opacity: 0.25 }}
+        preserveAspectRatio="xMidYMid slice"
       >
         {/* Grid */}
         <defs>
