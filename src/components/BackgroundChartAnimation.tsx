@@ -35,9 +35,9 @@ const BackgroundChartAnimation = () => {
     let price = 100;
     
     // Fill screen with candles from right to left
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 80; i++) {
       const candle = generateCandle(i, price);
-      candle.x = i * 20;
+      candle.x = i * 28; // Increase spacing between candles
       initialCandles.push(candle);
       price = candle.close;
     }
@@ -51,7 +51,7 @@ const BackgroundChartAnimation = () => {
         // Move all candles to the left
         const movedCandles = prevCandles.map(candle => ({
           ...candle,
-          x: candle.x - 2
+          x: candle.x - 2.5
         }));
         
         // Remove candles that moved off screen
@@ -66,13 +66,13 @@ const BackgroundChartAnimation = () => {
             Date.now(),
             lastCandle ? lastCandle.close : 100
           );
-          newCandle.x = maxX + 20;
+          newCandle.x = maxX + 28; // Match spacing
           visibleCandles.push(newCandle);
         }
         
         return visibleCandles;
       });
-    }, 100);
+    }, 80);
 
     return () => clearInterval(interval);
   }, []);
@@ -90,14 +90,20 @@ const BackgroundChartAnimation = () => {
         >
         <defs>
           <linearGradient id="candleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#10b981" stopOpacity="1"/>
-            <stop offset="50%" stopColor="#059669" stopOpacity="0.9"/>
-            <stop offset="100%" stopColor="#047857" stopOpacity="0.8"/>
+            <stop offset="0%" stopColor="#00d4aa" stopOpacity="1"/>
+            <stop offset="50%" stopColor="#00b894" stopOpacity="0.95"/>
+            <stop offset="100%" stopColor="#00a085" stopOpacity="0.9"/>
+          </linearGradient>
+          
+          <linearGradient id="candleGradientBear" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#ff6b6b" stopOpacity="1"/>
+            <stop offset="50%" stopColor="#e55656" stopOpacity="0.95"/>
+            <stop offset="100%" stopColor="#d63031" stopOpacity="0.9"/>
           </linearGradient>
           
           <filter id="glow">
-            <feMorphology operator="dilate" radius="1"/>
-            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMorphology operator="dilate" radius="0.5"/>
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
             <feMerge> 
               <feMergeNode in="coloredBlur"/>
               <feMergeNode in="SourceGraphic"/>
@@ -109,38 +115,40 @@ const BackgroundChartAnimation = () => {
         
         {/* Main candlestick chart - Center screen */}
         {candles.map(candle => {
-          const scale = 3;
-          const centerY = 540; // Center of 1080px height
+          const scale = 4;
+          const centerY = 540;
           const priceOffset = (candle.close - 100) * scale;
           const baseY = centerY - priceOffset;
           const bodyHeight = Math.abs(candle.close - candle.open) * scale;
           const bodyY = baseY - Math.max(candle.open - 100, candle.close - 100) * scale;
           const wickTop = baseY - (candle.high - 100) * scale;
           const wickBottom = baseY - (candle.low - 100) * scale;
+          const isBullish = candle.close > candle.open;
           
             return (
             <g key={candle.id} filter="url(#glow)">
               {/* Wick */}
               <line
-                x1={candle.x + 6}
+                x1={candle.x + 10}
                 y1={wickTop}
-                x2={candle.x + 6}
+                x2={candle.x + 10}
                 y2={wickBottom}
-                stroke="#10b981"
-                strokeWidth="2"
-                opacity="0.8"
+                stroke={isBullish ? "#00d4aa" : "#ff6b6b"}
+                strokeWidth="3"
+                opacity="0.9"
               />
               
               {/* Body */}
               <rect
-                x={candle.x + 2}
+                x={candle.x + 3}
                 y={bodyY}
-                width="8"
-                height={Math.max(bodyHeight, 3)}
-                fill="url(#candleGradient)"
-                stroke="#10b981"
-                strokeWidth="1"
-                opacity="0.8"
+                width="14"
+                height={Math.max(bodyHeight, 4)}
+                fill={isBullish ? "url(#candleGradient)" : "url(#candleGradientBear)"}
+                stroke={isBullish ? "#00b894" : "#e55656"}
+                strokeWidth="1.5"
+                opacity="0.95"
+                rx="1"
               />
             </g>
           );
