@@ -71,23 +71,23 @@ const BackgroundChartAnimation = () => {
   }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none w-full h-full">
+    <div className="absolute inset-0 pointer-events-none w-full h-full overflow-hidden">
       <svg
         width="100%"
         height="100%"
         viewBox="0 0 1920 1080"
         className="absolute inset-0 w-full h-full"
-        style={{ opacity: 0.25 }}
+        style={{ opacity: 0.4 }}
         preserveAspectRatio="xMidYMid slice"
       >
         {/* Grid */}
         <defs>
-          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#10b981" strokeWidth="0.3" opacity="0.4"/>
+          <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#10b981" strokeWidth="0.5" opacity="0.6"/>
           </pattern>
           <linearGradient id="candleGlow" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#10b981" stopOpacity="0.8"/>
-            <stop offset="100%" stopColor="#065f46" stopOpacity="0.3"/>
+            <stop offset="0%" stopColor="#10b981" stopOpacity="1"/>
+            <stop offset="100%" stopColor="#065f46" stopOpacity="0.6"/>
           </linearGradient>
         </defs>
         
@@ -95,7 +95,7 @@ const BackgroundChartAnimation = () => {
         
         {/* Price levels */}
         {[150, 250, 350, 450, 550, 650, 750, 850].map(y => (
-          <line key={y} x1="0" y1={y} x2="1920" y2={y} stroke="#10b981" strokeWidth="0.8" opacity="0.15" strokeDasharray="8,12"/>
+          <line key={y} x1="0" y1={y} x2="1920" y2={y} stroke="#10b981" strokeWidth="1.2" opacity="0.3" strokeDasharray="10,15"/>
         ))}
         
         {/* Main candles layer */}
@@ -108,7 +108,7 @@ const BackgroundChartAnimation = () => {
           const wickBottom = baseY - candle.low * scale;
           
           return (
-            <g key={candle.id} opacity="0.9">
+            <g key={candle.id} opacity="1">
               {/* Wick */}
               <line
                 x1={candle.x + 7}
@@ -116,7 +116,7 @@ const BackgroundChartAnimation = () => {
                 x2={candle.x + 7}
                 y2={wickBottom}
                 stroke="#10b981"
-                strokeWidth="1.5"
+                strokeWidth="2"
               />
               
               {/* Body with glow */}

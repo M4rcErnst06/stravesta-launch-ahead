@@ -73,11 +73,11 @@ const IndexContent = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl animate-pulse"></div>
       </div>
 
-      <div className="relative z-20">
+      <div className="relative z-30">
         <Navigation />
         
-        {/* Hero Section - Dark Background */}
-        <section id="home" className="pt-20 bg-stravesta-dark">
+        {/* Hero Section - Dark Background with Chart Animation */}
+        <section id="home" className="pt-20 bg-stravesta-dark relative">
           <HeroSection />
         </section>
         
