@@ -7,6 +7,7 @@ interface Candle {
   low: number;
   close: number;
   x: number;
+  y: number; // Add y position for diagonal movement
 }
 
 const BackgroundChartAnimation = () => {
@@ -26,7 +27,8 @@ const BackgroundChartAnimation = () => {
       high,
       low,
       close,
-      x: id * 25 // Much smaller spacing
+      x: id * 25,
+      y: 0 // Will be set dynamically
     };
   };
 
@@ -36,7 +38,8 @@ const BackgroundChartAnimation = () => {
     
     for (let i = 0; i < 80; i++) {
       const candle = generateCandle(i, price);
-      candle.x = (i * 25) + 600; // More centered position
+      candle.x = (i * 25) + 150; // Start from bottom left
+      candle.y = 200 + (i * 2); // Diagonal movement up
       initialCandles.push(candle);
       price = candle.close;
     }
@@ -50,10 +53,11 @@ const BackgroundChartAnimation = () => {
         const newCandles = [...prevCandles];
         
         newCandles.forEach(candle => {
-          candle.x -= 1.5;
+          candle.x -= 1.5; // Move right to left
+          candle.y -= 0.8; // Move bottom to top
         });
         
-        const visibleCandles = newCandles.filter(candle => candle.x > 400); // Keep centered area visible
+        const visibleCandles = newCandles.filter(candle => candle.x > -200 && candle.y > -200); // Keep diagonal area visible
         
         if (visibleCandles.length < 80) {
           const lastCandle = visibleCandles[visibleCandles.length - 1];
@@ -61,7 +65,8 @@ const BackgroundChartAnimation = () => {
             lastCandle ? lastCandle.id + 1 : 0,
             lastCandle ? lastCandle.close : 20
           );
-          newCandle.x = 1920 + 300; // Enter from right, more centered
+          newCandle.x = 1920 + 200; // Enter from right
+          newCandle.y = 800; // Enter from bottom
           visibleCandles.push(newCandle);
         }
         
@@ -102,10 +107,10 @@ const BackgroundChartAnimation = () => {
         
         {/* No grid background - solid color only */}
         
-        {/* Main candlestick chart - Much taller candles */}
+        {/* Main candlestick chart - Diagonal movement */}
         {candles.map(candle => {
-          const scale = 12; // Much larger scale for height
-          const baseY = 750; // Lower base
+          const scale = 12;
+          const baseY = 750 + candle.y; // Use dynamic Y position
           const bodyHeight = Math.abs(candle.close - candle.open) * scale;
           const bodyY = baseY - Math.max(candle.open, candle.close) * scale;
           const wickTop = baseY - candle.high * scale;
