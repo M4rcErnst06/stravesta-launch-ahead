@@ -83,14 +83,14 @@ const BackgroundChartAnimation = () => {
         >
         <defs>
           <linearGradient id="candleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#00d4ff" stopOpacity="1"/>
-            <stop offset="50%" stopColor="#00b4d8" stopOpacity="0.9"/>
-            <stop offset="100%" stopColor="#0077b6" stopOpacity="0.7"/>
+            <stop offset="0%" stopColor="#10b981" stopOpacity="1"/>
+            <stop offset="50%" stopColor="#059669" stopOpacity="0.9"/>
+            <stop offset="100%" stopColor="#047857" stopOpacity="0.8"/>
           </linearGradient>
           
           <filter id="glow">
             <feMorphology operator="dilate" radius="1"/>
-            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
             <feMerge> 
               <feMergeNode in="coloredBlur"/>
               <feMergeNode in="SourceGraphic"/>
@@ -98,30 +98,11 @@ const BackgroundChartAnimation = () => {
           </filter>
         </defs>
         
-        {/* Grid background */}
-        <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
-          <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#00d4ff" strokeWidth="0.5" opacity="0.2"/>
-        </pattern>
-        <rect width="100%" height="100%" fill="url(#grid)" />
+        {/* No grid background - solid color only */}
         
-        {/* Price levels */}
-        {[200, 300, 400, 500, 600, 700, 800].map(y => (
-          <line 
-            key={y} 
-            x1="0" 
-            y1={y} 
-            x2="1920" 
-            y2={y} 
-            stroke="#00d4ff" 
-            strokeWidth="1" 
-            opacity="0.3" 
-            strokeDasharray="10,10"
-          />
-        ))}
-        
-        {/* Main candlestick chart */}
+        {/* Main candlestick chart - Larger candles */}
         {candles.map(candle => {
-          const scale = 2.5;
+          const scale = 4; // Increased scale for larger candles
           const baseY = 540;
           const bodyHeight = Math.abs(candle.close - candle.open) * scale;
           const bodyY = baseY - Math.max(candle.open, candle.close) * scale;
@@ -136,29 +117,29 @@ const BackgroundChartAnimation = () => {
                 y1={wickTop}
                 x2={candle.x + 12}
                 y2={wickBottom}
-                stroke="#00d4ff"
-                strokeWidth="3"
-                opacity="0.9"
+                stroke="#10b981"
+                strokeWidth="4"
+                opacity="1"
               />
               
-              {/* Body */}
+              {/* Body - Larger */}
               <rect
-                x={candle.x + 6}
+                x={candle.x + 4}
                 y={bodyY}
-                width="12"
-                height={Math.max(bodyHeight, 3)}
+                width="16"
+                height={Math.max(bodyHeight, 4)}
                 fill="url(#candleGradient)"
-                stroke="#00d4ff"
-                strokeWidth="1"
-                opacity="0.9"
+                stroke="#10b981"
+                strokeWidth="1.5"
+                opacity="1"
               />
             </g>
           );
         })}
         
-        {/* Second layer for depth */}
+        {/* Second layer for depth - Green */}
         {candles.slice(0, 40).map(candle => {
-          const scale = 2;
+          const scale = 3;
           const baseY = 740;
           const bodyHeight = Math.abs(candle.close - candle.open) * scale;
           const bodyY = baseY - Math.max(candle.open, candle.close) * scale;
@@ -172,25 +153,25 @@ const BackgroundChartAnimation = () => {
                 y1={wickTop}
                 x2={candle.x + 200}
                 y2={wickBottom}
-                stroke="#00b4d8"
-                strokeWidth="2"
-                opacity="0.6"
+                stroke="#10b981"
+                strokeWidth="3"
+                opacity="0.7"
               />
               <rect
                 x={candle.x + 196}
                 y={bodyY}
-                width="8"
-                height={Math.max(bodyHeight, 2)}
-                fill="#00b4d8"
-                opacity="0.6"
+                width="12"
+                height={Math.max(bodyHeight, 3)}
+                fill="#10b981"
+                opacity="0.7"
               />
             </g>
           );
         })}
         
-        {/* Third layer */}
+        {/* Third layer - Green */}
         {candles.slice(0, 25).map(candle => {
-          const scale = 1.5;
+          const scale = 2;
           const baseY = 300;
           const bodyHeight = Math.abs(candle.close - candle.open) * scale;
           const bodyY = baseY - Math.max(candle.open, candle.close) * scale;
@@ -204,17 +185,17 @@ const BackgroundChartAnimation = () => {
                 y1={wickTop}
                 x2={candle.x + 400}
                 y2={wickBottom}
-                stroke="#0077b6"
-                strokeWidth="1.5"
-                opacity="0.4"
+                stroke="#10b981"
+                strokeWidth="2"
+                opacity="0.5"
               />
               <rect
                 x={candle.x + 398}
                 y={bodyY}
-                width="4"
-                height={Math.max(bodyHeight, 1)}
-                fill="#0077b6"
-                opacity="0.4"
+                width="6"
+                height={Math.max(bodyHeight, 2)}
+                fill="#10b981"
+                opacity="0.5"
               />
             </g>
           );
