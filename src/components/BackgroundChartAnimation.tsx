@@ -53,7 +53,7 @@ const BackgroundChartAnimation = () => {
         // Move all candles to the left smoothly
         const movedCandles = prevCandles.map(candle => ({
           ...candle,
-          x: candle.x - 1.5
+          x: candle.x - 0.8
         }));
         
         // Remove candles that moved off screen
