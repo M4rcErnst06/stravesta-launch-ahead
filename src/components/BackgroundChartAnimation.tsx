@@ -46,33 +46,39 @@ const BackgroundChartAnimation = () => {
   }, []);
 
   useEffect(() => {
+    let candleCounter = 0;
+    
     const interval = setInterval(() => {
       setCandles(prevCandles => {
-        // Move all candles to the left
+        // Move all candles to the left smoothly
         const movedCandles = prevCandles.map(candle => ({
           ...candle,
-          x: candle.x - 3
+          x: candle.x - 1.5
         }));
         
         // Remove candles that moved off screen
         const visibleCandles = movedCandles.filter(candle => candle.x > -60);
         
-        // Add new candle from the right - one at a time
-        const lastCandle = visibleCandles[visibleCandles.length - 1];
-        const maxX = Math.max(...visibleCandles.map(c => c.x), 0);
-        
-        if (maxX < 2100) {
-          const newCandle = generateCandle(
-            Date.now(),
-            lastCandle ? lastCandle.close : 100
-          );
-          newCandle.x = maxX + 35; // Match spacing
-          visibleCandles.push(newCandle);
+        // Add new candle every 40 frames (more realistic timing)
+        candleCounter++;
+        if (candleCounter >= 40) {
+          const lastCandle = visibleCandles[visibleCandles.length - 1];
+          const maxX = Math.max(...visibleCandles.map(c => c.x), 0);
+          
+          if (maxX < 2100) {
+            const newCandle = generateCandle(
+              Date.now(),
+              lastCandle ? lastCandle.close : 100
+            );
+            newCandle.x = maxX + 35;
+            visibleCandles.push(newCandle);
+            candleCounter = 0; // Reset counter
+          }
         }
         
         return visibleCandles;
       });
-    }, 150); // Slower for individual appearance
+    }, 50); // Smooth 20fps animation
 
     return () => clearInterval(interval);
   }, []);
@@ -86,24 +92,24 @@ const BackgroundChartAnimation = () => {
           viewBox="0 0 1920 1080"
           className="absolute inset-0 w-full h-full"
           preserveAspectRatio="xMidYMid slice"
-          style={{ opacity: 0.8 }}
+          style={{ opacity: 0.7 }}
         >
         <defs>
           <linearGradient id="candleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#00d4aa" stopOpacity="1"/>
-            <stop offset="50%" stopColor="#00b894" stopOpacity="0.95"/>
-            <stop offset="100%" stopColor="#00a085" stopOpacity="0.9"/>
+            <stop offset="0%" stopColor="#00d4aa" stopOpacity="0.9"/>
+            <stop offset="50%" stopColor="#00b894" stopOpacity="0.8"/>
+            <stop offset="100%" stopColor="#00a085" stopOpacity="0.7"/>
           </linearGradient>
           
           <linearGradient id="candleGradientBear" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#ff6b6b" stopOpacity="1"/>
-            <stop offset="50%" stopColor="#e55656" stopOpacity="0.95"/>
-            <stop offset="100%" stopColor="#d63031" stopOpacity="0.9"/>
+            <stop offset="0%" stopColor="#ff6b6b" stopOpacity="0.9"/>
+            <stop offset="50%" stopColor="#e55656" stopOpacity="0.8"/>
+            <stop offset="100%" stopColor="#d63031" stopOpacity="0.7"/>
           </linearGradient>
           
           <filter id="glow">
-            <feMorphology operator="dilate" radius="0.5"/>
-            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMorphology operator="dilate" radius="0.3"/>
+            <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
             <feMerge> 
               <feMergeNode in="coloredBlur"/>
               <feMergeNode in="SourceGraphic"/>
@@ -126,7 +132,7 @@ const BackgroundChartAnimation = () => {
           const isBullish = candle.close > candle.open;
           
             return (
-            <g key={candle.id} filter="url(#glow)">
+            <g key={candle.id}>
               {/* Wick */}
               <line
                 x1={candle.x + 12}
@@ -134,8 +140,8 @@ const BackgroundChartAnimation = () => {
                 x2={candle.x + 12}
                 y2={wickBottom}
                 stroke={isBullish ? "#00d4aa" : "#ff6b6b"}
-                strokeWidth="4"
-                opacity="0.9"
+                strokeWidth="3"
+                opacity="0.8"
               />
               
               {/* Body */}
@@ -146,9 +152,9 @@ const BackgroundChartAnimation = () => {
                 height={Math.max(bodyHeight, 6)}
                 fill={isBullish ? "url(#candleGradient)" : "url(#candleGradientBear)"}
                 stroke={isBullish ? "#00b894" : "#e55656"}
-                strokeWidth="2"
-                opacity="0.95"
-                rx="2"
+                strokeWidth="1.5"
+                opacity="0.8"
+                rx="1.5"
               />
             </g>
           );
