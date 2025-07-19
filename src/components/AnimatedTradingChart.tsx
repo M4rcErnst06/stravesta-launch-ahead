@@ -8,21 +8,29 @@ interface Candle {
   low: number;
   close: number;
   x: number;
+  isBullish: boolean;
 }
 
 const AnimatedTradingChart = () => {
   const [candles, setCandles] = useState<Candle[]>([]);
+  const [currentPrice, setCurrentPrice] = useState(100);
 
   // Generate realistic candlestick data
   const generateCandle = (id: number, prevClose: number): Candle => {
-    const volatility = 0.03;
-    const trend = Math.random() > 0.5 ? 1 : -1;
-    const change = (Math.random() * volatility * trend);
+    const isBullish = Math.random() > 0.5;
+    const volatility = 0.015 + Math.random() * 0.025; // 1.5-4% volatility
     
-    const open = prevClose;
-    const close = open * (1 + change);
-    const high = Math.max(open, close) * (1 + Math.random() * 0.02);
-    const low = Math.min(open, close) * (1 - Math.random() * 0.02);
+    let open = prevClose;
+    let close: number;
+    
+    if (isBullish) {
+      close = open * (1 + Math.random() * volatility);
+    } else {
+      close = open * (1 - Math.random() * volatility);
+    }
+    
+    const high = Math.max(open, close) * (1 + Math.random() * 0.01);
+    const low = Math.min(open, close) * (1 - Math.random() * 0.01);
     
     return {
       id,
@@ -30,7 +38,8 @@ const AnimatedTradingChart = () => {
       high,
       low,
       close,
-      x: id * 15
+      x: id * 15 + 20, // Start from x=20 and space candles by 15 units
+      isBullish
     };
   };
 
@@ -39,13 +48,14 @@ const AnimatedTradingChart = () => {
     const initialCandles: Candle[] = [];
     let price = 100;
     
-    for (let i = 0; i < 120; i++) {
+    for (let i = 0; i < 40; i++) {
       const candle = generateCandle(i, price);
       initialCandles.push(candle);
       price = candle.close;
     }
     
     setCandles(initialCandles);
+    setCurrentPrice(price);
   }, []);
 
   // Animate new candles
@@ -57,192 +67,141 @@ const AnimatedTradingChart = () => {
         const lastCandle = prevCandles[prevCandles.length - 1];
         const newCandle = generateCandle(lastCandle.id + 1, lastCandle.close);
         
+        setCurrentPrice(newCandle.close);
+        
         // Move all candles to the left and add new one
         const updatedCandles = prevCandles
           .map(candle => ({ ...candle, x: candle.x - 15 }))
-          .filter(candle => candle.x > -50);
+          .filter(candle => candle.x > -30);
         
         return [...updatedCandles, newCandle];
       });
-    }, 1500);
+    }, 800); // Update every 800ms
 
     return () => clearInterval(interval);
   }, []);
 
-  const renderCandle = (candle: Candle, index: number) => {
-    const isGreen = candle.close > candle.open;
-    const bodyHeight = Math.abs(candle.close - candle.open) * 400;
-    const bodyTop = Math.min(candle.open, candle.close) * 400;
-    const wickTop = candle.high * 400;
-    const wickBottom = candle.low * 400;
+  const renderCandle = (candle: Candle) => {
+    const isGreen = candle.isBullish;
+    const scale = 300; // Scale factor
+    
+    const bodyHeight = Math.abs(candle.close - candle.open) * scale;
+    const bodyTop = Math.min(candle.open, candle.close) * scale;
+    const wickTop = candle.high * scale;
+    const wickBottom = candle.low * scale;
+    
+    const chartHeight = 250;
+    const baselineY = chartHeight - 30;
     
     return (
-      <g key={`${candle.id}-${index}`} className="candle-group">
+      <g key={candle.id} className="transition-all duration-500">
         {/* Wick */}
         <line
           x1={candle.x + 6}
-          y1={500 - wickTop}
+          y1={baselineY - (wickTop - 90 * scale)}
           x2={candle.x + 6}
-          y2={500 - wickBottom}
-          stroke={isGreen ? '#00F5D4' : '#FF4757'}
-          strokeWidth="2"
-          opacity="0.9"
+          y2={baselineY - (wickBottom - 90 * scale)}
+          stroke={isGreen ? '#10B981' : '#EF4444'}
+          strokeWidth="1.5"
         />
         
         {/* Body */}
         <rect
           x={candle.x}
-          y={500 - (bodyTop + bodyHeight)}
+          y={baselineY - (bodyTop + bodyHeight - 90 * scale)}
           width="12"
-          height={Math.max(bodyHeight, 2)}
-          fill={isGreen ? '#00F5D4' : '#FF4757'}
-          opacity="0.8"
-          className="transition-all duration-300"
+          height={Math.max(bodyHeight, 3)}
+          fill={isGreen ? '#10B981' : '#EF4444'}
+          stroke={isGreen ? '#059669' : '#DC2626'}
+          strokeWidth="1"
+          rx="1"
+          className="transition-all duration-500"
         />
       </g>
     );
   };
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ opacity: 0.25 }}>
+    <div className="w-full h-full relative">
       <svg
         width="100%"
         height="100%"
-        viewBox="0 0 1800 500"
+        viewBox="0 0 700 250"
         className="w-full h-full"
-        style={{ 
-          background: 'transparent',
-          transform: 'scale(1.1)',
-        }}
+        preserveAspectRatio="xMidYMid slice"
       >
         {/* Grid lines */}
         <defs>
-          <pattern id="grid" width="60" height="50" patternUnits="userSpaceOnUse">
-            <path d="M 60 0 L 0 0 0 50" fill="none" stroke="rgba(0, 245, 212, 0.15)" strokeWidth="1"/>
+          <pattern id="chartGrid" width="25" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 25 0 L 0 0 0 20" fill="none" stroke="rgba(0, 245, 212, 0.15)" strokeWidth="0.5"/>
           </pattern>
-          
-          {/* Glow effect */}
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-            <feMerge> 
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
         </defs>
         
-        <rect width="100%" height="100%" fill="url(#grid)" />
+        <rect width="100%" height="100%" fill="url(#chartGrid)" />
         
-        {/* Price levels */}
-        {[100, 200, 300, 400].map(level => (
-          <line
-            key={level}
-            x1="0"
-            y1={500 - level}
-            x2="1800"
-            y2={500 - level}
-            stroke="rgba(0, 245, 212, 0.2)"
-            strokeWidth="1"
-            strokeDasharray="10,5"
-          />
+        {/* Horizontal price levels */}
+        {[95, 100, 105, 110].map(level => (
+          <g key={level}>
+            <line
+              x1="0"
+              y1={220 - (level - 90) * 3}
+              x2="700"
+              y2={220 - (level - 90) * 3}
+              stroke="rgba(0, 245, 212, 0.2)"
+              strokeWidth="0.5"
+              strokeDasharray="3,3"
+            />
+            <text
+              x="10"
+              y={220 - (level - 90) * 3 - 3}
+              fill="rgba(0, 245, 212, 0.6)"
+              fontSize="8"
+              fontFamily="monospace"
+            >
+              ${level}
+            </text>
+          </g>
         ))}
         
         {/* Candlesticks */}
-        {candles.map((candle, index) => renderCandle(candle, index))}
-        
-        {/* Floating trading notifications */}
-        <g className="trading-notification opacity-90">
-          <rect
-            x="1200"
-            y="80"
-            width="400"
-            height="90"
-            rx="12"
-            fill="rgba(0, 245, 212, 0.15)"
-            stroke="rgba(0, 245, 212, 0.4)"
-            strokeWidth="2"
-            filter="url(#glow)"
-          />
-          <text
-            x="1220"
-            y="110"
-            fill="#00F5D4"
-            fontSize="14"
-            fontFamily="monospace"
-            fontWeight="bold"
-          >
-            ✓ AI Setup erkannt: Bullish Pattern
-          </text>
-          <text
-            x="1220"
-            y="130"
-            fill="#00F5D4"
-            fontSize="12"
-            fontFamily="monospace"
-            opacity="0.9"
-          >
-            Profit Target: +3.2% | Stop Loss: -1.1%
-          </text>
-          <text
-            x="1220"
-            y="150"
-            fill="#00F5D4"
-            fontSize="11"
-            fontFamily="monospace"
-            opacity="0.7"
-          >
-            Confidence: 87%
-          </text>
+        <g className="candlesticks">
+          {candles.map(candle => renderCandle(candle))}
         </g>
         
-        {/* Second notification */}
-        <g className="trading-notification-2 opacity-80">
-          <rect
-            x="200"
-            y="300"
-            width="350"
-            height="70"
-            rx="10"
-            fill="rgba(255, 71, 87, 0.12)"
-            stroke="rgba(255, 71, 87, 0.3)"
-            strokeWidth="2"
-          />
-          <text
-            x="220"
-            y="325"
-            fill="#FF4757"
-            fontSize="13"
-            fontFamily="monospace"
-            fontWeight="bold"
-          >
-            ⚠ Risk Management aktiv
-          </text>
-          <text
-            x="220"
-            y="345"
-            fill="#FF4757"
-            fontSize="11"
-            fontFamily="monospace"
-            opacity="0.8"
-          >
-            Position reduziert: -50%
-          </text>
-        </g>
+        {/* Current price line */}
+        <line
+          x1="0"
+          y1={220 - (currentPrice - 90) * 3}
+          x2="700"
+          y2={220 - (currentPrice - 90) * 3}
+          stroke="#00F5D4"
+          strokeWidth="2"
+          strokeDasharray="5,3"
+          opacity="0.8"
+        />
         
-        {/* Moving price line */}
-        <g className="price-line animate-pulse">
-          <line
-            x1="0"
-            y1="250"
-            x2="1800"
-            y2="260"
-            stroke="#00F5D4"
-            strokeWidth="3"
-            strokeDasharray="15,10"
-            opacity="0.6"
-            filter="url(#glow)"
-          />
-        </g>
+        {/* Price display */}
+        <rect
+          x="580"
+          y="15"
+          width="110"
+          height="25"
+          rx="5"
+          fill="rgba(0, 245, 212, 0.2)"
+          stroke="rgba(0, 245, 212, 0.4)"
+          strokeWidth="1"
+        />
+        <text
+          x="635"
+          y="32"
+          fill="#00F5D4"
+          fontSize="10"
+          fontFamily="monospace"
+          fontWeight="bold"
+          textAnchor="middle"
+        >
+          ${currentPrice.toFixed(2)}
+        </text>
       </svg>
     </div>
   );

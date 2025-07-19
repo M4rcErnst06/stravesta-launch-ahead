@@ -14,6 +14,7 @@ const translations = {
     'nav.features': 'Features',
     'nav.about': 'About Us',
     'nav.contact': 'Contact',
+    'nav.earlyAccess': 'Early Access',
     
     // Hero Section
     'hero.title': 'Trading with',
@@ -110,6 +111,7 @@ const translations = {
     'nav.features': 'Features',
     'nav.about': 'Über uns',
     'nav.contact': 'Kontakt',
+    'nav.earlyAccess': 'Early Access',
     
     // Hero Section
     'hero.title': 'Trading mit',
