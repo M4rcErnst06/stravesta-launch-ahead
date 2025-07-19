@@ -6,7 +6,6 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import EmailSubscribeForm from './EmailSubscribeForm';
 import FeedbackModal from './FeedbackModal';
 import AnimatedTradingChart from './AnimatedTradingChart';
-import BackgroundChartAnimation from './BackgroundChartAnimation';
 
 const HeroSection = () => {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
@@ -28,9 +27,6 @@ const HeroSection = () => {
 
   return (
     <section className="min-h-screen bg-stravesta-dark bg-gradient-to-br from-stravesta-dark via-stravesta-navy to-stravesta-dark relative overflow-hidden flex items-center">
-      {/* Background Chart Animation */}
-      <BackgroundChartAnimation />
-      
       {/* Background effects */}
       <div className="absolute top-20 left-10 w-64 h-64 bg-stravesta-teal/8 rounded-full blur-3xl animate-pulse"></div>
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-stravesta-teal/8 rounded-full blur-3xl animate-pulse"></div>

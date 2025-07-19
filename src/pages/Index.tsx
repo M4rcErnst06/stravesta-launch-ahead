@@ -7,6 +7,7 @@ import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import SetupScannerSection from '@/components/setup-scanner/SetupScannerSection';
 import TradeAnalyticsSection from '@/components/trading-journal/TradeAnalyticsSection';
+import BackgroundChartAnimation from '@/components/BackgroundChartAnimation';
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 
 const IndexContent = () => {
@@ -59,7 +60,10 @@ const IndexContent = () => {
   const featureGroups: any[] = [];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      {/* Fullscreen Background Chart Animation */}
+      <BackgroundChartAnimation />
+      
       {/* Static Background for fixed elements */}
       <div className="fixed inset-0 z-0 bg-stravesta-dark">
         <div className="absolute top-10 left-10 w-96 h-96 bg-stravesta-teal/10 rounded-full blur-3xl animate-pulse"></div>
