@@ -60,25 +60,21 @@ const IndexContent = () => {
   const featureGroups: any[] = [];
 
   return (
-    <div className="min-h-screen relative">
-      {/* Fullscreen Background Chart Animation */}
-      <div className="fixed inset-0 z-10">
-        <BackgroundChartAnimation />
-      </div>
-      
-      {/* Static Background for fixed elements */}
-      <div className="fixed inset-0 z-0 bg-stravesta-dark">
-        <div className="absolute top-10 left-10 w-96 h-96 bg-stravesta-teal/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-stravesta-teal/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl animate-pulse"></div>
-      </div>
-
-      <div className="relative z-30">
+    <div className="min-h-screen relative bg-stravesta-dark">
+      <div className="relative z-20">
         <Navigation />
         
-        {/* Hero Section - Dark Background with Chart Animation */}
-        <section id="home" className="pt-20 bg-stravesta-dark relative">
-          <HeroSection />
+        {/* Hero Section with Chart Background */}
+        <section id="home" className="pt-20 bg-stravesta-dark relative min-h-screen">
+          {/* Chart Animation Background */}
+          <div className="absolute inset-0 z-0">
+            <BackgroundChartAnimation />
+          </div>
+          
+          {/* Hero Content */}
+          <div className="relative z-10">
+            <HeroSection />
+          </div>
         </section>
         
         {/* KI Setup Scanner Section - Navy Blue Background */}

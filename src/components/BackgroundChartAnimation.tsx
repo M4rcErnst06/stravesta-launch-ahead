@@ -13,11 +13,11 @@ const BackgroundChartAnimation = () => {
   const [candles, setCandles] = useState<Candle[]>([]);
 
   const generateCandle = (id: number, prevClose: number): Candle => {
-    const open = prevClose + (Math.random() - 0.3) * 1.5;
-    const change = Math.random() * 3 + 0.5; // Always bullish
+    const open = prevClose + (Math.random() - 0.3) * 2;
+    const change = Math.random() * 4 + 1; // Always bullish
     const close = open + change;
-    const high = close + Math.random() * 1.5;
-    const low = open - Math.random() * 0.5;
+    const high = close + Math.random() * 2;
+    const low = open - Math.random() * 1;
     
     return {
       id,
@@ -25,15 +25,15 @@ const BackgroundChartAnimation = () => {
       high,
       low,
       close,
-      x: id * 15
+      x: id * 25
     };
   };
 
   useEffect(() => {
     const initialCandles: Candle[] = [];
-    let price = 150;
+    let price = 100;
     
-    for (let i = 0; i < 120; i++) {
+    for (let i = 0; i < 80; i++) {
       const candle = generateCandle(i, price);
       initialCandles.push(candle);
       price = candle.close;
@@ -48,16 +48,16 @@ const BackgroundChartAnimation = () => {
         const newCandles = [...prevCandles];
         
         newCandles.forEach(candle => {
-          candle.x -= 0.8;
+          candle.x -= 1.5;
         });
         
-        const visibleCandles = newCandles.filter(candle => candle.x > -60);
+        const visibleCandles = newCandles.filter(candle => candle.x > -100);
         
-        if (visibleCandles.length < 120) {
+        if (visibleCandles.length < 80) {
           const lastCandle = visibleCandles[visibleCandles.length - 1];
           const newCandle = generateCandle(
             lastCandle ? lastCandle.id + 1 : 0,
-            lastCandle ? lastCandle.close : 150
+            lastCandle ? lastCandle.close : 100
           );
           newCandle.x = 2100;
           visibleCandles.push(newCandle);
@@ -65,42 +65,61 @@ const BackgroundChartAnimation = () => {
         
         return visibleCandles;
       });
-    }, 60);
+    }, 50);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none w-full h-full overflow-hidden">
+    <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
       <svg
         width="100%"
         height="100%"
         viewBox="0 0 1920 1080"
         className="absolute inset-0 w-full h-full"
-        style={{ opacity: 0.4 }}
         preserveAspectRatio="xMidYMid slice"
       >
-        {/* Grid */}
         <defs>
-          <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#10b981" strokeWidth="0.5" opacity="0.6"/>
-          </pattern>
-          <linearGradient id="candleGlow" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#10b981" stopOpacity="1"/>
-            <stop offset="100%" stopColor="#065f46" stopOpacity="0.6"/>
+          <linearGradient id="candleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#00d4ff" stopOpacity="1"/>
+            <stop offset="50%" stopColor="#00b4d8" stopOpacity="0.9"/>
+            <stop offset="100%" stopColor="#0077b6" stopOpacity="0.7"/>
           </linearGradient>
+          
+          <filter id="glow">
+            <feMorphology operator="dilate" radius="1"/>
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge> 
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
         </defs>
         
+        {/* Grid background */}
+        <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+          <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#00d4ff" strokeWidth="0.5" opacity="0.2"/>
+        </pattern>
         <rect width="100%" height="100%" fill="url(#grid)" />
         
         {/* Price levels */}
-        {[150, 250, 350, 450, 550, 650, 750, 850].map(y => (
-          <line key={y} x1="0" y1={y} x2="1920" y2={y} stroke="#10b981" strokeWidth="1.2" opacity="0.3" strokeDasharray="10,15"/>
+        {[200, 300, 400, 500, 600, 700, 800].map(y => (
+          <line 
+            key={y} 
+            x1="0" 
+            y1={y} 
+            x2="1920" 
+            y2={y} 
+            stroke="#00d4ff" 
+            strokeWidth="1" 
+            opacity="0.3" 
+            strokeDasharray="10,10"
+          />
         ))}
         
-        {/* Main candles layer */}
+        {/* Main candlestick chart */}
         {candles.map(candle => {
-          const scale = 2.2;
+          const scale = 2.5;
           const baseY = 540;
           const bodyHeight = Math.abs(candle.close - candle.open) * scale;
           const bodyY = baseY - Math.max(candle.open, candle.close) * scale;
@@ -108,65 +127,68 @@ const BackgroundChartAnimation = () => {
           const wickBottom = baseY - candle.low * scale;
           
           return (
-            <g key={candle.id} opacity="1">
+            <g key={candle.id} filter="url(#glow)">
               {/* Wick */}
               <line
-                x1={candle.x + 7}
+                x1={candle.x + 12}
                 y1={wickTop}
-                x2={candle.x + 7}
+                x2={candle.x + 12}
                 y2={wickBottom}
-                stroke="#10b981"
-                strokeWidth="2"
+                stroke="#00d4ff"
+                strokeWidth="3"
+                opacity="0.9"
               />
               
-              {/* Body with glow */}
+              {/* Body */}
               <rect
-                x={candle.x + 3}
+                x={candle.x + 6}
                 y={bodyY}
-                width="8"
-                height={Math.max(bodyHeight, 1.5)}
-                fill="url(#candleGlow)"
-                stroke="#10b981"
-                strokeWidth="0.5"
+                width="12"
+                height={Math.max(bodyHeight, 3)}
+                fill="url(#candleGradient)"
+                stroke="#00d4ff"
+                strokeWidth="1"
+                opacity="0.9"
               />
             </g>
           );
         })}
         
-        {/* Background layer with offset */}
-        {candles.slice(0, 60).map(candle => {
-          const scale = 1.8;
-          const baseY = 720;
+        {/* Second layer for depth */}
+        {candles.slice(0, 40).map(candle => {
+          const scale = 2;
+          const baseY = 740;
           const bodyHeight = Math.abs(candle.close - candle.open) * scale;
           const bodyY = baseY - Math.max(candle.open, candle.close) * scale;
           const wickTop = baseY - candle.high * scale;
           const wickBottom = baseY - candle.low * scale;
           
           return (
-            <g key={`bg-${candle.id}`} opacity="0.4">
+            <g key={`layer2-${candle.id}`}>
               <line
-                x1={candle.x + 150}
+                x1={candle.x + 200}
                 y1={wickTop}
-                x2={candle.x + 150}
+                x2={candle.x + 200}
                 y2={wickBottom}
-                stroke="#10b981"
-                strokeWidth="1"
+                stroke="#00b4d8"
+                strokeWidth="2"
+                opacity="0.6"
               />
               <rect
-                x={candle.x + 147}
+                x={candle.x + 196}
                 y={bodyY}
-                width="6"
-                height={Math.max(bodyHeight, 1)}
-                fill="#10b981"
+                width="8"
+                height={Math.max(bodyHeight, 2)}
+                fill="#00b4d8"
                 opacity="0.6"
               />
             </g>
           );
         })}
         
-        {/* Third layer for depth */}
-        {candles.slice(0, 40).map(candle => {
-          const scale = 1.4;
+        {/* Third layer */}
+        {candles.slice(0, 25).map(candle => {
+          const scale = 1.5;
           const baseY = 300;
           const bodyHeight = Math.abs(candle.close - candle.open) * scale;
           const bodyY = baseY - Math.max(candle.open, candle.close) * scale;
@@ -174,22 +196,23 @@ const BackgroundChartAnimation = () => {
           const wickBottom = baseY - candle.low * scale;
           
           return (
-            <g key={`depth-${candle.id}`} opacity="0.25">
+            <g key={`layer3-${candle.id}`}>
               <line
-                x1={candle.x + 300}
+                x1={candle.x + 400}
                 y1={wickTop}
-                x2={candle.x + 300}
+                x2={candle.x + 400}
                 y2={wickBottom}
-                stroke="#10b981"
-                strokeWidth="0.8"
+                stroke="#0077b6"
+                strokeWidth="1.5"
+                opacity="0.4"
               />
               <rect
-                x={candle.x + 298}
+                x={candle.x + 398}
                 y={bodyY}
                 width="4"
                 height={Math.max(bodyHeight, 1)}
-                fill="#10b981"
-                opacity="0.5"
+                fill="#0077b6"
+                opacity="0.4"
               />
             </g>
           );
