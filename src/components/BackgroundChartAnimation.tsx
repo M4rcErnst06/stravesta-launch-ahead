@@ -32,10 +32,11 @@ const BackgroundChartAnimation = () => {
 
   useEffect(() => {
     const initialCandles: Candle[] = [];
-    let price = 20; // Start much lower for taller candles
+    let price = 20;
     
-    for (let i = 0; i < 30; i++) { // Much fewer candles
+    for (let i = 0; i < 30; i++) {
       const candle = generateCandle(i, price);
+      candle.x = (i * 60) + 400; // Start centered in viewport
       initialCandles.push(candle);
       price = candle.close;
     }
@@ -52,15 +53,15 @@ const BackgroundChartAnimation = () => {
           candle.x -= 1.5;
         });
         
-        const visibleCandles = newCandles.filter(candle => candle.x > -100);
+        const visibleCandles = newCandles.filter(candle => candle.x > -200); // Keep in center area
         
-        if (visibleCandles.length < 30) { // Fewer candles
+        if (visibleCandles.length < 30) {
           const lastCandle = visibleCandles[visibleCandles.length - 1];
           const newCandle = generateCandle(
             lastCandle ? lastCandle.id + 1 : 0,
             lastCandle ? lastCandle.close : 20
           );
-          newCandle.x = 2400; // Wider viewport
+          newCandle.x = 1920 + 200; // Start from right edge, centered
           visibleCandles.push(newCandle);
         }
         
@@ -150,16 +151,16 @@ const BackgroundChartAnimation = () => {
           return (
             <g key={`layer2-${candle.id}`}>
               <line
-                x1={candle.x + 200}
+                x1={candle.x + 300} // Offset for second layer
                 y1={wickTop}
-                x2={candle.x + 200}
+                x2={candle.x + 300}
                 y2={wickBottom}
                 stroke="#10b981"
                 strokeWidth="3"
                 opacity="0.7"
               />
               <rect
-                x={candle.x + 196}
+                x={candle.x + 288}
                 y={bodyY}
                 width="16"
                 height={Math.max(bodyHeight, 4)}
@@ -182,16 +183,16 @@ const BackgroundChartAnimation = () => {
           return (
             <g key={`layer3-${candle.id}`}>
               <line
-                x1={candle.x + 400}
+                x1={candle.x + 600} // Further offset for third layer
                 y1={wickTop}
-                x2={candle.x + 400}
+                x2={candle.x + 600}
                 y2={wickBottom}
                 stroke="#10b981"
                 strokeWidth="2"
                 opacity="0.5"
               />
               <rect
-                x={candle.x + 398}
+                x={candle.x + 594}
                 y={bodyY}
                 width="10"
                 height={Math.max(bodyHeight, 3)}
