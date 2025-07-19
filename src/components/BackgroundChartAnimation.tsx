@@ -7,18 +7,20 @@ interface Candle {
   low: number;
   close: number;
   x: number;
+  y: number;
 }
 
 const BackgroundChartAnimation = () => {
   const [candles, setCandles] = useState<Candle[]>([]);
 
-  const generateCandle = (id: number, prevClose: number): Candle => {
-    const volatility = Math.random() * 15 + 5;
-    const open = prevClose + (Math.random() - 0.5) * volatility;
-    const change = (Math.random() - 0.2) * volatility * 2;
+  const generateCandle = (id: number, prevClose: number, baseY: number): Candle => {
+    // Always bullish trend like DipSway
+    const volatility = Math.random() * 8 + 2;
+    const open = prevClose;
+    const change = Math.random() * 6 + 1; // Always positive (bullish)
     const close = open + change;
-    const high = Math.max(open, close) + Math.random() * volatility * 1.5;
-    const low = Math.min(open, close) - Math.random() * volatility * 0.3;
+    const high = close + Math.random() * 3;
+    const low = open - Math.random() * 1;
     
     return {
       id,
@@ -26,17 +28,20 @@ const BackgroundChartAnimation = () => {
       high,
       low,
       close,
-      x: id * 25 // Standard spacing
+      x: id * 40, // Wider spacing
+      y: baseY
     };
   };
 
   useEffect(() => {
     const initialCandles: Candle[] = [];
-    let price = 20;
+    let price = 10; // Start low
     
-    for (let i = 0; i < 80; i++) {
-      const candle = generateCandle(i, price);
-      candle.x = (i * 25) + 200; // Start from left side
+    for (let i = 0; i < 50; i++) {
+      // Diagonal positioning: bottom left to top right
+      const baseY = 900 - (i * 15); // Higher Y = lower on screen
+      const candle = generateCandle(i, price, baseY);
+      candle.x = (i * 40) + 50; // Start from left
       initialCandles.push(candle);
       price = candle.close;
     }
@@ -50,18 +55,24 @@ const BackgroundChartAnimation = () => {
         const newCandles = [...prevCandles];
         
         newCandles.forEach(candle => {
-          candle.x -= 2; // Move left like real trading chart
+          candle.x -= 1; // Slow movement
+          candle.y += 0.3; // Slight downward drift for new space
         });
         
-        const visibleCandles = newCandles.filter(candle => candle.x > -100); // Keep visible area
+        const visibleCandles = newCandles.filter(candle => candle.x > -100 && candle.y < 1000);
         
-        if (visibleCandles.length < 80) {
+        if (visibleCandles.length < 50) {
           const lastCandle = visibleCandles[visibleCandles.length - 1];
+          const lastPrice = lastCandle ? lastCandle.close : 10;
+          const newY = lastCandle ? lastCandle.y - 15 : 100; // Continue diagonal
+          
           const newCandle = generateCandle(
             lastCandle ? lastCandle.id + 1 : 0,
-            lastCandle ? lastCandle.close : 20
+            lastPrice,
+            newY
           );
-          newCandle.x = 1920 + 50; // New candles enter from right edge
+          newCandle.x = 1920 + 100;
+          newCandle.y = newY;
           visibleCandles.push(newCandle);
         }
         
@@ -85,9 +96,9 @@ const BackgroundChartAnimation = () => {
         >
         <defs>
           <linearGradient id="candleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#10b981" stopOpacity="1"/>
-            <stop offset="50%" stopColor="#059669" stopOpacity="0.9"/>
-            <stop offset="100%" stopColor="#047857" stopOpacity="0.8"/>
+            <stop offset="0%" stopColor="#00d4ff" stopOpacity="1"/>
+            <stop offset="50%" stopColor="#00b4d8" stopOpacity="0.9"/>
+            <stop offset="100%" stopColor="#0077b6" stopOpacity="0.8"/>
           </linearGradient>
           
           <filter id="glow">
@@ -102,10 +113,10 @@ const BackgroundChartAnimation = () => {
         
         {/* No grid background - solid color only */}
         
-        {/* Trading chart animation - horizontal movement */}
+        {/* DipSway-style diagonal chart */}
         {candles.map(candle => {
-          const scale = 12;
-          const baseY = 650; // Fixed Y position
+          const scale = 8; // Good scale for visibility
+          const baseY = candle.y; // Use the diagonal Y position
           const bodyHeight = Math.abs(candle.close - candle.open) * scale;
           const bodyY = baseY - Math.max(candle.open, candle.close) * scale;
           const wickTop = baseY - candle.high * scale;
@@ -115,24 +126,24 @@ const BackgroundChartAnimation = () => {
             <g key={candle.id} filter="url(#glow)">
               {/* Wick */}
               <line
-                x1={candle.x + 8}
+                x1={candle.x + 10}
                 y1={wickTop}
-                x2={candle.x + 8}
+                x2={candle.x + 10}
                 y2={wickBottom}
-                stroke="#10b981"
-                strokeWidth="6"
+                stroke="#00d4ff"
+                strokeWidth="3"
                 opacity="1"
               />
               
               {/* Body - Larger */}
               <rect
-                x={candle.x + 2}
+                x={candle.x + 3}
                 y={bodyY}
-                width="12"
-                height={Math.max(bodyHeight, 8)}
+                width="14"
+                height={Math.max(bodyHeight, 4)}
                 fill="url(#candleGradient)"
-                stroke="#10b981"
-                strokeWidth="1.5"
+                stroke="#00d4ff"
+                strokeWidth="1"
                 opacity="1"
               />
             </g>
