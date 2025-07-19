@@ -72,13 +72,15 @@ const BackgroundChartAnimation = () => {
 
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-      <svg
-        width="100%"
-        height="100%"
-        viewBox="0 0 1920 1080"
-        className="absolute inset-0 w-full h-full"
-        preserveAspectRatio="xMidYMid slice"
-      >
+      <div className="w-full h-full relative">
+        <svg
+          width="100%"
+          height="100%"
+          viewBox="0 0 1920 1080"
+          className="absolute inset-0 w-full h-full"
+          preserveAspectRatio="xMidYMid slice"
+          style={{ opacity: 0.8 }}
+        >
         <defs>
           <linearGradient id="candleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#00d4ff" stopOpacity="1"/>
@@ -217,7 +219,8 @@ const BackgroundChartAnimation = () => {
             </g>
           );
         })}
-      </svg>
+        </svg>
+      </div>
     </div>
   );
 };
