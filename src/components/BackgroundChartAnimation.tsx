@@ -122,7 +122,7 @@ const BackgroundChartAnimation = () => {
         {/* Main candlestick chart - Center screen */}
         {candles.map(candle => {
           const scale = 5;
-          const centerY = 540;
+          const centerY = 400; // Moved back to center area
           const priceOffset = (candle.close - 100) * scale;
           const baseY = centerY - priceOffset;
           const bodyHeight = Math.abs(candle.close - candle.open) * scale;
