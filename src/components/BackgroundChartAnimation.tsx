@@ -7,18 +7,17 @@ interface Candle {
   low: number;
   close: number;
   x: number;
-  y: number; // Add y position for diagonal movement
 }
 
 const BackgroundChartAnimation = () => {
   const [candles, setCandles] = useState<Candle[]>([]);
 
   const generateCandle = (id: number, prevClose: number): Candle => {
-    const volatility = Math.random() * 15 + 5;
-    const open = prevClose + (Math.random() - 0.5) * volatility;
-    const change = (Math.random() - 0.2) * volatility * 2;
+    const volatility = Math.random() * 8 + 3;
+    const open = prevClose + (Math.random() - 0.5) * 2;
+    const change = (Math.random() - 0.5) * volatility;
     const close = open + change;
-    const high = Math.max(open, close) + Math.random() * volatility * 1.5;
+    const high = Math.max(open, close) + Math.random() * volatility * 0.5;
     const low = Math.min(open, close) - Math.random() * volatility * 0.3;
     
     return {
@@ -27,19 +26,18 @@ const BackgroundChartAnimation = () => {
       high,
       low,
       close,
-      x: id * 25,
-      y: 0 // Will be set dynamically
+      x: id * 20
     };
   };
 
   useEffect(() => {
     const initialCandles: Candle[] = [];
-    let price = 20;
+    let price = 100;
     
-    for (let i = 0; i < 80; i++) {
+    // Fill screen with candles from right to left
+    for (let i = 0; i < 100; i++) {
       const candle = generateCandle(i, price);
-      candle.x = (i * 25) + 150; // Start from bottom left
-      candle.y = 200 + (i * 2); // Diagonal movement up
+      candle.x = i * 20;
       initialCandles.push(candle);
       price = candle.close;
     }
@@ -50,29 +48,31 @@ const BackgroundChartAnimation = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCandles(prevCandles => {
-        const newCandles = [...prevCandles];
+        // Move all candles to the left
+        const movedCandles = prevCandles.map(candle => ({
+          ...candle,
+          x: candle.x - 2
+        }));
         
-        newCandles.forEach(candle => {
-          candle.x -= 1.5; // Move right to left
-          candle.y -= 0.8; // Move bottom to top
-        });
+        // Remove candles that moved off screen
+        const visibleCandles = movedCandles.filter(candle => candle.x > -50);
         
-        const visibleCandles = newCandles.filter(candle => candle.x > -200 && candle.y > -200); // Keep diagonal area visible
+        // Add new candle from the right
+        const lastCandle = visibleCandles[visibleCandles.length - 1];
+        const maxX = Math.max(...visibleCandles.map(c => c.x), 0);
         
-        if (visibleCandles.length < 80) {
-          const lastCandle = visibleCandles[visibleCandles.length - 1];
+        if (maxX < 2000) {
           const newCandle = generateCandle(
-            lastCandle ? lastCandle.id + 1 : 0,
-            lastCandle ? lastCandle.close : 20
+            Date.now(),
+            lastCandle ? lastCandle.close : 100
           );
-          newCandle.x = 1920 + 200; // Enter from right
-          newCandle.y = 800; // Enter from bottom
+          newCandle.x = maxX + 20;
           visibleCandles.push(newCandle);
         }
         
         return visibleCandles;
       });
-    }, 50);
+    }, 100);
 
     return () => clearInterval(interval);
   }, []);
@@ -107,38 +107,40 @@ const BackgroundChartAnimation = () => {
         
         {/* No grid background - solid color only */}
         
-        {/* Main candlestick chart - Diagonal movement */}
+        {/* Main candlestick chart - Center screen */}
         {candles.map(candle => {
-          const scale = 12;
-          const baseY = 750 + candle.y; // Use dynamic Y position
+          const scale = 3;
+          const centerY = 540; // Center of 1080px height
+          const priceOffset = (candle.close - 100) * scale;
+          const baseY = centerY - priceOffset;
           const bodyHeight = Math.abs(candle.close - candle.open) * scale;
-          const bodyY = baseY - Math.max(candle.open, candle.close) * scale;
-          const wickTop = baseY - candle.high * scale;
-          const wickBottom = baseY - candle.low * scale;
+          const bodyY = baseY - Math.max(candle.open - 100, candle.close - 100) * scale;
+          const wickTop = baseY - (candle.high - 100) * scale;
+          const wickBottom = baseY - (candle.low - 100) * scale;
           
-          return (
+            return (
             <g key={candle.id} filter="url(#glow)">
               {/* Wick */}
               <line
-                x1={candle.x + 8}
+                x1={candle.x + 6}
                 y1={wickTop}
-                x2={candle.x + 8}
+                x2={candle.x + 6}
                 y2={wickBottom}
                 stroke="#10b981"
-                strokeWidth="6"
-                opacity="1"
+                strokeWidth="2"
+                opacity="0.8"
               />
               
-              {/* Body - Larger */}
+              {/* Body */}
               <rect
                 x={candle.x + 2}
                 y={bodyY}
-                width="12"
-                height={Math.max(bodyHeight, 8)}
+                width="8"
+                height={Math.max(bodyHeight, 3)}
                 fill="url(#candleGradient)"
                 stroke="#10b981"
-                strokeWidth="1.5"
-                opacity="1"
+                strokeWidth="1"
+                opacity="0.8"
               />
             </g>
           );
