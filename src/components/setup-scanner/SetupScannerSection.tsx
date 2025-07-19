@@ -27,12 +27,6 @@ const SetupScannerSection = () => {
     }
   ];
 
-  const stats = [
-    { value: "98.7%", label: "Erkennungsgenauigkeit" },
-    { value: "0.3s", label: "Analysezeit" },
-    { value: "24/7", label: "Marktüberwachung" },
-    { value: "67%", label: "Mehr erkannte Setups" }
-  ];
 
   return (
     <section className="py-20 relative overflow-hidden">
@@ -52,15 +46,6 @@ const SetupScannerSection = () => {
             und erkennt automatisch Ihre individuellen Trading-Strategien.
           </p>
           
-          {/* Stats Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
-                <div className="text-sm text-stravesta-lightGray">{stat.label}</div>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Problem/Solution Section */}
@@ -82,7 +67,7 @@ const SetupScannerSection = () => {
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-stravesta-lightGray">67% aller profitablen Setups werden übersehen</span>
+                    <span className="text-stravesta-lightGray">Viele profitable Setups werden übersehen</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
@@ -112,7 +97,7 @@ const SetupScannerSection = () => {
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-stravesta-lightGray">100% aller Setups erfasst und analysiert</span>
+                    <span className="text-stravesta-lightGray">Alle Setups werden erfasst und analysiert</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
