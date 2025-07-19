@@ -13,12 +13,12 @@ const BackgroundChartAnimation = () => {
   const [candles, setCandles] = useState<Candle[]>([]);
 
   const generateCandle = (id: number, prevClose: number): Candle => {
-    const volatility = Math.random() * 8 + 2; // More variation
+    const volatility = Math.random() * 15 + 5; // Much more variation
     const open = prevClose + (Math.random() - 0.5) * volatility;
-    const change = (Math.random() - 0.3) * volatility; // Sometimes up, sometimes down
+    const change = (Math.random() - 0.2) * volatility * 2; // Bigger moves, mostly up
     const close = open + change;
-    const high = Math.max(open, close) + Math.random() * volatility;
-    const low = Math.min(open, close) - Math.random() * volatility * 0.5;
+    const high = Math.max(open, close) + Math.random() * volatility * 1.5; // Much higher wicks
+    const low = Math.min(open, close) - Math.random() * volatility * 0.3;
     
     return {
       id,
@@ -26,15 +26,15 @@ const BackgroundChartAnimation = () => {
       high,
       low,
       close,
-      x: id * 30 // More spacing
+      x: id * 60 // Much more spacing
     };
   };
 
   useEffect(() => {
     const initialCandles: Candle[] = [];
-    let price = 50; // Start lower
+    let price = 20; // Start much lower for taller candles
     
-    for (let i = 0; i < 70; i++) {
+    for (let i = 0; i < 30; i++) { // Much fewer candles
       const candle = generateCandle(i, price);
       initialCandles.push(candle);
       price = candle.close;
@@ -54,13 +54,13 @@ const BackgroundChartAnimation = () => {
         
         const visibleCandles = newCandles.filter(candle => candle.x > -100);
         
-        if (visibleCandles.length < 70) {
+        if (visibleCandles.length < 30) { // Fewer candles
           const lastCandle = visibleCandles[visibleCandles.length - 1];
           const newCandle = generateCandle(
             lastCandle ? lastCandle.id + 1 : 0,
-            lastCandle ? lastCandle.close : 50
+            lastCandle ? lastCandle.close : 20
           );
-          newCandle.x = 2200;
+          newCandle.x = 2400; // Wider viewport
           visibleCandles.push(newCandle);
         }
         
@@ -101,10 +101,10 @@ const BackgroundChartAnimation = () => {
         
         {/* No grid background - solid color only */}
         
-        {/* Main candlestick chart - Better positioning */}
+        {/* Main candlestick chart - Much taller candles */}
         {candles.map(candle => {
-          const scale = 6; // Even larger scale
-          const baseY = 650; // Move down more
+          const scale = 12; // Much larger scale for height
+          const baseY = 750; // Lower base
           const bodyHeight = Math.abs(candle.close - candle.open) * scale;
           const bodyY = baseY - Math.max(candle.open, candle.close) * scale;
           const wickTop = baseY - candle.high * scale;
@@ -114,21 +114,21 @@ const BackgroundChartAnimation = () => {
             <g key={candle.id} filter="url(#glow)">
               {/* Wick */}
               <line
-                x1={candle.x + 10}
+                x1={candle.x + 15}
                 y1={wickTop}
-                x2={candle.x + 10}
+                x2={candle.x + 15}
                 y2={wickBottom}
                 stroke="#10b981"
-                strokeWidth="4"
+                strokeWidth="6"
                 opacity="1"
               />
               
               {/* Body - Larger */}
               <rect
-                x={candle.x + 2}
+                x={candle.x + 5}
                 y={bodyY}
-                width="20"
-                height={Math.max(bodyHeight, 6)}
+                width="24"
+                height={Math.max(bodyHeight, 8)}
                 fill="url(#candleGradient)"
                 stroke="#10b981"
                 strokeWidth="1.5"
@@ -138,10 +138,10 @@ const BackgroundChartAnimation = () => {
           );
         })}
         
-        {/* Second layer for depth - Different positioning */}
-        {candles.slice(0, 35).map(candle => {
-          const scale = 4;
-          const baseY = 850; // Lower positioning
+        {/* Second layer for depth - Fewer, taller candles */}
+        {candles.slice(0, 15).map(candle => {
+          const scale = 8;
+          const baseY = 950; // Much lower
           const bodyHeight = Math.abs(candle.close - candle.open) * scale;
           const bodyY = baseY - Math.max(candle.open, candle.close) * scale;
           const wickTop = baseY - candle.high * scale;
@@ -170,10 +170,10 @@ const BackgroundChartAnimation = () => {
           );
         })}
         
-        {/* Third layer - Higher positioning */}
-        {candles.slice(0, 20).map(candle => {
-          const scale = 3;
-          const baseY = 400; // Higher up
+        {/* Third layer - Fewer candles */}
+        {candles.slice(0, 10).map(candle => {
+          const scale = 6;
+          const baseY = 500; // Higher up but still tall
           const bodyHeight = Math.abs(candle.close - candle.open) * scale;
           const bodyY = baseY - Math.max(candle.open, candle.close) * scale;
           const wickTop = baseY - candle.high * scale;
