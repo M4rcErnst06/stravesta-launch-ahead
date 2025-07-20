@@ -151,10 +151,10 @@ const MetaTraderSyncAnimation = () => {
         </h2>
       </div>
 
-      {/* Fixed height container with proper grid */}
-      <div className="grid lg:grid-cols-2 gap-8 h-[500px]">
-        {/* MetaTrader History - Left Side */}
-        <div className="space-y-4 h-full flex flex-col">
+      {/* Optimized layout for better proportions */}
+      <div className="grid lg:grid-cols-5 gap-8 h-[550px]">
+        {/* MetaTrader History - Left Side (2 columns) */}
+        <div className="lg:col-span-2 space-y-4 h-full flex flex-col">
           <div className="flex items-center gap-4">
             <div className="bg-blue-500/20 p-3 rounded-lg">
               <BarChart3 className="h-6 w-6 text-blue-400" />
@@ -210,8 +210,8 @@ const MetaTraderSyncAnimation = () => {
           </div>
         </div>
 
-        {/* Stravesta Journal - Right Side - Fixed height container */}
-        <div className="space-y-4 h-full flex flex-col">
+        {/* Stravesta Journal - Right Side (3 columns for more space) */}
+        <div className="lg:col-span-3 space-y-4 h-full flex flex-col">
           <div className="flex items-center gap-4">
             <div className="bg-gradient-to-r from-stravesta-teal to-blue-500 p-3 rounded-lg">
               <TrendingUp className="h-6 w-6 text-white" />
@@ -227,23 +227,23 @@ const MetaTraderSyncAnimation = () => {
             )}
           </div>
 
-          {/* Journal entries - Fixed container with max 3 entries */}
-          <div className="h-full space-y-3 overflow-hidden">
+          {/* Journal entries - Optimized container for better display */}
+          <div className="h-full space-y-4 overflow-hidden flex flex-col justify-start">
             {journalEntries.slice(0, 3).map((entry, index) => (
               <div 
                 key={entry.id}
                 className={`
-                  bg-stravesta-dark/50 border border-stravesta-darkGray rounded-lg p-4 transition-all duration-700
+                  bg-stravesta-dark/50 border border-stravesta-darkGray rounded-lg p-5 transition-all duration-700
                   ${entry.status === 'syncing' ? 'border-stravesta-teal shadow-lg shadow-stravesta-teal/20' : ''}
-                  opacity-0 translate-x-8 animate-[fade-in_0.5s_ease-out_forwards]
+                  opacity-0 translate-x-8 animate-[fade-in_0.5s_ease-out_forwards] min-h-[120px] flex flex-col justify-between
                 `}
                 style={{ animationDelay: `${index * 300}ms` }}
               >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <span className="font-bold text-white text-lg">{entry.symbol}</span>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span className="font-bold text-white text-xl">{entry.symbol}</span>
                     <Badge 
-                      className={`text-xs px-2 py-1 ${
+                      className={`text-sm px-3 py-1 ${
                         entry.type === 'buy' 
                           ? 'bg-green-500/20 text-green-400 border-green-500/30' 
                           : 'bg-red-500/20 text-red-400 border-red-500/30'
@@ -251,20 +251,20 @@ const MetaTraderSyncAnimation = () => {
                     >
                       {entry.type.toUpperCase()}
                     </Badge>
-                    <span className="text-xs text-stravesta-lightGray">{entry.time}</span>
+                    <span className="text-sm text-stravesta-lightGray">{entry.time}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className={`font-bold text-lg ${entry.profit >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                  <div className="flex items-center gap-3">
+                    <span className={`font-bold text-xl ${entry.profit >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                       ${entry.profit}
                     </span>
                     {entry.status === 'complete' && (
-                      <CheckCircle className="h-4 w-4 text-green-500" />
+                      <CheckCircle className="h-5 w-5 text-green-500" />
                     )}
                   </div>
                 </div>
                 
-                <div className="flex items-center justify-between text-xs">
-                  <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
+                <div className="flex items-center justify-between text-sm">
+                  <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-sm px-3 py-1">
                     {entry.category}
                   </Badge>
                   <span className="text-stravesta-lightGray">{entry.session}</span>
