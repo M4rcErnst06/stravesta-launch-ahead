@@ -1,6 +1,5 @@
-
 import React, { useEffect, useRef, useState } from 'react';
-import { TrendingUp, AlertTriangle, Target } from 'lucide-react';
+import { Brain, Target, TrendingUp, AlertTriangle, Zap, CheckCircle2 } from 'lucide-react';
 
 interface CandleData {
   open: number;
@@ -13,31 +12,34 @@ interface CandleData {
 const TradingChartAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [animationStep, setAnimationStep] = useState(0);
-  const [missedEntry, setMissedEntry] = useState(false);
-  const [animationComplete, setAnimationComplete] = useState(false);
+  const [patternDetected, setPatternDetected] = useState(false);
+  const [alertTriggered, setAlertTriggered] = useState(false);
+  const [entryExecuted, setEntryExecuted] = useState(false);
+  const [aiAnalyzing, setAiAnalyzing] = useState(false);
+  const [confidence, setConfidence] = useState(0);
 
-  // Realistic trading data based on the uploaded image
+  // Chart data showing a bullish flag pattern
   const candleData: CandleData[] = [
-    { open: 1.0850, high: 1.0870, low: 1.0845, close: 1.0865, timestamp: 1 },
-    { open: 1.0865, high: 1.0880, low: 1.0860, close: 1.0875, timestamp: 2 },
-    { open: 1.0875, high: 1.0885, low: 1.0870, close: 1.0880, timestamp: 3 },
-    { open: 1.0880, high: 1.0890, low: 1.0875, close: 1.0885, timestamp: 4 },
-    { open: 1.0885, high: 1.0895, low: 1.0880, close: 1.0890, timestamp: 5 },
-    { open: 1.0890, high: 1.0900, low: 1.0885, close: 1.0895, timestamp: 6 },
-    { open: 1.0895, high: 1.0905, low: 1.0890, close: 1.0900, timestamp: 7 },
-    { open: 1.0900, high: 1.0920, low: 1.0895, close: 1.0915, timestamp: 8 },
-    { open: 1.0915, high: 1.0925, low: 1.0910, close: 1.0920, timestamp: 9 },
-    { open: 1.0920, high: 1.0935, low: 1.0915, close: 1.0930, timestamp: 10 },
+    { open: 1.0850, high: 1.0890, low: 1.0840, close: 1.0875, timestamp: 1 },
+    { open: 1.0875, high: 1.0920, low: 1.0860, close: 1.0915, timestamp: 2 },
+    { open: 1.0915, high: 1.0950, low: 1.0900, close: 1.0940, timestamp: 3 },
+    { open: 1.0940, high: 1.0965, low: 1.0920, close: 1.0955, timestamp: 4 },
+    { open: 1.0955, high: 1.0965, low: 1.0940, close: 1.0950, timestamp: 5 },
+    { open: 1.0950, high: 1.0960, low: 1.0935, close: 1.0945, timestamp: 6 },
+    { open: 1.0945, high: 1.0955, low: 1.0930, close: 1.0940, timestamp: 7 },
+    { open: 1.0940, high: 1.0950, low: 1.0925, close: 1.0935, timestamp: 8 },
+    { open: 1.0935, high: 1.0970, low: 1.0930, close: 1.0965, timestamp: 9 },
+    { open: 1.0965, high: 1.1020, low: 1.0960, close: 1.1015, timestamp: 10 },
   ];
 
-  const fibLevels = [
-    { level: 0.618, price: 1.0895, label: '61.8%' },
-    { level: 0.786, price: 1.0885, label: '78.6%' },
-    { level: 0.886, price: 1.0875, label: '88.6%' },
-  ];
-
-  const entryPoint = { price: 1.0890, timestamp: 6 };
-  const targetPoint = { price: 1.0930, timestamp: 10 };
+  // Pattern recognition points
+  const flagPole = { start: 1, end: 4 };
+  const flagConsolidation = { start: 4, end: 8 };
+  const breakout = { timestamp: 9, price: 1.0965 };
+  
+  // Entry and target points
+  const entryPoint = { price: 1.0965, timestamp: 9 };
+  const targetPoint = { price: 1.1015, timestamp: 10 };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -47,7 +49,7 @@ const TradingChartAnimation = () => {
     if (!ctx) return;
 
     // Set canvas size
-    canvas.width = 600;
+    canvas.width = 700;
     canvas.height = 400;
 
     const drawChart = () => {
@@ -56,16 +58,16 @@ const TradingChartAnimation = () => {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Chart boundaries
-      const chartLeft = 60;
-      const chartRight = canvas.width - 40;
-      const chartTop = 40;
+      const chartLeft = 80;
+      const chartRight = canvas.width - 120;
+      const chartTop = 50;
       const chartBottom = canvas.height - 60;
       const chartWidth = chartRight - chartLeft;
       const chartHeight = chartBottom - chartTop;
 
       // Price range
-      const minPrice = 1.0840;
-      const maxPrice = 1.0940;
+      const minPrice = 1.0820;
+      const maxPrice = 1.1030;
       const priceRange = maxPrice - minPrice;
 
       // Helper functions
@@ -75,34 +77,13 @@ const TradingChartAnimation = () => {
       // Draw grid
       ctx.strokeStyle = '#1A2A3A';
       ctx.lineWidth = 1;
-      for (let i = 0; i <= 5; i++) {
-        const y = chartTop + (i * chartHeight) / 5;
+      for (let i = 0; i <= 8; i++) {
+        const y = chartTop + (i * chartHeight) / 8;
         ctx.beginPath();
         ctx.moveTo(chartLeft, y);
         ctx.lineTo(chartRight, y);
         ctx.stroke();
       }
-
-      // Draw fibonacci levels
-      ctx.lineWidth = 1;
-      fibLevels.forEach((fib, index) => {
-        if (animationStep > 2) {
-          ctx.strokeStyle = index === 0 ? '#17E6C8' : index === 1 ? '#FFB800' : '#FF6B6B';
-          ctx.setLineDash([5, 5]);
-          const y = priceToY(fib.price);
-          ctx.beginPath();
-          ctx.moveTo(chartLeft, y);
-          ctx.lineTo(chartRight, y);
-          ctx.stroke();
-
-          // Fib labels
-          ctx.fillStyle = ctx.strokeStyle;
-          ctx.font = '12px Arial';
-          ctx.fillText(fib.label, chartRight + 5, y + 4);
-          ctx.fillText(fib.price.toFixed(4), chartRight + 5, y - 8);
-        }
-      });
-      ctx.setLineDash([]);
 
       // Draw candlesticks
       const visibleCandles = Math.min(animationStep + 1, candleData.length);
@@ -114,12 +95,12 @@ const TradingChartAnimation = () => {
         const highY = priceToY(candle.high);
         const lowY = priceToY(candle.low);
 
-        const candleWidth = 12;
+        const candleWidth = 16;
         const isGreen = candle.close > candle.open;
 
         // Draw wick
         ctx.strokeStyle = isGreen ? '#00C851' : '#FF4444';
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(x, highY);
         ctx.lineTo(x, lowY);
@@ -129,29 +110,82 @@ const TradingChartAnimation = () => {
         ctx.fillStyle = isGreen ? '#00C851' : '#FF4444';
         const bodyHeight = Math.abs(closeY - openY);
         const bodyTop = Math.min(openY, closeY);
-        ctx.fillRect(x - candleWidth/2, bodyTop, candleWidth, bodyHeight || 1);
+        ctx.fillRect(x - candleWidth/2, bodyTop, candleWidth, bodyHeight || 2);
       }
 
-      // Draw entry point
-      if (animationStep >= 6) {
+      // Draw AI pattern recognition
+      if (patternDetected && animationStep >= 5) {
+        // Flag pole highlight
+        ctx.strokeStyle = '#17E6C8';
+        ctx.lineWidth = 3;
+        ctx.setLineDash([]);
+        
+        // Draw flag pole trend line
+        const startX = timestampToX(flagPole.start);
+        const endX = timestampToX(flagPole.end);
+        const startY = priceToY(candleData[flagPole.start - 1].low);
+        const endY = priceToY(candleData[flagPole.end - 1].high);
+        
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(endX, endY);
+        ctx.stroke();
+        
+        // Pattern label
+        ctx.fillStyle = '#17E6C8';
+        ctx.font = 'bold 14px Arial';
+        ctx.fillText('BULLISH FLAG', endX + 10, endY - 20);
+        ctx.font = '12px Arial';
+        ctx.fillText(`Confidence: ${confidence}%`, endX + 10, endY - 5);
+      }
+
+      // Draw consolidation zone
+      if (patternDetected && animationStep >= 6) {
+        ctx.strokeStyle = '#FFB800';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([8, 4]);
+        
+        // Upper consolidation line
+        const upperY = priceToY(1.0955);
+        ctx.beginPath();
+        ctx.moveTo(timestampToX(4), upperY);
+        ctx.lineTo(timestampToX(8), upperY);
+        ctx.stroke();
+        
+        // Lower consolidation line
+        const lowerY = priceToY(1.0930);
+        ctx.beginPath();
+        ctx.moveTo(timestampToX(4), lowerY);
+        ctx.lineTo(timestampToX(8), lowerY);
+        ctx.stroke();
+        
+        ctx.setLineDash([]);
+      }
+
+      // Draw breakout and entry point
+      if (entryExecuted && animationStep >= 9) {
         const entryX = timestampToX(entryPoint.timestamp);
         const entryY = priceToY(entryPoint.price);
 
-        // Entry arrow
-        ctx.fillStyle = missedEntry ? '#FF4444' : '#17E6C8';
+        // Breakout arrow
+        ctx.fillStyle = '#00C851';
         ctx.beginPath();
-        ctx.moveTo(entryX, entryY);
-        ctx.lineTo(entryX - 8, entryY - 12);
-        ctx.lineTo(entryX + 8, entryY - 12);
+        ctx.moveTo(entryX, entryY - 30);
+        ctx.lineTo(entryX - 12, entryY - 45);
+        ctx.lineTo(entryX - 4, entryY - 45);
+        ctx.lineTo(entryX - 4, entryY - 55);
+        ctx.lineTo(entryX + 4, entryY - 55);
+        ctx.lineTo(entryX + 4, entryY - 45);
+        ctx.lineTo(entryX + 12, entryY - 45);
         ctx.closePath();
         ctx.fill();
 
         // Entry label
-        ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 12px Arial';
-        ctx.fillText(missedEntry ? 'MISSED!' : 'ENTRY', entryX - 20, entryY - 20);
-        ctx.font = '10px Arial';
-        ctx.fillText(entryPoint.price.toFixed(4), entryX - 15, entryY - 8);
+        ctx.fillStyle = '#00C851';
+        ctx.font = 'bold 14px Arial';
+        ctx.fillText('ENTRY EXECUTED', entryX - 50, entryY - 60);
+        ctx.font = '12px Arial';
+        ctx.fillText(entryPoint.price.toFixed(4), entryX - 20, entryY - 20);
       }
 
       // Draw target point
@@ -159,9 +193,10 @@ const TradingChartAnimation = () => {
         const targetX = timestampToX(targetPoint.timestamp);
         const targetY = priceToY(targetPoint.price);
 
+        // Target line
         ctx.strokeStyle = '#00C851';
-        ctx.lineWidth = 2;
-        ctx.setLineDash([3, 3]);
+        ctx.lineWidth = 3;
+        ctx.setLineDash([6, 6]);
         ctx.beginPath();
         ctx.moveTo(timestampToX(entryPoint.timestamp), priceToY(entryPoint.price));
         ctx.lineTo(targetX, targetY);
@@ -170,95 +205,138 @@ const TradingChartAnimation = () => {
 
         // Target label
         ctx.fillStyle = '#00C851';
-        ctx.font = 'bold 12px Arial';
-        ctx.fillText('TARGET', targetX - 25, targetY - 15);
-        ctx.font = '10px Arial';
-        ctx.fillText('+40 PIPS', targetX - 20, targetY - 5);
+        ctx.font = 'bold 14px Arial';
+        ctx.fillText('TARGET HIT', targetX - 40, targetY - 20);
+        ctx.font = '12px Arial';
+        ctx.fillText('+50 PIPS', targetX - 25, targetY - 5);
       }
 
       // Price labels
       ctx.fillStyle = '#E0E5EB';
-      ctx.font = '10px Arial';
-      for (let i = 0; i <= 5; i++) {
-        const price = maxPrice - (i * priceRange) / 5;
-        const y = chartTop + (i * chartHeight) / 5;
-        ctx.fillText(price.toFixed(4), 10, y + 4);
+      ctx.font = '11px Arial';
+      for (let i = 0; i <= 8; i++) {
+        const price = maxPrice - (i * priceRange) / 8;
+        const y = chartTop + (i * chartHeight) / 8;
+        ctx.fillText(price.toFixed(4), 15, y + 4);
+      }
+
+      // AI analysis box
+      if (aiAnalyzing) {
+        ctx.fillStyle = 'rgba(23, 230, 200, 0.1)';
+        ctx.strokeStyle = '#17E6C8';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(chartRight + 10, chartTop, 100, 120, 8);
+        ctx.fill();
+        ctx.stroke();
+        
+        ctx.fillStyle = '#17E6C8';
+        ctx.font = 'bold 12px Arial';
+        ctx.fillText('KI ANALYSE', chartRight + 20, chartTop + 20);
+        
+        ctx.font = '10px Arial';
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillText('Pattern: Analyzing...', chartRight + 15, chartTop + 40);
+        ctx.fillText('Trend: Bullish', chartRight + 15, chartTop + 55);
+        ctx.fillText('Volume: Rising', chartRight + 15, chartTop + 70);
+        ctx.fillText('Signal: Strong', chartRight + 15, chartTop + 85);
+        
+        if (confidence > 0) {
+          ctx.fillStyle = '#00C851';
+          ctx.fillText(`Setup: ${confidence}%`, chartRight + 15, chartTop + 105);
+        }
       }
     };
 
     drawChart();
-  }, [animationStep, missedEntry]);
+  }, [animationStep, patternDetected, alertTriggered, entryExecuted, aiAnalyzing, confidence]);
 
   useEffect(() => {
-    if (animationComplete) return;
+    const phases = [
+      { step: 0, delay: 1000, action: () => setAiAnalyzing(true) },
+      { step: 3, delay: 1500, action: () => setConfidence(65) },
+      { step: 4, delay: 1000, action: () => setConfidence(78) },
+      { step: 5, delay: 1000, action: () => { setPatternDetected(true); setConfidence(89); } },
+      { step: 6, delay: 1500, action: () => setAlertTriggered(true) },
+      { step: 8, delay: 1000, action: () => setConfidence(94) },
+      { step: 9, delay: 1000, action: () => setEntryExecuted(true) }
+    ];
 
     const timer = setInterval(() => {
       setAnimationStep(prev => {
-        if (prev < 10) {
-          return prev + 1;
-        } else {
-          // Animation reached the end - mark as missed and stop
-          setMissedEntry(true);
-          setAnimationComplete(true);
-          return prev; // Keep the final state
+        const nextStep = prev + 1;
+        
+        // Execute phase actions
+        phases.forEach(phase => {
+          if (nextStep === phase.step) {
+            setTimeout(phase.action, phase.delay);
+          }
+        });
+        
+        if (nextStep > 10) {
+          // Reset animation
+          setTimeout(() => {
+            setAnimationStep(0);
+            setPatternDetected(false);
+            setAlertTriggered(false);
+            setEntryExecuted(false);
+            setAiAnalyzing(false);
+            setConfidence(0);
+          }, 3000);
+          return 0;
         }
+        
+        return nextStep;
       });
-    }, 800);
+    }, 1200);
 
-    // Set missed state after 5 seconds regardless of animation step
-    const missedTimer = setTimeout(() => {
-      if (!animationComplete) {
-        setMissedEntry(true);
-        setAnimationComplete(true);
-      }
-    }, 5000);
-
-    return () => {
-      clearInterval(timer);
-      clearTimeout(missedTimer);
-    };
-  }, [animationComplete]);
-
-  // Reset animation after showing missed state for 3 seconds
-  useEffect(() => {
-    if (missedEntry && animationComplete) {
-      const resetTimer = setTimeout(() => {
-        setAnimationStep(0);
-        setMissedEntry(false);
-        setAnimationComplete(false);
-      }, 3000);
-
-      return () => clearTimeout(resetTimer);
-    }
-  }, [missedEntry, animationComplete]);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto">
+    <div className="relative w-full max-w-4xl mx-auto">
       <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-lg p-6 border border-stravesta-teal/20" style={{ minHeight: '500px' }}>
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-stravesta-teal" />
-            <span className="text-white font-semibold">EUR/USD • M15</span>
+        
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <Brain className="h-6 w-6 text-stravesta-teal" />
+            <span className="text-white font-semibold text-lg">EUR/USD • M15 • KI Setup Scanner</span>
           </div>
-          <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${
-            missedEntry 
-              ? 'bg-red-500/20 text-red-400' 
-              : 'bg-stravesta-teal/20 text-stravesta-teal'
+          <div className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
+            entryExecuted 
+              ? 'bg-green-500/20 text-green-400' 
+              : alertTriggered
+                ? 'bg-yellow-500/20 text-yellow-400'
+                : patternDetected
+                  ? 'bg-stravesta-teal/20 text-stravesta-teal'
+                  : 'bg-gray-500/20 text-gray-400'
           }`}>
-            {missedEntry ? (
+            {entryExecuted ? (
               <>
-                <AlertTriangle className="h-4 w-4" />
-                <span className="text-sm font-medium">Setup Missed</span>
+                <CheckCircle2 className="h-5 w-5" />
+                <span className="font-medium">Entry Executed</span>
+              </>
+            ) : alertTriggered ? (
+              <>
+                <Zap className="h-5 w-5 animate-pulse" />
+                <span className="font-medium">Alert Triggered</span>
+              </>
+            ) : patternDetected ? (
+              <>
+                <Target className="h-5 w-5" />
+                <span className="font-medium">Pattern Detected</span>
               </>
             ) : (
               <>
-                <Target className="h-4 w-4" />
-                <span className="text-sm font-medium">Setup Detected</span>
+                <Brain className="h-5 w-5" />
+                <span className="font-medium">KI Analyzing...</span>
               </>
             )}
           </div>
         </div>
 
+        {/* Chart */}
         <div style={{ height: '400px' }}>
           <canvas 
             ref={canvasRef}
@@ -267,33 +345,47 @@ const TradingChartAnimation = () => {
           />
         </div>
 
-        <div className="mt-4 grid grid-cols-3 gap-4 text-center">
-          <div className="bg-stravesta-dark/50 rounded p-3">
-            <div className="text-stravesta-teal text-lg font-bold">78.6%</div>
-            <div className="text-stravesta-lightGray text-xs">Fibonacci Entry</div>
-          </div>
-          <div className="bg-stravesta-dark/50 rounded p-3">
-            <div className="text-green-400 text-lg font-bold">+40</div>
-            <div className="text-stravesta-lightGray text-xs">Pips Potential</div>
-          </div>
-          <div className="bg-stravesta-dark/50 rounded p-3">
-            <div className={`text-lg font-bold ${missedEntry ? 'text-red-400' : 'text-stravesta-teal'}`}>
-              {missedEntry ? 'MISSED' : 'ACTIVE'}
+        {/* Stats */}
+        <div className="mt-6 grid grid-cols-4 gap-4 text-center">
+          <div className="bg-stravesta-dark/50 rounded-lg p-4">
+            <div className={`text-lg font-bold transition-colors ${patternDetected ? 'text-stravesta-teal' : 'text-gray-400'}`}>
+              {patternDetected ? 'Bullish Flag' : 'Analyzing...'}
             </div>
-            <div className="text-stravesta-lightGray text-xs">Status</div>
+            <div className="text-stravesta-lightGray text-sm">Pattern</div>
+          </div>
+          <div className="bg-stravesta-dark/50 rounded-lg p-4">
+            <div className={`text-lg font-bold transition-colors ${confidence > 80 ? 'text-green-400' : confidence > 60 ? 'text-yellow-400' : 'text-gray-400'}`}>
+              {confidence > 0 ? `${confidence}%` : '--'}
+            </div>
+            <div className="text-stravesta-lightGray text-sm">Confidence</div>
+          </div>
+          <div className="bg-stravesta-dark/50 rounded-lg p-4">
+            <div className={`text-lg font-bold transition-colors ${entryExecuted ? 'text-green-400' : alertTriggered ? 'text-yellow-400' : 'text-gray-400'}`}>
+              {entryExecuted ? '1.0965' : alertTriggered ? 'Ready' : 'Waiting'}
+            </div>
+            <div className="text-stravesta-lightGray text-sm">Entry Point</div>
+          </div>
+          <div className="bg-stravesta-dark/50 rounded-lg p-4">
+            <div className={`text-lg font-bold transition-colors ${animationStep >= 10 ? 'text-green-400' : 'text-gray-400'}`}>
+              {animationStep >= 10 ? '+50 Pips' : '+-- Pips'}
+            </div>
+            <div className="text-stravesta-lightGray text-sm">Potential</div>
           </div>
         </div>
-      </div>
 
-      {missedEntry && (
-        <div className="absolute inset-0 bg-red-500/10 rounded-lg border-2 border-red-500/50 flex items-center justify-center backdrop-blur-sm">
-          <div className="text-center">
-            <AlertTriangle className="h-12 w-12 text-red-400 mx-auto mb-2" />
-            <div className="text-red-400 font-bold text-lg">Setup Verpasst!</div>
-            <div className="text-red-300 text-sm">40 Pips Gewinn entgangen</div>
+        {/* Alert notification */}
+        {alertTriggered && !entryExecuted && (
+          <div className="absolute top-20 right-6 bg-yellow-500/20 border border-yellow-500/50 rounded-lg p-4 animate-pulse">
+            <div className="flex items-center gap-3">
+              <Zap className="h-6 w-6 text-yellow-400" />
+              <div>
+                <div className="text-yellow-400 font-bold">Setup Alert!</div>
+                <div className="text-yellow-300 text-sm">Bullish Flag - Entry imminent</div>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
