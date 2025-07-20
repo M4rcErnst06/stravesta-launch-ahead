@@ -254,9 +254,6 @@ const MetaTraderSyncAnimation = () => {
                     <span className="text-xs text-stravesta-lightGray">{entry.time}</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <span className={`font-bold text-sm ${entry.profit >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      ${entry.profit}
-                    </span>
                     {entry.status === 'complete' && (
                       <CheckCircle className="h-3 w-3 text-green-500" />
                     )}
