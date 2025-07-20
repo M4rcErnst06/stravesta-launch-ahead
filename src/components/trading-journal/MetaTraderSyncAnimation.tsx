@@ -144,38 +144,34 @@ const MetaTraderSyncAnimation = () => {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-stravesta-teal/20 min-h-[500px]">
-      {/* Main content container */}
-      <div className="grid lg:grid-cols-2 gap-8 h-full">
-        {/* MetaTrader History */}
-        <div className="space-y-6 flex flex-col">
-          <div className="flex items-center gap-4 mb-6">
+    <div className="w-full bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-stravesta-teal/20">
+      <div className="text-center mb-8">
+        <h2 className="text-2xl font-bold text-white mb-2">
+          Sehen Sie live, wie Ihre MetaTrader Trades automatisch ins Stravesta Journal synchronisiert und von unserer KI analysiert werden
+        </h2>
+      </div>
+
+      {/* Fixed height container with proper grid */}
+      <div className="grid lg:grid-cols-2 gap-8 h-[500px]">
+        {/* MetaTrader History - Left Side */}
+        <div className="space-y-4 h-full flex flex-col">
+          <div className="flex items-center gap-4">
             <div className="bg-blue-500/20 p-3 rounded-lg">
-              <BarChart3 className="h-7 w-7 text-blue-400" />
+              <BarChart3 className="h-6 w-6 text-blue-400" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-white">MetaTrader 5 History</h3>
-              <p className="text-stravesta-lightGray text-base">Ihre geschlossenen Trades</p>
+              <h3 className="text-xl font-bold text-white">MetaTrader 5 History</h3>
+              <p className="text-stravesta-lightGray">Ihre geschlossenen Trades</p>
             </div>
-            {currentStep === 2 && (
-              <Button 
-                size="sm" 
-                className="ml-auto bg-stravesta-teal hover:bg-stravesta-teal/80 animate-pulse text-base px-4 py-2"
-                disabled
-              >
-                <Download className="h-5 w-5 mr-2" />
-                Sync läuft...
-              </Button>
-            )}
           </div>
 
-          {/* MetaTrader Table */}
+          {/* MetaTrader Table - Fixed size */}
           <div className={`
-            bg-stravesta-dark/80 rounded-lg border border-stravesta-darkGray p-6 transition-all duration-700 flex-1
+            bg-stravesta-dark/80 rounded-lg border border-stravesta-darkGray p-4 h-full transition-all duration-700 overflow-hidden
             ${currentStep >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
           `}>
-            <div className="space-y-4 h-full">
-              <div className="grid grid-cols-7 gap-3 text-sm text-stravesta-lightGray font-medium border-b border-stravesta-darkGray pb-3">
+            <div className="h-full flex flex-col">
+              <div className="grid grid-cols-7 gap-2 text-xs text-stravesta-lightGray font-medium border-b border-stravesta-darkGray pb-2 mb-3">
                 <span>Time</span>
                 <span>Type</span>
                 <span>Size</span>
@@ -185,99 +181,96 @@ const MetaTraderSyncAnimation = () => {
                 <span>Profit</span>
               </div>
               
-              {metaTraderTrades.map((trade, index) => (
-                <div 
-                  key={trade.ticket}
-                  className={`
-                    grid grid-cols-7 gap-3 text-sm py-4 px-2 rounded transition-all duration-500
-                    ${syncingTrades.includes(trade.ticket) ? 'bg-stravesta-teal/20 border border-stravesta-teal animate-pulse' : ''}
-                    ${currentStep >= 1 ? 'opacity-100' : 'opacity-0'}
-                  `}
-                  style={{ transitionDelay: `${index * 200}ms` }}
-                >
-                  <span className="text-stravesta-lightGray font-medium">{trade.time}</span>
-                  <span className={`font-semibold ${trade.type === 'buy' ? 'text-green-400' : 'text-red-400'}`}>
-                    {trade.type.toUpperCase()}
-                  </span>
-                  <span className="text-white font-medium">{trade.size}</span>
-                  <span className="text-white font-bold text-base">{trade.symbol}</span>
-                  <span className="text-stravesta-lightGray font-medium">{trade.price}</span>
-                  <span className="text-stravesta-lightGray font-medium">{trade.sl}</span>
-                  <span className={`font-bold text-lg ${trade.profit > 0 ? 'text-green-400' : 'text-red-400'}`}>
-                    ${trade.profit}
-                  </span>
-                </div>
-              ))}
+              <div className="space-y-3 flex-1">
+                {metaTraderTrades.map((trade, index) => (
+                  <div 
+                    key={trade.ticket}
+                    className={`
+                      grid grid-cols-7 gap-2 text-xs py-3 px-2 rounded transition-all duration-500
+                      ${syncingTrades.includes(trade.ticket) ? 'bg-stravesta-teal/20 border border-stravesta-teal/50' : 'bg-stravesta-navy/30'}
+                      ${currentStep >= 1 ? 'opacity-100' : 'opacity-0'}
+                    `}
+                    style={{ transitionDelay: `${index * 200}ms` }}
+                  >
+                    <span className="text-stravesta-lightGray text-xs">{trade.time}</span>
+                    <span className={`font-semibold text-xs ${trade.type === 'buy' ? 'text-green-400' : 'text-red-400'}`}>
+                      {trade.type.toUpperCase()}
+                    </span>
+                    <span className="text-white text-xs">{trade.size}</span>
+                    <span className="text-white font-bold text-sm">{trade.symbol}</span>
+                    <span className="text-stravesta-lightGray text-xs">{trade.price}</span>
+                    <span className="text-stravesta-lightGray text-xs">{trade.sl}</span>
+                    <span className={`font-bold text-sm ${trade.profit > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                      ${trade.profit}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-
-          {currentStep === 2 && (
-            <div className="text-center p-4 bg-stravesta-teal/10 rounded-lg border border-stravesta-teal/30 animate-fade-in">
-              <Zap className="h-7 w-7 text-stravesta-teal mx-auto mb-3 animate-pulse" />
-              <p className="text-stravesta-teal font-medium text-base">Automatische Synchronisation gestartet...</p>
-            </div>
-          )}
         </div>
 
-        {/* Stravesta Journal */}
-        <div className="space-y-6 flex flex-col">
-          <div className="flex items-center gap-4 mb-6">
+        {/* Stravesta Journal - Right Side - Fixed height container */}
+        <div className="space-y-4 h-full flex flex-col">
+          <div className="flex items-center gap-4">
             <div className="bg-gradient-to-r from-stravesta-teal to-blue-500 p-3 rounded-lg">
-              <TrendingUp className="h-7 w-7 text-white" />
+              <TrendingUp className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-white">Stravesta Journal</h3>
-              <p className="text-stravesta-lightGray text-base">Automatisch synchronisiert</p>
+              <h3 className="text-xl font-bold text-white">Stravesta Journal</h3>
+              <p className="text-stravesta-lightGray">Automatisch synchronisiert</p>
             </div>
             {currentStep >= 3 && (
-              <Badge className="ml-auto bg-green-500/20 text-green-400 border-green-500/30 text-sm px-3 py-1">
-                {journalEntries.length} Trades importiert
+              <Badge className="ml-auto bg-green-500/20 text-green-400 border-green-500/30">
+                {Math.min(journalEntries.length, 3)} Trades importiert
               </Badge>
             )}
           </div>
 
-          {/* Journal entries */}
-          <div className="flex-1 space-y-4 overflow-hidden">
-            {journalEntries.map((entry, index) => (
-              <Card 
+          {/* Journal entries - Fixed container with max 3 entries */}
+          <div className="h-full space-y-3 overflow-hidden">
+            {journalEntries.slice(0, 3).map((entry, index) => (
+              <div 
                 key={entry.id}
                 className={`
-                  bg-stravesta-dark/50 border-stravesta-darkGray transition-all duration-700
-                  ${entry.status === 'syncing' ? 'border-stravesta-teal shadow-lg shadow-stravesta-teal/20 scale-105' : ''}
+                  bg-stravesta-dark/50 border border-stravesta-darkGray rounded-lg p-4 transition-all duration-700
+                  ${entry.status === 'syncing' ? 'border-stravesta-teal shadow-lg shadow-stravesta-teal/20' : ''}
                   opacity-0 translate-x-8 animate-[fade-in_0.5s_ease-out_forwards]
                 `}
                 style={{ animationDelay: `${index * 300}ms` }}
               >
-                <CardContent className="p-5">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <span className="font-bold text-white text-xl">{entry.symbol}</span>
-                      <Badge variant={entry.type === 'buy' ? 'default' : 'secondary'} className="text-sm px-2 py-1">
-                        {entry.type.toUpperCase()}
-                      </Badge>
-                      <span className="text-sm text-stravesta-lightGray font-medium">{entry.time}</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className={`font-bold text-xl ${entry.profit >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                        ${entry.profit}
-                      </span>
-                      {entry.status === 'complete' && (
-                        <CheckCircle className="h-5 w-5 text-green-500" />
-                      )}
-                    </div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <span className="font-bold text-white text-lg">{entry.symbol}</span>
+                    <Badge 
+                      className={`text-xs px-2 py-1 ${
+                        entry.type === 'buy' 
+                          ? 'bg-green-500/20 text-green-400 border-green-500/30' 
+                          : 'bg-red-500/20 text-red-400 border-red-500/30'
+                      }`}
+                    >
+                      {entry.type.toUpperCase()}
+                    </Badge>
+                    <span className="text-xs text-stravesta-lightGray">{entry.time}</span>
                   </div>
-                  
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex flex-col gap-2">
-                      <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-sm w-fit px-2 py-1">
-                        {entry.category}
-                      </Badge>
-                      <span className="text-stravesta-lightGray text-sm font-medium">{entry.session}</span>
-                    </div>
-                    <span className="text-stravesta-lightGray font-medium">Size: {entry.size}</span>
+                  <div className="flex items-center gap-2">
+                    <span className={`font-bold text-lg ${entry.profit >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                      ${entry.profit}
+                    </span>
+                    {entry.status === 'complete' && (
+                      <CheckCircle className="h-4 w-4 text-green-500" />
+                    )}
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+                
+                <div className="flex items-center justify-between text-xs">
+                  <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
+                    {entry.category}
+                  </Badge>
+                  <span className="text-stravesta-lightGray">{entry.session}</span>
+                  <span className="text-stravesta-lightGray">Size: {entry.size}</span>
+                </div>
+              </div>
             ))}
           </div>
         </div>
