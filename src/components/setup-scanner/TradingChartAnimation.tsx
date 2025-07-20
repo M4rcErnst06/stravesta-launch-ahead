@@ -158,8 +158,8 @@ const TradingChartAnimation = () => {
         ctx.fillRect(x - candleWidth/2, bodyTop, candleWidth, bodyHeight || 2);
       }
 
-      // Draw EMAs from start
-      if (animationStep >= 1) {
+      // Draw EMAs from the very beginning (always visible)
+      if (true) {
         const visibleCandles = Math.min(animationStep + 1, candleData.length);
         
         // EMA 20 (fast)
@@ -216,30 +216,30 @@ const TradingChartAnimation = () => {
         const entryX = timestampToX(entryPoint.timestamp);
         const entryY = priceToY(entryPoint.price);
 
-        // Entry arrow (blue, pointing up, under candle)
+        // Entry arrow (blue, pointing up, further under candle)
         ctx.fillStyle = '#2196F3';
         ctx.strokeStyle = '#1976D2';
         ctx.lineWidth = 1;
         
-        // Smaller arrow body
+        // Smaller arrow body, positioned further down
         ctx.beginPath();
-        ctx.moveTo(entryX, entryY + 10);
-        ctx.lineTo(entryX - 5, entryY + 20);
-        ctx.lineTo(entryX - 3, entryY + 20);
-        ctx.lineTo(entryX - 3, entryY + 30);
-        ctx.lineTo(entryX + 3, entryY + 30);
-        ctx.lineTo(entryX + 3, entryY + 20);
-        ctx.lineTo(entryX + 5, entryY + 20);
+        ctx.moveTo(entryX, entryY + 25);
+        ctx.lineTo(entryX - 5, entryY + 35);
+        ctx.lineTo(entryX - 3, entryY + 35);
+        ctx.lineTo(entryX - 3, entryY + 45);
+        ctx.lineTo(entryX + 3, entryY + 45);
+        ctx.lineTo(entryX + 3, entryY + 35);
+        ctx.lineTo(entryX + 5, entryY + 35);
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
 
-        // Smaller entry label
+        // Smaller entry label, positioned lower for better readability
         ctx.fillStyle = '#2196F3';
         ctx.font = 'bold 10px Arial';
-        ctx.fillText('ENTRY', entryX - 15, entryY + 45);
+        ctx.fillText('ENTRY', entryX - 15, entryY + 60);
         ctx.font = '9px Arial';
-        ctx.fillText(entryPoint.price.toFixed(4), entryX - 15, entryY + 55);
+        ctx.fillText(entryPoint.price.toFixed(4), entryX - 15, entryY + 72);
       }
 
       // Draw target point with smaller TradingView-style arrow
