@@ -43,7 +43,7 @@ const TradeDashboard: React.FC<TradeDashboardProps> = ({ trades }) => {
 
   const recentTrades = [...trades].sort((a, b) => 
     new Date(b.entry_date).getTime() - new Date(a.entry_date).getTime()
-  ).slice(0, 5);
+  ).slice(0, 3);
 
   return (
     <div className="space-y-8">
@@ -140,31 +140,33 @@ const TradeDashboard: React.FC<TradeDashboardProps> = ({ trades }) => {
               Aktuelle Trades
             </CardTitle>
             <CardDescription className="text-stravesta-lightGray text-base">
-              Ihre letzten 5 Trades im Überblick
+              Ihre letzten 3 Trades im Überblick
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-5">
             {recentTrades.map((trade, index) => (
               <div 
                 key={trade.id} 
-                className="flex items-center justify-between p-4 bg-stravesta-dark/40 rounded-xl border border-stravesta-darkGray/50 hover:bg-stravesta-dark/60 transition-all duration-200"
+                className="flex items-center justify-between p-5 bg-stravesta-dark/40 rounded-xl border border-stravesta-darkGray/50 hover:bg-stravesta-dark/60 transition-all duration-200"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-2 h-12 rounded-full bg-gradient-to-b from-stravesta-teal to-stravesta-teal/50"></div>
+                  <div className="w-3 h-16 rounded-full bg-gradient-to-b from-stravesta-teal to-stravesta-teal/50"></div>
                   <div>
-                    <div className="font-bold text-white text-lg">{trade.symbol}</div>
-                    <div className="text-sm text-stravesta-lightGray flex items-center gap-2">
-                      <span className={`px-2 py-1 rounded-lg text-xs font-medium ${
+                    <div className="font-bold text-white text-xl mb-1">{trade.symbol}</div>
+                    <div className="text-sm text-stravesta-lightGray flex items-center gap-3">
+                      <span className={`px-3 py-1 rounded-lg text-xs font-medium ${
                         trade.type === 'long' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
                       }`}>
-                        {trade.type.toUpperCase()}
+                        {trade.type === 'long' ? '📈 LONG' : '📉 SHORT'}
                       </span>
-                      <span>{new Date(trade.entry_date).toLocaleDateString('de-DE')}</span>
+                      <span className="text-stravesta-lightGray">
+                        {new Date(trade.entry_date).toLocaleDateString('de-DE')}
+                      </span>
                     </div>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className={`font-bold text-lg ${
+                  <div className={`font-bold text-xl ${
                     trade.status === 'open' 
                       ? 'text-stravesta-teal' 
                       : (trade.pnl || 0) >= 0 
@@ -176,7 +178,7 @@ const TradeDashboard: React.FC<TradeDashboardProps> = ({ trades }) => {
                       : `$${(trade.pnl || 0).toFixed(2)}`
                     }
                   </div>
-                  <div className="text-sm text-stravesta-lightGray capitalize">
+                  <div className="text-sm text-stravesta-lightGray capitalize mt-1">
                     {trade.status === 'open' ? 'Aktiv' : 'Abgeschlossen'}
                   </div>
                 </div>

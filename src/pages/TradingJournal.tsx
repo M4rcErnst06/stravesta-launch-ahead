@@ -34,11 +34,11 @@ const TradingJournal = () => {
       entry_price: 1.0850,
       exit_price: 1.0920,
       quantity: 1000,
-      entry_date: '2024-06-10',
-      exit_date: '2024-06-11',
+      entry_date: '2024-01-15',
+      exit_date: '2024-01-16',
       pnl: 70,
       status: 'closed',
-      notes: 'Breakout-Setup funktionierte perfekt',
+      notes: 'Breakout nach EZB Entscheidung',
       emotion: 'discipline'
     },
     {
@@ -48,11 +48,11 @@ const TradingJournal = () => {
       entry_price: 1.2650,
       exit_price: 1.2580,
       quantity: 500,
-      entry_date: '2024-06-12',
-      exit_date: '2024-06-12',
+      entry_date: '2024-01-18',
+      exit_date: '2024-01-18',
       pnl: 35,
       status: 'closed',
-      notes: 'Schneller Scalp bei Resistance',
+      notes: 'Resistance Test erfolgreich',
       emotion: 'discipline'
     },
     {
@@ -61,9 +61,9 @@ const TradingJournal = () => {
       type: 'long',
       entry_price: 157.20,
       quantity: 800,
-      entry_date: '2024-06-13',
+      entry_date: '2024-01-20',
       status: 'open',
-      notes: 'Warte auf BOJ Entscheidung',
+      notes: 'Trend-Following Setup',
       emotion: 'neutral'
     }
   ]);
