@@ -152,8 +152,8 @@ const MetaTraderSyncAnimation = () => {
 
       {/* Fixed layout container - mehr Platz für Journal */}
       <div className="flex flex-col xl:flex-row gap-4 w-full">
-        {/* MetaTrader History - Left Side - flexibel */}
-        <div className="xl:w-2/5 space-y-3 min-w-0">
+        {/* MetaTrader History - Left Side - weniger Platz */}
+        <div className="xl:w-1/3 space-y-3 min-w-0">
           <div className="flex items-center gap-3">
             <div className="bg-blue-500/20 p-2 rounded-lg">
               <BarChart3 className="h-4 w-4 text-blue-400" />
@@ -209,8 +209,8 @@ const MetaTraderSyncAnimation = () => {
           </div>
         </div>
 
-        {/* Stravesta Journal - Right Side - mehr Platz */}
-        <div className="xl:w-3/5 space-y-3 min-w-0 flex-shrink-0">
+        {/* Stravesta Journal - Right Side - noch mehr Platz */}
+        <div className="xl:w-2/3 space-y-3 min-w-0 flex-shrink-0">
           <div className="flex items-center gap-3">
             <div className="bg-gradient-to-r from-stravesta-teal to-blue-500 p-2 rounded-lg">
               <TrendingUp className="h-4 w-4 text-white" />
