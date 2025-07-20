@@ -1,10 +1,7 @@
 
 import React from 'react';
 import { Instagram, Linkedin, Mail } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
-
 const Footer = () => {
-  const { t } = useLanguage();
   
   const socialLinks = [
     { icon: <Instagram className="h-5 w-5" />, href: "https://www.instagram.com/stravesta_official", label: "Instagram" },
@@ -18,7 +15,7 @@ const Footer = () => {
         <div className="max-w-4xl mx-auto">
           {/* Main Footer Content */}
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-gradient mb-4">{t('footer.title')}</h3>
+            <h3 className="text-2xl font-bold text-gradient mb-4">Stravesta</h3>
             <p className="text-stravesta-lightGray text-lg mb-6">
               For traders and investors who aim higher.
             </p>
@@ -45,16 +42,16 @@ const Footer = () => {
 
           {/* Footer Bottom */}
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-stravesta-lightGray">
-            <p>&copy; {t('footer.copyright')}</p>
+            <p>&copy; 2024 Stravesta. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="hover:text-stravesta-teal transition-colors duration-200">
-                {t('footer.privacy')}
+                Privacy
               </a>
               <a href="#" className="hover:text-stravesta-teal transition-colors duration-200">
-                {t('footer.imprint')}
+                Imprint
               </a>
               <a href="#" className="hover:text-stravesta-teal transition-colors duration-200">
-                {t('footer.terms')}
+                Terms
               </a>
             </div>
           </div>

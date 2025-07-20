@@ -1,17 +1,13 @@
 
 import React, { useState } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import LanguageToggle from './LanguageToggle';
-
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { t } = useLanguage();
   
   const navItems = [
-    { name: t('nav.home'), href: '#home' },
-    { name: 'KI Setup Scanner', href: '#setup-scanner' },
-    { name: 'KI Trading Journal', href: '#journal-analytics' },
-    { name: t('nav.earlyAccess'), href: '#early-access' },
+    { name: 'Home', href: '#home' },
+    { name: 'AI Setup Scanner', href: '#setup-scanner' },
+    { name: 'AI Trading Journal', href: '#journal-analytics' },
+    { name: 'Early Access', href: '#early-access' },
   ];
 
   const scrollToSection = (href: string) => {

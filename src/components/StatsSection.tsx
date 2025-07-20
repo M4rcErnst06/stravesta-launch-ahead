@@ -3,10 +3,10 @@ import React from 'react';
 
 const StatsSection = () => {
   const stats = [
-    { number: "500+", label: "Beta Tester", description: "Early Adopters weltweit" },
-    { number: "95%", label: "Setup-Genauigkeit", description: "KI-erkannte Trading-Muster" },
-    { number: "24/7", label: "Live Monitoring", description: "Ununterbrochene Marktüberwachung" },
-    { number: "∞", label: "Möglichkeiten", description: "Mit KI-unterstütztem Trading" }
+    { number: "500+", label: "Beta Testers", description: "Early adopters worldwide" },
+    { number: "95%", label: "Setup Accuracy", description: "AI-recognized trading patterns" },
+    { number: "24/7", label: "Live Monitoring", description: "Continuous market surveillance" },
+    { number: "∞", label: "Possibilities", description: "With AI-powered trading" }
   ];
 
   return (
@@ -14,10 +14,10 @@ const StatsSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">
-            Zahlen, die für sich sprechen
+            Numbers That Speak for Themselves
           </h2>
           <p className="text-xl text-stravesta-lightGray">
-            Stravesta in der Beta-Phase - bereits beeindruckende Ergebnisse
+            Stravesta in beta phase - already impressive results
           </p>
         </div>
         

@@ -7,19 +7,19 @@ const TestimonialSection = () => {
     {
       name: "Alex M.",
       role: "Daytrader",
-      content: "Die KI erkennt meine Setups besser als ich selbst. Seit Beta +127% Performance!",
+      content: "The AI recognizes my setups better than I do myself. Since beta +127% performance!",
       avatar: "🚀"
     },
     {
       name: "Sarah K.",
       role: "Swing Trader",
-      content: "Endlich eine Platform die versteht wie ich trade. Die Alerts sind Gold wert.",
+      content: "Finally a platform that understands how I trade. The alerts are worth gold.",
       avatar: "⭐"
     },
     {
       name: "Marcus L.",
       role: "Trading Coach",
-      content: "Perfekt für meine Schüler. Das Dashboard zeigt alle wichtigen Statistiken.",
+      content: "Perfect for my students. The dashboard shows all important statistics.",
       avatar: "📈"
     }
   ];
@@ -29,10 +29,10 @@ const TestimonialSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">
-            Beta-Tester sind begeistert
+            Beta Testers Are Thrilled
           </h2>
           <p className="text-xl text-stravesta-lightGray">
-            Echte Erfahrungen von echten Tradern
+            Real experiences from real traders
           </p>
         </div>
         

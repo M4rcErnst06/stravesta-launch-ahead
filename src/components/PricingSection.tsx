@@ -10,55 +10,55 @@ const PricingSection = () => {
     {
       name: "Starter",
       price: "29",
-      period: "Monat",
-      description: "Perfekt für Trading-Einsteiger",
+      period: "Month",
+      description: "Perfect for trading beginners",
       badge: null,
       features: [
-        "AI-Setup-Erkennung (Basic)",
-        "Trading-Journal",
-        "Community-Zugang",
+        "AI Setup Recognition (Basic)",
+        "Trading Journal",
+        "Community Access",
         "Email Support",
-        "5 AI-Alerts pro Tag"
+        "5 AI Alerts per day"
       ],
-      buttonText: "Jetzt starten",
+      buttonText: "Start Now",
       popular: false
     },
     {
       name: "Pro",
       price: "79",
-      period: "Monat", 
-      description: "Für professionelle Trader",
-      badge: "Beliebt",
+      period: "Month", 
+      description: "For professional traders",
+      badge: "Popular",
       features: [
-        "Alle Starter Features",
-        "Erweiterte AI-Setup-Erkennung",
-        "Persönliche AI-Bots",
-        "Live-Scan & Backtesting",
-        "Unbegrenzte Alerts",
+        "All Starter Features",
+        "Advanced AI Setup Recognition",
+        "Personal AI Bots",
+        "Live Scan & Backtesting",
+        "Unlimited Alerts",
         "TradingView Integration",
-        "Coach-Dashboard",
+        "Coach Dashboard",
         "Priority Support"
       ],
-      buttonText: "Pro werden",
+      buttonText: "Go Pro",
       popular: true
     },
     {
       name: "Enterprise",
       price: "199",
-      period: "Monat",
-      description: "Für Trading-Teams & Coaches",
+      period: "Month",
+      description: "For trading teams & coaches",
       badge: null,
       features: [
-        "Alle Pro Features",
+        "All Pro Features",
         "White-Label Solution",
         "Multi-User Management",
-        "Custom Integrationen",
+        "Custom Integrations",
         "Dedicated Account Manager",
         "SLA & 24/7 Support",
-        "Custom AI-Training",
-        "API-Zugang"
+        "Custom AI Training",
+        "API Access"
       ],
-      buttonText: "Kontakt aufnehmen",
+      buttonText: "Contact Us",
       popular: false
     }
   ];
@@ -68,12 +68,12 @@ const PricingSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">
-            💰 Preise & Pläne
+            💰 Pricing & Plans
           </h2>
           <p className="text-xl text-stravesta-lightGray max-w-3xl mx-auto">
-            Wähle den Plan, der zu deinem Trading-Stil passt. 
+            Choose the plan that fits your trading style. 
             <br />
-            Alle Pläne mit 14-tägiger Geld-zurück-Garantie.
+            All plans with 14-day money-back guarantee.
           </p>
         </div>
 
@@ -125,24 +125,24 @@ const PricingSection = () => {
 
         <div className="text-center mt-12">
           <p className="text-stravesta-lightGray mb-4">
-            🎓 Spezielle Rabatte für Studenten und Trading-Gruppen verfügbar
+            🎓 Special discounts available for students and trading groups
           </p>
           <div className="flex flex-wrap justify-center gap-6 text-sm text-stravesta-lightGray">
             <div className="flex items-center gap-2">
               <Check className="w-4 h-4 text-stravesta-teal" />
-              14-Tage Geld-zurück-Garantie
+              14-day money-back guarantee
             </div>
             <div className="flex items-center gap-2">
               <Check className="w-4 h-4 text-stravesta-teal" />
-              Jederzeit kündbar
+              Cancel anytime
             </div>
             <div className="flex items-center gap-2">
               <Check className="w-4 h-4 text-stravesta-teal" />
-              Keine Einrichtungsgebühren
+              No setup fees
             </div>
             <div className="flex items-center gap-2">
               <Check className="w-4 h-4 text-stravesta-teal" />
-              EU-DSGVO konform
+              EU-GDPR compliant
             </div>
           </div>
         </div>

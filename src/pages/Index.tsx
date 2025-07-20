@@ -8,10 +8,7 @@ import Footer from '@/components/Footer';
 import SetupScannerSection from '@/components/setup-scanner/SetupScannerSection';
 import TradeAnalyticsSection from '@/components/trading-journal/TradeAnalyticsSection';
 import BackgroundChartAnimation from '@/components/BackgroundChartAnimation';
-import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
-
 const IndexContent = () => {
-  const { t } = useLanguage();
 
   useEffect(() => {
     // Smooth scrolling for all links
@@ -107,8 +104,8 @@ const IndexContent = () => {
             <div className="flex justify-center">
               <div className="w-full max-w-7xl">
                 <GroupedFeatureSection
-                  title={t('features.title')}
-                  subtitle={t('features.subtitle')}
+                  title="Revolutionary Trading Tools"
+                  subtitle="Everything you need for successful trading - powered by AI"
                   featureGroups={featureGroups}
                   className="bg-stravesta-dark"
                 />
@@ -126,17 +123,17 @@ const IndexContent = () => {
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
-                {t('about.title')}
+                The Future of Trading
               </h2>
               <div className="text-lg text-stravesta-lightGray space-y-6">
                 <p className="opacity-0 translate-y-8 transition-all duration-700 delay-200" data-animate>
-                  {t('about.paragraph1')}
+                  Stravesta combines state-of-the-art AI technology with proven trading strategies to give you a decisive advantage in the markets.
                 </p>
                 <p className="opacity-0 translate-y-8 transition-all duration-700 delay-400" data-animate>
-                  {t('about.paragraph2')}
+                  Our platform learns from your trading style and helps you achieve consistent profits while minimizing risks.
                 </p>
                 <p className="opacity-0 translate-y-8 transition-all duration-700 delay-600" data-animate>
-                  {t('about.paragraph3')}
+                  From automatic setup recognition to intelligent trading bots - Stravesta is your personal trading assistant.
                 </p>
               </div>
             </div>
@@ -158,11 +155,7 @@ const IndexContent = () => {
 };
 
 const Index = () => {
-  return (
-    <LanguageProvider>
-      <IndexContent />
-    </LanguageProvider>
-  );
+  return <IndexContent />;
 };
 
 export default Index;

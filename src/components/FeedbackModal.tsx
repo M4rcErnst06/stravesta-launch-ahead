@@ -30,8 +30,8 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ open, onOpenChange }) => 
     setSubmitting(true);
     setTimeout(() => {
       toast({
-        title: "Vielen Dank für dein Feedback!",
-        description: `Du hast ${rating} Stern${rating !== 1 ? 'e' : ''} gegeben.`,
+        title: "Thank you for your feedback!",
+        description: `You gave ${rating} star${rating !== 1 ? 's' : ''}.`,
       });
       setSubmitting(false);
       setMessage("");
@@ -55,9 +55,9 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ open, onOpenChange }) => 
               <ArrowLeft className="h-4 w-4" />
             </Button>
             <div>
-              <DialogTitle className="text-white">Feedback geben</DialogTitle>
+              <DialogTitle className="text-white">Give Feedback</DialogTitle>
               <DialogDescription className="text-stravesta-lightGray">
-                Bewerte uns und teile deine Erfahrungen mit.
+                Rate us and share your experience.
               </DialogDescription>
             </div>
           </div>
@@ -65,7 +65,7 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ open, onOpenChange }) => 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="block text-sm font-medium text-white mb-2">
-              Wie zufrieden bist du? *
+              How satisfied are you? *
             </label>
             <StarRating 
               rating={rating} 
@@ -73,12 +73,12 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ open, onOpenChange }) => 
               disabled={submitting}
             />
             {touched && rating === 0 && (
-              <div className="text-sm text-red-400 mt-1">Bitte gib eine Bewertung ab.</div>
+              <div className="text-sm text-red-400 mt-1">Please give a rating.</div>
             )}
           </div>
           
           <Input
-            placeholder="Deine E-Mail (für Rückfragen, Pflichtfeld)"
+            placeholder="Your email (for follow-up, required)"
             value={email}
             onChange={e => setEmail(e.target.value)}
             type="email"
@@ -88,7 +88,7 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ open, onOpenChange }) => 
           />
           
           <Textarea
-            placeholder="Zusätzliche Kommentare (optional)..."
+            placeholder="Additional comments (optional)..."
             value={message}
             onChange={e => setMessage(e.target.value)}
             rows={4}
@@ -97,12 +97,12 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ open, onOpenChange }) => 
           />
           
           {touched && !/\S+@\S+\.\S+/.test(email) && (
-            <div className="text-sm text-red-400">Bitte gib eine gültige E-Mail an.</div>
+            <div className="text-sm text-red-400">Please enter a valid email.</div>
           )}
           
           <DialogFooter>
             <Button type="submit" disabled={!valid || submitting} className="w-full bg-stravesta-teal text-black hover:bg-stravesta-teal/90 font-semibold">
-              {submitting ? "Sende..." : "Feedback abschicken"}
+              {submitting ? "Sending..." : "Submit Feedback"}
             </Button>
           </DialogFooter>
         </form>
