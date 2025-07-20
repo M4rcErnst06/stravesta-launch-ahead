@@ -18,17 +18,17 @@ const TradingChartAnimation = () => {
   const [aiAnalyzing, setAiAnalyzing] = useState(false);
   const [confidence, setConfidence] = useState(0);
 
-  // Chart data showing a bullish flag pattern
+  // Chart data showing a bullish flag pattern with deeper pullback
   const candleData: CandleData[] = [
     { open: 1.0850, high: 1.0890, low: 1.0840, close: 1.0875, timestamp: 1 },
     { open: 1.0875, high: 1.0920, low: 1.0860, close: 1.0915, timestamp: 2 },
     { open: 1.0915, high: 1.0950, low: 1.0900, close: 1.0940, timestamp: 3 },
     { open: 1.0940, high: 1.0965, low: 1.0920, close: 1.0955, timestamp: 4 },
-    { open: 1.0955, high: 1.0965, low: 1.0940, close: 1.0950, timestamp: 5 },
-    { open: 1.0950, high: 1.0960, low: 1.0935, close: 1.0945, timestamp: 6 },
-    { open: 1.0945, high: 1.0955, low: 1.0930, close: 1.0940, timestamp: 7 },
-    { open: 1.0940, high: 1.0950, low: 1.0925, close: 1.0935, timestamp: 8 },
-    { open: 1.0935, high: 1.0970, low: 1.0930, close: 1.0965, timestamp: 9 },
+    { open: 1.0955, high: 1.0960, low: 1.0925, close: 1.0930, timestamp: 5 }, // Start deeper pullback
+    { open: 1.0930, high: 1.0940, low: 1.0910, close: 1.0920, timestamp: 6 }, // Deeper red candle
+    { open: 1.0920, high: 1.0935, low: 1.0895, close: 1.0915, timestamp: 7 }, // Even deeper pullback
+    { open: 1.0915, high: 1.0930, low: 1.0900, close: 1.0925, timestamp: 8 }, // Recovery starts
+    { open: 1.0925, high: 1.0970, low: 1.0920, close: 1.0965, timestamp: 9 }, // Breakout
     { open: 1.0965, high: 1.1020, low: 1.0960, close: 1.1015, timestamp: 10 },
   ];
 
@@ -36,6 +36,18 @@ const TradingChartAnimation = () => {
   const flagPole = { start: 1, end: 4 };
   const flagConsolidation = { start: 4, end: 8 };
   const breakout = { timestamp: 9, price: 1.0965 };
+  
+  // Fibonacci retracement levels
+  const fibLevels = {
+    high: 1.0955, // High of flagpole
+    low: 1.0895,  // Low of pullback
+    levels: [
+      { level: 0.236, price: 1.0941, label: '23.6%' },
+      { level: 0.382, price: 1.0932, label: '38.2%' },
+      { level: 0.618, price: 1.0918, label: '61.8%' },
+      { level: 0.786, price: 1.0908, label: '78.6%' }
+    ]
+  };
   
   // Entry and target points
   const entryPoint = { price: 1.0965, timestamp: 9 };
@@ -137,25 +149,40 @@ const TradingChartAnimation = () => {
         ctx.fillText('BULLISH FLAG', endX + 10, endY - 20);
       }
 
-      // Draw consolidation zone
+      // Draw Fibonacci retracement
       if (patternDetected && animationStep >= 6) {
         ctx.strokeStyle = '#FFB800';
-        ctx.lineWidth = 2;
-        ctx.setLineDash([8, 4]);
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 4]);
+        ctx.font = '10px Arial';
         
-        // Upper consolidation line
-        const upperY = priceToY(1.0955);
-        ctx.beginPath();
-        ctx.moveTo(timestampToX(4), upperY);
-        ctx.lineTo(timestampToX(8), upperY);
-        ctx.stroke();
-        
-        // Lower consolidation line
-        const lowerY = priceToY(1.0930);
-        ctx.beginPath();
-        ctx.moveTo(timestampToX(4), lowerY);
-        ctx.lineTo(timestampToX(8), lowerY);
-        ctx.stroke();
+        // Draw fibonacci levels
+        fibLevels.levels.forEach((fib, index) => {
+          const y = priceToY(fib.price);
+          const startX = timestampToX(4);
+          const endX = timestampToX(8);
+          
+          // Set color based on importance
+          if (fib.level === 0.618) {
+            ctx.strokeStyle = '#FF6B35'; // Golden ratio in orange
+            ctx.lineWidth = 2;
+          } else if (fib.level === 0.382) {
+            ctx.strokeStyle = '#FFB800'; // Important level in yellow
+            ctx.lineWidth = 1.5;
+          } else {
+            ctx.strokeStyle = '#888888'; // Other levels in gray
+            ctx.lineWidth = 1;
+          }
+          
+          ctx.beginPath();
+          ctx.moveTo(startX, y);
+          ctx.lineTo(endX, y);
+          ctx.stroke();
+          
+          // Draw level label
+          ctx.fillStyle = ctx.strokeStyle;
+          ctx.fillText(`${fib.label} (${fib.price.toFixed(4)})`, endX + 5, y + 3);
+        });
         
         ctx.setLineDash([]);
       }
