@@ -342,8 +342,8 @@ const TradingChartAnimation = () => {
       </div>
 
       {/* Stats Container - direkt anschließend */}
-      <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-b-lg border-l border-r border-b border-stravesta-teal/20 border-t-0">
-        <div className="p-6 pt-0">
+      <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-b-lg border-l border-r border-b border-stravesta-teal/20">
+        <div className="p-6">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div className="bg-stravesta-dark/50 rounded-lg p-4">
               <div className={`text-lg font-bold transition-colors ${patternDetected ? 'text-stravesta-teal' : 'text-gray-400'}`}>
