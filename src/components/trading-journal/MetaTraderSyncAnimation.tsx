@@ -233,17 +233,17 @@ const MetaTraderSyncAnimation = () => {
               <div 
                 key={entry.id}
                 className={`
-                  bg-stravesta-dark/50 border border-stravesta-darkGray rounded-lg p-3 transition-all duration-700
+                  bg-stravesta-dark/50 border border-stravesta-darkGray rounded-lg p-2.5 transition-all duration-700
                   ${entry.status === 'syncing' ? 'border-stravesta-teal shadow-lg shadow-stravesta-teal/20' : ''}
-                  opacity-0 translate-x-8 animate-[fade-in_0.5s_ease-out_forwards] h-[80px] flex flex-col justify-between
+                  opacity-0 translate-x-8 animate-[fade-in_0.5s_ease-out_forwards] h-[70px] flex flex-col justify-between
                 `}
                 style={{ animationDelay: `${index * 300}ms` }}
               >
-                <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center gap-2">
                     <span className="font-bold text-white text-sm">{entry.symbol}</span>
                     <Badge 
-                      className={`text-xs px-2 py-0.5 ${
+                      className={`text-xs px-1.5 py-0.5 ${
                         entry.type === 'buy' 
                           ? 'bg-green-500/20 text-green-400 border-green-500/30' 
                           : 'bg-red-500/20 text-red-400 border-red-500/30'
@@ -253,22 +253,22 @@ const MetaTraderSyncAnimation = () => {
                     </Badge>
                     <span className="text-xs text-stravesta-lightGray">{entry.time}</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1">
                     <span className={`font-bold text-sm ${entry.profit >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                       ${entry.profit}
                     </span>
                     {entry.status === 'complete' && (
-                      <CheckCircle className="h-4 w-4 text-green-500" />
+                      <CheckCircle className="h-3 w-3 text-green-500" />
                     )}
                   </div>
                 </div>
                 
                 <div className="flex items-center justify-between text-xs">
-                  <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs px-2 py-0.5">
+                  <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs px-1.5 py-0.5">
                     {entry.category}
                   </Badge>
-                  <span className="text-stravesta-lightGray">{entry.session}</span>
-                  <span className="text-stravesta-lightGray">Size: {entry.size}</span>
+                  <span className="text-stravesta-lightGray text-xs">{entry.session}</span>
+                  <span className="text-stravesta-lightGray text-xs">Size: {entry.size}</span>
                 </div>
               </div>
             ))}
