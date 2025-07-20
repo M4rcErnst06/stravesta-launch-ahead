@@ -135,8 +135,6 @@ const TradingChartAnimation = () => {
         ctx.fillStyle = '#17E6C8';
         ctx.font = 'bold 14px Arial';
         ctx.fillText('BULLISH FLAG', endX + 10, endY - 20);
-        ctx.font = '12px Arial';
-        ctx.fillText(`Confidence: ${confidence}%`, endX + 10, endY - 5);
       }
 
       // Draw consolidation zone
@@ -241,10 +239,6 @@ const TradingChartAnimation = () => {
         ctx.fillText('Volume: Rising', chartRight + 15, chartTop + 70);
         ctx.fillText('Signal: Strong', chartRight + 15, chartTop + 85);
         
-        if (confidence > 0) {
-          ctx.fillStyle = '#00C851';
-          ctx.fillText(`Setup: ${confidence}%`, chartRight + 15, chartTop + 105);
-        }
       }
     };
 
@@ -346,18 +340,12 @@ const TradingChartAnimation = () => {
         </div>
 
         {/* Stats */}
-        <div className="mt-6 grid grid-cols-4 gap-4 text-center">
+        <div className="mt-6 grid grid-cols-3 gap-4 text-center">
           <div className="bg-stravesta-dark/50 rounded-lg p-4">
             <div className={`text-lg font-bold transition-colors ${patternDetected ? 'text-stravesta-teal' : 'text-gray-400'}`}>
               {patternDetected ? 'Bullish Flag' : 'Analyzing...'}
             </div>
             <div className="text-stravesta-lightGray text-sm">Pattern</div>
-          </div>
-          <div className="bg-stravesta-dark/50 rounded-lg p-4">
-            <div className={`text-lg font-bold transition-colors ${confidence > 80 ? 'text-green-400' : confidence > 60 ? 'text-yellow-400' : 'text-gray-400'}`}>
-              {confidence > 0 ? `${confidence}%` : '--'}
-            </div>
-            <div className="text-stravesta-lightGray text-sm">Confidence</div>
           </div>
           <div className="bg-stravesta-dark/50 rounded-lg p-4">
             <div className={`text-lg font-bold transition-colors ${entryExecuted ? 'text-green-400' : alertTriggered ? 'text-yellow-400' : 'text-gray-400'}`}>
