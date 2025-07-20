@@ -147,7 +147,7 @@ const MetaTraderSyncAnimation = () => {
     <div className="w-full bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-stravesta-teal/20">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-bold text-white mb-2">
-          Sehen Sie live, wie Ihre MetaTrader Trades automatisch ins Stravesta Journal synchronisiert und von unserer KI analysiert werden
+          See live how your MetaTrader trades are automatically synchronized to the Stravesta Journal and analyzed by our AI
         </h2>
       </div>
 
@@ -161,7 +161,7 @@ const MetaTraderSyncAnimation = () => {
             </div>
             <div>
               <h3 className="text-xl font-bold text-white">MetaTrader 5 History</h3>
-              <p className="text-stravesta-lightGray">Ihre geschlossenen Trades</p>
+              <p className="text-stravesta-lightGray">Your closed trades</p>
             </div>
           </div>
 
@@ -218,11 +218,11 @@ const MetaTraderSyncAnimation = () => {
             </div>
             <div>
               <h3 className="text-xl font-bold text-white">Stravesta Journal</h3>
-              <p className="text-stravesta-lightGray">Automatisch synchronisiert</p>
+              <p className="text-stravesta-lightGray">Automatically synchronized</p>
             </div>
             {currentStep >= 3 && (
               <Badge className="ml-auto bg-green-500/20 text-green-400 border-green-500/30">
-                {Math.min(journalEntries.length, 3)} Trades importiert
+                {Math.min(journalEntries.length, 3)} Trades imported
               </Badge>
             )}
           </div>

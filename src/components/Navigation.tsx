@@ -57,7 +57,7 @@ const Navigation = () => {
                 <span className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-stravesta-teal transition-all duration-200 group-hover:w-full"></span>
               </button>
             ))}
-            <LanguageToggle />
+            
           </div>
 
           {/* Mobile Menu Button */}
