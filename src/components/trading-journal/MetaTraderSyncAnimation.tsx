@@ -37,7 +37,7 @@ const MetaTraderSyncAnimation = () => {
   // Limit to 3 trades to maintain consistent size
   const metaTraderTrades: MetaTraderTrade[] = [
     {
-      ticket: '2024.01.15 08:30:15',
+      ticket: 'mt5_trade_001',
       time: '08:30:15',
       type: 'buy',
       size: 0.04,
@@ -48,7 +48,7 @@ const MetaTraderSyncAnimation = () => {
       profit: 4.72
     },
     {
-      ticket: '2024.01.15 14:15:42',
+      ticket: 'mt5_trade_002',
       time: '14:15:42',
       type: 'sell',
       size: 0.24,
@@ -59,7 +59,7 @@ const MetaTraderSyncAnimation = () => {
       profit: 2.64
     },
     {
-      ticket: '2024.01.15 16:45:33',
+      ticket: 'mt5_trade_003',
       time: '16:45:33',
       type: 'sell',
       size: 0.42,
