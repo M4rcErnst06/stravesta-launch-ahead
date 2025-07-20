@@ -183,7 +183,7 @@ const MetaTraderSyncAnimation = () => {
               <div className="space-y-1 flex-1">
                 {metaTraderTrades.map((trade, index) => (
                   <div 
-                    key={trade.ticket}
+                    key={`mt-trade-${trade.ticket}-${index}`}
                     className={`
                       grid grid-cols-7 gap-1 text-xs py-2 px-1 rounded transition-all duration-500
                       ${syncingTrades.includes(trade.ticket) ? 'bg-stravesta-teal/20 border border-stravesta-teal/50' : 'bg-stravesta-navy/30'}
