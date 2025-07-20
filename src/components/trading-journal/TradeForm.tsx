@@ -97,154 +97,184 @@ const TradeForm: React.FC<TradeFormProps> = ({ onAddTrade }) => {
   };
 
   return (
-    <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle className="text-white flex items-center gap-2">
-          <PlusCircle className="h-5 w-5 text-stravesta-teal" />
+    <Card className="bg-stravesta-navy/60 backdrop-blur-sm border-stravesta-teal/30 max-w-4xl mx-auto">
+      <CardHeader className="text-center">
+        <CardTitle className="text-white flex items-center justify-center gap-3 text-2xl">
+          <div className="p-3 bg-stravesta-teal/20 rounded-lg">
+            <PlusCircle className="h-7 w-7 text-stravesta-teal" />
+          </div>
           Neuen Trade hinzufügen
         </CardTitle>
-        <CardDescription className="text-stravesta-lightGray">
-          Dokumentieren Sie Ihren Trade für die Analyse
+        <CardDescription className="text-stravesta-lightGray text-base mt-2">
+          Dokumentieren Sie Ihren Trade für eine professionelle Analyse
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="symbol" className="text-stravesta-lightGray">Symbol *</Label>
-              <Input
-                id="symbol"
-                value={formData.symbol}
-                onChange={(e) => setFormData(prev => ({ ...prev, symbol: e.target.value }))}
-                placeholder="z.B. EURUSD, AAPL"
-                className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="type" className="text-stravesta-lightGray">Trade-Typ *</Label>
-              <Select value={formData.type} onValueChange={(value: 'long' | 'short') => setFormData(prev => ({ ...prev, type: value }))}>
-                <SelectTrigger className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-stravesta-dark border-stravesta-darkGray">
-                  <SelectItem value="long" className="text-white hover:bg-stravesta-navy">Long (Kauf)</SelectItem>
-                  <SelectItem value="short" className="text-white hover:bg-stravesta-navy">Short (Verkauf)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="entry_price" className="text-stravesta-lightGray">Einstiegspreis *</Label>
-              <Input
-                id="entry_price"
-                type="number"
-                step="0.0001"
-                value={formData.entry_price}
-                onChange={(e) => setFormData(prev => ({ ...prev, entry_price: e.target.value }))}
-                placeholder="1.0850"
-                className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="quantity" className="text-stravesta-lightGray">Menge *</Label>
-              <Input
-                id="quantity"
-                type="number"
-                value={formData.quantity}
-                onChange={(e) => setFormData(prev => ({ ...prev, quantity: e.target.value }))}
-                placeholder="1000"
-                className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="entry_date" className="text-stravesta-lightGray">Einstiegsdatum *</Label>
-              <Input
-                id="entry_date"
-                type="date"
-                value={formData.entry_date}
-                onChange={(e) => setFormData(prev => ({ ...prev, entry_date: e.target.value }))}
-                className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="status" className="text-stravesta-lightGray">Status</Label>
-              <Select value={formData.status} onValueChange={(value: 'open' | 'closed') => setFormData(prev => ({ ...prev, status: value }))}>
-                <SelectTrigger className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-stravesta-dark border-stravesta-darkGray">
-                  <SelectItem value="open" className="text-white hover:bg-stravesta-navy">Offen</SelectItem>
-                  <SelectItem value="closed" className="text-white hover:bg-stravesta-navy">Geschlossen</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          {formData.status === 'closed' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="exit_price" className="text-stravesta-lightGray">Ausstiegspreis</Label>
+      <CardContent className="p-8">
+        <form onSubmit={handleSubmit} className="space-y-8">
+          {/* Basic Trade Information */}
+          <div className="bg-stravesta-dark/40 rounded-xl p-6 border border-stravesta-darkGray/50">
+            <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+              📊 Trade Grunddaten
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="space-y-3">
+                <Label htmlFor="symbol" className="text-stravesta-lightGray font-medium">Symbol *</Label>
                 <Input
-                  id="exit_price"
-                  type="number"
-                  step="0.0001"
-                  value={formData.exit_price}
-                  onChange={(e) => setFormData(prev => ({ ...prev, exit_price: e.target.value }))}
-                  placeholder="1.0920"
-                  className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal"
+                  id="symbol"
+                  value={formData.symbol}
+                  onChange={(e) => setFormData(prev => ({ ...prev, symbol: e.target.value }))}
+                  placeholder="z.B. EURUSD, AAPL"
+                  className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal h-12 text-base"
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="exit_date" className="text-stravesta-lightGray">Ausstiegsdatum</Label>
+              <div className="space-y-3">
+                <Label htmlFor="type" className="text-stravesta-lightGray font-medium">Trade-Typ *</Label>
+                <Select value={formData.type} onValueChange={(value: 'long' | 'short') => setFormData(prev => ({ ...prev, type: value }))}>
+                  <SelectTrigger className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal h-12">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-stravesta-dark border-stravesta-darkGray">
+                    <SelectItem value="long" className="text-white hover:bg-stravesta-navy">📈 Long (Kauf)</SelectItem>
+                    <SelectItem value="short" className="text-white hover:bg-stravesta-navy">📉 Short (Verkauf)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-3">
+                <Label htmlFor="status" className="text-stravesta-lightGray font-medium">Status</Label>
+                <Select value={formData.status} onValueChange={(value: 'open' | 'closed') => setFormData(prev => ({ ...prev, status: value }))}>
+                  <SelectTrigger className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal h-12">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-stravesta-dark border-stravesta-darkGray">
+                    <SelectItem value="open" className="text-white hover:bg-stravesta-navy">🔄 Offen</SelectItem>
+                    <SelectItem value="closed" className="text-white hover:bg-stravesta-navy">✅ Geschlossen</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+
+          {/* Price Information */}
+          <div className="bg-stravesta-dark/40 rounded-xl p-6 border border-stravesta-darkGray/50">
+            <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+              💰 Preis & Menge
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="space-y-3">
+                <Label htmlFor="entry_price" className="text-stravesta-lightGray font-medium">Einstiegspreis *</Label>
                 <Input
-                  id="exit_date"
-                  type="date"
-                  value={formData.exit_date}
-                  onChange={(e) => setFormData(prev => ({ ...prev, exit_date: e.target.value }))}
-                  className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal"
+                  id="entry_price"
+                  type="number"
+                  step="0.0001"
+                  value={formData.entry_price}
+                  onChange={(e) => setFormData(prev => ({ ...prev, entry_price: e.target.value }))}
+                  placeholder="1.0850"
+                  className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal h-12 text-base"
                 />
+              </div>
+
+              <div className="space-y-3">
+                <Label htmlFor="quantity" className="text-stravesta-lightGray font-medium">Menge *</Label>
+                <Input
+                  id="quantity"
+                  type="number"
+                  value={formData.quantity}
+                  onChange={(e) => setFormData(prev => ({ ...prev, quantity: e.target.value }))}
+                  placeholder="1000"
+                  className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal h-12 text-base"
+                />
+              </div>
+
+              <div className="space-y-3">
+                <Label htmlFor="entry_date" className="text-stravesta-lightGray font-medium">Einstiegsdatum *</Label>
+                <Input
+                  id="entry_date"
+                  type="date"
+                  value={formData.entry_date}
+                  onChange={(e) => setFormData(prev => ({ ...prev, entry_date: e.target.value }))}
+                  className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal h-12"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Exit Information - Only for closed trades */}
+          {formData.status === 'closed' && (
+            <div className="bg-stravesta-dark/40 rounded-xl p-6 border border-stravesta-darkGray/50">
+              <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                🎯 Ausstiegs-Information
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <Label htmlFor="exit_price" className="text-stravesta-lightGray font-medium">Ausstiegspreis</Label>
+                  <Input
+                    id="exit_price"
+                    type="number"
+                    step="0.0001"
+                    value={formData.exit_price}
+                    onChange={(e) => setFormData(prev => ({ ...prev, exit_price: e.target.value }))}
+                    placeholder="1.0920"
+                    className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal h-12 text-base"
+                  />
+                </div>
+
+                <div className="space-y-3">
+                  <Label htmlFor="exit_date" className="text-stravesta-lightGray font-medium">Ausstiegsdatum</Label>
+                  <Input
+                    id="exit_date"
+                    type="date"
+                    value={formData.exit_date}
+                    onChange={(e) => setFormData(prev => ({ ...prev, exit_date: e.target.value }))}
+                    className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal h-12"
+                  />
+                </div>
               </div>
             </div>
           )}
 
-          <div className="space-y-2">
-            <Label htmlFor="emotion" className="text-stravesta-lightGray">Emotion beim Trade</Label>
-            <Select value={formData.emotion} onValueChange={(value: 'fear' | 'greed' | 'discipline' | 'fomo' | 'neutral') => setFormData(prev => ({ ...prev, emotion: value }))}>
-              <SelectTrigger className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-stravesta-dark border-stravesta-darkGray">
-                <SelectItem value="neutral" className="text-white hover:bg-stravesta-navy">Neutral</SelectItem>
-                <SelectItem value="discipline" className="text-white hover:bg-stravesta-navy">Diszipliniert</SelectItem>
-                <SelectItem value="fear" className="text-white hover:bg-stravesta-navy">Angst</SelectItem>
-                <SelectItem value="greed" className="text-white hover:bg-stravesta-navy">Gier</SelectItem>
-                <SelectItem value="fomo" className="text-white hover:bg-stravesta-navy">FOMO</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          {/* Psychology & Notes */}
+          <div className="bg-stravesta-dark/40 rounded-xl p-6 border border-stravesta-darkGray/50">
+            <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+              🧠 Psychologie & Notizen
+            </h3>
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <Label htmlFor="emotion" className="text-stravesta-lightGray font-medium">Emotion beim Trade</Label>
+                <Select value={formData.emotion} onValueChange={(value: 'fear' | 'greed' | 'discipline' | 'fomo' | 'neutral') => setFormData(prev => ({ ...prev, emotion: value }))}>
+                  <SelectTrigger className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal h-12">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-stravesta-dark border-stravesta-darkGray">
+                    <SelectItem value="neutral" className="text-white hover:bg-stravesta-navy">😐 Neutral</SelectItem>
+                    <SelectItem value="discipline" className="text-white hover:bg-stravesta-navy">🎯 Diszipliniert</SelectItem>
+                    <SelectItem value="fear" className="text-white hover:bg-stravesta-navy">😰 Angst</SelectItem>
+                    <SelectItem value="greed" className="text-white hover:bg-stravesta-navy">🤑 Gier</SelectItem>
+                    <SelectItem value="fomo" className="text-white hover:bg-stravesta-navy">😱 FOMO</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="notes" className="text-stravesta-lightGray">Notizen</Label>
-            <Textarea
-              id="notes"
-              value={formData.notes}
-              onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
-              placeholder="Setup, Marktbedingungen, Lessons learned..."
-              className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal"
-              rows={4}
-            />
+              <div className="space-y-3">
+                <Label htmlFor="notes" className="text-stravesta-lightGray font-medium">Notizen & Setup</Label>
+                <Textarea
+                  id="notes"
+                  value={formData.notes}
+                  onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
+                  placeholder="Beschreiben Sie das Setup, Marktbedingungen, Lessons learned, etc..."
+                  className="bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal text-base"
+                  rows={5}
+                />
+              </div>
+            </div>
           </div>
 
           <Button 
             type="submit" 
-            className="w-full bg-stravesta-teal hover:bg-stravesta-teal/90 text-stravesta-dark font-medium"
+            className="w-full bg-gradient-to-r from-stravesta-teal to-stravesta-teal/90 hover:from-stravesta-teal/90 hover:to-stravesta-teal text-stravesta-dark font-semibold text-lg py-6 rounded-xl transition-all duration-200"
           >
-            Trade hinzufügen
+            ✅ Trade hinzufügen und speichern
           </Button>
         </form>
       </CardContent>

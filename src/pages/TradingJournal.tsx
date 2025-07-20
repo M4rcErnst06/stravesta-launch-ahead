@@ -85,82 +85,86 @@ const TradingJournal = () => {
   };
 
   return (
-    <div className="min-h-screen bg-stravesta-dark relative">
-      <div className="relative z-10">
-        {/* Header */}
-        <header className="bg-stravesta-navy/80 backdrop-blur-sm border-b border-stravesta-teal/20">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <Button 
-                  onClick={() => navigate('/dashboard')}
-                  variant="outline"
-                  size="sm"
-                  className="text-stravesta-lightGray border-stravesta-darkGray bg-stravesta-navy/50 hover:bg-stravesta-navy hover:text-white hover:border-stravesta-teal"
-                >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Zurück
-                </Button>
-                <div>
-                  <h1 className="text-2xl font-bold text-gradient flex items-center gap-2">
-                    <Target className="h-7 w-7 text-stravesta-teal" />
-                    Trading Journal
-                  </h1>
-                  <p className="text-stravesta-lightGray">Verfolgen und analysieren Sie Ihre Trades</p>
-                </div>
+    <div className="min-h-screen bg-stravesta-dark">
+      {/* Modern Header */}
+      <header className="bg-gradient-to-r from-stravesta-navy via-stravesta-navy/90 to-stravesta-navy border-b border-stravesta-teal/30">
+        <div className="container mx-auto px-6 py-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-6">
+              <Button 
+                onClick={() => navigate('/dashboard')}
+                variant="outline"
+                size="sm"
+                className="text-stravesta-lightGray border-stravesta-teal/30 bg-stravesta-dark/50 hover:bg-stravesta-teal hover:text-stravesta-dark transition-all duration-200"
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Zurück
+              </Button>
+              <div>
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-white via-stravesta-teal to-white bg-clip-text text-transparent flex items-center gap-3">
+                  <Target className="h-8 w-8 text-stravesta-teal" />
+                  Trading Journal
+                </h1>
+                <p className="text-stravesta-lightGray mt-2 text-lg">Professionelle Handelsanalyse und Performance-Tracking</p>
               </div>
             </div>
           </div>
-        </header>
+        </div>
+      </header>
 
-        {/* Main Content */}
-        <main className="container mx-auto px-4 py-8">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4 bg-stravesta-navy/50 border border-stravesta-teal/20">
+      {/* Enhanced Main Content */}
+      <main className="container mx-auto px-6 py-8">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
+          {/* Redesigned Tab Navigation */}
+          <div className="bg-stravesta-navy/60 backdrop-blur-sm rounded-xl p-2 border border-stravesta-teal/20">
+            <TabsList className="grid w-full grid-cols-4 bg-transparent gap-2">
               <TabsTrigger 
                 value="dashboard" 
-                className="data-[state=active]:bg-stravesta-teal data-[state=active]:text-stravesta-dark text-stravesta-lightGray"
+                className="data-[state=active]:bg-stravesta-teal data-[state=active]:text-stravesta-dark data-[state=active]:shadow-lg text-stravesta-lightGray hover:text-white hover:bg-stravesta-navy/50 transition-all duration-200 rounded-lg py-3 font-medium"
               >
-                Dashboard
+                📊 Dashboard
               </TabsTrigger>
               <TabsTrigger 
                 value="add-trade" 
-                className="data-[state=active]:bg-stravesta-teal data-[state=active]:text-stravesta-dark text-stravesta-lightGray"
+                className="data-[state=active]:bg-stravesta-teal data-[state=active]:text-stravesta-dark data-[state=active]:shadow-lg text-stravesta-lightGray hover:text-white hover:bg-stravesta-navy/50 transition-all duration-200 rounded-lg py-3 font-medium"
               >
-                Trade hinzufügen
+                ➕ Trade hinzufügen
               </TabsTrigger>
               <TabsTrigger 
                 value="trades" 
-                className="data-[state=active]:bg-stravesta-teal data-[state=active]:text-stravesta-dark text-stravesta-lightGray"
+                className="data-[state=active]:bg-stravesta-teal data-[state=active]:text-stravesta-dark data-[state=active]:shadow-lg text-stravesta-lightGray hover:text-white hover:bg-stravesta-navy/50 transition-all duration-200 rounded-lg py-3 font-medium"
               >
-                Alle Trades
+                📋 Alle Trades
               </TabsTrigger>
               <TabsTrigger 
                 value="analytics" 
-                className="data-[state=active]:bg-stravesta-teal data-[state=active]:text-stravesta-dark text-stravesta-lightGray"
+                className="data-[state=active]:bg-stravesta-teal data-[state=active]:text-stravesta-dark data-[state=active]:shadow-lg text-stravesta-lightGray hover:text-white hover:bg-stravesta-navy/50 transition-all duration-200 rounded-lg py-3 font-medium"
               >
-                Analytics
+                📈 Analytics
               </TabsTrigger>
             </TabsList>
+          </div>
 
-            <TabsContent value="dashboard" className="space-y-6">
+          {/* Tab Content with Better Spacing */}
+          <div className="space-y-8">
+            <TabsContent value="dashboard" className="space-y-8 animate-fade-in">
               <TradeDashboard trades={trades} />
             </TabsContent>
 
-            <TabsContent value="add-trade" className="space-y-6">
+            <TabsContent value="add-trade" className="space-y-8 animate-fade-in">
               <TradeForm onAddTrade={addTrade} />
             </TabsContent>
 
-            <TabsContent value="trades" className="space-y-6">
+            <TabsContent value="trades" className="space-y-8 animate-fade-in">
               <TradeList trades={trades} onUpdateTrade={updateTrade} />
             </TabsContent>
 
-            <TabsContent value="analytics" className="space-y-6">
+            <TabsContent value="analytics" className="space-y-8 animate-fade-in">
               <TradeAnalytics trades={trades} />
             </TabsContent>
-          </Tabs>
-        </main>
-      </div>
+          </div>
+        </Tabs>
+      </main>
     </div>
   );
 };
