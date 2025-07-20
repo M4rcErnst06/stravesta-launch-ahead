@@ -158,8 +158,8 @@ const TradingChartAnimation = () => {
         ctx.fillRect(x - candleWidth/2, bodyTop, candleWidth, bodyHeight || 2);
       }
 
-      // Draw EMAs
-      if (animationStep >= 3) {
+      // Draw EMAs from start
+      if (animationStep >= 1) {
         const visibleCandles = Math.min(animationStep + 1, candleData.length);
         
         // EMA 20 (fast)
@@ -207,138 +207,80 @@ const TradingChartAnimation = () => {
 
       // Draw Volume Profile - REMOVED
 
-      // Draw AI pattern recognition
-      if (patternDetected && animationStep >= 5) {
-        // Flag pole highlight
-        ctx.strokeStyle = '#17E6C8';
-        ctx.lineWidth = 3;
-        ctx.setLineDash([]);
-        
-        // Draw flag pole trend line
-        const startX = timestampToX(flagPole.start);
-        const endX = timestampToX(flagPole.end);
-        const startY = priceToY(candleData[flagPole.start - 1].low);
-        const endY = priceToY(candleData[flagPole.end - 1].high);
-        
-        ctx.beginPath();
-        ctx.moveTo(startX, startY);
-        ctx.lineTo(endX, endY);
-        ctx.stroke();
-        
-        // Pattern label
-        ctx.fillStyle = '#17E6C8';
-        ctx.font = 'bold 14px Arial';
-        ctx.fillText('BULLISH FLAG', endX + 10, endY - 20);
-      }
+      // AI pattern recognition - REMOVED bullish flag line
 
-      // Draw Fibonacci retracement
-      if (patternDetected && animationStep >= 6) {
-        ctx.strokeStyle = '#FFB800';
-        ctx.lineWidth = 1;
-        ctx.setLineDash([4, 4]);
-        ctx.font = '10px Arial';
-        
-        // Draw fibonacci levels
-        fibLevels.levels.forEach((fib, index) => {
-          const y = priceToY(fib.price);
-          const startX = timestampToX(4);
-          const endX = timestampToX(8);
-          
-          // Set color based on importance
-          if (fib.level === 0.618) {
-            ctx.strokeStyle = '#FF6B35'; // Golden ratio in orange
-            ctx.lineWidth = 2;
-          } else if (fib.level === 0.382) {
-            ctx.strokeStyle = '#FFB800'; // Important level in yellow
-            ctx.lineWidth = 1.5;
-          } else {
-            ctx.strokeStyle = '#888888'; // Other levels in gray
-            ctx.lineWidth = 1;
-          }
-          
-          ctx.beginPath();
-          ctx.moveTo(startX, y);
-          ctx.lineTo(endX, y);
-          ctx.stroke();
-          
-          // Draw level label
-          ctx.fillStyle = ctx.strokeStyle;
-          ctx.fillText(`${fib.label} (${fib.price.toFixed(4)})`, endX + 5, y + 3);
-        });
-        
-        ctx.setLineDash([]);
-      }
+      // Fibonacci retracement - REMOVED
 
-      // Draw breakout and entry point with TradingView-style arrow
+      // Draw breakout and entry point with smaller TradingView-style arrow
       if (entryExecuted && animationStep >= 9) {
         const entryX = timestampToX(entryPoint.timestamp);
         const entryY = priceToY(entryPoint.price);
 
-        // Entry arrow (blue, pointing up)
+        // Entry arrow (blue, pointing up, under candle)
         ctx.fillStyle = '#2196F3';
         ctx.strokeStyle = '#1976D2';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1;
         
-        // Arrow body
+        // Smaller arrow body
         ctx.beginPath();
-        ctx.moveTo(entryX, entryY + 15);
-        ctx.lineTo(entryX - 8, entryY + 35);
-        ctx.lineTo(entryX - 4, entryY + 35);
-        ctx.lineTo(entryX - 4, entryY + 50);
-        ctx.lineTo(entryX + 4, entryY + 50);
-        ctx.lineTo(entryX + 4, entryY + 35);
-        ctx.lineTo(entryX + 8, entryY + 35);
+        ctx.moveTo(entryX, entryY + 10);
+        ctx.lineTo(entryX - 5, entryY + 20);
+        ctx.lineTo(entryX - 3, entryY + 20);
+        ctx.lineTo(entryX - 3, entryY + 30);
+        ctx.lineTo(entryX + 3, entryY + 30);
+        ctx.lineTo(entryX + 3, entryY + 20);
+        ctx.lineTo(entryX + 5, entryY + 20);
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
 
-        // Entry label
+        // Smaller entry label
         ctx.fillStyle = '#2196F3';
-        ctx.font = 'bold 12px Arial';
-        ctx.fillText('ENTRY', entryX - 20, entryY + 70);
-        ctx.font = '11px Arial';
-        ctx.fillText(entryPoint.price.toFixed(4), entryX - 20, entryY + 85);
+        ctx.font = 'bold 10px Arial';
+        ctx.fillText('ENTRY', entryX - 15, entryY + 45);
+        ctx.font = '9px Arial';
+        ctx.fillText(entryPoint.price.toFixed(4), entryX - 15, entryY + 55);
       }
 
-      // Draw target point with TradingView-style arrow
+      // Draw target point with smaller TradingView-style arrow
       if (animationStep >= 10) {
         const targetX = timestampToX(targetPoint.timestamp);
         const targetY = priceToY(targetPoint.price);
 
-        // TP arrow (green, pointing down)
+        // TP arrow (green, pointing down, above candle)
         ctx.fillStyle = '#4CAF50';
         ctx.strokeStyle = '#388E3C';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1;
         
-        // Arrow body
+        // Smaller arrow body
         ctx.beginPath();
-        ctx.moveTo(targetX, targetY - 15);
-        ctx.lineTo(targetX - 8, targetY - 35);
-        ctx.lineTo(targetX - 4, targetY - 35);
-        ctx.lineTo(targetX - 4, targetY - 50);
-        ctx.lineTo(targetX + 4, targetY - 50);
-        ctx.lineTo(targetX + 4, targetY - 35);
-        ctx.lineTo(targetX + 8, targetY - 35);
+        ctx.moveTo(targetX, targetY - 10);
+        ctx.lineTo(targetX - 5, targetY - 20);
+        ctx.lineTo(targetX - 3, targetY - 20);
+        ctx.lineTo(targetX - 3, targetY - 30);
+        ctx.lineTo(targetX + 3, targetY - 30);
+        ctx.lineTo(targetX + 3, targetY - 20);
+        ctx.lineTo(targetX + 5, targetY - 20);
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
 
         // Target line (dashed)
         ctx.strokeStyle = '#4CAF50';
-        ctx.lineWidth = 2;
-        ctx.setLineDash([6, 6]);
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 4]);
         ctx.beginPath();
         ctx.moveTo(timestampToX(entryPoint.timestamp), priceToY(entryPoint.price));
         ctx.lineTo(targetX, targetY);
         ctx.stroke();
         ctx.setLineDash([]);
 
-        // Target label
+        // Smaller target label
         ctx.fillStyle = '#4CAF50';
-        ctx.font = 'bold 12px Arial';
-        ctx.fillText('TP', targetX - 10, targetY - 65);
-        ctx.font = '11px Arial';
-        ctx.fillText('+50 PIPS', targetX - 25, targetY - 52);
+        ctx.font = 'bold 10px Arial';
+        ctx.fillText('TP', targetX - 8, targetY - 40);
+        ctx.font = '9px Arial';
+        ctx.fillText('+50 PIPS', targetX - 18, targetY - 32);
       }
 
       // Price labels
