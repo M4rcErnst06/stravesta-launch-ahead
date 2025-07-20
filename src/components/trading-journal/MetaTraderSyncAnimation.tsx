@@ -151,9 +151,9 @@ const MetaTraderSyncAnimation = () => {
       </div>
 
       {/* Fixed layout container - mehr Platz für Journal */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-        {/* MetaTrader History - Left Side - 2 von 5 Spalten */}
-        <div className="lg:col-span-2 space-y-3">
+      <div className="flex flex-col xl:flex-row gap-4 w-full">
+        {/* MetaTrader History - Left Side - flexibel */}
+        <div className="xl:w-2/5 space-y-3 min-w-0">
           <div className="flex items-center gap-3">
             <div className="bg-blue-500/20 p-2 rounded-lg">
               <BarChart3 className="h-4 w-4 text-blue-400" />
@@ -209,8 +209,8 @@ const MetaTraderSyncAnimation = () => {
           </div>
         </div>
 
-        {/* Stravesta Journal - Right Side - 3 von 5 Spalten für mehr Platz */}
-        <div className="lg:col-span-3 space-y-3">
+        {/* Stravesta Journal - Right Side - mehr Platz */}
+        <div className="xl:w-3/5 space-y-3 min-w-0 flex-shrink-0">
           <div className="flex items-center gap-3">
             <div className="bg-gradient-to-r from-stravesta-teal to-blue-500 p-2 rounded-lg">
               <TrendingUp className="h-4 w-4 text-white" />
@@ -252,11 +252,11 @@ const MetaTraderSyncAnimation = () => {
                   `}
                   style={{ animationDelay: `${slotIndex * 300}ms` }}
                 >
-                  <div className="flex items-center justify-between mb-2 w-full">
-                    <div className="flex items-center gap-3 flex-1 min-w-0">
-                      <span className="font-bold text-white text-base flex-shrink-0">{entry.symbol}</span>
+                  <div className="flex items-center justify-between mb-2 w-full overflow-hidden">
+                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                      <span className="font-bold text-white text-sm flex-shrink-0">{entry.symbol}</span>
                       <Badge 
-                        className={`text-xs px-2 py-1 flex-shrink-0 ${
+                        className={`text-xs px-1.5 py-0.5 flex-shrink-0 ${
                           entry.type === 'buy' 
                             ? 'bg-green-500/20 text-green-400 border-green-500/30' 
                             : 'bg-red-500/20 text-red-400 border-red-500/30'
@@ -264,24 +264,24 @@ const MetaTraderSyncAnimation = () => {
                       >
                         {entry.type.toUpperCase()}
                       </Badge>
-                      <span className="text-xs text-stravesta-lightGray flex-shrink-0">{entry.time}</span>
+                      <span className="text-xs text-stravesta-lightGray truncate">{entry.time}</span>
                     </div>
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                      <span className={`font-bold text-lg ${entry.profit >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                    <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+                      <span className={`font-bold text-base ${entry.profit >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                         ${entry.profit}
                       </span>
                       {entry.status === 'complete' && (
-                        <CheckCircle className="h-4 w-4 text-green-500" />
+                        <CheckCircle className="h-3 w-3 text-green-500" />
                       )}
                     </div>
                   </div>
                   
-                  <div className="flex items-center justify-between text-xs w-full">
-                    <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs px-2 py-1 flex-shrink-0">
+                  <div className="flex items-center justify-between text-xs w-full overflow-hidden">
+                    <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs px-1.5 py-0.5 flex-shrink-0">
                       {entry.category}
                     </Badge>
-                    <span className="text-stravesta-lightGray text-xs mx-2 flex-1 text-center">{entry.session}</span>
-                    <span className="text-stravesta-lightGray text-xs flex-shrink-0">Size: {entry.size}</span>
+                    <span className="text-stravesta-lightGray text-xs flex-1 text-center mx-1 truncate">{entry.session}</span>
+                    <span className="text-stravesta-lightGray text-xs flex-shrink-0 whitespace-nowrap">Size: {entry.size}</span>
                   </div>
                 </div>
               );
