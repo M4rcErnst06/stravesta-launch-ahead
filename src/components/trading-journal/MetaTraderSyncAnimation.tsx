@@ -263,12 +263,15 @@ const MetaTraderSyncAnimation = () => {
                   </div>
                 </div>
                 
-                <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center text-xs">
                   <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs px-1.5 py-0.5">
                     {entry.category}
                   </Badge>
-                  <span className="text-stravesta-lightGray text-xs">{entry.session}</span>
-                  <span className="text-stravesta-lightGray text-xs">Size: {entry.size}</span>
+                  <span className="text-stravesta-lightGray text-xs ml-2">{entry.session}</span>
+                  <span className="text-stravesta-lightGray text-xs ml-4">Size: {entry.size}</span>
+                  <span className={`font-bold text-xs ml-4 ${entry.profit >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                    ${entry.profit}
+                  </span>
                 </div>
               </div>
             ))}
