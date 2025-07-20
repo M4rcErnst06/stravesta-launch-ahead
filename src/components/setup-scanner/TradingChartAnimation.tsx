@@ -7,6 +7,12 @@ interface CandleData {
   low: number;
   close: number;
   timestamp: number;
+  volume: number;
+}
+
+interface VolumeProfile {
+  price: number;
+  volume: number;
 }
 
 const TradingChartAnimation = () => {
@@ -20,16 +26,16 @@ const TradingChartAnimation = () => {
 
   // Chart data showing a bullish flag pattern with deeper pullback
   const candleData: CandleData[] = [
-    { open: 1.0850, high: 1.0890, low: 1.0840, close: 1.0875, timestamp: 1 },
-    { open: 1.0875, high: 1.0920, low: 1.0860, close: 1.0915, timestamp: 2 },
-    { open: 1.0915, high: 1.0950, low: 1.0900, close: 1.0940, timestamp: 3 },
-    { open: 1.0940, high: 1.0965, low: 1.0920, close: 1.0955, timestamp: 4 },
-    { open: 1.0955, high: 1.0960, low: 1.0925, close: 1.0930, timestamp: 5 }, // Start deeper pullback
-    { open: 1.0930, high: 1.0940, low: 1.0910, close: 1.0920, timestamp: 6 }, // Deeper red candle
-    { open: 1.0920, high: 1.0935, low: 1.0895, close: 1.0915, timestamp: 7 }, // Even deeper pullback
-    { open: 1.0915, high: 1.0930, low: 1.0900, close: 1.0925, timestamp: 8 }, // Recovery starts
-    { open: 1.0925, high: 1.0970, low: 1.0920, close: 1.0965, timestamp: 9 }, // Breakout
-    { open: 1.0965, high: 1.1020, low: 1.0960, close: 1.1015, timestamp: 10 },
+    { open: 1.0850, high: 1.0890, low: 1.0840, close: 1.0875, timestamp: 1, volume: 1250 },
+    { open: 1.0875, high: 1.0920, low: 1.0860, close: 1.0915, timestamp: 2, volume: 1580 },
+    { open: 1.0915, high: 1.0950, low: 1.0900, close: 1.0940, timestamp: 3, volume: 1820 },
+    { open: 1.0940, high: 1.0965, low: 1.0920, close: 1.0955, timestamp: 4, volume: 2100 },
+    { open: 1.0955, high: 1.0960, low: 1.0925, close: 1.0930, timestamp: 5, volume: 1350 }, // Start deeper pullback
+    { open: 1.0930, high: 1.0940, low: 1.0910, close: 1.0920, timestamp: 6, volume: 1680 }, // Deeper red candle
+    { open: 1.0920, high: 1.0935, low: 1.0895, close: 1.0915, timestamp: 7, volume: 1420 }, // Even deeper pullback
+    { open: 1.0915, high: 1.0930, low: 1.0900, close: 1.0925, timestamp: 8, volume: 1200 }, // Recovery starts
+    { open: 1.0925, high: 1.0970, low: 1.0920, close: 1.0965, timestamp: 9, volume: 2500 }, // Breakout
+    { open: 1.0965, high: 1.1020, low: 1.0960, close: 1.1015, timestamp: 10, volume: 2800 },
   ];
 
   // Pattern recognition points
@@ -52,6 +58,43 @@ const TradingChartAnimation = () => {
   // Entry and target points
   const entryPoint = { price: 1.0965, timestamp: 9 };
   const targetPoint = { price: 1.1015, timestamp: 10 };
+
+  // Calculate EMAs
+  const calculateEMA = (data: CandleData[], period: number) => {
+    const multiplier = 2 / (period + 1);
+    const emaValues: number[] = [];
+    
+    if (data.length === 0) return emaValues;
+    
+    // First EMA is SMA
+    let sum = 0;
+    for (let i = 0; i < Math.min(period, data.length); i++) {
+      sum += data[i].close;
+    }
+    emaValues[Math.min(period - 1, data.length - 1)] = sum / Math.min(period, data.length);
+    
+    // Calculate subsequent EMAs
+    for (let i = period; i < data.length; i++) {
+      emaValues[i] = (data[i].close - emaValues[i - 1]) * multiplier + emaValues[i - 1];
+    }
+    
+    return emaValues;
+  };
+
+  const ema20 = calculateEMA(candleData, 5); // Shortened for animation
+  const ema50 = calculateEMA(candleData, 8); // Shortened for animation
+
+  // Volume Profile data
+  const volumeProfile: VolumeProfile[] = [
+    { price: 1.0895, volume: 1200 },
+    { price: 1.0910, volume: 1800 },
+    { price: 1.0925, volume: 2200 }, // High volume area
+    { price: 1.0940, volume: 1600 },
+    { price: 1.0955, volume: 1900 },
+    { price: 1.0970, volume: 1400 },
+    { price: 1.0985, volume: 1100 },
+    { price: 1.1000, volume: 1300 },
+  ];
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -123,6 +166,82 @@ const TradingChartAnimation = () => {
         const bodyHeight = Math.abs(closeY - openY);
         const bodyTop = Math.min(openY, closeY);
         ctx.fillRect(x - candleWidth/2, bodyTop, candleWidth, bodyHeight || 2);
+      }
+
+      // Draw EMAs
+      if (animationStep >= 3) {
+        const visibleCandles = Math.min(animationStep + 1, candleData.length);
+        
+        // EMA 20 (fast)
+        if (ema20.length > 1) {
+          ctx.strokeStyle = '#00C851';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          let started = false;
+          for (let i = 0; i < visibleCandles && i < ema20.length; i++) {
+            if (ema20[i] !== undefined) {
+              const x = timestampToX(i + 1);
+              const y = priceToY(ema20[i]);
+              if (!started) {
+                ctx.moveTo(x, y);
+                started = true;
+              } else {
+                ctx.lineTo(x, y);
+              }
+            }
+          }
+          ctx.stroke();
+        }
+
+        // EMA 50 (slow)
+        if (ema50.length > 1) {
+          ctx.strokeStyle = '#FF6B35';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          let started = false;
+          for (let i = 0; i < visibleCandles && i < ema50.length; i++) {
+            if (ema50[i] !== undefined) {
+              const x = timestampToX(i + 1);
+              const y = priceToY(ema50[i]);
+              if (!started) {
+                ctx.moveTo(x, y);
+                started = true;
+              } else {
+                ctx.lineTo(x, y);
+              }
+            }
+          }
+          ctx.stroke();
+        }
+      }
+
+      // Draw Volume Profile
+      if (animationStep >= 4) {
+        const maxVolume = Math.max(...volumeProfile.map(v => v.volume));
+        const profileWidth = 60;
+        
+        volumeProfile.forEach(level => {
+          const y = priceToY(level.price);
+          const barWidth = (level.volume / maxVolume) * profileWidth;
+          
+          // Volume bar
+          ctx.fillStyle = level.volume === Math.max(...volumeProfile.map(v => v.volume)) 
+            ? 'rgba(255, 107, 53, 0.4)' // Highest volume in orange
+            : 'rgba(23, 230, 200, 0.3)'; // Other volumes in teal
+          ctx.fillRect(chartRight - profileWidth - 10, y - 3, barWidth, 6);
+          
+          // Volume border
+          ctx.strokeStyle = level.volume === Math.max(...volumeProfile.map(v => v.volume)) 
+            ? '#FF6B35' 
+            : '#17E6C8';
+          ctx.lineWidth = 1;
+          ctx.strokeRect(chartRight - profileWidth - 10, y - 3, barWidth, 6);
+        });
+        
+        // Volume profile label
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = '10px Arial';
+        ctx.fillText('Vol Profile', chartRight - profileWidth - 5, chartTop + 15);
       }
 
       // Draw AI pattern recognition
@@ -251,21 +370,32 @@ const TradingChartAnimation = () => {
         ctx.strokeStyle = '#17E6C8';
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.roundRect(chartRight + 10, chartTop, 100, 120, 8);
+        ctx.roundRect(chartRight + 10, chartTop + 140, 100, 140, 8);
         ctx.fill();
         ctx.stroke();
         
         ctx.fillStyle = '#17E6C8';
         ctx.font = 'bold 12px Arial';
-        ctx.fillText('KI ANALYSE', chartRight + 20, chartTop + 20);
+        ctx.fillText('KI ANALYSE', chartRight + 20, chartTop + 160);
         
         ctx.font = '10px Arial';
         ctx.fillStyle = '#FFFFFF';
-        ctx.fillText('Pattern: Analyzing...', chartRight + 15, chartTop + 40);
-        ctx.fillText('Trend: Bullish', chartRight + 15, chartTop + 55);
-        ctx.fillText('Volume: Rising', chartRight + 15, chartTop + 70);
-        ctx.fillText('Signal: Strong', chartRight + 15, chartTop + 85);
+        ctx.fillText('Pattern: Analyzing...', chartRight + 15, chartTop + 180);
+        ctx.fillText('EMA 20/50: Bullish', chartRight + 15, chartTop + 195);
+        ctx.fillText('Volume: Rising', chartRight + 15, chartTop + 210);
+        ctx.fillText('VP Support: 1.0925', chartRight + 15, chartTop + 225);
+        ctx.fillText('Signal: Strong', chartRight + 15, chartTop + 240);
         
+        // EMA Legend
+        ctx.fillStyle = '#00C851';
+        ctx.fillRect(chartRight + 15, chartTop + 250, 15, 2);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillText('EMA 20', chartRight + 35, chartTop + 255);
+        
+        ctx.fillStyle = '#FF6B35';
+        ctx.fillRect(chartRight + 15, chartTop + 265, 15, 2);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillText('EMA 50', chartRight + 35, chartTop + 270);
       }
     };
 
