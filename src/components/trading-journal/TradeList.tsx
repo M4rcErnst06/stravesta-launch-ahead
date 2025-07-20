@@ -62,130 +62,236 @@ const TradeList: React.FC<TradeListProps> = ({ trades, onUpdateTrade }) => {
   };
 
   return (
-    <Card className="bg-stravesta-navy/50 border-stravesta-teal/20">
-      <CardHeader>
-        <CardTitle className="text-white flex items-center gap-2">
-          <Eye className="h-5 w-5 text-stravesta-teal" />
-          Alle Trades
-        </CardTitle>
-        <CardDescription className="text-stravesta-lightGray">
-          Übersicht und Verwaltung Ihrer Trades
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-4">
+    <div className="space-y-6">
+      {/* Header Section */}
+      <div className="bg-stravesta-navy/60 backdrop-blur-sm rounded-2xl p-6 border border-stravesta-teal/30">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold text-white mb-2 flex items-center justify-center gap-3">
+            <div className="p-2 bg-stravesta-teal/20 rounded-lg">
+              <Eye className="h-6 w-6 text-stravesta-teal" />
+            </div>
+            Alle Trades verwalten
+          </h2>
+          <p className="text-stravesta-lightGray text-base">
+            Übersicht und Verwaltung Ihrer Trading-History
+          </p>
+        </div>
+
+        {/* Enhanced Filters */}
+        <div className="flex flex-col lg:flex-row gap-4">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-stravesta-lightGray" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-stravesta-lightGray" />
             <Input
               placeholder="Nach Symbol oder Notizen suchen..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal"
+              className="pl-12 h-12 bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal text-base"
             />
           </div>
           
           <Select value={statusFilter} onValueChange={(value: 'all' | 'open' | 'closed') => setStatusFilter(value)}>
-            <SelectTrigger className="w-[140px] bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal">
+            <SelectTrigger className="w-full lg:w-[160px] h-12 bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-stravesta-dark border-stravesta-darkGray">
-              <SelectItem value="all" className="text-white hover:bg-stravesta-navy">Alle Status</SelectItem>
-              <SelectItem value="open" className="text-white hover:bg-stravesta-navy">Offen</SelectItem>
-              <SelectItem value="closed" className="text-white hover:bg-stravesta-navy">Geschlossen</SelectItem>
+              <SelectItem value="all" className="text-white hover:bg-stravesta-navy">🔄 Alle Status</SelectItem>
+              <SelectItem value="open" className="text-white hover:bg-stravesta-navy">🟢 Offen</SelectItem>
+              <SelectItem value="closed" className="text-white hover:bg-stravesta-navy">✅ Geschlossen</SelectItem>
             </SelectContent>
           </Select>
 
           <Select value={typeFilter} onValueChange={(value: 'all' | 'long' | 'short') => setTypeFilter(value)}>
-            <SelectTrigger className="w-[120px] bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal">
+            <SelectTrigger className="w-full lg:w-[140px] h-12 bg-stravesta-dark border-stravesta-darkGray text-white focus:border-stravesta-teal">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-stravesta-dark border-stravesta-darkGray">
-              <SelectItem value="all" className="text-white hover:bg-stravesta-navy">Alle Typen</SelectItem>
-              <SelectItem value="long" className="text-white hover:bg-stravesta-navy">Long</SelectItem>
-              <SelectItem value="short" className="text-white hover:bg-stravesta-navy">Short</SelectItem>
+              <SelectItem value="all" className="text-white hover:bg-stravesta-navy">📊 Alle Typen</SelectItem>
+              <SelectItem value="long" className="text-white hover:bg-stravesta-navy">📈 Long</SelectItem>
+              <SelectItem value="short" className="text-white hover:bg-stravesta-navy">📉 Short</SelectItem>
             </SelectContent>
           </Select>
         </div>
+      </div>
 
-        {/* Table */}
-        <div className="rounded-md border border-stravesta-darkGray overflow-hidden">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-stravesta-dark border-b border-stravesta-darkGray">
-                <TableHead className="text-stravesta-lightGray">Symbol</TableHead>
-                <TableHead className="text-stravesta-lightGray">Typ</TableHead>
-                <TableHead className="text-stravesta-lightGray">Entry</TableHead>
-                <TableHead className="text-stravesta-lightGray">Exit</TableHead>
-                <TableHead className="text-stravesta-lightGray">Menge</TableHead>
-                <TableHead className="text-stravesta-lightGray">P&L</TableHead>
-                <TableHead className="text-stravesta-lightGray">Status</TableHead>
-                <TableHead className="text-stravesta-lightGray">Emotion</TableHead>
-                <TableHead className="text-stravesta-lightGray">Datum</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredTrades.map((trade) => (
-                <TableRow 
-                  key={trade.id} 
-                  className="bg-stravesta-navy/30 border-b border-stravesta-darkGray hover:bg-stravesta-navy/50"
-                >
-                  <TableCell className="font-medium text-white">{trade.symbol}</TableCell>
-                  <TableCell>
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${
-                      trade.type === 'long' 
-                        ? 'bg-green-500/20 text-green-500' 
-                        : 'bg-red-500/20 text-red-500'
-                    }`}>
-                      {trade.type.toUpperCase()}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-white">{trade.entry_price.toFixed(4)}</TableCell>
-                  <TableCell className="text-white">
-                    {trade.exit_price ? trade.exit_price.toFixed(4) : '-'}
-                  </TableCell>
-                  <TableCell className="text-white">{trade.quantity.toLocaleString()}</TableCell>
-                  <TableCell>
-                    {trade.pnl !== undefined ? (
-                      <span className={`font-medium ${
-                        trade.pnl >= 0 ? 'text-green-500' : 'text-red-500'
-                      }`}>
-                        ${trade.pnl.toFixed(2)}
-                      </span>
-                    ) : (
-                      <span className="text-stravesta-lightGray">-</span>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${
-                      trade.status === 'open' 
-                        ? 'bg-stravesta-teal/20 text-stravesta-teal' 
-                        : 'bg-stravesta-lightGray/20 text-stravesta-lightGray'
-                    }`}>
-                      {trade.status === 'open' ? 'OFFEN' : 'GESCHLOSSEN'}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <span className={`text-sm ${getEmotionColor(trade.emotion)}`}>
-                      {getEmotionLabel(trade.emotion)}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-stravesta-lightGray">
-                    {new Date(trade.entry_date).toLocaleDateString('de-DE')}
-                  </TableCell>
-                </TableRow>
+      {/* Trades Cards - Mobile Friendly */}
+      <div className="space-y-4">
+        {filteredTrades.length === 0 ? (
+          <Card className="bg-stravesta-navy/60 backdrop-blur-sm border-stravesta-teal/30">
+            <CardContent className="text-center py-12">
+              <div className="p-4 bg-stravesta-dark/50 rounded-full w-fit mx-auto mb-4">
+                <Eye className="h-8 w-8 text-stravesta-lightGray" />
+              </div>
+              <p className="text-stravesta-lightGray text-lg">Keine Trades gefunden.</p>
+              <p className="text-stravesta-lightGray/70 text-sm mt-2">Versuchen Sie andere Filtereinstellungen.</p>
+            </CardContent>
+          </Card>
+        ) : (
+          <>
+            {/* Desktop Table View */}
+            <Card className="bg-stravesta-navy/60 backdrop-blur-sm border-stravesta-teal/30 hidden lg:block">
+              <CardContent className="p-0">
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="bg-stravesta-dark/50 border-b border-stravesta-darkGray hover:bg-stravesta-dark/50">
+                        <TableHead className="text-stravesta-lightGray font-semibold py-4 px-6">Symbol</TableHead>
+                        <TableHead className="text-stravesta-lightGray font-semibold py-4">Typ</TableHead>
+                        <TableHead className="text-stravesta-lightGray font-semibold py-4">Entry</TableHead>
+                        <TableHead className="text-stravesta-lightGray font-semibold py-4">Exit</TableHead>
+                        <TableHead className="text-stravesta-lightGray font-semibold py-4">Menge</TableHead>
+                        <TableHead className="text-stravesta-lightGray font-semibold py-4">P&L</TableHead>
+                        <TableHead className="text-stravesta-lightGray font-semibold py-4">Status</TableHead>
+                        <TableHead className="text-stravesta-lightGray font-semibold py-4">Emotion</TableHead>
+                        <TableHead className="text-stravesta-lightGray font-semibold py-4 px-6">Datum</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredTrades.map((trade, index) => (
+                        <TableRow 
+                          key={trade.id} 
+                          className="bg-stravesta-navy/30 border-b border-stravesta-darkGray/50 hover:bg-stravesta-navy/50 transition-all duration-200"
+                        >
+                          <TableCell className="font-bold text-white text-lg py-4 px-6">{trade.symbol}</TableCell>
+                          <TableCell className="py-4">
+                            <span className={`px-3 py-2 rounded-lg text-sm font-semibold ${
+                              trade.type === 'long' 
+                                ? 'bg-green-500/20 text-green-400' 
+                                : 'bg-red-500/20 text-red-400'
+                            }`}>
+                              {trade.type === 'long' ? '📈 LONG' : '📉 SHORT'}
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-white font-medium py-4">{trade.entry_price.toFixed(4)}</TableCell>
+                          <TableCell className="text-white font-medium py-4">
+                            {trade.exit_price ? trade.exit_price.toFixed(4) : '-'}
+                          </TableCell>
+                          <TableCell className="text-white font-medium py-4">{trade.quantity.toLocaleString()}</TableCell>
+                          <TableCell className="py-4">
+                            {trade.pnl !== undefined ? (
+                              <span className={`font-bold text-base ${
+                                trade.pnl >= 0 ? 'text-green-400' : 'text-red-400'
+                              }`}>
+                                ${trade.pnl.toFixed(2)}
+                              </span>
+                            ) : (
+                              <span className="text-stravesta-lightGray">-</span>
+                            )}
+                          </TableCell>
+                          <TableCell className="py-4">
+                            <span className={`px-3 py-2 rounded-lg text-sm font-semibold ${
+                              trade.status === 'open' 
+                                ? 'bg-stravesta-teal/20 text-stravesta-teal' 
+                                : 'bg-stravesta-lightGray/20 text-stravesta-lightGray'
+                            }`}>
+                              {trade.status === 'open' ? '🟢 OFFEN' : '✅ GESCHLOSSEN'}
+                            </span>
+                          </TableCell>
+                          <TableCell className="py-4">
+                            <span className={`text-sm font-medium ${getEmotionColor(trade.emotion)}`}>
+                              {getEmotionLabel(trade.emotion)}
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-stravesta-lightGray font-medium py-4 px-6">
+                            {new Date(trade.entry_date).toLocaleDateString('de-DE')}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Mobile Card View */}
+            <div className="grid gap-4 lg:hidden">
+              {filteredTrades.map((trade, index) => (
+                <Card key={trade.id} className="bg-stravesta-navy/60 backdrop-blur-sm border-stravesta-teal/30 hover:border-stravesta-teal/50 transition-all duration-200">
+                  <CardContent className="p-6">
+                    <div className="space-y-4">
+                      {/* Header */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-3 h-12 rounded-full bg-gradient-to-b from-stravesta-teal to-stravesta-teal/50"></div>
+                          <div>
+                            <h3 className="text-xl font-bold text-white">{trade.symbol}</h3>
+                            <p className="text-stravesta-lightGray text-sm">
+                              {new Date(trade.entry_date).toLocaleDateString('de-DE')}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <span className={`px-3 py-2 rounded-lg text-sm font-semibold ${
+                            trade.status === 'open' 
+                              ? 'bg-stravesta-teal/20 text-stravesta-teal' 
+                              : 'bg-stravesta-lightGray/20 text-stravesta-lightGray'
+                          }`}>
+                            {trade.status === 'open' ? '🟢 OFFEN' : '✅ GESCHLOSSEN'}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Details Grid */}
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-stravesta-lightGray text-sm">Typ</p>
+                          <span className={`px-3 py-1 rounded-lg text-sm font-semibold ${
+                            trade.type === 'long' 
+                              ? 'bg-green-500/20 text-green-400' 
+                              : 'bg-red-500/20 text-red-400'
+                          }`}>
+                            {trade.type === 'long' ? '📈 LONG' : '📉 SHORT'}
+                          </span>
+                        </div>
+                        <div>
+                          <p className="text-stravesta-lightGray text-sm">P&L</p>
+                          {trade.pnl !== undefined ? (
+                            <p className={`font-bold text-lg ${
+                              trade.pnl >= 0 ? 'text-green-400' : 'text-red-400'
+                            }`}>
+                              ${trade.pnl.toFixed(2)}
+                            </p>
+                          ) : (
+                            <p className="text-stravesta-lightGray">-</p>
+                          )}
+                        </div>
+                        <div>
+                          <p className="text-stravesta-lightGray text-sm">Entry</p>
+                          <p className="text-white font-medium">{trade.entry_price.toFixed(4)}</p>
+                        </div>
+                        <div>
+                          <p className="text-stravesta-lightGray text-sm">Exit</p>
+                          <p className="text-white font-medium">
+                            {trade.exit_price ? trade.exit_price.toFixed(4) : '-'}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-stravesta-lightGray text-sm">Menge</p>
+                          <p className="text-white font-medium">{trade.quantity.toLocaleString()}</p>
+                        </div>
+                        <div>
+                          <p className="text-stravesta-lightGray text-sm">Emotion</p>
+                          <p className={`text-sm font-medium ${getEmotionColor(trade.emotion)}`}>
+                            {getEmotionLabel(trade.emotion)}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Notes if available */}
+                      {trade.notes && (
+                        <div className="pt-3 border-t border-stravesta-darkGray/50">
+                          <p className="text-stravesta-lightGray text-sm mb-1">Notizen:</p>
+                          <p className="text-white text-sm">{trade.notes}</p>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
               ))}
-            </TableBody>
-          </Table>
-        </div>
-
-        {filteredTrades.length === 0 && (
-          <div className="text-center py-8">
-            <p className="text-stravesta-lightGray">Keine Trades gefunden.</p>
-          </div>
+            </div>
+          </>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
