@@ -158,52 +158,7 @@ const TradingChartAnimation = () => {
         ctx.fillRect(x - candleWidth/2, bodyTop, candleWidth, bodyHeight || 2);
       }
 
-      // Draw EMAs from the very beginning (always visible)
-      if (true) {
-        const visibleCandles = Math.min(animationStep + 1, candleData.length);
-        
-        // EMA 20 (fast)
-        if (ema20.length > 1) {
-          ctx.strokeStyle = '#00C851';
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          let started = false;
-          for (let i = 0; i < visibleCandles && i < ema20.length; i++) {
-            if (ema20[i] !== undefined) {
-              const x = timestampToX(i + 1);
-              const y = priceToY(ema20[i]);
-              if (!started) {
-                ctx.moveTo(x, y);
-                started = true;
-              } else {
-                ctx.lineTo(x, y);
-              }
-            }
-          }
-          ctx.stroke();
-        }
-
-        // EMA 50 (slow)
-        if (ema50.length > 1) {
-          ctx.strokeStyle = '#FF6B35';
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          let started = false;
-          for (let i = 0; i < visibleCandles && i < ema50.length; i++) {
-            if (ema50[i] !== undefined) {
-              const x = timestampToX(i + 1);
-              const y = priceToY(ema50[i]);
-              if (!started) {
-                ctx.moveTo(x, y);
-                started = true;
-              } else {
-                ctx.lineTo(x, y);
-              }
-            }
-          }
-          ctx.stroke();
-        }
-      }
+      // EMAs REMOVED
 
       // Draw Volume Profile - REMOVED
 
@@ -211,35 +166,36 @@ const TradingChartAnimation = () => {
 
       // Fibonacci retracement - REMOVED
 
-      // Draw breakout and entry point with smaller TradingView-style arrow
+      // Draw breakout and entry point with proper spacing below candle
       if (entryExecuted && animationStep >= 9) {
         const entryX = timestampToX(entryPoint.timestamp);
         const entryY = priceToY(entryPoint.price);
 
-        // Entry arrow (blue, pointing up, further under candle)
+        // Entry arrow (blue, pointing up, well below candle with proper spacing)
         ctx.fillStyle = '#2196F3';
         ctx.strokeStyle = '#1976D2';
         ctx.lineWidth = 1;
         
-        // Smaller arrow body, positioned further down
+        // Arrow positioned much further down with proper spacing
+        const arrowOffset = 50; // More spacing from candle
         ctx.beginPath();
-        ctx.moveTo(entryX, entryY + 25);
-        ctx.lineTo(entryX - 5, entryY + 35);
-        ctx.lineTo(entryX - 3, entryY + 35);
-        ctx.lineTo(entryX - 3, entryY + 45);
-        ctx.lineTo(entryX + 3, entryY + 45);
-        ctx.lineTo(entryX + 3, entryY + 35);
-        ctx.lineTo(entryX + 5, entryY + 35);
+        ctx.moveTo(entryX, entryY + arrowOffset);
+        ctx.lineTo(entryX - 5, entryY + arrowOffset + 10);
+        ctx.lineTo(entryX - 3, entryY + arrowOffset + 10);
+        ctx.lineTo(entryX - 3, entryY + arrowOffset + 20);
+        ctx.lineTo(entryX + 3, entryY + arrowOffset + 20);
+        ctx.lineTo(entryX + 3, entryY + arrowOffset + 10);
+        ctx.lineTo(entryX + 5, entryY + arrowOffset + 10);
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
 
-        // Smaller entry label, positioned lower for better readability
+        // Entry label with proper spacing for readability
         ctx.fillStyle = '#2196F3';
         ctx.font = 'bold 10px Arial';
-        ctx.fillText('ENTRY', entryX - 15, entryY + 60);
+        ctx.fillText('ENTRY', entryX - 15, entryY + arrowOffset + 35);
         ctx.font = '9px Arial';
-        ctx.fillText(entryPoint.price.toFixed(4), entryX - 15, entryY + 72);
+        ctx.fillText(entryPoint.price.toFixed(4), entryX - 15, entryY + arrowOffset + 47);
       }
 
       // Draw target point with smaller TradingView-style arrow
@@ -309,20 +265,10 @@ const TradingChartAnimation = () => {
         ctx.font = '10px Arial';
         ctx.fillStyle = '#FFFFFF';
         ctx.fillText('Pattern: Analyzing...', chartRight + 15, chartTop + 180);
-        ctx.fillText('EMA 20/50: Bullish', chartRight + 15, chartTop + 195);
         ctx.fillText('Volume: Rising', chartRight + 15, chartTop + 210);
         ctx.fillText('Signal: Strong', chartRight + 15, chartTop + 225);
         
-        // EMA Legend
-        ctx.fillStyle = '#00C851';
-        ctx.fillRect(chartRight + 15, chartTop + 240, 15, 2);
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fillText('EMA 20', chartRight + 35, chartTop + 245);
-        
-        ctx.fillStyle = '#FF6B35';
-        ctx.fillRect(chartRight + 15, chartTop + 255, 15, 2);
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fillText('EMA 50', chartRight + 35, chartTop + 260);
+        // EMA Legend REMOVED
       }
     };
 
