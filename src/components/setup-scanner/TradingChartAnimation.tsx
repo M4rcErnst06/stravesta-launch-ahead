@@ -289,7 +289,7 @@ const TradingChartAnimation = () => {
 
   return (
     <div className="relative w-full max-w-4xl mx-auto">
-      <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-lg p-6 border border-stravesta-teal/20" style={{ minHeight: '500px' }}>
+      <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-lg p-6 border border-stravesta-teal/20" style={{ minHeight: '600px' }}>
         
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
@@ -331,7 +331,7 @@ const TradingChartAnimation = () => {
         </div>
 
         {/* Chart */}
-        <div style={{ height: '400px' }}>
+        <div style={{ height: '420px', marginBottom: '20px' }}>
           <canvas 
             ref={canvasRef}
             className="w-full h-auto border border-stravesta-teal/10 rounded"
