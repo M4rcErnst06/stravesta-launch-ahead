@@ -227,23 +227,23 @@ const MetaTraderSyncAnimation = () => {
             )}
           </div>
 
-          {/* Journal entries - Optimized container for better display */}
-          <div className="h-full space-y-4 overflow-hidden flex flex-col justify-start">
+          {/* Journal entries - Compact container */}
+          <div className="h-full space-y-2 overflow-hidden flex flex-col justify-start">
             {journalEntries.slice(0, 3).map((entry, index) => (
               <div 
                 key={entry.id}
                 className={`
-                  bg-stravesta-dark/50 border border-stravesta-darkGray rounded-lg p-5 transition-all duration-700
+                  bg-stravesta-dark/50 border border-stravesta-darkGray rounded-lg p-3 transition-all duration-700
                   ${entry.status === 'syncing' ? 'border-stravesta-teal shadow-lg shadow-stravesta-teal/20' : ''}
-                  opacity-0 translate-x-8 animate-[fade-in_0.5s_ease-out_forwards] min-h-[120px] flex flex-col justify-between
+                  opacity-0 translate-x-8 animate-[fade-in_0.5s_ease-out_forwards] h-[80px] flex flex-col justify-between
                 `}
                 style={{ animationDelay: `${index * 300}ms` }}
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <span className="font-bold text-white text-xl">{entry.symbol}</span>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-white text-sm">{entry.symbol}</span>
                     <Badge 
-                      className={`text-sm px-3 py-1 ${
+                      className={`text-xs px-2 py-0.5 ${
                         entry.type === 'buy' 
                           ? 'bg-green-500/20 text-green-400 border-green-500/30' 
                           : 'bg-red-500/20 text-red-400 border-red-500/30'
@@ -251,20 +251,20 @@ const MetaTraderSyncAnimation = () => {
                     >
                       {entry.type.toUpperCase()}
                     </Badge>
-                    <span className="text-sm text-stravesta-lightGray">{entry.time}</span>
+                    <span className="text-xs text-stravesta-lightGray">{entry.time}</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className={`font-bold text-xl ${entry.profit >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                  <div className="flex items-center gap-2">
+                    <span className={`font-bold text-sm ${entry.profit >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                       ${entry.profit}
                     </span>
                     {entry.status === 'complete' && (
-                      <CheckCircle className="h-5 w-5 text-green-500" />
+                      <CheckCircle className="h-4 w-4 text-green-500" />
                     )}
                   </div>
                 </div>
                 
-                <div className="flex items-center justify-between text-sm">
-                  <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-sm px-3 py-1">
+                <div className="flex items-center justify-between text-xs">
+                  <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs px-2 py-0.5">
                     {entry.category}
                   </Badge>
                   <span className="text-stravesta-lightGray">{entry.session}</span>
