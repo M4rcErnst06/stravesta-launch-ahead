@@ -176,8 +176,8 @@ const TradingChartAnimation = () => {
         ctx.strokeStyle = '#1976D2';
         ctx.lineWidth = 1;
         
-        // Arrow positioned much further down with doubled spacing
-        const arrowOffset = 100; // Doubled spacing from candle
+        // Arrow positioned with reduced spacing (removed 1/3)
+        const arrowOffset = 67; // Reduced by 1/3 from 100
         ctx.beginPath();
         ctx.moveTo(entryX, entryY + arrowOffset);
         ctx.lineTo(entryX - 5, entryY + arrowOffset + 10);
