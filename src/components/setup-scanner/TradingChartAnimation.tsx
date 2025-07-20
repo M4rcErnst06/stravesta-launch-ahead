@@ -84,17 +84,7 @@ const TradingChartAnimation = () => {
   const ema20 = calculateEMA(candleData, 5); // Shortened for animation
   const ema50 = calculateEMA(candleData, 8); // Shortened for animation
 
-  // Volume Profile data
-  const volumeProfile: VolumeProfile[] = [
-    { price: 1.0895, volume: 1200 },
-    { price: 1.0910, volume: 1800 },
-    { price: 1.0925, volume: 2200 }, // High volume area
-    { price: 1.0940, volume: 1600 },
-    { price: 1.0955, volume: 1900 },
-    { price: 1.0970, volume: 1400 },
-    { price: 1.0985, volume: 1100 },
-    { price: 1.1000, volume: 1300 },
-  ];
+  // Volume Profile data - REMOVED
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -215,34 +205,7 @@ const TradingChartAnimation = () => {
         }
       }
 
-      // Draw Volume Profile
-      if (animationStep >= 4) {
-        const maxVolume = Math.max(...volumeProfile.map(v => v.volume));
-        const profileWidth = 60;
-        
-        volumeProfile.forEach(level => {
-          const y = priceToY(level.price);
-          const barWidth = (level.volume / maxVolume) * profileWidth;
-          
-          // Volume bar
-          ctx.fillStyle = level.volume === Math.max(...volumeProfile.map(v => v.volume)) 
-            ? 'rgba(255, 107, 53, 0.4)' // Highest volume in orange
-            : 'rgba(23, 230, 200, 0.3)'; // Other volumes in teal
-          ctx.fillRect(chartRight - profileWidth - 10, y - 3, barWidth, 6);
-          
-          // Volume border
-          ctx.strokeStyle = level.volume === Math.max(...volumeProfile.map(v => v.volume)) 
-            ? '#FF6B35' 
-            : '#17E6C8';
-          ctx.lineWidth = 1;
-          ctx.strokeRect(chartRight - profileWidth - 10, y - 3, barWidth, 6);
-        });
-        
-        // Volume profile label
-        ctx.fillStyle = '#FFFFFF';
-        ctx.font = '10px Arial';
-        ctx.fillText('Vol Profile', chartRight - profileWidth - 5, chartTop + 15);
-      }
+      // Draw Volume Profile - REMOVED
 
       // Draw AI pattern recognition
       if (patternDetected && animationStep >= 5) {
@@ -306,40 +269,63 @@ const TradingChartAnimation = () => {
         ctx.setLineDash([]);
       }
 
-      // Draw breakout and entry point
+      // Draw breakout and entry point with TradingView-style arrow
       if (entryExecuted && animationStep >= 9) {
         const entryX = timestampToX(entryPoint.timestamp);
         const entryY = priceToY(entryPoint.price);
 
-        // Breakout arrow
-        ctx.fillStyle = '#00C851';
+        // Entry arrow (blue, pointing up)
+        ctx.fillStyle = '#2196F3';
+        ctx.strokeStyle = '#1976D2';
+        ctx.lineWidth = 2;
+        
+        // Arrow body
         ctx.beginPath();
-        ctx.moveTo(entryX, entryY - 30);
-        ctx.lineTo(entryX - 12, entryY - 45);
-        ctx.lineTo(entryX - 4, entryY - 45);
-        ctx.lineTo(entryX - 4, entryY - 55);
-        ctx.lineTo(entryX + 4, entryY - 55);
-        ctx.lineTo(entryX + 4, entryY - 45);
-        ctx.lineTo(entryX + 12, entryY - 45);
+        ctx.moveTo(entryX, entryY + 15);
+        ctx.lineTo(entryX - 8, entryY + 35);
+        ctx.lineTo(entryX - 4, entryY + 35);
+        ctx.lineTo(entryX - 4, entryY + 50);
+        ctx.lineTo(entryX + 4, entryY + 50);
+        ctx.lineTo(entryX + 4, entryY + 35);
+        ctx.lineTo(entryX + 8, entryY + 35);
         ctx.closePath();
         ctx.fill();
+        ctx.stroke();
 
         // Entry label
-        ctx.fillStyle = '#00C851';
-        ctx.font = 'bold 14px Arial';
-        ctx.fillText('ENTRY EXECUTED', entryX - 50, entryY - 60);
-        ctx.font = '12px Arial';
-        ctx.fillText(entryPoint.price.toFixed(4), entryX - 20, entryY - 20);
+        ctx.fillStyle = '#2196F3';
+        ctx.font = 'bold 12px Arial';
+        ctx.fillText('ENTRY', entryX - 20, entryY + 70);
+        ctx.font = '11px Arial';
+        ctx.fillText(entryPoint.price.toFixed(4), entryX - 20, entryY + 85);
       }
 
-      // Draw target point
+      // Draw target point with TradingView-style arrow
       if (animationStep >= 10) {
         const targetX = timestampToX(targetPoint.timestamp);
         const targetY = priceToY(targetPoint.price);
 
-        // Target line
-        ctx.strokeStyle = '#00C851';
-        ctx.lineWidth = 3;
+        // TP arrow (green, pointing down)
+        ctx.fillStyle = '#4CAF50';
+        ctx.strokeStyle = '#388E3C';
+        ctx.lineWidth = 2;
+        
+        // Arrow body
+        ctx.beginPath();
+        ctx.moveTo(targetX, targetY - 15);
+        ctx.lineTo(targetX - 8, targetY - 35);
+        ctx.lineTo(targetX - 4, targetY - 35);
+        ctx.lineTo(targetX - 4, targetY - 50);
+        ctx.lineTo(targetX + 4, targetY - 50);
+        ctx.lineTo(targetX + 4, targetY - 35);
+        ctx.lineTo(targetX + 8, targetY - 35);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // Target line (dashed)
+        ctx.strokeStyle = '#4CAF50';
+        ctx.lineWidth = 2;
         ctx.setLineDash([6, 6]);
         ctx.beginPath();
         ctx.moveTo(timestampToX(entryPoint.timestamp), priceToY(entryPoint.price));
@@ -348,11 +334,11 @@ const TradingChartAnimation = () => {
         ctx.setLineDash([]);
 
         // Target label
-        ctx.fillStyle = '#00C851';
-        ctx.font = 'bold 14px Arial';
-        ctx.fillText('TARGET HIT', targetX - 40, targetY - 20);
-        ctx.font = '12px Arial';
-        ctx.fillText('+50 PIPS', targetX - 25, targetY - 5);
+        ctx.fillStyle = '#4CAF50';
+        ctx.font = 'bold 12px Arial';
+        ctx.fillText('TP', targetX - 10, targetY - 65);
+        ctx.font = '11px Arial';
+        ctx.fillText('+50 PIPS', targetX - 25, targetY - 52);
       }
 
       // Price labels
@@ -383,19 +369,18 @@ const TradingChartAnimation = () => {
         ctx.fillText('Pattern: Analyzing...', chartRight + 15, chartTop + 180);
         ctx.fillText('EMA 20/50: Bullish', chartRight + 15, chartTop + 195);
         ctx.fillText('Volume: Rising', chartRight + 15, chartTop + 210);
-        ctx.fillText('VP Support: 1.0925', chartRight + 15, chartTop + 225);
-        ctx.fillText('Signal: Strong', chartRight + 15, chartTop + 240);
+        ctx.fillText('Signal: Strong', chartRight + 15, chartTop + 225);
         
         // EMA Legend
         ctx.fillStyle = '#00C851';
-        ctx.fillRect(chartRight + 15, chartTop + 250, 15, 2);
+        ctx.fillRect(chartRight + 15, chartTop + 240, 15, 2);
         ctx.fillStyle = '#FFFFFF';
-        ctx.fillText('EMA 20', chartRight + 35, chartTop + 255);
+        ctx.fillText('EMA 20', chartRight + 35, chartTop + 245);
         
         ctx.fillStyle = '#FF6B35';
-        ctx.fillRect(chartRight + 15, chartTop + 265, 15, 2);
+        ctx.fillRect(chartRight + 15, chartTop + 255, 15, 2);
         ctx.fillStyle = '#FFFFFF';
-        ctx.fillText('EMA 50', chartRight + 35, chartTop + 270);
+        ctx.fillText('EMA 50', chartRight + 35, chartTop + 260);
       }
     };
 
