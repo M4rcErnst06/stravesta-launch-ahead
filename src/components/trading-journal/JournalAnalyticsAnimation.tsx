@@ -2,314 +2,267 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Brain, Sparkles, Radar, Activity, AlertTriangle, CheckCircle, Eye, Zap } from 'lucide-react';
+import { Brain, TrendingUp, TrendingDown, Clock, Target, Zap } from 'lucide-react';
+
+interface TradeEntry {
+  id: string;
+  symbol: string;
+  type: 'long' | 'short';
+  pnl: number;
+  emotion: string;
+  time: string;
+  note: string;
+}
 
 const JournalAnalyticsAnimation = () => {
-  const [currentPhase, setCurrentPhase] = useState(0);
-  const [aiPulse, setAiPulse] = useState(false);
-  const [scanProgress, setScanProgress] = useState(0);
-  const [activeInsights, setActiveInsights] = useState<number[]>([]);
-  const [neuralNetwork, setNeuralNetwork] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [scanningTrade, setScanningTrade] = useState<string | null>(null);
+  const [visibleInsights, setVisibleInsights] = useState<number[]>([]);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-  const insights = [
+  const mockTrades: TradeEntry[] = [
     {
-      icon: <Eye className="h-5 w-5" />,
-      type: "VISION",
-      title: "Chart Pattern Detected",
-      message: "Double Top Formation auf EURUSD erkannt - 87% Bearish Signal",
-      intensity: "high",
-      color: "purple"
+      id: '1',
+      symbol: 'EURUSD',
+      type: 'long',
+      pnl: -45,
+      emotion: 'FOMO',
+      time: '08:30',
+      note: 'Entry zu früh, keine Bestätigung'
     },
     {
-      icon: <Brain className="h-5 w-5" />,
-      type: "NEURAL",
-      title: "Behavioral Analysis", 
-      message: "Trading-Muster zeigt Überconfidence-Bias in Winning Streaks",
-      intensity: "medium",
-      color: "cyan"
+      id: '2',
+      symbol: 'GBPUSD',
+      type: 'short',
+      pnl: 120,
+      emotion: 'Discipline',
+      time: '14:15',
+      note: 'Perfect London breakout'
     },
     {
-      icon: <Radar className="h-5 w-5" />,
-      type: "RADAR",
-      title: "Risk Scanner",
-      message: "Position-Sizing 32% über optimaler Allocation - Reduktion empfohlen",
-      intensity: "high", 
-      color: "orange"
+      id: '3',
+      symbol: 'USDJPY',
+      type: 'long',
+      pnl: -32,
+      emotion: 'Fear',
+      time: '20:45',
+      note: 'Stop Loss zu eng gesetzt'
     },
     {
-      icon: <Sparkles className="h-5 w-5" />,
-      type: "QUANTUM",
-      title: "Future Prediction",
-      message: "70% Wahrscheinlichkeit für Trend-Reversal in nächsten 4H",
-      intensity: "ultra",
-      color: "green"
+      id: '4',
+      symbol: 'EURUSD',
+      type: 'short',
+      pnl: 89,
+      emotion: 'Discipline',
+      time: '15:30',
+      note: 'Fibonacci 0.618 Retracement'
+    }
+  ];
+
+  const aiInsights = [
+    {
+      icon: <Target className="h-4 w-4" />,
+      title: "Pattern erkannt",
+      message: "Ihre besten Trades (89% Winrate) entstehen bei London Session zwischen 14:00-16:00",
+      color: "text-green-400",
+      bgColor: "bg-green-500/10",
+      borderColor: "border-green-500/30"
+    },
+    {
+      icon: <Brain className="h-4 w-4" />,
+      title: "Emotion-Alert",
+      message: "FOMO-Trades haben 73% niedrigere Winrate - warten Sie auf Setup-Bestätigung",
+      color: "text-red-400",
+      bgColor: "bg-red-500/10",
+      borderColor: "border-red-500/30"
+    },
+    {
+      icon: <Zap className="h-4 w-4" />,
+      title: "Optimierung",
+      message: "Stop Loss Optimierung: Bei Breakouts 1.5x ATR statt 1x für bessere RRR",
+      color: "text-stravesta-teal",
+      bgColor: "bg-stravesta-teal/10",
+      borderColor: "border-stravesta-teal/30"
+    },
+    {
+      icon: <Clock className="h-4 w-4" />,
+      title: "Timing-Insight",
+      message: "Fibonacci-Setups: 0.618 Level zeigt 67% höhere Erfolgsrate als 0.5",
+      color: "text-blue-400",
+      bgColor: "bg-blue-500/10",
+      borderColor: "border-blue-500/30"
     }
   ];
 
   useEffect(() => {
-    const sequence = async () => {
-      // Phase 1: Neural Network aktiviert
-      setCurrentPhase(1);
-      setNeuralNetwork(true);
-      await new Promise(resolve => setTimeout(resolve, 2000));
+    const animationSequence = async () => {
+      // Step 1: Show journal
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setCurrentStep(1);
       
-      // Phase 2: AI Scanning beginnt
-      setCurrentPhase(2);
-      setAiPulse(true);
+      // Step 2: Start AI analysis
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      setCurrentStep(2);
+      setIsAnalyzing(true);
       
-      // Scan Progress
-      for (let i = 0; i <= 100; i += 10) {
-        setScanProgress(i);
-        await new Promise(resolve => setTimeout(resolve, 150));
+      // Step 3: Scan each trade
+      for (let i = 0; i < mockTrades.length; i++) {
+        setScanningTrade(mockTrades[i].id);
+        await new Promise(resolve => setTimeout(resolve, 800));
+      }
+      setScanningTrade(null);
+      setIsAnalyzing(false);
+      
+      // Step 4: Show insights one by one
+      setCurrentStep(3);
+      for (let i = 0; i < aiInsights.length; i++) {
+        await new Promise(resolve => setTimeout(resolve, 1200));
+        setVisibleInsights(prev => [...prev, i]);
       }
       
-      // Phase 3: Insights erscheinen
-      setCurrentPhase(3);
-      for (let i = 0; i < insights.length; i++) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setActiveInsights(prev => [...prev, i]);
-      }
-      
-      // Phase 4: Hold für 4 Sekunden
-      await new Promise(resolve => setTimeout(resolve, 4000));
-      
-      // Reset
-      setCurrentPhase(0);
-      setNeuralNetwork(false);
-      setAiPulse(false);
-      setScanProgress(0);
-      setActiveInsights([]);
+      // Reset animation after 5 seconds
+      await new Promise(resolve => setTimeout(resolve, 5000));
+      setCurrentStep(0);
+      setScanningTrade(null);
+      setVisibleInsights([]);
+      setIsAnalyzing(false);
     };
 
-    const interval = setInterval(sequence, 15000);
-    sequence();
+    const interval = setInterval(animationSequence, 12000);
+    animationSequence(); // Start immediately
 
     return () => clearInterval(interval);
   }, []);
 
-  const getIntensityClass = (intensity: string) => {
-    switch (intensity) {
-      case 'ultra': return 'animate-pulse bg-gradient-to-r from-green-500/30 to-emerald-500/30 border-green-400/60';
-      case 'high': return 'bg-gradient-to-r from-red-500/20 to-orange-500/20 border-orange-400/50';
-      case 'medium': return 'bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border-cyan-400/50';
-      default: return 'bg-stravesta-dark/50 border-stravesta-darkGray';
-    }
-  };
-
-  const getColorClass = (color: string) => {
-    switch (color) {
-      case 'purple': return 'text-purple-400';
-      case 'cyan': return 'text-cyan-400';
-      case 'orange': return 'text-orange-400';
-      case 'green': return 'text-green-400';
-      default: return 'text-white';
-    }
-  };
-
   return (
-    <div className="relative max-w-7xl mx-auto">
-      {/* Neural Network Background */}
-      {neuralNetwork && (
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-stravesta-teal rounded-full animate-ping"></div>
-          <div className="absolute top-3/4 right-1/3 w-1 h-1 bg-blue-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
-          <div className="absolute bottom-1/4 left-1/2 w-1.5 h-1.5 bg-purple-400 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute top-1/2 right-1/4 w-1 h-1 bg-green-400 rounded-full animate-ping" style={{ animationDelay: '1.5s' }}></div>
-        </div>
-      )}
-
-      {/* Main Container */}
-      <div className="bg-gradient-to-br from-stravesta-navy/90 to-black/80 backdrop-blur-xl rounded-3xl border border-stravesta-teal/30 overflow-hidden">
-        
-        {/* Header mit AI Brain */}
-        <div className="relative p-8 border-b border-stravesta-teal/20">
-          <div className="flex items-center justify-center">
-            <div className={`relative transition-all duration-1000 ${aiPulse ? 'scale-125' : 'scale-100'}`}>
-              <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal via-blue-500 to-purple-500 rounded-full blur-2xl opacity-40 animate-pulse"></div>
-              <div className="relative bg-gradient-to-r from-stravesta-teal to-blue-500 p-8 rounded-full">
-                <Brain className={`h-16 w-16 text-white transition-all duration-500 ${aiPulse ? 'animate-pulse' : ''}`} />
-              </div>
+    <div className="max-w-6xl mx-auto bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-stravesta-teal/20">
+      <div className="grid lg:grid-cols-2 gap-8">
+        {/* Trading Journal */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="bg-stravesta-teal/20 p-2 rounded-lg">
+              <Brain className="h-6 w-6 text-stravesta-teal" />
             </div>
-          </div>
-          
-          <div className="text-center mt-6">
-            <h3 className="text-3xl font-bold bg-gradient-to-r from-white via-stravesta-teal to-blue-400 bg-clip-text text-transparent mb-2">
-              Quantum AI Neural Scanner
-            </h3>
-            <p className="text-stravesta-lightGray">
-              {currentPhase === 0 && "Initialisierung..."}
-              {currentPhase === 1 && "Neural Network Online"}
-              {currentPhase === 2 && "Deep Pattern Scanning..."}
-              {currentPhase === 3 && "Strategic Insights Generated"}
-            </p>
+            <div>
+              <h3 className="text-xl font-bold text-white">Trading Journal</h3>
+              <p className="text-stravesta-lightGray text-sm">Ihre letzten Trades</p>
+            </div>
+            {isAnalyzing && (
+              <Badge className="ml-auto bg-stravesta-teal/20 text-stravesta-teal border-stravesta-teal/30 animate-pulse">
+                KI analysiert...
+              </Badge>
+            )}
           </div>
 
-          {/* Scan Progress */}
-          {currentPhase === 2 && (
-            <div className="mt-6 max-w-md mx-auto">
-              <div className="flex justify-between text-sm text-stravesta-lightGray mb-2">
-                <span>Scanning Trading Data</span>
-                <span>{scanProgress}%</span>
-              </div>
-              <div className="w-full bg-stravesta-dark rounded-full h-2">
-                <div 
-                  className="bg-gradient-to-r from-stravesta-teal to-blue-500 h-2 rounded-full transition-all duration-300 relative overflow-hidden"
-                  style={{ width: `${scanProgress}%` }}
-                >
-                  <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Content Area */}
-        <div className="p-8">
-          {/* Phase 1: Aktivierung */}
-          {currentPhase === 1 && (
-            <div className="text-center space-y-6 animate-fade-in">
-              <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
-                {[Activity, Radar, Zap].map((Icon, i) => (
-                  <div 
-                    key={i}
-                    className="bg-stravesta-dark/50 rounded-xl p-6 border border-stravesta-teal/20 animate-fade-in"
-                    style={{ animationDelay: `${i * 200}ms` }}
-                  >
-                    <Icon className="h-8 w-8 text-stravesta-teal mx-auto mb-2" />
-                    <div className="text-sm text-stravesta-lightGray">
-                      {i === 0 && "Pattern Engine"}
-                      {i === 1 && "Risk Scanner"}
-                      {i === 2 && "Quantum Predictor"}
+          <div className="space-y-3">
+            {mockTrades.map((trade) => (
+              <Card 
+                key={trade.id}
+                className={`
+                  bg-stravesta-dark/50 border-stravesta-darkGray transition-all duration-500
+                  ${scanningTrade === trade.id ? 'border-stravesta-teal shadow-lg shadow-stravesta-teal/20 scale-105' : ''}
+                  ${currentStep >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+                `}
+                style={{ transitionDelay: `${mockTrades.indexOf(trade) * 200}ms` }}
+              >
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-white">{trade.symbol}</span>
+                      <Badge variant={trade.type === 'long' ? 'default' : 'secondary'} className="text-xs">
+                        {trade.type.toUpperCase()}
+                      </Badge>
+                      <span className="text-xs text-stravesta-lightGray">{trade.time}</span>
+                    </div>
+                    <div className={`font-bold ${trade.pnl >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                      ${trade.pnl}
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Phase 2: Scanning */}
-          {currentPhase === 2 && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-white flex items-center gap-2">
-                    <Eye className="h-5 w-5 text-stravesta-teal" />
-                    Live Chart Analysis
-                  </h4>
-                  <div className="bg-stravesta-dark/30 rounded-lg p-4 border border-stravesta-teal/20">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm text-stravesta-lightGray">EURUSD</span>
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-stravesta-teal rounded-full animate-ping"></div>
-                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-ping" style={{ animationDelay: '0.2s' }}></div>
-                        <div className="w-2 h-2 bg-purple-400 rounded-full animate-ping" style={{ animationDelay: '0.4s' }}></div>
-                      </div>
-                    </div>
-                    <div className="text-2xl font-bold text-white mb-1">1.0847</div>
-                    <div className="text-sm text-red-400">-0.0023 (-0.21%)</div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-stravesta-lightGray">{trade.note}</span>
+                    <Badge 
+                      className={`text-xs ${
+                        trade.emotion === 'Discipline' 
+                          ? 'bg-green-500/20 text-green-400 border-green-500/30' 
+                          : 'bg-red-500/20 text-red-400 border-red-500/30'
+                      }`}
+                    >
+                      {trade.emotion}
+                    </Badge>
                   </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-white flex items-center gap-2">
-                    <Radar className="h-5 w-5 text-orange-400" />
-                    Risk Assessment
-                  </h4>
-                  <div className="bg-stravesta-dark/30 rounded-lg p-4 border border-orange-400/20">
-                    <div className="flex items-center gap-2 mb-2">
-                      <AlertTriangle className="h-4 w-4 text-orange-400" />
-                      <span className="text-sm text-orange-400">High Risk Detected</span>
-                    </div>
-                    <div className="text-sm text-stravesta-lightGray">
-                      Portfolio allocation exceeds recommended limits
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Phase 3: Insights */}
-          {currentPhase === 3 && (
-            <div className="space-y-4">
-              <h4 className="text-xl font-bold text-white text-center mb-6">
-                Strategic AI Insights
-              </h4>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {insights.map((insight, index) => (
-                  <Card 
-                    key={index}
-                    className={`
-                      ${getIntensityClass(insight.intensity)} 
-                      border-2 transition-all duration-1000 transform
-                      ${activeInsights.includes(index) 
-                        ? 'opacity-100 translate-y-0 scale-100' 
-                        : 'opacity-0 translate-y-8 scale-95'
-                      }
-                    `}
-                    style={{ transitionDelay: `${index * 200}ms` }}
-                  >
-                    <CardContent className="p-5">
-                      <div className="flex items-start gap-4">
-                        <div className={`${getColorClass(insight.color)} bg-black/20 p-3 rounded-lg`}>
-                          {insight.icon}
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
-                            <Badge className={`text-xs ${getColorClass(insight.color)} bg-black/30 border-current`}>
-                              {insight.type}
-                            </Badge>
-                            {insight.intensity === 'ultra' && (
-                              <Sparkles className="h-4 w-4 text-yellow-400 animate-pulse" />
-                            )}
-                          </div>
-                          <h5 className={`font-bold ${getColorClass(insight.color)} mb-2`}>
-                            {insight.title}
-                          </h5>
-                          <p className="text-stravesta-lightGray text-sm leading-relaxed">
-                            {insight.message}
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-
-              {/* Final Summary */}
-              {activeInsights.length === insights.length && (
-                <div className="mt-8 text-center animate-fade-in">
-                  <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl p-6 border-2 border-green-400/50">
-                    <CheckCircle className="h-8 w-8 text-green-400 mx-auto mb-3" />
-                    <h4 className="text-xl font-bold text-green-400 mb-2">
-                      Analysis Complete
-                    </h4>
-                    <p className="text-stravesta-lightGray">
-                      4 kritische Insights identifiziert • Implementierung könnte ROI um 42% steigern
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* Status Indicator */}
-        <div className="px-8 pb-6">
-          <div className="flex justify-center space-x-3">
-            {[0, 1, 2, 3].map((phase) => (
-              <div
-                key={phase}
-                className={`h-2 rounded-full transition-all duration-500 ${
-                  currentPhase >= phase 
-                    ? phase === 3 ? 'w-8 bg-green-400' : 'w-6 bg-stravesta-teal' 
-                    : 'w-2 bg-stravesta-darkGray'
-                }`}
-              />
+                  {scanningTrade === trade.id && (
+                    <div className="absolute inset-0 bg-stravesta-teal/10 animate-pulse rounded-lg"></div>
+                  )}
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
+
+        {/* AI Insights */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="bg-gradient-to-r from-stravesta-teal to-blue-500 p-2 rounded-lg">
+              <Brain className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-white">KI-Analyse</h3>
+              <p className="text-stravesta-lightGray text-sm">Strategische Insights</p>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            {aiInsights.map((insight, index) => (
+              <Card 
+                key={index}
+                className={`
+                  ${insight.bgColor} ${insight.borderColor} border-2 transition-all duration-700
+                  ${visibleInsights.includes(index) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}
+                `}
+                style={{ transitionDelay: `${index * 300}ms` }}
+              >
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3">
+                    <div className={`${insight.color} mt-1`}>
+                      {insight.icon}
+                    </div>
+                    <div className="flex-1">
+                      <h4 className={`font-semibold ${insight.color} mb-1`}>
+                        {insight.title}
+                      </h4>
+                      <p className="text-stravesta-lightGray text-sm leading-relaxed">
+                        {insight.message}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+
+            {currentStep >= 3 && visibleInsights.length === aiInsights.length && (
+              <div className="text-center pt-4 animate-fade-in">
+                <div className="bg-gradient-to-r from-stravesta-teal/20 to-blue-500/20 rounded-lg p-4 border border-stravesta-teal/30">
+                  <h4 className="text-white font-semibold mb-2">🎯 Performance-Boost erkannt!</h4>
+                  <p className="text-stravesta-lightGray text-sm">
+                    Mit diesen Optimierungen könnten Sie Ihre Winrate um <span className="text-stravesta-teal font-bold">35%</span> steigern
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Progress Indicator */}
+      <div className="flex justify-center mt-8 space-x-2">
+        {[0, 1, 2, 3].map((step) => (
+          <div
+            key={step}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              currentStep >= step ? 'bg-stravesta-teal' : 'bg-stravesta-darkGray'
+            }`}
+          />
+        ))}
       </div>
     </div>
   );
