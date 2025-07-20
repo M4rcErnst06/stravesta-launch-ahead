@@ -289,7 +289,8 @@ const TradingChartAnimation = () => {
 
   return (
     <div className="relative w-full max-w-4xl mx-auto">
-      <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-lg p-6 border border-stravesta-teal/20" style={{ minHeight: '600px' }}>
+      {/* Chart Container */}
+      <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-t-lg p-6 border border-stravesta-teal/20">
         
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
@@ -331,49 +332,53 @@ const TradingChartAnimation = () => {
         </div>
 
         {/* Chart */}
-        <div style={{ height: '420px', marginBottom: '20px' }}>
+        <div className="relative">
           <canvas 
             ref={canvasRef}
             className="w-full h-auto border border-stravesta-teal/10 rounded"
             style={{ maxWidth: '100%', height: 'auto' }}
           />
         </div>
+      </div>
 
-        {/* Stats */}
-        <div className="mt-6 grid grid-cols-3 gap-4 text-center">
-          <div className="bg-stravesta-dark/50 rounded-lg p-4">
-            <div className={`text-lg font-bold transition-colors ${patternDetected ? 'text-stravesta-teal' : 'text-gray-400'}`}>
-              {patternDetected ? 'Bullish Flag' : 'Analyzing...'}
+      {/* Stats Container - direkt anschließend */}
+      <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-b-lg border-l border-r border-b border-stravesta-teal/20 border-t-0">
+        <div className="p-6 pt-0">
+          <div className="grid grid-cols-3 gap-4 text-center">
+            <div className="bg-stravesta-dark/50 rounded-lg p-4">
+              <div className={`text-lg font-bold transition-colors ${patternDetected ? 'text-stravesta-teal' : 'text-gray-400'}`}>
+                {patternDetected ? 'Bullish Flag' : 'Analyzing...'}
+              </div>
+              <div className="text-stravesta-lightGray text-sm">Pattern</div>
             </div>
-            <div className="text-stravesta-lightGray text-sm">Pattern</div>
-          </div>
-          <div className="bg-stravesta-dark/50 rounded-lg p-4">
-            <div className={`text-lg font-bold transition-colors ${entryExecuted ? 'text-green-400' : alertTriggered ? 'text-yellow-400' : 'text-gray-400'}`}>
-              {entryExecuted ? '1.0965' : alertTriggered ? 'Ready' : 'Waiting'}
+            <div className="bg-stravesta-dark/50 rounded-lg p-4">
+              <div className={`text-lg font-bold transition-colors ${entryExecuted ? 'text-green-400' : alertTriggered ? 'text-yellow-400' : 'text-gray-400'}`}>
+                {entryExecuted ? '1.0965' : alertTriggered ? 'Ready' : 'Waiting'}
+              </div>
+              <div className="text-stravesta-lightGray text-sm">Entry Point</div>
             </div>
-            <div className="text-stravesta-lightGray text-sm">Entry Point</div>
-          </div>
-          <div className="bg-stravesta-dark/50 rounded-lg p-4">
-            <div className={`text-lg font-bold transition-colors ${animationStep >= 10 ? 'text-green-400' : 'text-gray-400'}`}>
-              {animationStep >= 10 ? '+50 Pips' : '+-- Pips'}
+            <div className="bg-stravesta-dark/50 rounded-lg p-4">
+              <div className={`text-lg font-bold transition-colors ${animationStep >= 10 ? 'text-green-400' : 'text-gray-400'}`}>
+                {animationStep >= 10 ? '+50 Pips' : '+-- Pips'}
+              </div>
+              <div className="text-stravesta-lightGray text-sm">Potential</div>
             </div>
-            <div className="text-stravesta-lightGray text-sm">Potential</div>
           </div>
         </div>
+      </div>
 
-        {/* Alert notification */}
-        {alertTriggered && !entryExecuted && (
-          <div className="absolute top-20 right-6 bg-yellow-500/20 border border-yellow-500/50 rounded-lg p-4 animate-pulse">
-            <div className="flex items-center gap-3">
-              <Zap className="h-6 w-6 text-yellow-400" />
-              <div>
-                <div className="text-yellow-400 font-bold">Setup Alert!</div>
-                <div className="text-yellow-300 text-sm">Bullish Flag - Entry imminent</div>
-              </div>
+      {/* Alert notification */}
+      {alertTriggered && !entryExecuted && (
+        <div className="absolute top-20 right-6 bg-yellow-500/20 border border-yellow-500/50 rounded-lg p-4 animate-pulse">
+          <div className="flex items-center gap-3">
+            <Zap className="h-6 w-6 text-yellow-400" />
+            <div>
+              <div className="text-yellow-400 font-bold">Setup Alert!</div>
+              <div className="text-yellow-300 text-sm">Bullish Flag - Entry imminent</div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
