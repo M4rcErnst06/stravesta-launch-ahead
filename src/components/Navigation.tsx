@@ -4,7 +4,6 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   
   const navItems = [
-    { name: 'Home', href: '#home' },
     { name: 'AI Setup Scanner', href: '#setup-scanner' },
     { name: 'AI Trading Journal', href: '#journal-analytics' },
     { name: 'Early Access', href: '#early-access' },
