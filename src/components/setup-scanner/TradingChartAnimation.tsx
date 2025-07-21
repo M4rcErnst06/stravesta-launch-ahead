@@ -93,20 +93,22 @@ const TradingChartAnimation = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Set canvas size
-    canvas.width = 700;
-    canvas.height = 400;
+    // Set canvas size - responsive
+    const isMobile = window.innerWidth < 768;
+    canvas.width = isMobile ? 360 : 700;
+    canvas.height = isMobile ? 280 : 400;
 
     const drawChart = () => {
       // Clear canvas
       ctx.fillStyle = '#0A1929';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Chart boundaries
-      const chartLeft = 80;
-      const chartRight = canvas.width - 120;
-      const chartTop = 50;
-      const chartBottom = canvas.height - 60;
+      // Chart boundaries - responsive
+      const isMobile = window.innerWidth < 768;
+      const chartLeft = isMobile ? 30 : 80;
+      const chartRight = canvas.width - (isMobile ? 30 : 120);
+      const chartTop = isMobile ? 30 : 50;
+      const chartBottom = canvas.height - (isMobile ? 40 : 60);
       const chartWidth = chartRight - chartLeft;
       const chartHeight = chartBottom - chartTop;
 
@@ -140,7 +142,7 @@ const TradingChartAnimation = () => {
         const highY = priceToY(candle.high);
         const lowY = priceToY(candle.low);
 
-        const candleWidth = 16;
+        const candleWidth = isMobile ? 10 : 16;
         const isGreen = candle.close > candle.open;
 
         // Draw wick
@@ -176,8 +178,8 @@ const TradingChartAnimation = () => {
         ctx.strokeStyle = '#1976D2';
         ctx.lineWidth = 1;
         
-        // Arrow positioned with reduced spacing (removed 1/3)
-        const arrowOffset = 67; // Reduced by 1/3 from 100
+        // Arrow positioned with mobile responsiveness
+        const arrowOffset = isMobile ? 40 : 67;
         ctx.beginPath();
         ctx.moveTo(entryX, entryY + arrowOffset);
         ctx.lineTo(entryX - 5, entryY + arrowOffset + 10);
@@ -190,12 +192,12 @@ const TradingChartAnimation = () => {
         ctx.fill();
         ctx.stroke();
 
-        // Entry label with proper spacing for readability
+        // Entry label with mobile responsive text
         ctx.fillStyle = '#2196F3';
-        ctx.font = 'bold 10px Arial';
-        ctx.fillText('ENTRY', entryX - 15, entryY + arrowOffset + 35);
-        ctx.font = '9px Arial';
-        ctx.fillText(entryPoint.price.toFixed(4), entryX - 15, entryY + arrowOffset + 47);
+        ctx.font = isMobile ? 'bold 8px Arial' : 'bold 10px Arial';
+        ctx.fillText('ENTRY', entryX - (isMobile ? 10 : 15), entryY + arrowOffset + (isMobile ? 25 : 35));
+        ctx.font = isMobile ? '7px Arial' : '9px Arial';
+        ctx.fillText(entryPoint.price.toFixed(4), entryX - (isMobile ? 12 : 15), entryY + arrowOffset + (isMobile ? 35 : 47));
       }
 
       // Draw target point with smaller TradingView-style arrow
@@ -231,12 +233,12 @@ const TradingChartAnimation = () => {
         ctx.stroke();
         ctx.setLineDash([]);
 
-        // Smaller target label
+        // Target label with mobile responsiveness
         ctx.fillStyle = '#4CAF50';
-        ctx.font = 'bold 10px Arial';
-        ctx.fillText('TP', targetX - 8, targetY - 40);
-        ctx.font = '9px Arial';
-        ctx.fillText('+50 PIPS', targetX - 18, targetY - 32);
+        ctx.font = isMobile ? 'bold 8px Arial' : 'bold 10px Arial';
+        ctx.fillText('TP', targetX - (isMobile ? 6 : 8), targetY - (isMobile ? 30 : 40));
+        ctx.font = isMobile ? '7px Arial' : '9px Arial';
+        ctx.fillText('+50 PIPS', targetX - (isMobile ? 14 : 18), targetY - (isMobile ? 24 : 32));
       }
 
       // Price labels
@@ -248,8 +250,8 @@ const TradingChartAnimation = () => {
         ctx.fillText(price.toFixed(4), 15, y + 4);
       }
 
-      // AI analysis box
-      if (aiAnalyzing) {
+      // AI analysis box - mobile responsive
+      if (aiAnalyzing && !isMobile) {
         ctx.fillStyle = 'rgba(23, 230, 200, 0.1)';
         ctx.strokeStyle = '#17E6C8';
         ctx.lineWidth = 2;
@@ -267,8 +269,6 @@ const TradingChartAnimation = () => {
         ctx.fillText('Pattern: Analyzing...', chartRight + 15, chartTop + 180);
         ctx.fillText('Volume: Rising', chartRight + 15, chartTop + 210);
         ctx.fillText('Signal: Strong', chartRight + 15, chartTop + 225);
-        
-        // EMA Legend REMOVED
       }
     };
 
@@ -373,25 +373,25 @@ const TradingChartAnimation = () => {
 
       {/* Stats Container - direkt anschließend */}
       <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-b-lg border-l border-r border-b border-stravesta-teal/20">
-        <div className="p-6">
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div className="bg-stravesta-dark/50 rounded-lg p-4">
-              <div className={`text-lg font-bold transition-colors ${patternDetected ? 'text-stravesta-teal' : 'text-gray-400'}`}>
+        <div className="p-3 md:p-6">
+          <div className="grid grid-cols-3 gap-2 md:gap-4 text-center">
+            <div className="bg-stravesta-dark/50 rounded-lg p-2 md:p-4">
+              <div className={`text-sm md:text-lg font-bold transition-colors ${patternDetected ? 'text-stravesta-teal' : 'text-gray-400'}`}>
                 {patternDetected ? 'Bullish Flag' : 'Analyzing...'}
               </div>
-              <div className="text-stravesta-lightGray text-sm">Pattern</div>
+              <div className="text-stravesta-lightGray text-xs md:text-sm">Pattern</div>
             </div>
-            <div className="bg-stravesta-dark/50 rounded-lg p-4">
-              <div className={`text-lg font-bold transition-colors ${entryExecuted ? 'text-green-400' : alertTriggered ? 'text-yellow-400' : 'text-gray-400'}`}>
+            <div className="bg-stravesta-dark/50 rounded-lg p-2 md:p-4">
+              <div className={`text-sm md:text-lg font-bold transition-colors ${entryExecuted ? 'text-green-400' : alertTriggered ? 'text-yellow-400' : 'text-gray-400'}`}>
                 {entryExecuted ? '1.0965' : alertTriggered ? 'Ready' : 'Waiting'}
               </div>
-              <div className="text-stravesta-lightGray text-sm">Entry Point</div>
+              <div className="text-stravesta-lightGray text-xs md:text-sm">Entry Point</div>
             </div>
-            <div className="bg-stravesta-dark/50 rounded-lg p-4">
-              <div className={`text-lg font-bold transition-colors ${animationStep >= 10 ? 'text-green-400' : 'text-gray-400'}`}>
+            <div className="bg-stravesta-dark/50 rounded-lg p-2 md:p-4">
+              <div className={`text-sm md:text-lg font-bold transition-colors ${animationStep >= 10 ? 'text-green-400' : 'text-gray-400'}`}>
                 {animationStep >= 10 ? '+50 Pips' : '+-- Pips'}
               </div>
-              <div className="text-stravesta-lightGray text-sm">Potential</div>
+              <div className="text-stravesta-lightGray text-xs md:text-sm">Potential</div>
             </div>
           </div>
         </div>
