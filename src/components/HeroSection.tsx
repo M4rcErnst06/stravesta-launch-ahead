@@ -37,7 +37,7 @@ const HeroSection = () => {
           </h1>
           
           <p className="text-lg md:text-xl text-stravesta-lightGray mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in-delay">
-            Revolutionize your trading with automatic setup recognition, personalized AI bots and intelligent analysis.
+            Stravesta is for traders and investors who aim higher.
           </p>
 
           {/* CTA Button */}
