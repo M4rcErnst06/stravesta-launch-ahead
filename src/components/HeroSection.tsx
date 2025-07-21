@@ -37,7 +37,7 @@ const HeroSection = () => {
           </h1>
           
           <p className="text-lg md:text-xl text-stravesta-lightGray mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in-delay">
-            Stravesta is for traders and investors who aim higher.
+            Stravesta is for traders and investors who aim higher
           </p>
 
           {/* CTA Button */}
@@ -56,7 +56,7 @@ const HeroSection = () => {
           <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-xl p-6 border border-stravesta-teal/30 max-w-xl mx-auto mb-8 animate-slide-in-up">
             <div className="flex items-center justify-center gap-2 mb-3">
               <Rocket className="h-5 w-5 text-stravesta-teal animate-bounce" />
-              <h3 className="text-lg font-bold text-white">Early Access Active</h3>
+              <h3 className="text-lg font-bold text-white">Early Access Soon Active</h3>
             </div>
             <p className="text-stravesta-lightGray text-sm mb-4">
               Exclusive access to Stravesta with continuous updates and direct developer contact
