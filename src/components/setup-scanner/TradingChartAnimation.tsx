@@ -95,8 +95,8 @@ const TradingChartAnimation = () => {
 
     // Set canvas size - responsive
     const isMobile = window.innerWidth < 768;
-    canvas.width = isMobile ? 360 : 700;
-    canvas.height = isMobile ? 280 : 400;
+    canvas.width = isMobile ? 320 : 700;
+    canvas.height = isMobile ? 240 : 400;
 
     const drawChart = () => {
       // Clear canvas
@@ -105,10 +105,10 @@ const TradingChartAnimation = () => {
 
       // Chart boundaries - responsive
       const isMobile = window.innerWidth < 768;
-      const chartLeft = isMobile ? 30 : 80;
-      const chartRight = canvas.width - (isMobile ? 30 : 120);
-      const chartTop = isMobile ? 30 : 50;
-      const chartBottom = canvas.height - (isMobile ? 40 : 60);
+      const chartLeft = isMobile ? 25 : 80;
+      const chartRight = canvas.width - (isMobile ? 15 : 120);
+      const chartTop = isMobile ? 20 : 50;
+      const chartBottom = canvas.height - (isMobile ? 30 : 60);
       const chartWidth = chartRight - chartLeft;
       const chartHeight = chartBottom - chartTop;
 
@@ -179,25 +179,27 @@ const TradingChartAnimation = () => {
         ctx.lineWidth = 1;
         
         // Arrow positioned with mobile responsiveness
-        const arrowOffset = isMobile ? 40 : 67;
+        const arrowOffset = isMobile ? 25 : 67;
         ctx.beginPath();
         ctx.moveTo(entryX, entryY + arrowOffset);
-        ctx.lineTo(entryX - 5, entryY + arrowOffset + 10);
-        ctx.lineTo(entryX - 3, entryY + arrowOffset + 10);
-        ctx.lineTo(entryX - 3, entryY + arrowOffset + 20);
-        ctx.lineTo(entryX + 3, entryY + arrowOffset + 20);
-        ctx.lineTo(entryX + 3, entryY + arrowOffset + 10);
-        ctx.lineTo(entryX + 5, entryY + arrowOffset + 10);
+        ctx.lineTo(entryX - 4, entryY + arrowOffset + 8);
+        ctx.lineTo(entryX - 2, entryY + arrowOffset + 8);
+        ctx.lineTo(entryX - 2, entryY + arrowOffset + 15);
+        ctx.lineTo(entryX + 2, entryY + arrowOffset + 15);
+        ctx.lineTo(entryX + 2, entryY + arrowOffset + 8);
+        ctx.lineTo(entryX + 4, entryY + arrowOffset + 8);
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
 
-        // Entry label with mobile responsive text
-        ctx.fillStyle = '#2196F3';
-        ctx.font = isMobile ? 'bold 8px Arial' : 'bold 10px Arial';
-        ctx.fillText('ENTRY', entryX - (isMobile ? 10 : 15), entryY + arrowOffset + (isMobile ? 25 : 35));
-        ctx.font = isMobile ? '7px Arial' : '9px Arial';
-        ctx.fillText(entryPoint.price.toFixed(4), entryX - (isMobile ? 12 : 15), entryY + arrowOffset + (isMobile ? 35 : 47));
+        // Entry label with mobile responsive text - only show if space available
+        if (!isMobile || entryY + arrowOffset + 30 < canvas.height) {
+          ctx.fillStyle = '#2196F3';
+          ctx.font = isMobile ? 'bold 7px Arial' : 'bold 10px Arial';
+          ctx.fillText('ENTRY', entryX - (isMobile ? 8 : 15), entryY + arrowOffset + (isMobile ? 20 : 35));
+          ctx.font = isMobile ? '6px Arial' : '9px Arial';
+          ctx.fillText(entryPoint.price.toFixed(4), entryX - (isMobile ? 10 : 15), entryY + arrowOffset + (isMobile ? 28 : 47));
+        }
       }
 
       // Draw target point with smaller TradingView-style arrow
@@ -233,21 +235,24 @@ const TradingChartAnimation = () => {
         ctx.stroke();
         ctx.setLineDash([]);
 
-        // Target label with mobile responsiveness
-        ctx.fillStyle = '#4CAF50';
-        ctx.font = isMobile ? 'bold 8px Arial' : 'bold 10px Arial';
-        ctx.fillText('TP', targetX - (isMobile ? 6 : 8), targetY - (isMobile ? 30 : 40));
-        ctx.font = isMobile ? '7px Arial' : '9px Arial';
-        ctx.fillText('+50 PIPS', targetX - (isMobile ? 14 : 18), targetY - (isMobile ? 24 : 32));
+        // Target label with mobile responsiveness - only show if space available  
+        if (!isMobile || targetY - 35 > 0) {
+          ctx.fillStyle = '#4CAF50';
+          ctx.font = isMobile ? 'bold 7px Arial' : 'bold 10px Arial';
+          ctx.fillText('TP', targetX - (isMobile ? 5 : 8), targetY - (isMobile ? 25 : 40));
+          ctx.font = isMobile ? '6px Arial' : '9px Arial';
+          ctx.fillText('+50 PIPS', targetX - (isMobile ? 12 : 18), targetY - (isMobile ? 20 : 32));
+        }
       }
 
-      // Price labels
+      // Price labels - responsive
       ctx.fillStyle = '#E0E5EB';
-      ctx.font = '11px Arial';
+      ctx.font = isMobile ? '8px Arial' : '11px Arial';
       for (let i = 0; i <= 8; i++) {
         const price = maxPrice - (i * priceRange) / 8;
         const y = chartTop + (i * chartHeight) / 8;
-        ctx.fillText(price.toFixed(4), 15, y + 4);
+        const labelX = isMobile ? 3 : 15;
+        ctx.fillText(price.toFixed(4), labelX, y + 4);
       }
 
       // AI analysis box - mobile responsive
