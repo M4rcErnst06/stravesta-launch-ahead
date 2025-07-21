@@ -52,37 +52,6 @@ const HeroSection = () => {
             </Button>
           </div>
 
-          {/* Early Access Notification */}
-          <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-xl p-6 border border-stravesta-teal/30 max-w-xl mx-auto mb-8 animate-slide-in-up">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <Rocket className="h-5 w-5 text-stravesta-teal animate-bounce" />
-              <h3 className="text-lg font-bold text-white">Early Access Soon Active</h3>
-            </div>
-            <p className="text-stravesta-lightGray text-sm mb-4">
-              Exclusive access to Stravesta with continuous updates and direct developer contact
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button 
-                onClick={handleFeedbackClick}
-                size="sm"
-                className="bg-stravesta-teal text-black font-semibold border-none hover:bg-stravesta-teal/90 hover:scale-105 transition-all duration-300"
-              > 
-                Give Feedback
-              </Button>
-              <Button 
-                onClick={() => scrollToSection('#about')}
-                size="sm"
-                className="bg-stravesta-teal/10 text-stravesta-teal border border-stravesta-teal/30 hover:bg-stravesta-teal/20 hover:scale-105 transition-all duration-300"
-              >
-                Learn More
-              </Button>
-            </div>
-          </div>
-
-          {/* Email Subscription */}
-          <div className="max-w-md mx-auto animate-fade-in-delay-2">
-            <EmailSubscribeForm />
-          </div>
         </div>
       </div>
 
