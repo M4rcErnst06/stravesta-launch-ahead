@@ -7,26 +7,26 @@ const AnalyticsFeatures = () => {
   const analyticsFeatures = [
     {
       icon: <Brain className="h-6 w-6" />,
-      title: "KI-Pattern Erkennung",
-      description: "Automatische Analyse Ihrer Trading-Gewohnheiten und Erfolgspatterns",
+      title: "AI Pattern Recognition",
+      description: "Automatic analysis of your trading habits and success patterns",
       color: "#17E6C8"
     },
     {
       icon: <Target className="h-6 w-6" />,
-      title: "Emotion-Tracking", 
-      description: "Korrelation zwischen Emotionen und Trading-Performance",
+      title: "Emotion Tracking", 
+      description: "Correlation between emotions and trading performance",
       color: "#10B981"
     },
     {
       icon: <Zap className="h-6 w-6" />,
-      title: "Performance-Optimierung",
-      description: "Konkrete Handlungsempfehlungen zur Verbesserung Ihrer Ergebnisse",
+      title: "Performance Optimization",
+      description: "Concrete action recommendations to improve your results",
       color: "#F59E0B"
     },
     {
       icon: <BarChart3 className="h-6 w-6" />,
       title: "Predictive Analytics",
-      description: "KI-basierte Vorhersagen für zukünftige Trading-Entscheidungen",
+      description: "AI-based predictions for future trading decisions",
       color: "#8B5CF6"
     }
   ];
@@ -35,10 +35,10 @@ const AnalyticsFeatures = () => {
     <div className="mb-16" data-animate>
       <div className="text-center mb-12">
         <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-          Intelligente Journal-Analyse
+          Intelligent Journal Analysis
         </h3>
         <p className="text-lg text-stravesta-lightGray max-w-2xl mx-auto">
-          Unsere KI erkennt Patterns in Ihren Trades, die für das menschliche Auge unsichtbar sind.
+          Our AI recognizes patterns in your trades that are invisible to the human eye.
         </p>
       </div>
 

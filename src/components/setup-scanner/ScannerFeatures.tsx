@@ -7,20 +7,20 @@ const ScannerFeatures = () => {
   const scannerFeatures = [
     {
       icon: <Brain className="h-6 w-6" />,
-      title: "KI-basierte Erkennung",
-      description: "Automatische Identifikation von Fibonacci-Retracements, Support/Resistance und Chart-Patterns",
+      title: "AI-based Recognition",
+      description: "Automatic identification of Fibonacci retracements, support/resistance and chart patterns",
       color: "#17E6C8"
     },
     {
       icon: <Zap className="h-6 w-6" />,
-      title: "Echtzeit-Alerts",
-      description: "Sofortige Benachrichtigungen wenn Ihr Setup sich entwickelt - per App, E-Mail oder SMS",
+      title: "Real-time Alerts",
+      description: "Instant notifications when your setup develops - via app, email or SMS",
       color: "#FFB800"
     },
     {
       icon: <Target className="h-6 w-6" />,
-      title: "Präzise Entry-Points",
-      description: "Exakte Ein- und Ausstiegspunkte basierend auf technischer Analyse und Marktstruktur",
+      title: "Precise Entry Points",
+      description: "Exact entry and exit points based on technical analysis and market structure",
       color: "#00C851"
     }
   ];
@@ -29,11 +29,11 @@ const ScannerFeatures = () => {
     <div className="mb-16" data-animate>
       <div className="text-center mb-12">
         <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-          Intelligente Setup-Erkennung
+          Intelligent Setup Recognition
         </h3>
         <p className="text-lg text-stravesta-lightGray max-w-2xl mx-auto">
-          Unsere KI analysiert kontinuierlich die Märkte und erkennt profitable Trading-Setups 
-          basierend auf Ihrer individuellen Strategie.
+          Our AI continuously analyzes the markets and recognizes profitable trading setups 
+          based on your individual strategy.
         </p>
       </div>
 

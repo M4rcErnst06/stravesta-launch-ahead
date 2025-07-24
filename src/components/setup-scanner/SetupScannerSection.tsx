@@ -9,20 +9,20 @@ const SetupScannerSection = () => {
   const features = [
     {
       icon: <Brain className="h-8 w-8" />,
-      title: "KI-Powered Erkennung",
-      description: "Automatische Identifikation von Chart-Patterns und Setup-Formationen",
+      title: "AI-Powered Recognition",
+      description: "Automatic identification of chart patterns and setup formations",
       color: "from-blue-500 to-cyan-500"
     },
     {
       icon: <Zap className="h-8 w-8" />,
-      title: "Echtzeit-Alerts",
-      description: "Sofortige Benachrichtigungen bei entstehenden Trading-Gelegenheiten",
+      title: "Real-time Alerts",
+      description: "Instant notifications when trading opportunities emerge",
       color: "from-purple-500 to-pink-500"
     },
     {
       icon: <Target className="h-8 w-8" />,
-      title: "Präzise Entry-Points",
-      description: "Exakte Ein- und Ausstiegspunkte für maximale Profitabilität",
+      title: "Precise Entry Points",
+      description: "Exact entry and exit points for maximum profitability",
       color: "from-green-500 to-emerald-500"
     }
   ];
@@ -39,11 +39,11 @@ const SetupScannerSection = () => {
           </div>
           
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient">
-            KI Setup Scanner
+            AI Setup Scanner
           </h2>
           <p className="text-xl text-stravesta-lightGray max-w-3xl mx-auto mb-8">
-            Verpassen Sie nie wieder profitable Trading-Setups. Unsere KI überwacht die Märkte 24/7 
-            und erkennt automatisch Ihre individuellen Trading-Strategien.
+            Never miss profitable trading setups again. Our AI monitors the markets 24/7 
+            and automatically recognizes your individual trading strategies.
           </p>
           
         </div>
@@ -57,25 +57,25 @@ const SetupScannerSection = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-red-300">
                   <AlertCircle className="h-6 w-6" />
-                  Das Problem
+                  The Problem
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <h3 className="text-lg font-semibold text-white mb-3">
-                  Warum Trader Geld verlieren
+                  Why Traders Lose Money
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-stravesta-lightGray">Viele profitable Setups werden übersehen</span>
+                    <span className="text-stravesta-lightGray">Many profitable setups are overlooked</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-stravesta-lightGray">Emotionale Entscheidungen führen zu Verlusten</span>
+                    <span className="text-stravesta-lightGray">Emotional decisions lead to losses</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-stravesta-lightGray">Inkonsistente Ausführung der Strategie</span>
+                    <span className="text-stravesta-lightGray">Inconsistent strategy execution</span>
                   </div>
                 </div>
               </CardContent>
@@ -87,25 +87,25 @@ const SetupScannerSection = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-green-300">
                   <CheckCircle2 className="h-6 w-6" />
-                  Die Lösung
+                  The Solution
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <h3 className="text-lg font-semibold text-white mb-3">
-                  Stravesta KI Setup Scanner
+                  Stravesta AI Setup Scanner
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-stravesta-lightGray">Alle Setups werden erfasst und analysiert</span>
+                    <span className="text-stravesta-lightGray">All setups are captured and analyzed</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-stravesta-lightGray">Systematischer, emotionsfreier Ansatz</span>
+                    <span className="text-stravesta-lightGray">Systematic, emotion-free approach</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-stravesta-lightGray">Konsistente Performance durch KI-Unterstützung</span>
+                    <span className="text-stravesta-lightGray">Consistent performance through AI support</span>
                   </div>
                 </div>
               </CardContent>
@@ -117,10 +117,10 @@ const SetupScannerSection = () => {
         <div className="mb-20" data-animate>
           <div className="text-center mb-8">
             <h3 className="text-2xl font-bold text-white mb-4">
-              Sehen Sie die KI in Aktion
+              See the AI in Action
             </h3>
             <p className="text-stravesta-lightGray max-w-2xl mx-auto">
-              Diese Animation zeigt, wie unsere KI profitable Setups in Echtzeit erkennt und Sie sofort benachrichtigt
+              This animation shows how our AI recognizes profitable setups in real-time and notifies you instantly
             </p>
           </div>
           <div className="relative">
@@ -137,10 +137,10 @@ const SetupScannerSection = () => {
         <div className="mb-16" data-animate>
           <div className="text-center mb-12">
             <h3 className="text-3xl font-bold text-white mb-4">
-              Intelligente Trading-Unterstützung
+              Intelligent Trading Support
             </h3>
             <p className="text-lg text-stravesta-lightGray max-w-2xl mx-auto">
-              Drei Kern-Features, die Ihr Trading revolutionieren werden
+              Three core features that will revolutionize your trading
             </p>
           </div>
 
@@ -172,13 +172,13 @@ const SetupScannerSection = () => {
         <div className="text-center" data-animate>
           <div className="bg-gradient-to-r from-stravesta-teal/10 to-blue-500/10 rounded-2xl p-8 border border-stravesta-teal/30">
             <h3 className="text-2xl font-bold text-white mb-4">
-              Bereit für professionelles Trading?
+              Ready for Professional Trading?
             </h3>
             <p className="text-stravesta-lightGray mb-6 max-w-2xl mx-auto">
-              Schließen Sie sich über 10.000 Tradern an, die bereits mit Stravesta erfolgreich handeln.
+              Join over 10,000 traders who are already trading successfully with Stravesta.
             </p>
             <Badge className="bg-stravesta-teal text-stravesta-dark font-semibold px-6 py-2">
-              Früher Zugang sichern
+              Secure Early Access
             </Badge>
           </div>
         </div>

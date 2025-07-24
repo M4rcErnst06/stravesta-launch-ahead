@@ -8,11 +8,11 @@ const AnalyticsProblemComparison = () => {
     <div className="mb-16" data-animate>
       <div className="text-center mb-12">
         <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-          Das Problem: Oberflächliche Selbstanalyse
+          The Problem: Superficial Self-Analysis
         </h3>
         <p className="text-lg text-stravesta-lightGray max-w-2xl mx-auto">
-          Die meisten Trader analysieren ihre Trades nur oberflächlich und verpassen 
-          wichtige Patterns, die den Unterschied zwischen Gewinn und Verlust ausmachen.
+          Most traders analyze their trades only superficially and miss 
+          important patterns that make the difference between profit and loss.
         </p>
       </div>
 
@@ -21,26 +21,26 @@ const AnalyticsProblemComparison = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-white">
               <Target className="h-5 w-5 text-red-400" />
-              Ohne KI-Analyse
+              Without AI Analysis
             </CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
               <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0"></div>
-                Vage Notizen ohne Erkenntnisse
+                Vague notes without insights
               </li>
               <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0"></div>
-                Wiederholung derselben Fehler
+                Repeating the same mistakes
               </li>
               <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0"></div>
-                Keine strategische Optimierung
+                No strategic optimization
               </li>
               <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0"></div>
-                Emotionale Entscheidungen
+                Emotional decisions
               </li>
             </ul>
           </CardContent>
@@ -50,26 +50,26 @@ const AnalyticsProblemComparison = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-white">
               <Brain className="h-5 w-5 text-green-400" />
-              Mit Stravesta KI
+              With Stravesta AI
             </CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
               <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0"></div>
-                Tiefe Pattern-Erkennung
+                Deep pattern recognition
               </li>
               <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0"></div>
-                Konkrete Handlungsempfehlungen
+                Concrete action recommendations
               </li>
               <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0"></div>
-                Kontinuierliche Optimierung
+                Continuous optimization
               </li>
               <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0"></div>
-                Emotionale Kontrolle
+                Emotional control
               </li>
             </ul>
           </CardContent>

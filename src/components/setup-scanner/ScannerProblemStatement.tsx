@@ -7,24 +7,24 @@ const ScannerProblemStatement = () => {
   const tradingScenarios = [
     {
       icon: <AlertCircle className="h-5 w-5 text-red-400" />,
-      title: "Ohne Stravesta",
+      title: "Without Stravesta",
       points: [
-        "Setups werden übersehen",
-        "Emotionale Entscheidungen",
-        "Verpasste Gelegenheiten",
-        "Inkonsistente Ergebnisse"
+        "Setups are missed",
+        "Emotional decisions",
+        "Missed opportunities",
+        "Inconsistent results"
       ],
       bgColor: "bg-red-500/10",
       borderColor: "border-red-500/30"
     },
     {
       icon: <CheckCircle className="h-5 w-5 text-green-400" />,
-      title: "Mit Stravesta",
+      title: "With Stravesta",
       points: [
-        "Alle Setups erfasst",
-        "Systematischer Ansatz",
-        "Keine verpassten Trades",
-        "Konsistente Performance"
+        "All setups captured",
+        "Systematic approach",
+        "No missed trades",
+        "Consistent performance"
       ],
       bgColor: "bg-green-500/10",
       borderColor: "border-green-500/30"
@@ -35,11 +35,11 @@ const ScannerProblemStatement = () => {
     <div className="mb-16" data-animate>
       <div className="text-center mb-12">
         <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-          Das Problem: Verpasste Gelegenheiten
+          The Problem: Missed Opportunities
         </h3>
         <p className="text-lg text-stravesta-lightGray max-w-2xl mx-auto">
-          Studien zeigen: Durchschnittliche Trader verpassen 67% aller profitablen Setups, 
-          weil sie nicht permanent die Charts überwachen können.
+          Studies show: Average traders miss 67% of all profitable setups 
+          because they cannot permanently monitor the charts.
         </p>
       </div>
 
