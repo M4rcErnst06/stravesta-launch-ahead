@@ -22,12 +22,12 @@ const TradeAnalyticsSection = () => {
                 <Download className="h-8 w-8 text-blue-400" />
               </div>
               <h3 className="text-2xl font-bold text-white">
-                Automatische MetaTrader Integration
+                Automatic MetaTrader Integration
               </h3>
             </div>
             <p className="text-stravesta-lightGray max-w-2xl mx-auto">
-              Sehen Sie live, wie Ihre MetaTrader Trades automatisch ins Stravesta Journal 
-              synchronisiert und von unserer KI analysiert werden
+              See live how your MetaTrader trades are automatically synchronized to the Stravesta Journal 
+              and analyzed by our AI
             </p>
           </div>
           <div style={{ minHeight: '600px' }}>
@@ -39,10 +39,10 @@ const TradeAnalyticsSection = () => {
         <div className="mb-20" data-animate>
           <div className="text-center mb-8">
             <h3 className="text-2xl font-bold text-white mb-2">
-              KI-Analyse in Aktion
+              AI Analysis in Action
             </h3>
             <p className="text-stravesta-lightGray">
-              Live-Demo: Wie unsere KI Ihr Trading Journal analysiert und strategische Insights liefert
+              Live Demo: How our AI analyzes your Trading Journal and delivers strategic insights
             </p>
           </div>
           <div style={{ minHeight: '500px' }}>

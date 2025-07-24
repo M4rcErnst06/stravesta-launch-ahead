@@ -12,14 +12,14 @@ const AnalyticsHeader = () => {
         </div>
       </div>
       <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">
-        KI Trading Journal Analytics
+        AI Trading Journal Analytics
       </h2>
       <p className="text-xl text-stravesta-lightGray max-w-3xl mx-auto mb-4">
-        Lassen Sie KI Ihre Trading-Performance analysieren und optimieren
+        Let AI analyze and optimize your trading performance
       </p>
       <div className="flex justify-center gap-2">
         <Badge className="bg-stravesta-teal/20 text-stravesta-teal border-stravesta-teal/30">
-          KI-Powered
+          AI-Powered
         </Badge>
         <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
           Predictive Analytics
