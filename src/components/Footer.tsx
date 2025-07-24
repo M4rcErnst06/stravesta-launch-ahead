@@ -6,7 +6,6 @@ const Footer = () => {
   const socialLinks = [
     { icon: <Instagram className="h-5 w-5" />, href: "https://www.instagram.com/stravesta_official", label: "Instagram" },
     { icon: <Linkedin className="h-5 w-5" />, href: "https://www.linkedin.com/company/stravesta/", label: "LinkedIn" },
-    { icon: <Mail className="h-5 w-5" />, href: "mailto:contact@stravesta.com", label: "E-Mail" },
   ];
 
   return (
