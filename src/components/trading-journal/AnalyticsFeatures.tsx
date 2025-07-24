@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Brain, Zap, Target, BarChart3 } from 'lucide-react';
+import { Brain, TrendingUp, Target, BarChart3 } from 'lucide-react';
 
 const AnalyticsFeatures = () => {
   const analyticsFeatures = [
@@ -18,7 +18,7 @@ const AnalyticsFeatures = () => {
       color: "#10B981"
     },
     {
-      icon: <Zap className="h-6 w-6" />,
+      icon: <TrendingUp className="h-6 w-6" />,
       title: "Performance Optimization",
       description: "Concrete action recommendations to improve your results",
       color: "#F59E0B"
