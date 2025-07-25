@@ -9,21 +9,24 @@ const SetupScannerSection = () => {
   const features = [
     {
       icon: <Brain className="h-8 w-8" />,
-      title: "AI-Powered Recognition",
+      title: "AI-Powered Recognition", 
       description: "Automatic identification of chart patterns and setup formations",
-      color: "from-stravesta-teal to-stravesta-teal"
+      color: "from-stravesta-teal/20 to-stravesta-teal/20",
+      iconColor: "#17E6C8"
     },
     {
       icon: <Zap className="h-8 w-8" />,
       title: "Real-time Alerts",
-      description: "Instant notifications when trading opportunities emerge",
-      color: "from-stravesta-teal to-stravesta-teal"
+      description: "Instant notifications when trading opportunities emerge", 
+      color: "from-stravesta-teal/20 to-stravesta-teal/20",
+      iconColor: "#17E6C8"
     },
     {
       icon: <Target className="h-8 w-8" />,
       title: "Precise Entry Points",
       description: "Exact entry and exit points for maximum profitability",
-      color: "from-stravesta-teal to-stravesta-teal"
+      color: "from-stravesta-teal/20 to-stravesta-teal/20", 
+      iconColor: "#17E6C8"
     }
   ];
 
@@ -153,8 +156,13 @@ const SetupScannerSection = () => {
                 <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
                 
                 <CardHeader className="relative z-10 text-center">
-                  <div className={`w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br ${feature.color} flex items-center justify-center text-white`}>
-                    {feature.icon}
+                  <div 
+                    className={`w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br ${feature.color} flex items-center justify-center`}
+                    style={{ backgroundColor: `${feature.iconColor}20` }}
+                  >
+                    <div style={{ color: feature.iconColor }}>
+                      {feature.icon}
+                    </div>
                   </div>
                   <CardTitle className="text-xl text-white mb-2">
                     {feature.title}
