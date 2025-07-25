@@ -1,7 +1,10 @@
 
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
   
   const navItems = [
     { name: 'AI Setup Scanner', href: '#setup-scanner' },
@@ -19,6 +22,16 @@ const Navigation = () => {
     }
   };
 
+  const handleLogoClick = () => {
+    if (location.pathname === '/') {
+      // If we're on the homepage, scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // If we're on any other page, navigate to homepage
+      navigate('/');
+    }
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-stravesta-dark/95 backdrop-blur-md border-b border-stravesta-teal/20">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
@@ -26,7 +39,7 @@ const Navigation = () => {
           {/* Logo Section - Logo links vom Text */}
           <div className="flex items-center -ml-4">
             <button 
-              onClick={() => scrollToSection('#home')} 
+              onClick={handleLogoClick} 
               className="flex items-center space-x-2 hover:opacity-80 transition-opacity duration-200"
             >
               <div className="w-12 h-12 flex items-center justify-center">
