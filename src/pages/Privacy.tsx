@@ -182,7 +182,7 @@ const Privacy = () => {
                 </p>
                 <div className="bg-stravesta-dark/50 rounded-lg p-4 mt-4">
                   <p className="text-white font-semibold">Stravesta</p>
-                  <p className="text-stravesta-lightGray">Email: privacy@stravesta.com</p>
+                  <p className="text-stravesta-lightGray">Email: contact@stravesta.com</p>
                   <p className="text-stravesta-lightGray">Website: www.stravesta.com</p>
                 </div>
               </section>
