@@ -15,19 +15,19 @@ const AnalyticsFeatures = () => {
       icon: <Target className="h-6 w-6" />,
       title: "Emotion Tracking", 
       description: "Correlation between emotions and trading performance",
-      color: "#10B981"
+      color: "#17E6C8"
     },
     {
       icon: <TrendingUp className="h-6 w-6" />,
       title: "Performance Optimization",
       description: "Concrete action recommendations to improve your results",
-      color: "#F59E0B"
+      color: "#17E6C8"
     },
     {
       icon: <BarChart3 className="h-6 w-6" />,
       title: "Predictive Analytics",
       description: "AI-based predictions for future trading decisions",
-      color: "#8B5CF6"
+      color: "#17E6C8"
     }
   ];
 
