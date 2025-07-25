@@ -44,7 +44,7 @@ const Imprint = () => {
                       <h4 className="text-lg font-semibold text-white mb-2">Contact Details</h4>
                       <p className="text-stravesta-lightGray">
                         <strong>Phone:</strong> [Phone Number]<br/>
-                        <strong>Email:</strong> info@stravesta.com<br/>
+                        <strong>Email:</strong> contact@stravesta.com<br/>
                         <strong>Website:</strong> www.stravesta.com
                       </p>
                     </div>
@@ -68,7 +68,7 @@ const Imprint = () => {
                 <div className="bg-stravesta-dark/50 rounded-lg p-6">
                   <p className="text-stravesta-lightGray">
                     <strong>Managing Director:</strong> [Name]<br/>
-                    <strong>Email:</strong> legal@stravesta.com
+                    <strong>Email:</strong> contact@stravesta.com
                   </p>
                 </div>
               </section>
@@ -131,7 +131,7 @@ const Imprint = () => {
                 <div className="bg-stravesta-dark/50 rounded-lg p-6">
                   <p className="text-stravesta-lightGray">
                     For data protection inquiries, please contact our Data Protection Officer:<br/>
-                    <strong>Email:</strong> dpo@stravesta.com<br/>
+                    <strong>Email:</strong> contact@stravesta.com<br/>
                     <strong>Address:</strong> [DPO Address if different from company address]
                   </p>
                 </div>

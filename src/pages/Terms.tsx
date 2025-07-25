@@ -286,8 +286,8 @@ const Terms = () => {
                 <div className="bg-stravesta-dark/50 rounded-lg p-6">
                   <p className="text-white font-semibold mb-2">Stravesta Support</p>
                   <p className="text-stravesta-lightGray">
-                    <strong>Email:</strong> support@stravesta.com<br/>
-                    <strong>Legal:</strong> legal@stravesta.com<br/>
+                    <strong>Email:</strong> contact@stravesta.com<br/>
+                    <strong>Legal:</strong> contact@stravesta.com<br/>
                     <strong>Website:</strong> www.stravesta.com
                   </p>
                 </div>
