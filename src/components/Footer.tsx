@@ -43,13 +43,13 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-stravesta-lightGray">
             <p>&copy; 2024 Stravesta. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="hover:text-stravesta-teal transition-colors duration-200">
+              <a href="/privacy" className="hover:text-stravesta-teal transition-colors duration-200">
                 Privacy
               </a>
-              <a href="#" className="hover:text-stravesta-teal transition-colors duration-200">
+              <a href="/imprint" className="hover:text-stravesta-teal transition-colors duration-200">
                 Imprint
               </a>
-              <a href="#" className="hover:text-stravesta-teal transition-colors duration-200">
+              <a href="/terms" className="hover:text-stravesta-teal transition-colors duration-200">
                 Terms
               </a>
             </div>

@@ -11,6 +11,9 @@ import AIFeatures from "./pages/AIFeatures";
 import AnalysisFeatures from "./pages/AnalysisFeatures";
 import About from "./pages/About";
 import Roadmap from "./pages/Roadmap";
+import Privacy from "./pages/Privacy";
+import Imprint from "./pages/Imprint";
+import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +31,9 @@ const App = () => (
           <Route path="/analysis-features" element={<AnalysisFeatures />} />
           <Route path="/about" element={<About />} />
           <Route path="/roadmap" element={<Roadmap />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/imprint" element={<Imprint />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
