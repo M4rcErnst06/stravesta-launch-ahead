@@ -11,19 +11,19 @@ const SetupScannerSection = () => {
       icon: <Brain className="h-8 w-8" />,
       title: "AI-Powered Recognition",
       description: "Automatic identification of chart patterns and setup formations",
-      color: "from-blue-500 to-cyan-500"
+      color: "from-stravesta-teal to-stravesta-teal"
     },
     {
       icon: <Zap className="h-8 w-8" />,
       title: "Real-time Alerts",
       description: "Instant notifications when trading opportunities emerge",
-      color: "from-purple-500 to-pink-500"
+      color: "from-stravesta-teal to-stravesta-teal"
     },
     {
       icon: <Target className="h-8 w-8" />,
       title: "Precise Entry Points",
       description: "Exact entry and exit points for maximum profitability",
-      color: "from-green-500 to-emerald-500"
+      color: "from-stravesta-teal to-stravesta-teal"
     }
   ];
 
@@ -168,20 +168,6 @@ const SetupScannerSection = () => {
           </div>
         </div>
 
-        {/* CTA Section */}
-        <div className="text-center" data-animate>
-          <div className="bg-gradient-to-r from-stravesta-teal/10 to-blue-500/10 rounded-2xl p-8 border border-stravesta-teal/30">
-            <h3 className="text-2xl font-bold text-white mb-4">
-              Ready for Professional Trading?
-            </h3>
-            <p className="text-stravesta-lightGray mb-6 max-w-2xl mx-auto">
-              Join over 10,000 traders who are already trading successfully with Stravesta.
-            </p>
-            <Badge className="bg-stravesta-teal text-stravesta-dark font-semibold px-6 py-2">
-              Secure Early Access
-            </Badge>
-          </div>
-        </div>
       </div>
     </section>
   );
