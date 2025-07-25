@@ -367,11 +367,11 @@ const TradingChartAnimation = () => {
         </div>
 
         {/* Chart */}
-        <div className="relative">
+        <div className="relative flex justify-center">
           <canvas 
             ref={canvasRef}
-            className="w-full h-auto border border-stravesta-teal/10 rounded"
-            style={{ maxWidth: '100%', height: 'auto' }}
+            className="border border-stravesta-teal/10 rounded"
+            style={{ width: '700px', height: '400px', maxWidth: '100%' }}
           />
         </div>
       </div>
