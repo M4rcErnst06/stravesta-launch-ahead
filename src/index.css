@@ -70,16 +70,17 @@
 
 /* Custom Stravesta Theme Colors */
 :root {
-  --stravesta-dark: #0A0A0B;
-  --stravesta-navy: #1A1A2E;
-  --stravesta-teal: #00F5D4;
-  --stravesta-darkGray: #1F1F23;
-  --stravesta-lightGray: #B0B0B8;
+  --stravesta-dark: #0D1421;
+  --stravesta-navy: #162536;
+  --stravesta-teal: #4FC3F7;
+  --stravesta-blue: #29B6F6;
+  --stravesta-darkGray: #1A2332;
+  --stravesta-lightGray: #A3B4C7;
 }
 
 /* Gradient Text - completely redesigned to prevent text clipping */
 .text-gradient {
-  background: linear-gradient(135deg, #00F5D4 0%, #00D4F5 100%);
+  background: linear-gradient(135deg, #4FC3F7 0%, #29B6F6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
