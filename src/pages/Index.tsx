@@ -181,8 +181,8 @@ const IndexContent = () => {
                 
                 <div className="space-y-4">
                   <div>
-                    <h3 className="text-2xl font-bold text-white mb-1">[Name]</h3>
-                    <p className="text-stravesta-teal font-semibold text-lg">Position</p>
+                    <h3 className="text-2xl font-bold text-white mb-1">Gabriel Suter</h3>
+                    <p className="text-stravesta-teal font-semibold text-lg">Founder & CEO</p>
                   </div>
                   
                   <p className="text-stravesta-lightGray leading-relaxed max-w-sm mx-auto">
@@ -228,8 +228,8 @@ const IndexContent = () => {
                 
                 <div className="space-y-4">
                   <div>
-                    <h3 className="text-2xl font-bold text-white mb-1">[Name]</h3>
-                    <p className="text-stravesta-teal font-semibold text-lg">Position</p>
+                    <h3 className="text-2xl font-bold text-white mb-1">Marc Ernst</h3>
+                    <p className="text-stravesta-teal font-semibold text-lg">Co-Founder</p>
                   </div>
                   
                   <p className="text-stravesta-lightGray leading-relaxed max-w-sm mx-auto">
