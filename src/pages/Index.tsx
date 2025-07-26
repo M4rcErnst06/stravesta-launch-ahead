@@ -218,7 +218,7 @@ const IndexContent = () => {
                      <img 
                        src="/lovable-uploads/07991bd6-28dc-4eeb-944c-a1db9d21a001.png" 
                        alt="Marc Ernst"
-                       className="w-full h-full object-cover"
+                       className="w-full h-full object-cover object-center"
                      />
                   </div>
                 </div>
