@@ -201,15 +201,12 @@ const IndexContent = () => {
                       </svg>
                       <span className="text-stravesta-teal text-sm font-medium">LinkedIn</span>
                     </a>
-                    <a 
-                      href="mailto:gabriel@stravesta.com" 
-                      className="flex items-center space-x-2 bg-stravesta-blue/10 hover:bg-stravesta-blue/20 border border-stravesta-blue/30 rounded-lg px-4 py-2 transition-all duration-300 group"
-                    >
-                      <svg className="h-4 w-4 text-stravesta-blue group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center space-x-2 bg-stravesta-blue/10 border border-stravesta-blue/30 rounded-lg px-4 py-2">
+                      <svg className="h-4 w-4 text-stravesta-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
-                      <span className="text-stravesta-blue text-sm font-medium">Contact</span>
-                    </a>
+                      <span className="text-stravesta-blue text-sm font-medium">Contact: gabriel@stravesta.com</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -248,15 +245,12 @@ const IndexContent = () => {
                       </svg>
                       <span className="text-stravesta-teal text-sm font-medium">LinkedIn</span>
                     </a>
-                    <a 
-                      href="mailto:marc@stravesta.com" 
-                      className="flex items-center space-x-2 bg-stravesta-blue/10 hover:bg-stravesta-blue/20 border border-stravesta-blue/30 rounded-lg px-4 py-2 transition-all duration-300 group"
-                    >
-                      <svg className="h-4 w-4 text-stravesta-blue group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2v10a2 2 0 002 2z" />
+                    <div className="flex items-center space-x-2 bg-stravesta-blue/10 border border-stravesta-blue/30 rounded-lg px-4 py-2">
+                      <svg className="h-4 w-4 text-stravesta-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
-                      <span className="text-stravesta-blue text-sm font-medium">Contact</span>
-                    </a>
+                      <span className="text-stravesta-blue text-sm font-medium">Contact: marc@stravesta.com</span>
+                    </div>
                   </div>
                 </div>
               </div>
