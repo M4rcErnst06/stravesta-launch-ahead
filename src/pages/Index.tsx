@@ -114,7 +114,127 @@ const IndexContent = () => {
           </section>
         )}
 
-        {/* About Section - Light Navy Background */}
+        {/* About Us Section - Light Navy Background */}
+        <section id="about-us" className="py-20 scroll-mt-20 bg-stravesta-navy/30 relative">
+          <div className="absolute inset-0">
+            <div className="absolute top-10 left-10 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-10 right-10 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>
+          </div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-4xl mx-auto text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
+                About Us
+              </h2>
+              <div className="text-lg text-stravesta-lightGray space-y-6">
+                <p className="opacity-0 translate-y-8 transition-all duration-700 delay-200" data-animate>
+                  Meet the team behind Stravesta - united expertise in trading, technology and AI.
+                </p>
+                <p className="opacity-0 translate-y-8 transition-all duration-700 delay-400" data-animate>
+                  We combine years of trading experience with cutting-edge artificial intelligence to revolutionize the way traders approach the markets.
+                </p>
+              </div>
+            </div>
+            
+            {/* Team Cards */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-4xl mx-auto">
+              {/* Team Member 1 */}
+              <div className="text-center group opacity-0 translate-y-8 transition-all duration-700 delay-600" data-animate>
+                <div className="relative mb-6">
+                  <div className="w-48 h-48 mx-auto rounded-2xl overflow-hidden bg-gradient-to-br from-stravesta-teal/20 to-stravesta-blue/20 border-2 border-stravesta-teal/30 group-hover:border-stravesta-teal/50 transition-all duration-300">
+                    <img 
+                      src="/api/placeholder/192/192" 
+                      alt="Team Member"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-1">[Name]</h3>
+                    <p className="text-stravesta-teal font-semibold text-lg">Position</p>
+                  </div>
+                  
+                  <p className="text-stravesta-lightGray leading-relaxed max-w-sm mx-auto">
+                    Brief description of expertise and role at Stravesta.
+                  </p>
+                  
+                  <div className="flex justify-center space-x-4 pt-4">
+                    <a 
+                      href="#" 
+                      className="flex items-center space-x-2 bg-stravesta-teal/10 hover:bg-stravesta-teal/20 border border-stravesta-teal/30 rounded-lg px-4 py-2 transition-all duration-300 group"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <svg className="h-4 w-4 text-stravesta-teal group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                      </svg>
+                      <span className="text-stravesta-teal text-sm font-medium">LinkedIn</span>
+                    </a>
+                    <a 
+                      href="mailto:contact@stravesta.com" 
+                      className="flex items-center space-x-2 bg-stravesta-blue/10 hover:bg-stravesta-blue/20 border border-stravesta-blue/30 rounded-lg px-4 py-2 transition-all duration-300 group"
+                    >
+                      <svg className="h-4 w-4 text-stravesta-blue group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      <span className="text-stravesta-blue text-sm font-medium">Contact</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Team Member 2 */}
+              <div className="text-center group opacity-0 translate-y-8 transition-all duration-700 delay-800" data-animate>
+                <div className="relative mb-6">
+                  <div className="w-48 h-48 mx-auto rounded-2xl overflow-hidden bg-gradient-to-br from-stravesta-blue/20 to-stravesta-teal/20 border-2 border-stravesta-teal/30 group-hover:border-stravesta-teal/50 transition-all duration-300">
+                    <img 
+                      src="/api/placeholder/192/192" 
+                      alt="Team Member"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-1">[Name]</h3>
+                    <p className="text-stravesta-teal font-semibold text-lg">Position</p>
+                  </div>
+                  
+                  <p className="text-stravesta-lightGray leading-relaxed max-w-sm mx-auto">
+                    Brief description of expertise and role at Stravesta.
+                  </p>
+                  
+                  <div className="flex justify-center space-x-4 pt-4">
+                    <a 
+                      href="#" 
+                      className="flex items-center space-x-2 bg-stravesta-teal/10 hover:bg-stravesta-teal/20 border border-stravesta-teal/30 rounded-lg px-4 py-2 transition-all duration-300 group"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <svg className="h-4 w-4 text-stravesta-teal group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                      </svg>
+                      <span className="text-stravesta-teal text-sm font-medium">LinkedIn</span>
+                    </a>
+                    <a 
+                      href="mailto:contact@stravesta.com" 
+                      className="flex items-center space-x-2 bg-stravesta-blue/10 hover:bg-stravesta-blue/20 border border-stravesta-blue/30 rounded-lg px-4 py-2 transition-all duration-300 group"
+                    >
+                      <svg className="h-4 w-4 text-stravesta-blue group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2v10a2 2 0 002 2z" />
+                      </svg>
+                      <span className="text-stravesta-blue text-sm font-medium">Contact</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* The Future of Trading Section - Light Navy Background */}
         <section id="about" className="py-20 scroll-mt-20 bg-stravesta-navy/30 relative">
           <div className="absolute inset-0">
             <div className="absolute top-10 left-10 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl animate-pulse"></div>

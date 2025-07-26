@@ -9,6 +9,7 @@ const Navigation = () => {
   const navItems = [
     { name: 'AI Setup Scanner', href: '#setup-scanner' },
     { name: 'AI Trading Journal', href: '#journal-analytics' },
+    { name: 'About Us', href: '#about-us' },
     { name: 'Early Access', href: '#early-access' },
   ];
 
