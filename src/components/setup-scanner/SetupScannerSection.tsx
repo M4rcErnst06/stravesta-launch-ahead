@@ -10,21 +10,21 @@ const SetupScannerSection = () => {
     {
       icon: <Brain className="h-8 w-8" />,
       title: "AI-Powered Recognition", 
-      description: "Automatic identification of chart patterns and setup formations",
+      description: "Our sophisticated machine learning algorithms automatically identify and analyze complex chart patterns, support and resistance levels, and trading formations across all major markets with 89% accuracy.",
       color: "from-stravesta-teal/20 to-stravesta-teal/20",
       iconColor: "#17E6C8"
     },
     {
       icon: <Zap className="h-8 w-8" />,
       title: "Real-time Alerts",
-      description: "Instant notifications when trading opportunities emerge", 
+      description: "Receive instant notifications via mobile app, email, or desktop whenever high-probability trading opportunities emerge that match your specific criteria and risk parameters.", 
       color: "from-stravesta-teal/20 to-stravesta-teal/20",
       iconColor: "#17E6C8"
     },
     {
       icon: <Target className="h-8 w-8" />,
       title: "Precise Entry Points",
-      description: "Exact entry and exit points for maximum profitability",
+      description: "Get mathematically calculated entry and exit points with precise stop-loss and take-profit levels, optimized for your risk tolerance and designed to maximize your profit potential.",
       color: "from-stravesta-teal/20 to-stravesta-teal/20", 
       iconColor: "#17E6C8"
     }
@@ -67,20 +67,20 @@ const SetupScannerSection = () => {
                 <h3 className="text-lg font-semibold text-white mb-3">
                   Why Traders Lose Money
                 </h3>
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-stravesta-lightGray">Many profitable setups are overlooked</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-stravesta-lightGray">Emotional decisions lead to losses</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-stravesta-lightGray">Inconsistent strategy execution</span>
-                  </div>
-                </div>
+                 <div className="space-y-4 text-stravesta-lightGray leading-relaxed">
+                   <p>
+                     Traders constantly miss profitable trading opportunities because they cannot monitor all markets simultaneously. 
+                     The human eye simply cannot process the vast amount of market data required to identify every potential setup.
+                   </p>
+                   <p>
+                     Emotional decision-making destroys trading accounts faster than any other factor. Fear and greed override 
+                     rational analysis, leading to premature exits from winning trades and holding onto losing positions too long.
+                   </p>
+                   <p>
+                     Without systematic execution, even the best trading strategies fail. Manual trading leads to inconsistent 
+                     application of rules, missed entries, and poorly timed exits that erode profitability over time.
+                   </p>
+                 </div>
               </CardContent>
             </Card>
 
@@ -97,20 +97,20 @@ const SetupScannerSection = () => {
                 <h3 className="text-lg font-semibold text-white mb-3">
                   Stravesta AI Setup Scanner
                 </h3>
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-stravesta-lightGray">All setups are captured and analyzed</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-stravesta-lightGray">Systematic, emotion-free approach</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-stravesta-lightGray">Consistent performance through AI support</span>
-                  </div>
-                </div>
+                 <div className="space-y-4 text-stravesta-lightGray leading-relaxed">
+                   <p>
+                     Our advanced AI system monitors thousands of instruments across multiple timeframes simultaneously, 
+                     ensuring that every profitable trading setup is captured and analyzed with mathematical precision.
+                   </p>
+                   <p>
+                     By removing human emotion from the equation, our AI provides systematic and objective analysis 
+                     of market conditions, executing trades based purely on statistical probabilities and proven patterns.
+                   </p>
+                   <p>
+                     Achieve consistent trading performance through intelligent AI support that learns from your successful 
+                     trades and continuously optimizes your strategy for maximum profitability and minimal risk exposure.
+                   </p>
+                 </div>
               </CardContent>
             </Card>
           </div>

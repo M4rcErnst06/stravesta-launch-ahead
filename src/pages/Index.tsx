@@ -153,10 +153,14 @@ const IndexContent = () => {
               </h2>
               <div className="text-lg text-stravesta-lightGray space-y-6">
                 <p className="opacity-0 translate-y-8 transition-all duration-700 delay-200" data-animate>
-                  Meet the team behind Stravesta - united expertise in trading, technology and AI.
+                  Meet the visionary team behind Stravesta, where decades of professional trading experience converge 
+                  with breakthrough artificial intelligence technology. Our founders have built successful trading careers 
+                  and now dedicate their expertise to democratizing advanced trading tools for traders worldwide.
                 </p>
                 <p className="opacity-0 translate-y-8 transition-all duration-700 delay-400" data-animate>
-                  We combine years of trading experience with cutting-edge artificial intelligence to revolutionize the way traders approach the markets.
+                  We believe that every trader deserves access to institutional-grade technology and insights. 
+                  Our mission is to level the playing field by combining deep market knowledge with cutting-edge AI, 
+                  transforming how retail traders analyze markets and execute profitable strategies.
                 </p>
               </div>
             </div>
