@@ -81,6 +81,25 @@ const About = () => {
             </div>
           </div>
 
+          {/* About Stravesta Section */}
+          <div className="bg-stravesta-navy/40 backdrop-blur-sm rounded-xl p-8 border border-stravesta-teal/20">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-gradient mb-6">The Future of Trading</h2>
+              <div className="space-y-6 max-w-4xl mx-auto">
+                <p className="text-lg text-stravesta-lightGray leading-relaxed">
+                  Stravesta combines state-of-the-art AI technology with proven trading strategies to give you a decisive 
+                  advantage in the markets.
+                </p>
+                <p className="text-lg text-stravesta-lightGray leading-relaxed">
+                  Our platform learns from your trading style and helps you achieve consistent profits while minimizing risks.
+                </p>
+                <p className="text-lg text-stravesta-lightGray leading-relaxed">
+                  From automatic setup recognition to intelligent trading bots - Stravesta is your personal trading assistant.
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* Founders Section */}
           <div className="bg-stravesta-navy/40 backdrop-blur-sm rounded-xl p-8 border border-stravesta-teal/20">
             <div className="text-center mb-12">
