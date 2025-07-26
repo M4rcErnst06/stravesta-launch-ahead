@@ -1,7 +1,7 @@
 
 import React from 'react';
 import Navigation from '@/components/Navigation';
-import { Target, Zap, Users, TrendingUp } from 'lucide-react';
+import { Target, Zap, Users, TrendingUp, User } from 'lucide-react';
 
 const About = () => {
   return (
@@ -78,6 +78,45 @@ const About = () => {
                   <span className="text-white font-medium">Kontinuierliche Weiterentwicklung</span>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Founders Section */}
+          <div className="bg-stravesta-navy/40 backdrop-blur-sm rounded-xl p-8 border border-stravesta-teal/20">
+            <h2 className="text-2xl font-bold text-white text-center mb-8">Unser Team</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+              {/* Founder */}
+              <div className="text-center">
+                <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-r from-stravesta-teal/20 to-stravesta-blue/20 border-2 border-stravesta-teal/30 flex items-center justify-center">
+                  <User className="h-16 w-16 text-stravesta-teal" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Gründer</h3>
+                <p className="text-stravesta-teal font-medium mb-2">Founder & CEO</p>
+                <p className="text-stravesta-lightGray text-sm leading-relaxed">
+                  Visionär mit jahrelanger Erfahrung im Trading und der Entwicklung 
+                  innovativer KI-Lösungen für den Finanzmarkt.
+                </p>
+              </div>
+
+              {/* Co-Founder */}
+              <div className="text-center">
+                <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-r from-stravesta-blue/20 to-stravesta-teal/20 border-2 border-stravesta-teal/30 flex items-center justify-center">
+                  <User className="h-16 w-16 text-stravesta-teal" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Co-Gründer</h3>
+                <p className="text-stravesta-teal font-medium mb-2">Co-Founder & CTO</p>
+                <p className="text-stravesta-lightGray text-sm leading-relaxed">
+                  Tech-Experte und Trading-Spezialist, der die technische Vision 
+                  von Stravesta umsetzt und vorantreibt.
+                </p>
+              </div>
+            </div>
+
+            <div className="text-center mt-8 pt-6 border-t border-stravesta-teal/20">
+              <p className="text-stravesta-lightGray text-sm">
+                Gemeinsam bringen wir über 15 Jahre Erfahrung in Trading, 
+                Technologie und KI-Entwicklung mit.
+              </p>
             </div>
           </div>
         </div>
