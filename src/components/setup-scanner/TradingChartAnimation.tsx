@@ -324,14 +324,23 @@ const TradingChartAnimation = () => {
 
   return (
     <div className="relative w-full max-w-4xl mx-auto">
+      {/* Wireframe Preview Header */}
+      <div className="text-center mb-6">
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-lg mb-4">
+          <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse"></div>
+          <span className="text-yellow-400 text-sm font-medium">Preview - Coming Soon in English</span>
+        </div>
+        <p className="text-stravesta-lightGray text-sm">This shows how the AI scanner will work when completed</p>
+      </div>
+      
       {/* Chart Container */}
-      <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-t-lg p-6 border border-stravesta-teal/20">
+      <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-t-lg p-6 border border-dashed border-stravesta-teal/30">
         
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <Brain className="h-6 w-6 text-stravesta-teal" />
-            <span className="text-white font-semibold text-lg">EUR/USD • M15 • KI Setup Scanner</span>
+            <Brain className="h-6 w-6 text-stravesta-teal opacity-80" />
+            <span className="text-white font-semibold text-lg opacity-90">EUR/USD • M15 • AI Setup Scanner (Preview)</span>
           </div>
           <div className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
             entryExecuted 
@@ -345,22 +354,22 @@ const TradingChartAnimation = () => {
             {entryExecuted ? (
               <>
                 <CheckCircle2 className="h-5 w-5" />
-                <span className="font-medium">Entry Executed</span>
+                <span className="font-medium">Entry Executed (Preview)</span>
               </>
             ) : alertTriggered ? (
               <>
                 <Zap className="h-5 w-5 animate-pulse" />
-                <span className="font-medium">Alert Triggered</span>
+                <span className="font-medium">Alert Triggered (Preview)</span>
               </>
             ) : patternDetected ? (
               <>
                 <Target className="h-5 w-5" />
-                <span className="font-medium">Pattern Detected</span>
+                <span className="font-medium">Pattern Detected (Preview)</span>
               </>
             ) : (
               <>
                 <Brain className="h-5 w-5" />
-                <span className="font-medium">KI Analyzing...</span>
+                <span className="font-medium">AI Analyzing... (Preview)</span>
               </>
             )}
           </div>
@@ -370,14 +379,14 @@ const TradingChartAnimation = () => {
         <div className="relative flex justify-center">
           <canvas 
             ref={canvasRef}
-            className="border border-stravesta-teal/10 rounded"
+            className="border border-dashed border-stravesta-teal/30 rounded opacity-90"
             style={{ width: '700px', height: '400px', maxWidth: '100%' }}
           />
         </div>
       </div>
 
       {/* Stats Container - direkt anschließend */}
-      <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-b-lg border-l border-r border-b border-stravesta-teal/20">
+      <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-b-lg border-l border-r border-b border-dashed border-stravesta-teal/30">
         <div className="p-3 md:p-6">
           <div className="grid grid-cols-3 gap-2 md:gap-4 text-center">
             <div className="bg-stravesta-dark/50 rounded-lg p-2 md:p-4">

@@ -135,21 +135,30 @@ const JournalAnalyticsAnimation = () => {
   }, []);
 
   return (
-    <div className="max-w-6xl mx-auto bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-stravesta-teal/20">
+    <div className="max-w-6xl mx-auto bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-dashed border-stravesta-teal/30">
+      {/* Wireframe Preview Header */}
+      <div className="text-center mb-8">
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-lg mb-4">
+          <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse"></div>
+          <span className="text-yellow-400 text-sm font-medium">Preview - Coming Soon in English</span>
+        </div>
+        <p className="text-stravesta-lightGray text-sm">This shows how the AI analytics will look when completed</p>
+      </div>
+      
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Trading Journal */}
         <div className="space-y-4">
           <div className="flex items-center gap-3 mb-6">
-            <div className="bg-stravesta-teal/20 p-2 rounded-lg">
-              <Brain className="h-6 w-6 text-stravesta-teal" />
+            <div className="bg-stravesta-teal/20 border border-dashed border-stravesta-teal/30 p-2 rounded-lg">
+              <Brain className="h-6 w-6 text-stravesta-teal opacity-80" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white">Trading Journal</h3>
-              <p className="text-stravesta-lightGray text-sm">Ihre letzten Trades</p>
+              <h3 className="text-xl font-bold text-white opacity-90">Trading Journal (Preview)</h3>
+              <p className="text-stravesta-lightGray text-sm opacity-80">Your recent trades</p>
             </div>
             {isAnalyzing && (
-              <Badge className="ml-auto bg-stravesta-teal/20 text-stravesta-teal border-stravesta-teal/30 animate-pulse">
-                KI analysiert...
+              <Badge className="ml-auto bg-stravesta-teal/20 text-stravesta-teal border border-dashed border-stravesta-teal/30 animate-pulse">
+                AI analyzing...
               </Badge>
             )}
           </div>
@@ -159,7 +168,7 @@ const JournalAnalyticsAnimation = () => {
               <Card 
                 key={trade.id}
                 className={`
-                  bg-stravesta-dark/50 border-stravesta-darkGray transition-all duration-500
+                  bg-stravesta-dark/30 border border-dashed border-stravesta-darkGray/50 transition-all duration-500
                   ${scanningTrade === trade.id ? 'border-stravesta-teal shadow-lg shadow-stravesta-teal/20 scale-105' : ''}
                   ${currentStep >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
                 `}
@@ -202,12 +211,12 @@ const JournalAnalyticsAnimation = () => {
         {/* AI Insights */}
         <div className="space-y-4">
           <div className="flex items-center gap-3 mb-6">
-            <div className="bg-gradient-to-r from-stravesta-teal to-blue-500 p-2 rounded-lg">
-              <Brain className="h-6 w-6 text-white" />
+            <div className="bg-gradient-to-r from-stravesta-teal/50 to-blue-500/50 border border-dashed border-blue-500/30 p-2 rounded-lg">
+              <Brain className="h-6 w-6 text-white opacity-80" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white">KI-Analyse</h3>
-              <p className="text-stravesta-lightGray text-sm">Strategische Insights</p>
+              <h3 className="text-xl font-bold text-white opacity-90">AI Analysis (Preview)</h3>
+              <p className="text-stravesta-lightGray text-sm opacity-80">Strategic Insights</p>
             </div>
           </div>
 
@@ -216,7 +225,7 @@ const JournalAnalyticsAnimation = () => {
               <Card 
                 key={index}
                 className={`
-                  ${insight.bgColor} ${insight.borderColor} border-2 transition-all duration-700
+                  ${insight.bgColor} border border-dashed ${insight.borderColor} transition-all duration-700
                   ${visibleInsights.includes(index) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}
                 `}
                 style={{ transitionDelay: `${index * 300}ms` }}
