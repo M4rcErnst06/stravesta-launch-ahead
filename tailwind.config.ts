@@ -65,12 +65,11 @@ export default {
 				},
 				// Stravesta brand colors
 				stravesta: {
-					teal: "#4FC3F7",
-					blue: "#29B6F6",
-					dark: "#0D1421",
-					navy: "#162536", 
-					darkGray: "#1A2332",
-					lightGray: "#A3B4C7"
+					teal: "#17E6C8",
+					dark: "#0A1929",
+					navy: "#0F2942",
+					darkGray: "#1A2A3A",
+					lightGray: "#E0E5EB"
 				}
 			},
 			borderRadius: {
