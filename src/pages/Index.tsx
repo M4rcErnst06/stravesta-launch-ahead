@@ -216,7 +216,7 @@ const IndexContent = () => {
                 <div className="relative mb-6">
                    <div className="w-48 h-48 mx-auto rounded-2xl overflow-hidden bg-gradient-to-br from-stravesta-blue/20 to-stravesta-teal/20 border-2 border-stravesta-teal/30 group-hover:border-stravesta-teal/50 transition-all duration-300">
                      <img 
-                       src="/lovable-uploads/07991bd6-28dc-4eeb-944c-a1db9d21a001.png" 
+                       src="/lovable-uploads/97115739-f0fc-4c78-9081-72a120c3b818.png" 
                        alt="Marc Ernst"
                        className="w-full h-full object-cover object-center"
                      />
