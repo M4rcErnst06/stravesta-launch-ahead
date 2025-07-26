@@ -191,7 +191,7 @@ const IndexContent = () => {
                   
                   <div className="flex justify-center space-x-4 pt-4">
                     <a 
-                      href="#" 
+                      href="https://www.linkedin.com/in/gabriel-suter-18973329a" 
                       className="flex items-center space-x-2 bg-stravesta-teal/10 hover:bg-stravesta-teal/20 border border-stravesta-teal/30 rounded-lg px-4 py-2 transition-all duration-300 group"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -202,7 +202,7 @@ const IndexContent = () => {
                       <span className="text-stravesta-teal text-sm font-medium">LinkedIn</span>
                     </a>
                     <a 
-                      href="mailto:contact@stravesta.com" 
+                      href="mailto:gabriel@stravesta.com" 
                       className="flex items-center space-x-2 bg-stravesta-blue/10 hover:bg-stravesta-blue/20 border border-stravesta-blue/30 rounded-lg px-4 py-2 transition-all duration-300 group"
                     >
                       <svg className="h-4 w-4 text-stravesta-blue group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -238,7 +238,7 @@ const IndexContent = () => {
                   
                   <div className="flex justify-center space-x-4 pt-4">
                     <a 
-                      href="#" 
+                      href="https://www.linkedin.com/in/marc-ernst-213a76351" 
                       className="flex items-center space-x-2 bg-stravesta-teal/10 hover:bg-stravesta-teal/20 border border-stravesta-teal/30 rounded-lg px-4 py-2 transition-all duration-300 group"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -249,7 +249,7 @@ const IndexContent = () => {
                       <span className="text-stravesta-teal text-sm font-medium">LinkedIn</span>
                     </a>
                     <a 
-                      href="mailto:contact@stravesta.com" 
+                      href="mailto:marc@stravesta.com" 
                       className="flex items-center space-x-2 bg-stravesta-blue/10 hover:bg-stravesta-blue/20 border border-stravesta-blue/30 rounded-lg px-4 py-2 transition-all duration-300 group"
                     >
                       <svg className="h-4 w-4 text-stravesta-blue group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
