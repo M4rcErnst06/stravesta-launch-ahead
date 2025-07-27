@@ -11,8 +11,11 @@ interface Candle {
 
 const BackgroundChartAnimation = () => {
   const [candles, setCandles] = useState<Candle[]>([]);
+  const [direction, setDirection] = useState(1); // 1 for right, -1 for left
+  const [currentY, setCurrentY] = useState(400); // Current vertical position
+  const [verticalDirection, setVerticalDirection] = useState(1); // 1 for down, -1 for up
 
-  const generateCandle = (id: number, prevClose: number): Candle => {
+  const generateCandle = (id: number, prevClose: number, x: number): Candle => {
     const volatility = Math.random() * 12 + 6;
     const open = prevClose + (Math.random() - 0.5) * 3;
     const change = (Math.random() - 0.5) * volatility;
@@ -26,7 +29,7 @@ const BackgroundChartAnimation = () => {
       high,
       low,
       close,
-      x: id * 35
+      x
     };
   };
 
@@ -36,8 +39,7 @@ const BackgroundChartAnimation = () => {
     
     // Fill screen with candles from right to left
     for (let i = 0; i < 60; i++) {
-      const candle = generateCandle(i, price);
-      candle.x = i * 35; // Increase spacing between candles
+      const candle = generateCandle(i, price, i * 35);
       initialCandles.push(candle);
       price = candle.close;
     }
@@ -50,38 +52,61 @@ const BackgroundChartAnimation = () => {
     
     const interval = setInterval(() => {
       setCandles(prevCandles => {
-        // Move all candles to the left smoothly
+        // Move all candles horizontally based on direction
         const movedCandles = prevCandles.map(candle => ({
           ...candle,
-          x: candle.x - 0.8
+          x: candle.x + (direction * 0.8)
         }));
         
-        // Remove candles that moved off screen
-        const visibleCandles = movedCandles.filter(candle => candle.x > -60);
+        // Check boundaries and reverse direction if needed
+        const minX = Math.min(...movedCandles.map(c => c.x));
+        const maxX = Math.max(...movedCandles.map(c => c.x));
         
-        // Add new candle every 40 frames (more realistic timing)
-        candleCounter++;
-        if (candleCounter >= 40) {
-          const lastCandle = visibleCandles[visibleCandles.length - 1];
-          const maxX = Math.max(...visibleCandles.map(c => c.x), 0);
-          
-          if (maxX < 2100) {
-            const newCandle = generateCandle(
-              Date.now(),
-              lastCandle ? lastCandle.close : 100
-            );
-            newCandle.x = maxX + 35;
-            visibleCandles.push(newCandle);
-            candleCounter = 0; // Reset counter
-          }
+        if (maxX > 2000 && direction === 1) {
+          setDirection(-1);
+        } else if (minX < -100 && direction === -1) {
+          setDirection(1);
         }
         
-        return visibleCandles;
+        // Update vertical position and check boundaries
+        setCurrentY(prevY => {
+          const newY = prevY + (verticalDirection * 0.3);
+          if (newY > 800) {
+            setVerticalDirection(-1);
+            return newY;
+          } else if (newY < 200) {
+            setVerticalDirection(1);
+            return newY;
+          }
+          return newY;
+        });
+        
+        // Add new candle occasionally to maintain density
+        candleCounter++;
+        if (candleCounter >= 60) {
+          const lastCandle = movedCandles[movedCandles.length - 1];
+          const newX = direction === 1 ? 
+            Math.max(...movedCandles.map(c => c.x)) + 35 :
+            Math.min(...movedCandles.map(c => c.x)) - 35;
+          
+          const newCandle = generateCandle(
+            Date.now(),
+            lastCandle ? lastCandle.close : 100,
+            newX
+          );
+          movedCandles.push(newCandle);
+          candleCounter = 0;
+        }
+        
+        // Remove candles that are too far off screen
+        return movedCandles.filter(candle => 
+          candle.x > -200 && candle.x < 2200
+        );
       });
-    }, 50); // Smooth 20fps animation
+    }, 50);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [direction, verticalDirection]);
 
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
@@ -119,12 +144,11 @@ const BackgroundChartAnimation = () => {
         
         {/* No grid background - solid color only */}
         
-        {/* Main candlestick chart - Center screen */}
+        {/* Main candlestick chart - Dynamic position */}
         {candles.map(candle => {
           const scale = 5;
-          const centerY = 400; // Moved back to center area
           const priceOffset = (candle.close - 100) * scale;
-          const baseY = centerY - priceOffset;
+          const baseY = currentY - priceOffset;
           const bodyHeight = Math.abs(candle.close - candle.open) * scale;
           const bodyY = baseY - Math.max(candle.open - 100, candle.close - 100) * scale;
           const wickTop = baseY - (candle.high - 100) * scale;
