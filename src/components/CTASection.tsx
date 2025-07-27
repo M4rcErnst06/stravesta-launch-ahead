@@ -7,9 +7,8 @@ import { Rocket, Crown, Users, Zap } from 'lucide-react';
 const CTASection = () => {
   
   return (
-    <section className="py-20 bg-stravesta-dark relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/5 via-transparent to-stravesta-navy/20"></div>
+    <section className="py-20 bg-[#0b1e35] relative overflow-hidden">
+      {/* Removed gradient background for consistency */}
       
       <div className="relative z-10 container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto">
