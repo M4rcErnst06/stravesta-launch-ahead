@@ -145,16 +145,16 @@ const IndexContent = () => {
               
               {/* Modern Team Cards Grid */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
-                {/* Team Member 1 - Modern glassmorphism card */}
-                <div className="group opacity-0 translate-y-8 transition-all duration-700 delay-400" data-animate>
-                  <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-8 shadow-2xl hover:bg-white/10 hover:border-white/20 transition-all duration-500 hover:scale-105 hover:-translate-y-2">
+                {/* Team Member 1 - Gabriel Suter */}
+                <div className="opacity-0 translate-y-8 transition-all duration-700 delay-400" data-animate>
+                  <div className="backdrop-blur-xl bg-white/10 border border-stravesta-teal/50 rounded-3xl p-8 shadow-2xl">
                     <div className="text-center">
                       <div className="relative mb-8">
-                        <div className="w-40 h-40 mx-auto rounded-3xl overflow-hidden bg-gradient-to-br from-stravesta-teal/30 to-blue-500/30 border-2 border-white/20 shadow-xl group-hover:border-stravesta-teal/50 transition-all duration-500 group-hover:scale-110">
+                        <div className="w-40 h-40 mx-auto rounded-3xl overflow-hidden bg-gradient-to-br from-stravesta-teal/30 to-blue-500/30 border-2 border-stravesta-teal/50 shadow-xl">
                           <img 
                             src="/lovable-uploads/9382c705-a077-40ee-bc08-9311467ad362.png" 
                             alt="Gabriel Suter"
-                            className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
+                            className="w-full h-full object-cover object-center"
                           />
                         </div>
                         {/* Floating accent */}
@@ -163,19 +163,19 @@ const IndexContent = () => {
                       
                       <div className="space-y-6">
                         <div>
-                          <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 group-hover:text-stravesta-teal transition-colors duration-300">Gabriel Suter</h3>
+                          <h3 className="text-2xl md:text-3xl font-bold text-stravesta-teal mb-2">Gabriel Suter</h3>
                           <p className="text-stravesta-teal font-semibold text-lg bg-stravesta-teal/10 px-4 py-2 rounded-full inline-block">Founder & CEO</p>
                         </div>
                         
-                        {/* Modern action buttons */}
+                        {/* LinkedIn button */}
                         <div className="flex justify-center space-x-3">
                           <a 
                             href="https://www.linkedin.com/in/gabriel-suter-18973329a" 
-                            className="flex items-center space-x-2 bg-gradient-to-r from-stravesta-teal/20 to-blue-500/20 hover:from-stravesta-teal/30 hover:to-blue-500/30 border border-white/10 hover:border-white/20 rounded-xl px-6 py-3 transition-all duration-300 group/btn hover:scale-105"
+                            className="flex items-center space-x-2 bg-gradient-to-r from-stravesta-teal/30 to-blue-500/30 border border-stravesta-teal/50 rounded-xl px-6 py-3"
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            <svg className="h-5 w-5 text-stravesta-teal group-hover/btn:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                            <svg className="h-5 w-5 text-stravesta-teal" fill="currentColor" viewBox="0 0 24 24">
                               <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                             </svg>
                             <span className="text-white text-sm font-medium">LinkedIn</span>
@@ -196,16 +196,16 @@ const IndexContent = () => {
                   </div>
                 </div>
 
-                {/* Team Member 2 - Modern glassmorphism card */}
-                <div className="group opacity-0 translate-y-8 transition-all duration-700 delay-600" data-animate>
-                  <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-8 shadow-2xl hover:bg-white/10 hover:border-white/20 transition-all duration-500 hover:scale-105 hover:-translate-y-2">
+                {/* Team Member 2 - Marc Ernst */}
+                <div className="opacity-0 translate-y-8 transition-all duration-700 delay-600" data-animate>
+                  <div className="backdrop-blur-xl bg-white/10 border border-blue-400/50 rounded-3xl p-8 shadow-2xl">
                     <div className="text-center">
                       <div className="relative mb-8">
-                        <div className="w-40 h-40 mx-auto rounded-3xl overflow-hidden bg-gradient-to-br from-blue-500/30 to-purple-500/30 border-2 border-white/20 shadow-xl group-hover:border-blue-400/50 transition-all duration-500 group-hover:scale-110">
+                        <div className="w-40 h-40 mx-auto rounded-3xl overflow-hidden bg-gradient-to-br from-blue-500/30 to-purple-500/30 border-2 border-blue-400/50 shadow-xl">
                           <img 
                             src="/lovable-uploads/07991bd6-28dc-4eeb-944c-a1db9d21a001.png" 
                             alt="Marc Ernst"
-                            className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
+                            className="w-full h-full object-cover object-center"
                           />
                         </div>
                         {/* Floating accent */}
@@ -214,19 +214,19 @@ const IndexContent = () => {
                       
                       <div className="space-y-6">
                         <div>
-                          <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors duration-300">Marc Ernst</h3>
+                          <h3 className="text-2xl md:text-3xl font-bold text-blue-400 mb-2">Marc Ernst</h3>
                           <p className="text-blue-400 font-semibold text-lg bg-blue-400/10 px-4 py-2 rounded-full inline-block">Co-Founder</p>
                         </div>
                         
-                        {/* Modern action buttons */}
+                        {/* LinkedIn button */}
                         <div className="flex justify-center space-x-3">
                           <a 
                             href="https://www.linkedin.com/in/marc-ernst-213a76351" 
-                            className="flex items-center space-x-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 hover:from-blue-500/30 hover:to-purple-500/30 border border-white/10 hover:border-white/20 rounded-xl px-6 py-3 transition-all duration-300 group/btn hover:scale-105"
+                            className="flex items-center space-x-2 bg-gradient-to-r from-blue-500/30 to-purple-500/30 border border-blue-400/50 rounded-xl px-6 py-3"
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            <svg className="h-5 w-5 text-blue-400 group-hover/btn:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                            <svg className="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
                               <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                             </svg>
                             <span className="text-white text-sm font-medium">LinkedIn</span>
