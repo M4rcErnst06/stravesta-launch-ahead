@@ -24,7 +24,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="min-h-screen bg-transparent relative overflow-hidden flex flex-col justify-between pt-32 pb-20">
+    <section className="min-h-screen bg-transparent relative overflow-hidden flex flex-col pt-32">
       {/* Remove background effects to let chart show through */}
       
       <div className="relative z-20 container mx-auto px-4">
@@ -38,8 +38,8 @@ const HeroSection = () => {
         </div>
       </div>
       
-      {/* Content in unterer Mitte */}
-      <div className="relative z-20 container mx-auto px-4">
+      {/* Content in mittlerer Position - nicht ganz unten */}
+      <div className="relative z-20 container mx-auto px-4 mt-32">
         <div className="text-center max-w-4xl mx-auto">
           <p className="text-xl md:text-2xl lg:text-3xl text-stravesta-lightGray mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-in-delay font-medium">
             Stravesta is for traders and investors who aim higher
