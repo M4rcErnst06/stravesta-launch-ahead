@@ -143,30 +143,18 @@ const IndexContent = () => {
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
                 About Us
               </h2>
-              <div className="text-lg text-stravesta-lightGray space-y-6">
-                <p className="opacity-0 translate-y-8 transition-all duration-700 delay-200" data-animate>
-                  Meet the visionary team behind Stravesta, passionate about combining innovative technology 
-                  with smart trading solutions. Our founders are dedicated to democratizing advanced trading 
-                  tools and making sophisticated market analysis accessible to traders worldwide.
-                </p>
-                <p className="opacity-0 translate-y-8 transition-all duration-700 delay-400" data-animate>
-                  We believe that every trader deserves access to institutional-grade technology and insights. 
-                  Our mission is to level the playing field by combining deep market knowledge with cutting-edge AI, 
-                  transforming how retail traders analyze markets and execute profitable strategies.
-                </p>
-              </div>
             </div>
             
             {/* Team Cards */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-4xl mx-auto mb-16">
               {/* Team Member 1 */}
               <div className="text-center group opacity-0 translate-y-8 transition-all duration-700 delay-600" data-animate>
                 <div className="relative mb-6">
                   <div className="w-48 h-48 mx-auto rounded-2xl overflow-hidden bg-gradient-to-br from-stravesta-teal/20 to-stravesta-blue/20 border-2 border-stravesta-teal/30 group-hover:border-stravesta-teal/50 transition-all duration-300">
                     <img 
-                      src="/api/placeholder/192/192" 
-                      alt="Team Member"
-                      className="w-full h-full object-cover"
+                      src="/lovable-uploads/9382c705-a077-40ee-bc08-9311467ad362.png" 
+                      alt="Gabriel Suter"
+                      className="w-full h-full object-cover object-center"
                     />
                   </div>
                 </div>
@@ -176,10 +164,6 @@ const IndexContent = () => {
                     <h3 className="text-2xl font-bold text-white mb-1">Gabriel Suter</h3>
                     <p className="text-stravesta-teal font-semibold text-lg">Founder & CEO</p>
                   </div>
-                  
-                  <p className="text-stravesta-lightGray leading-relaxed max-w-sm mx-auto">
-                    Brief description of expertise and role at Stravesta.
-                  </p>
                   
                   <div className="flex justify-center space-x-4 pt-4">
                     <a 
@@ -221,10 +205,6 @@ const IndexContent = () => {
                     <p className="text-stravesta-teal font-semibold text-lg">Co-Founder</p>
                   </div>
                   
-                  <p className="text-stravesta-lightGray leading-relaxed max-w-sm mx-auto">
-                    Brief description of expertise and role at Stravesta.
-                  </p>
-                  
                   <div className="flex justify-center space-x-4 pt-4">
                     <a 
                       href="https://www.linkedin.com/in/marc-ernst-213a76351" 
@@ -245,6 +225,22 @@ const IndexContent = () => {
                      </div>
                   </div>
                 </div>
+              </div>
+            </div>
+            
+            {/* About Us Text below team cards */}
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="text-lg text-stravesta-lightGray space-y-6">
+                <p className="opacity-0 translate-y-8 transition-all duration-700 delay-1000" data-animate>
+                  Meet the visionary team behind Stravesta, passionate about combining innovative technology 
+                  with smart trading solutions. Our founders are dedicated to democratizing advanced trading 
+                  tools and making sophisticated market analysis accessible to traders worldwide.
+                </p>
+                <p className="opacity-0 translate-y-8 transition-all duration-700 delay-1200" data-animate>
+                  We believe that every trader deserves access to institutional-grade technology and insights. 
+                  Our mission is to level the playing field by combining deep market knowledge with cutting-edge AI, 
+                  transforming how retail traders analyze markets and execute profitable strategies.
+                </p>
               </div>
             </div>
           </div>
