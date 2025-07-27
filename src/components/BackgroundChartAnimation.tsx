@@ -46,8 +46,6 @@ const BackgroundChartAnimation = () => {
   }, []);
 
   useEffect(() => {
-    let candleCounter = 0;
-    
     const interval = setInterval(() => {
       setCandles(prevCandles => {
         // Move all candles to the left smoothly
@@ -56,27 +54,23 @@ const BackgroundChartAnimation = () => {
           x: candle.x - 0.8
         }));
         
-        // Remove candles that moved off screen
-        const visibleCandles = movedCandles.filter(candle => candle.x > -60);
-        
-        // Add new candle every 40 frames (more realistic timing)
-        candleCounter++;
-        if (candleCounter >= 40) {
-          const lastCandle = visibleCandles[visibleCandles.length - 1];
-          const maxX = Math.max(...visibleCandles.map(c => c.x), 0);
-          
-          if (maxX < 2100) {
+        // Instead of removing candles, reposition them when they go off-screen
+        const updatedCandles = movedCandles.map(candle => {
+          // If candle moved off the left side, move it to the right side
+          if (candle.x < -60) {
+            const maxX = Math.max(...movedCandles.map(c => c.x), 0);
+            const lastCandle = movedCandles.find(c => c.x === maxX);
             const newCandle = generateCandle(
-              Date.now(),
+              Date.now() + Math.random(),
               lastCandle ? lastCandle.close : 100
             );
             newCandle.x = maxX + 35;
-            visibleCandles.push(newCandle);
-            candleCounter = 0; // Reset counter
+            return newCandle;
           }
-        }
+          return candle;
+        });
         
-        return visibleCandles;
+        return updatedCandles;
       });
     }, 50); // Smooth 20fps animation
 
