@@ -81,12 +81,6 @@ const BackgroundChartAnimation = () => {
     <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
       {/* Container with defined bounds and fade effects */}
       <div className="w-full max-w-[1400px] mx-auto h-full relative overflow-hidden">
-        {/* Left fade-out gradient */}
-        <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-stravesta-dark via-stravesta-dark/80 to-transparent z-10 pointer-events-none"></div>
-        
-        {/* Right fade-out gradient */}
-        <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-stravesta-dark via-stravesta-dark/80 to-transparent z-10 pointer-events-none"></div>
-        
         <svg
           width="100%"
           height="100%"
