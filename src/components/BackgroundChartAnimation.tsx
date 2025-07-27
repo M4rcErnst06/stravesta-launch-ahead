@@ -34,10 +34,10 @@ const BackgroundChartAnimation = () => {
     const initialCandles: Candle[] = [];
     let price = 100;
     
-    // Fill screen with candles from right to left
-    for (let i = 0; i < 60; i++) {
+    // Fill container with candles - adjusted for max-width container
+    for (let i = 0; i < 45; i++) {
       const candle = generateCandle(i, price);
-      candle.x = i * 35; // Increase spacing between candles
+      candle.x = i * 35; // Spacing between candles
       initialCandles.push(candle);
       price = candle.close;
     }
@@ -79,11 +79,18 @@ const BackgroundChartAnimation = () => {
 
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-      <div className="w-full h-full relative">
+      {/* Container with defined bounds and fade effects */}
+      <div className="w-full max-w-[1400px] mx-auto h-full relative overflow-hidden">
+        {/* Left fade-out gradient */}
+        <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-stravesta-dark via-stravesta-dark/80 to-transparent z-10 pointer-events-none"></div>
+        
+        {/* Right fade-out gradient */}
+        <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-stravesta-dark via-stravesta-dark/80 to-transparent z-10 pointer-events-none"></div>
+        
         <svg
           width="100%"
           height="100%"
-          viewBox="0 0 1920 1080"
+          viewBox="0 0 1400 1080"
           className="absolute inset-0 w-full h-full"
           preserveAspectRatio="xMidYMid slice"
           style={{ opacity: 0.7 }}
