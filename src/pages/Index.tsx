@@ -109,7 +109,7 @@ const IndexContent = () => {
         </section>
         
         {/* KI Setup Scanner Section - Navy Blue Background */}
-        <section id="setup-scanner" className="scroll-mt-20 bg-stravesta-navy relative">
+        <section id="setup-scanner" className="scroll-mt-20 bg-[#081624] relative">
           {/* Section-specific background effects */}
           <div className="absolute inset-0">
             <div className="absolute top-20 left-10 w-96 h-96 bg-stravesta-teal/3 rounded-full blur-3xl animate-pulse"></div>
@@ -149,7 +149,7 @@ const IndexContent = () => {
         )}
 
         {/* About Us Section - Modern Card Design */}
-        <section id="about-us" className="py-32 scroll-mt-20 bg-[#0b1e35] relative overflow-hidden">
+        <section id="about-us" className="py-32 scroll-mt-20 bg-[#081624] relative overflow-hidden">
           {/* Modern animated background */}
           <div className="absolute inset-0">
             <div className="absolute top-10 right-20 w-80 h-80 bg-gradient-to-br from-purple-500/20 to-stravesta-teal/20 rounded-full blur-3xl animate-pulse"></div>
@@ -315,7 +315,7 @@ const IndexContent = () => {
         </section>
 
         {/* Footer - Dark Background */}
-        <div className="bg-stravesta-dark">
+        <div className="bg-[#081624]">
           <Footer />
         </div>
       </div>
