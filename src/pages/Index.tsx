@@ -251,8 +251,8 @@ const IndexContent = () => {
         </section>
 
 
-        {/* Early Access Section - Dark Background */}
-        <section id="early-access" className="scroll-mt-20 bg-stravesta-dark">
+        {/* Early Access Section - Same background as AI Setup Scanner */}
+        <section id="early-access" className="scroll-mt-20 bg-[#0b1e35]">
           <CTASection />
         </section>
 
