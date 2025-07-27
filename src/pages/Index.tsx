@@ -140,11 +140,11 @@ const IndexContent = () => {
           </div>
         </section>
 
-        {/* About Us Section - Light Navy Background */}
-        <section id="about-us" className="py-20 scroll-mt-20 bg-stravesta-navy/30 relative">
+        {/* About Us Section - Darker Background for Visual Separation */}
+        <section id="about-us" className="py-20 scroll-mt-20 bg-stravesta-dark relative">
           <div className="absolute inset-0">
-            <div className="absolute top-10 left-10 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-10 right-10 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute top-10 right-10 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-10 left-10 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl animate-pulse"></div>
           </div>
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center mb-16">
