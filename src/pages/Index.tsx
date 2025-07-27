@@ -108,8 +108,8 @@ const IndexContent = () => {
           </div>
         </section>
         
-        {/* KI Trading Journal Analytics Section - Dark Gray Background */}
-        <section id="journal-analytics" className="scroll-mt-20 bg-stravesta-darkGray relative">
+        {/* KI Trading Journal Analytics Section - Dark Navy Blue Background */}
+        <section id="journal-analytics" className="scroll-mt-20 bg-[#0a1b2e] relative">
           <div className="relative z-10">
             <TradeAnalyticsSection />
           </div>
