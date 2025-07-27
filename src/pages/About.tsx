@@ -84,7 +84,7 @@ const About = () => {
           {/* About Stravesta Section */}
           <div className="bg-stravesta-navy/40 backdrop-blur-sm rounded-xl p-8 border border-stravesta-teal/20">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gradient mb-6">The Future of Trading</h2>
+              <h2 className="text-3xl font-bold text-gradient mb-6">What is Stravesta</h2>
               <div className="space-y-6 max-w-4xl mx-auto">
                 <p className="text-lg text-stravesta-lightGray leading-relaxed">
                   Stravesta combines state-of-the-art AI technology with proven trading strategies to give you a decisive 

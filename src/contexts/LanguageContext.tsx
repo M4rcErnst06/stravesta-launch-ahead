@@ -78,7 +78,7 @@ const translations = {
     'feature.journal.feature4': 'Performance reports',
     
     // About Section
-    'about.title': 'The Future of Trading',
+    'about.title': 'What is Stravesta',
     'about.paragraph1': 'Stravesta combines state-of-the-art AI technology with proven trading strategies to give you a decisive advantage in the markets.',
     'about.paragraph2': 'Our platform learns from your trading style and helps you achieve consistent profits while minimizing risks.',
     'about.paragraph3': 'From automatic setup recognition to intelligent trading bots - Stravesta is your personal trading assistant.',

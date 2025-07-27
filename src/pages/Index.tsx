@@ -123,7 +123,7 @@ const IndexContent = () => {
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
-                The Future of Trading
+                What is Stravesta
               </h2>
               <div className="text-lg text-stravesta-lightGray space-y-6">
                 <p className="opacity-0 translate-y-8 transition-all duration-700 delay-200" data-animate>
