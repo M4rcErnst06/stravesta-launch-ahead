@@ -24,24 +24,29 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="min-h-screen bg-transparent relative overflow-hidden flex items-start pt-32">
+    <section className="min-h-screen bg-transparent relative overflow-hidden flex flex-col justify-between pt-32 pb-20">
       {/* Remove background effects to let chart show through */}
       
       <div className="relative z-20 container mx-auto px-4">
         <div className="text-center max-w-5xl mx-auto">
-          {/* Main Headline - Größer gemacht */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight animate-fade-in">
+          {/* Main Headline - Etwas kleiner gemacht */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight animate-fade-in">
             <span className="text-white">Trading with</span>
             <br />
             <span className="text-gradient">AI-Power</span>
           </h1>
-          
+        </div>
+      </div>
+      
+      {/* Content in unterer Mitte */}
+      <div className="relative z-20 container mx-auto px-4">
+        <div className="text-center max-w-4xl mx-auto">
           <p className="text-xl md:text-2xl lg:text-3xl text-stravesta-lightGray mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-in-delay font-medium">
             Stravesta is for traders and investors who aim higher
           </p>
 
-          {/* CTA Button - Größer gemacht */}
-          <div className="flex justify-center items-center mb-12 animate-scale-in">
+          {/* CTA Button */}
+          <div className="flex justify-center items-center animate-scale-in">
             <Button 
               onClick={() => scrollToSection('#early-access')}
               size="lg" 
@@ -51,7 +56,6 @@ const HeroSection = () => {
               <ArrowRight className="ml-3 h-6 w-6 lg:h-7 lg:w-7" />
             </Button>
           </div>
-
         </div>
       </div>
 
