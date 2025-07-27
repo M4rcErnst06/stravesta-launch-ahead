@@ -75,7 +75,7 @@ const IndexContent = () => {
         </section>
         
         {/* What is Stravesta Section - Light Navy Background */}
-        <section id="about" className="py-20 scroll-mt-20 bg-stravesta-navy relative">
+        <section id="about" className="py-20 scroll-mt-20 bg-stravesta-navy/30 relative">
           <div className="absolute inset-0">
             <div className="absolute top-10 left-10 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl animate-pulse"></div>
             <div className="absolute bottom-10 right-10 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>
