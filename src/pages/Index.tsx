@@ -74,12 +74,8 @@ const IndexContent = () => {
           </div>
         </section>
         
-        {/* What is Stravesta Section - Light Navy Background */}
-        <section id="about" className="py-20 scroll-mt-20 bg-stravesta-navy/30 relative">
-          <div className="absolute inset-0">
-            <div className="absolute top-10 left-10 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-10 right-10 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>
-          </div>
+        {/* What is Stravesta Section - Same background as AI Setup Scanner */}
+        <section id="about" className="py-20 scroll-mt-20 bg-[#0b1e35] relative">
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
