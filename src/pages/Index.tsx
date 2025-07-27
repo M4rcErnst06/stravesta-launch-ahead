@@ -76,13 +76,6 @@ const IndexContent = () => {
         
         {/* What is Stravesta Section - Modern Glassmorphism Design */}
         <section id="about" className="py-32 scroll-mt-20 bg-[#0b1e35] relative overflow-hidden">
-          {/* Modern animated background */}
-          <div className="absolute inset-0">
-            <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-stravesta-teal/20 to-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-l from-blue-400/20 to-stravesta-teal/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-stravesta-teal/5 to-blue-500/5 rounded-full blur-[100px] animate-pulse" style={{animationDelay: '2s'}}></div>
-          </div>
-          
           <div className="container mx-auto px-4 relative z-10">
             {/* Modern glassmorphism container */}
             <div className="max-w-6xl mx-auto">
@@ -110,11 +103,6 @@ const IndexContent = () => {
         
         {/* KI Setup Scanner Section - Navy Blue Background */}
         <section id="setup-scanner" className="scroll-mt-20 bg-[#081624] relative">
-          {/* Section-specific background effects */}
-          <div className="absolute inset-0">
-            <div className="absolute top-20 left-10 w-96 h-96 bg-stravesta-teal/3 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/3 rounded-full blur-3xl animate-pulse"></div>
-          </div>
           <div className="relative z-10">
             <SetupScannerSection />
           </div>
@@ -122,11 +110,6 @@ const IndexContent = () => {
         
         {/* KI Trading Journal Analytics Section - Dark Gray Background */}
         <section id="journal-analytics" className="scroll-mt-20 bg-stravesta-darkGray relative">
-          {/* Section-specific background effects */}
-          <div className="absolute inset-0">
-            <div className="absolute top-20 left-10 w-96 h-96 bg-green-500/3 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-20 right-10 w-96 h-96 bg-stravesta-teal/3 rounded-full blur-3xl animate-pulse"></div>
-          </div>
           <div className="relative z-10">
             <TradeAnalyticsSection />
           </div>
@@ -150,12 +133,6 @@ const IndexContent = () => {
 
         {/* About Us Section - Modern Card Design */}
         <section id="about-us" className="py-32 scroll-mt-20 bg-[#081624] relative overflow-hidden">
-          {/* Modern animated background */}
-          <div className="absolute inset-0">
-            <div className="absolute top-10 right-20 w-80 h-80 bg-gradient-to-br from-purple-500/20 to-stravesta-teal/20 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-10 left-20 w-80 h-80 bg-gradient-to-tr from-blue-400/20 to-green-400/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1.5s'}}></div>
-          </div>
-          
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-6xl mx-auto">
               {/* Modern section header */}
