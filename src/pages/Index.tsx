@@ -74,6 +74,32 @@ const IndexContent = () => {
           </div>
         </section>
         
+        {/* What is Stravesta Section - Light Navy Background */}
+        <section id="about" className="py-20 scroll-mt-20 bg-stravesta-navy/30 relative">
+          <div className="absolute inset-0">
+            <div className="absolute top-10 left-10 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-10 right-10 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>
+          </div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
+                What is Stravesta
+              </h2>
+              <div className="text-lg text-stravesta-lightGray space-y-6">
+                <p className="opacity-0 translate-y-8 transition-all duration-700 delay-200" data-animate>
+                  Stravesta combines state-of-the-art AI technology with proven trading strategies to give you a decisive advantage in the markets.
+                </p>
+                <p className="opacity-0 translate-y-8 transition-all duration-700 delay-400" data-animate>
+                  Our platform learns from your trading style and helps you achieve consistent profits while minimizing risks.
+                </p>
+                <p className="opacity-0 translate-y-8 transition-all duration-700 delay-600" data-animate>
+                  From automatic setup recognition to intelligent trading bots - Stravesta is your personal trading assistant.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        
         {/* KI Setup Scanner Section - Navy Blue Background */}
         <section id="setup-scanner" className="scroll-mt-20 bg-stravesta-navy relative">
           {/* Section-specific background effects */}
@@ -113,32 +139,6 @@ const IndexContent = () => {
             </div>
           </section>
         )}
-
-        {/* The Future of Trading Section - Light Navy Background */}
-        <section id="about" className="py-20 scroll-mt-20 bg-stravesta-navy/30 relative">
-          <div className="absolute inset-0">
-            <div className="absolute top-10 left-10 w-64 h-64 bg-stravesta-teal/5 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-10 right-10 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>
-          </div>
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
-                What is Stravesta
-              </h2>
-              <div className="text-lg text-stravesta-lightGray space-y-6">
-                <p className="opacity-0 translate-y-8 transition-all duration-700 delay-200" data-animate>
-                  Stravesta combines state-of-the-art AI technology with proven trading strategies to give you a decisive advantage in the markets.
-                </p>
-                <p className="opacity-0 translate-y-8 transition-all duration-700 delay-400" data-animate>
-                  Our platform learns from your trading style and helps you achieve consistent profits while minimizing risks.
-                </p>
-                <p className="opacity-0 translate-y-8 transition-all duration-700 delay-600" data-animate>
-                  From automatic setup recognition to intelligent trading bots - Stravesta is your personal trading assistant.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* About Us Section - Darker Background for Visual Separation */}
         <section id="about-us" className="py-20 scroll-mt-20 bg-stravesta-dark relative">
