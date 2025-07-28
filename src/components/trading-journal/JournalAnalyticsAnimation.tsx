@@ -143,9 +143,6 @@ const JournalAnalyticsAnimation = () => {
         {/* Trading Journal */}
         <div className="space-y-4">
           <div className="flex items-center gap-3 mb-6">
-            <div className="bg-stravesta-teal/20 border border-dashed border-stravesta-teal/30 p-2 rounded-lg">
-              <div className="h-6 w-6 bg-stravesta-teal rounded opacity-80"></div>
-            </div>
             <div>
               <h3 className="text-xl font-bold text-white opacity-90">Trading Journal (Preview)</h3>
               <p className="text-stravesta-lightGray text-sm opacity-80">Your recent trades</p>
@@ -205,9 +202,6 @@ const JournalAnalyticsAnimation = () => {
         {/* AI Insights */}
         <div className="space-y-4">
           <div className="flex items-center gap-3 mb-6">
-            <div className="bg-gradient-to-r from-stravesta-teal/50 to-blue-500/50 border border-dashed border-blue-500/30 p-2 rounded-lg">
-              <div className="h-6 w-6 bg-white rounded opacity-80"></div>
-            </div>
             <div>
               <h3 className="text-xl font-bold text-white opacity-90">AI Analysis (Preview)</h3>
               <p className="text-stravesta-lightGray text-sm opacity-80">Strategic Insights</p>
