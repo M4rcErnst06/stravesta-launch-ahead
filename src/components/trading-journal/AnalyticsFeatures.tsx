@@ -1,30 +1,26 @@
 
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Brain, TrendingUp, Target, BarChart3 } from 'lucide-react';
+
 
 const AnalyticsFeatures = () => {
   const analyticsFeatures = [
     {
-      icon: <Brain className="h-6 w-6" />,
       title: "AI Pattern Recognition",
       description: "Automatic analysis of your trading habits and success patterns",
       color: "#17E6C8"
     },
     {
-      icon: <Target className="h-6 w-6" />,
       title: "Emotion Tracking", 
       description: "Correlation between emotions and trading performance",
       color: "#17E6C8"
     },
     {
-      icon: <TrendingUp className="h-6 w-6" />,
       title: "Performance Optimization",
       description: "Concrete action recommendations to improve your results",
       color: "#17E6C8"
     },
     {
-      icon: <BarChart3 className="h-6 w-6" />,
       title: "Predictive Analytics",
       description: "AI-based predictions for future trading decisions",
       color: "#17E6C8"
@@ -52,14 +48,6 @@ const AnalyticsFeatures = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal/0 via-stravesta-teal/10 to-stravesta-teal/0 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
             
             <CardHeader className="relative z-10">
-              <div 
-                className="w-12 h-12 rounded-full flex items-center justify-center mb-4"
-                style={{ backgroundColor: `${feature.color}20` }}
-              >
-                <div style={{ color: feature.color }}>
-                  {feature.icon}
-                </div>
-              </div>
               <CardTitle className="text-lg text-white">
                 {feature.title}
               </CardTitle>

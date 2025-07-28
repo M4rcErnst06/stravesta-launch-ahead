@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Brain, Zap, Target, TrendingUp, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { AlertCircle, CheckCircle2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import TradingChartAnimation from './TradingChartAnimation';
@@ -8,21 +8,18 @@ import TradingChartAnimation from './TradingChartAnimation';
 const SetupScannerSection = () => {
   const features = [
     {
-      icon: <Brain className="h-8 w-8" />,
       title: "AI-Powered Recognition", 
       description: "Our sophisticated machine learning algorithms automatically identify and analyze complex chart patterns, support and resistance levels, and trading formations across all major markets with 89% accuracy.",
       color: "from-stravesta-teal/20 to-stravesta-teal/20",
       iconColor: "#17E6C8"
     },
     {
-      icon: <Zap className="h-8 w-8" />,
       title: "Real-time Alerts",
       description: "Receive instant notifications via mobile app, email, or desktop whenever high-probability trading opportunities emerge that match your specific criteria and risk parameters.", 
       color: "from-stravesta-teal/20 to-stravesta-teal/20",
       iconColor: "#17E6C8"
     },
     {
-      icon: <Target className="h-8 w-8" />,
       title: "Precise Entry Points",
       description: "Get mathematically calculated entry and exit points with precise stop-loss and take-profit levels, optimized for your risk tolerance and designed to maximize your profit potential.",
       color: "from-stravesta-teal/20 to-stravesta-teal/20", 
@@ -37,7 +34,6 @@ const SetupScannerSection = () => {
         {/* Hero Header */}
         <div className="text-center mb-16" data-animate>
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-gradient-to-r from-stravesta-teal/20 to-blue-500/20 rounded-full border border-stravesta-teal/30">
-            <Brain className="h-5 w-5 text-stravesta-teal" />
             <span className="text-sm font-medium text-stravesta-teal">AI-Powered Trading</span>
           </div>
           
@@ -156,14 +152,6 @@ const SetupScannerSection = () => {
                 <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
                 
                 <CardHeader className="relative z-10 text-center">
-                  <div 
-                    className={`w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br ${feature.color} flex items-center justify-center`}
-                    style={{ backgroundColor: `${feature.iconColor}20` }}
-                  >
-                    <div style={{ color: feature.iconColor }}>
-                      {feature.icon}
-                    </div>
-                  </div>
                   <CardTitle className="text-xl text-white mb-2">
                     {feature.title}
                   </CardTitle>

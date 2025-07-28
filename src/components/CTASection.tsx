@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import EmailSubscribeForm from '@/components/EmailSubscribeForm';
-import { Rocket, Crown, Users, Zap } from 'lucide-react';
+import { Rocket, Crown, Users } from 'lucide-react';
 
 const CTASection = () => {
   
@@ -38,7 +38,6 @@ const CTASection = () => {
                   <span className="text-sm text-stravesta-lightGray">25% Launch Discount</span>
                 </div>
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-stravesta-teal/5 hover:bg-stravesta-teal/10 transition-colors duration-300">
-                  <Zap className="w-5 h-5 text-stravesta-teal flex-shrink-0" />
                   <span className="text-sm text-stravesta-lightGray">Beta Features First</span>
                 </div>
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-stravesta-teal/5 hover:bg-stravesta-teal/10 transition-colors duration-300">
