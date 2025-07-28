@@ -79,19 +79,19 @@ const IndexContent = () => {
           <div className="container mx-auto px-4 relative z-10">
             {/* Modern glassmorphism container */}
             <div className="max-w-6xl mx-auto">
-              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-12 shadow-2xl hover:bg-white/10 transition-all duration-500 group">
+              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-12 shadow-2xl">
                 <div className="text-center">
-                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-gradient opacity-0 translate-y-8 transition-all duration-700 group-hover:scale-105" data-animate>
+                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
                     What is Stravesta
                   </h2>
                   <div className="space-y-8 text-lg md:text-xl lg:text-2xl text-stravesta-lightGray/90 leading-relaxed">
-                    <p className="opacity-0 translate-y-8 transition-all duration-700 delay-200 hover:text-white/90 transition-colors duration-300" data-animate>
+                    <p className="opacity-0 translate-y-8 transition-all duration-700 delay-200" data-animate>
                       Stravesta combines state-of-the-art AI technology with proven trading strategies to give you a decisive advantage in the markets.
                     </p>
-                    <p className="opacity-0 translate-y-8 transition-all duration-700 delay-400 hover:text-white/90 transition-colors duration-300" data-animate>
+                    <p className="opacity-0 translate-y-8 transition-all duration-700 delay-400" data-animate>
                       Our platform learns from your trading style and helps you achieve consistent profits while minimizing risks.
                     </p>
-                    <p className="opacity-0 translate-y-8 transition-all duration-700 delay-600 hover:text-white/90 transition-colors duration-300" data-animate>
+                    <p className="opacity-0 translate-y-8 transition-all duration-700 delay-600" data-animate>
                       From automatic setup recognition to intelligent trading bots - Stravesta is your personal trading assistant.
                     </p>
                   </div>
