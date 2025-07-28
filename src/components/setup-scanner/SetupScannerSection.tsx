@@ -8,14 +8,14 @@ import TradingChartAnimation from './TradingChartAnimation';
 const SetupScannerSection = () => {
   const features = [
     {
-      title: "Your setups detected automatically.", 
-      description: "Stravesta recognizes your patterns and chart signals in real-time.",
+      title: "Automatic Setup Detection", 
+      description: "Stravesta finds your best patterns. You stay focused.",
       color: "from-stravesta-teal/20 to-stravesta-teal/20",
       iconColor: "#17E6C8"
     },
     {
-      title: "Alerts that matter.",
-      description: "Get notified the moment your rules match real opportunities.", 
+      title: "Real-Time Alerts",
+      description: "Get notified the second your strategy conditions are met.", 
       color: "from-stravesta-teal/20 to-stravesta-teal/20",
       iconColor: "#17E6C8"
     }
@@ -31,22 +31,13 @@ const SetupScannerSection = () => {
             Meet your AI Trading Assistant
           </h2>
           <p className="text-xl text-stravesta-lightGray max-w-3xl mx-auto mb-8">
-            Stravesta scans the markets 24/7 finds your best setups and keeps you ahead.
+            Let AI monitor the charts while you focus on execution
           </p>
           
         </div>
 
         {/* Features Grid */}
         <div className="mb-16" data-animate>
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-white mb-4">
-              Intelligent Trading Support
-            </h3>
-            <p className="text-lg text-stravesta-lightGray max-w-2xl mx-auto">
-              Two core features that will revolutionize your trading
-            </p>
-          </div>
-
           <div className="grid md:grid-cols-2 gap-8">
             {features.map((feature, index) => (
               <Card 
