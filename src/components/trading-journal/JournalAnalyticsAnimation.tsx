@@ -130,15 +130,6 @@ const JournalAnalyticsAnimation = () => {
 
   return (
     <div className="max-w-6xl mx-auto bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-dashed border-stravesta-teal/30">
-      {/* Wireframe Preview Header */}
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-lg mb-4">
-          <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse"></div>
-          <span className="text-yellow-400 text-sm font-medium">Preview - Coming Soon in English</span>
-        </div>
-        <p className="text-stravesta-lightGray text-sm">This shows how the AI analytics will look when completed</p>
-      </div>
-      
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Trading Journal */}
         <div className="space-y-4">
