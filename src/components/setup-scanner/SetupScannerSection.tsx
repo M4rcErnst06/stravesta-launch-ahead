@@ -42,6 +42,38 @@ const SetupScannerSection = () => {
           
         </div>
 
+        {/* Features Grid */}
+        <div className="mb-16" data-animate>
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold text-white mb-4">
+              Intelligent Trading Support
+            </h3>
+            <p className="text-lg text-stravesta-lightGray max-w-2xl mx-auto">
+              Three core features that will revolutionize your trading
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <Card 
+                key={index}
+                className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group"
+              >
+                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
+                
+                <CardHeader className="relative z-10 text-center">
+                  <CardTitle className="text-xl text-white mb-2">
+                    {feature.title}
+                  </CardTitle>
+                  <CardDescription className="text-stravesta-lightGray">
+                    {feature.description}
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        </div>
+
         {/* Problem/Solution Section */}
         <div className="mb-20" data-animate>
           <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
@@ -124,38 +156,6 @@ const SetupScannerSection = () => {
                 <TradingChartAnimation />
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Features Grid */}
-        <div className="mb-16" data-animate>
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-white mb-4">
-              Intelligent Trading Support
-            </h3>
-            <p className="text-lg text-stravesta-lightGray max-w-2xl mx-auto">
-              Three core features that will revolutionize your trading
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <Card 
-                key={index}
-                className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group"
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
-                
-                <CardHeader className="relative z-10 text-center">
-                  <CardTitle className="text-xl text-white mb-2">
-                    {feature.title}
-                  </CardTitle>
-                  <CardDescription className="text-stravesta-lightGray">
-                    {feature.description}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
           </div>
         </div>
 
