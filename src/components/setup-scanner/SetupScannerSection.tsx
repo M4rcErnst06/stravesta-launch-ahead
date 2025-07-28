@@ -102,20 +102,20 @@ const SetupScannerSection = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <h3 className="text-lg font-semibold text-white mb-3">
-                  Why Traders Lose Money
+                  Why Most Traders Struggle
                 </h3>
                  <div className="space-y-4 text-stravesta-lightGray leading-relaxed">
                    <p>
-                     Traders constantly miss profitable trading opportunities because they cannot monitor all markets simultaneously. 
-                     The human eye simply cannot process the vast amount of market data required to identify every potential setup.
+                     They miss great setups because they can't watch their watchlist 24/7.
                    </p>
                    <p>
-                     Emotional decision-making destroys trading accounts faster than any other factor. Fear and greed override 
-                     rational analysis, leading to premature exits from winning trades and holding onto losing positions too long.
+                     Emotions take over fear, doubt, hesitation.
                    </p>
                    <p>
-                     Without systematic execution, even the best trading strategies fail. Manual trading leads to inconsistent 
-                     application of rules, missed entries, and poorly timed exits that erode profitability over time.
+                     Inconsistent execution ruins performance.
+                   </p>
+                   <p>
+                     Even solid strategies fail without structure, timing and discipline.
                    </p>
                  </div>
               </CardContent>
@@ -132,20 +132,23 @@ const SetupScannerSection = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <h3 className="text-lg font-semibold text-white mb-3">
-                  Stravesta AI Setup Scanner
+                  How Stravesta Helps You Win
                 </h3>
                  <div className="space-y-4 text-stravesta-lightGray leading-relaxed">
                    <p>
-                     Our advanced AI system monitors thousands of instruments across multiple timeframes simultaneously, 
-                     ensuring that every profitable trading setup is captured and analyzed with mathematical precision.
+                     AI scans all markets constantly – no missed setups.
                    </p>
                    <p>
-                     By removing human emotion from the equation, our AI provides systematic and objective analysis 
-                     of market conditions, executing trades based purely on statistical probabilities and proven patterns.
+                     Instant alerts based on your criteria – no second-guessing.
                    </p>
                    <p>
-                     Achieve consistent trading performance through intelligent AI support that learns from your successful 
-                     trades and continuously optimizes your strategy for maximum profitability and minimal risk exposure.
+                     Data-driven decisions, not emotions.
+                   </p>
+                   <p>
+                     Learns from your best trades and improves over time.
+                   </p>
+                   <p>
+                     With Stravesta, you trade with confidence – not chaos.
                    </p>
                  </div>
               </CardContent>
