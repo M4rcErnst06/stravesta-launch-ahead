@@ -8,21 +8,15 @@ import TradingChartAnimation from './TradingChartAnimation';
 const SetupScannerSection = () => {
   const features = [
     {
-      title: "AI-Powered Recognition", 
-      description: "Our sophisticated machine learning algorithms automatically identify and analyze complex chart patterns, support and resistance levels, and trading formations across all major markets with 89% accuracy.",
+      title: "Your setups detected automatically.", 
+      description: "Stravesta recognizes your patterns and chart signals in real-time.",
       color: "from-stravesta-teal/20 to-stravesta-teal/20",
       iconColor: "#17E6C8"
     },
     {
-      title: "Real-time Alerts",
-      description: "Receive instant notifications via mobile app, email, or desktop whenever high-probability trading opportunities emerge that match your specific criteria and risk parameters.", 
+      title: "Alerts that matter.",
+      description: "Get notified the moment your rules match real opportunities.", 
       color: "from-stravesta-teal/20 to-stravesta-teal/20",
-      iconColor: "#17E6C8"
-    },
-    {
-      title: "Precise Entry Points",
-      description: "Get mathematically calculated entry and exit points with precise stop-loss and take-profit levels, optimized for your risk tolerance and designed to maximize your profit potential.",
-      color: "from-stravesta-teal/20 to-stravesta-teal/20", 
       iconColor: "#17E6C8"
     }
   ];
@@ -49,11 +43,11 @@ const SetupScannerSection = () => {
               Intelligent Trading Support
             </h3>
             <p className="text-lg text-stravesta-lightGray max-w-2xl mx-auto">
-              Three core features that will revolutionize your trading
+              Two core features that will revolutionize your trading
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {features.map((feature, index) => (
               <Card 
                 key={index}
