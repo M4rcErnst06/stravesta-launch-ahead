@@ -74,6 +74,26 @@ const SetupScannerSection = () => {
           </div>
         </div>
 
+        {/* Chart Animation */}
+        <div className="mb-20" data-animate>
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-white mb-4">
+              See the AI in Action
+            </h3>
+            <p className="text-stravesta-lightGray max-w-2xl mx-auto">
+              This animation shows how our AI recognizes profitable setups in real-time and notifies you instantly
+            </p>
+          </div>
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal/5 to-blue-500/5 rounded-2xl blur-xl"></div>
+            <div className="relative bg-stravesta-navy/50 backdrop-blur-sm rounded-2xl p-8 border border-stravesta-teal/20">
+              <div style={{ minHeight: '500px' }}>
+                <TradingChartAnimation />
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Problem/Solution Section */}
         <div className="mb-20" data-animate>
           <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
@@ -136,26 +156,6 @@ const SetupScannerSection = () => {
                  </div>
               </CardContent>
             </Card>
-          </div>
-        </div>
-
-        {/* Chart Animation */}
-        <div className="mb-20" data-animate>
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-white mb-4">
-              See the AI in Action
-            </h3>
-            <p className="text-stravesta-lightGray max-w-2xl mx-auto">
-              This animation shows how our AI recognizes profitable setups in real-time and notifies you instantly
-            </p>
-          </div>
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal/5 to-blue-500/5 rounded-2xl blur-xl"></div>
-            <div className="relative bg-stravesta-navy/50 backdrop-blur-sm rounded-2xl p-8 border border-stravesta-teal/20">
-              <div style={{ minHeight: '500px' }}>
-                <TradingChartAnimation />
-              </div>
-            </div>
           </div>
         </div>
 
