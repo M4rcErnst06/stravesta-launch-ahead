@@ -78,7 +78,7 @@ const BackgroundChartAnimation = () => {
   }, []);
 
   return (
-    <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none -z-10">
+    <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
       {/* Container with defined bounds and fade effects */}
       <div className="w-full max-w-[1400px] mx-auto h-full relative overflow-hidden">
         <svg

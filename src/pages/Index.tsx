@@ -64,7 +64,7 @@ const IndexContent = () => {
         {/* Hero Section with Chart Background */}
         <section id="home" className="pt-20 bg-stravesta-dark relative min-h-screen">
           {/* Chart Animation Background - with bounds */}
-          <div className="absolute top-24 bottom-12 left-0 right-0 -z-10 overflow-hidden">
+          <div className="absolute top-24 bottom-12 left-0 right-0 z-5 overflow-hidden">
             <BackgroundChartAnimation />
           </div>
           
