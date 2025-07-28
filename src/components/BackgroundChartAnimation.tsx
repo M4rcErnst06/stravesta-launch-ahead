@@ -114,16 +114,17 @@ const BackgroundChartAnimation = () => {
         
         {/* No grid background - solid color only */}
         
-        {/* Main candlestick chart - Center screen */}
+        {/* Main candlestick chart - Center screen with bounds */}
         {candles.map(candle => {
-          const scale = 5;
-          const centerY = 400; // Moved back to center area
-          const priceOffset = (candle.close - 100) * scale;
+          const scale = 3; // Reduced scale to keep within bounds
+          const centerY = 500; // Center vertically within the container
+          const maxRange = 200; // Maximum vertical range from center
+          const priceOffset = Math.max(-maxRange, Math.min(maxRange, (candle.close - 100) * scale));
           const baseY = centerY - priceOffset;
           const bodyHeight = Math.abs(candle.close - candle.open) * scale;
           const bodyY = baseY - Math.max(candle.open - 100, candle.close - 100) * scale;
-          const wickTop = baseY - (candle.high - 100) * scale;
-          const wickBottom = baseY - (candle.low - 100) * scale;
+          const wickTop = Math.max(100, baseY - (candle.high - 100) * scale); // Prevent going above container
+          const wickBottom = Math.min(900, baseY - (candle.low - 100) * scale); // Prevent going below container
           const isBullish = candle.close > candle.open;
           
             return (
