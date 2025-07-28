@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Brain, Target } from 'lucide-react';
 
 const AnalyticsProblemComparison = () => {
   return (
@@ -19,8 +18,7 @@ const AnalyticsProblemComparison = () => {
       <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         <Card className="bg-red-500/10 border-red-500/30 border-2">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
-              <Target className="h-5 w-5 text-red-400" />
+            <CardTitle className="text-white">
               Without AI Analysis
             </CardTitle>
           </CardHeader>
@@ -48,8 +46,7 @@ const AnalyticsProblemComparison = () => {
 
         <Card className="bg-green-500/10 border-green-500/30 border-2">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
-              <Brain className="h-5 w-5 text-green-400" />
+            <CardTitle className="text-white">
               With Stravesta AI
             </CardTitle>
           </CardHeader>

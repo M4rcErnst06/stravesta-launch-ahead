@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Download, Zap, CheckCircle, BarChart3, TrendingUp, ArrowRight } from 'lucide-react';
 
 interface MetaTraderTrade {
   ticket: string;
@@ -156,9 +155,6 @@ const MetaTraderSyncAnimation = () => {
         {/* MetaTrader History - Left Side (2 columns) */}
         <div className="lg:col-span-2 space-y-4 h-full flex flex-col">
           <div className="flex items-center gap-4">
-            <div className="bg-blue-500/20 p-3 rounded-lg">
-              <BarChart3 className="h-6 w-6 text-blue-400" />
-            </div>
             <div>
               <h3 className="text-xl font-bold text-white">MetaTrader 5 History</h3>
               <p className="text-stravesta-lightGray">Your closed trades</p>
@@ -213,9 +209,6 @@ const MetaTraderSyncAnimation = () => {
         {/* Stravesta Journal - Right Side (3 columns for more space) */}
         <div className="lg:col-span-3 space-y-4 h-full flex flex-col">
           <div className="flex items-center gap-4">
-            <div className="bg-gradient-to-r from-stravesta-teal to-blue-500 p-3 rounded-lg">
-              <TrendingUp className="h-6 w-6 text-white" />
-            </div>
             <div>
               <h3 className="text-xl font-bold text-white">Stravesta Journal</h3>
               <p className="text-stravesta-lightGray">Automatically synchronized</p>
@@ -255,7 +248,7 @@ const MetaTraderSyncAnimation = () => {
                   </div>
                   <div className="flex items-center gap-1">
                     {entry.status === 'complete' && (
-                      <CheckCircle className="h-3 w-3 text-green-500" />
+                      <div className="h-3 w-3 bg-green-500 rounded-full"></div>
                     )}
                   </div>
                 </div>
@@ -280,20 +273,19 @@ const MetaTraderSyncAnimation = () => {
       <div className="flex justify-center items-center mt-8 pt-6 border-t border-stravesta-darkGray">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3 text-base text-stravesta-lightGray">
-            <div className="w-4 h-4 rounded-lg bg-blue-500/20 flex items-center justify-center">
-              <BarChart3 className="h-3 w-3 text-blue-400" />
-            </div>
+            <div className="w-4 h-4 rounded-lg bg-blue-500/20"></div>
             MetaTrader 5
           </div>
           
           <div className={`transition-all duration-1000 ${currentStep >= 2 ? 'animate-pulse' : ''}`}>
-            <ArrowRight className="h-6 w-6 text-stravesta-teal" />
+            <div className="w-6 h-6 flex items-center justify-center">
+              <div className="w-3 h-0.5 bg-stravesta-teal"></div>
+              <div className="w-0 h-0 border-l-[6px] border-l-stravesta-teal border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent"></div>
+            </div>
           </div>
           
           <div className="flex items-center gap-3 text-base text-stravesta-lightGray">
-            <div className="w-4 h-4 rounded-lg bg-gradient-to-r from-stravesta-teal to-blue-500 flex items-center justify-center">
-              <TrendingUp className="h-3 w-3 text-white" />
-            </div>
+            <div className="w-4 h-4 rounded-lg bg-gradient-to-r from-stravesta-teal to-blue-500"></div>
             Stravesta Journal
           </div>
         </div>

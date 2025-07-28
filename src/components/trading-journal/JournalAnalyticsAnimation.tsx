@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Brain, TrendingUp, TrendingDown, Clock, Target, Zap } from 'lucide-react';
 
 interface TradeEntry {
   id: string;
@@ -61,7 +60,6 @@ const JournalAnalyticsAnimation = () => {
 
   const aiInsights = [
     {
-      icon: <Target className="h-4 w-4" />,
       title: "Pattern erkannt",
       message: "Ihre besten Trades (89% Winrate) entstehen bei London Session zwischen 14:00-16:00",
       color: "text-green-400",
@@ -69,7 +67,6 @@ const JournalAnalyticsAnimation = () => {
       borderColor: "border-green-500/30"
     },
     {
-      icon: <Brain className="h-4 w-4" />,
       title: "Emotion-Alert",
       message: "FOMO-Trades haben 73% niedrigere Winrate - warten Sie auf Setup-Bestätigung",
       color: "text-red-400",
@@ -77,7 +74,6 @@ const JournalAnalyticsAnimation = () => {
       borderColor: "border-red-500/30"
     },
     {
-      icon: <Zap className="h-4 w-4" />,
       title: "Optimierung",
       message: "Stop Loss Optimierung: Bei Breakouts 1.5x ATR statt 1x für bessere RRR",
       color: "text-stravesta-teal",
@@ -85,7 +81,6 @@ const JournalAnalyticsAnimation = () => {
       borderColor: "border-stravesta-teal/30"
     },
     {
-      icon: <Clock className="h-4 w-4" />,
       title: "Timing-Insight",
       message: "Fibonacci-Setups: 0.618 Level zeigt 67% höhere Erfolgsrate als 0.5",
       color: "text-blue-400",
@@ -150,7 +145,7 @@ const JournalAnalyticsAnimation = () => {
         <div className="space-y-4">
           <div className="flex items-center gap-3 mb-6">
             <div className="bg-stravesta-teal/20 border border-dashed border-stravesta-teal/30 p-2 rounded-lg">
-              <Brain className="h-6 w-6 text-stravesta-teal opacity-80" />
+              <div className="h-6 w-6 bg-stravesta-teal rounded opacity-80"></div>
             </div>
             <div>
               <h3 className="text-xl font-bold text-white opacity-90">Trading Journal (Preview)</h3>
@@ -212,7 +207,7 @@ const JournalAnalyticsAnimation = () => {
         <div className="space-y-4">
           <div className="flex items-center gap-3 mb-6">
             <div className="bg-gradient-to-r from-stravesta-teal/50 to-blue-500/50 border border-dashed border-blue-500/30 p-2 rounded-lg">
-              <Brain className="h-6 w-6 text-white opacity-80" />
+              <div className="h-6 w-6 bg-white rounded opacity-80"></div>
             </div>
             <div>
               <h3 className="text-xl font-bold text-white opacity-90">AI Analysis (Preview)</h3>
@@ -232,9 +227,6 @@ const JournalAnalyticsAnimation = () => {
               >
                 <CardContent className="p-4">
                   <div className="flex items-start gap-3">
-                    <div className={`${insight.color} mt-1`}>
-                      {insight.icon}
-                    </div>
                     <div className="flex-1">
                       <h4 className={`font-semibold ${insight.color} mb-1`}>
                         {insight.title}

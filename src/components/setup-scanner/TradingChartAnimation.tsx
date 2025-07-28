@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Brain, Target, TrendingUp, AlertTriangle, Zap, CheckCircle2 } from 'lucide-react';
 
 interface CandleData {
   open: number;
@@ -339,7 +338,6 @@ const TradingChartAnimation = () => {
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <Brain className="h-6 w-6 text-stravesta-teal opacity-80" />
             <span className="text-white font-semibold text-lg opacity-90">EUR/USD • M15 • AI Setup Scanner (Preview)</span>
           </div>
           <div className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
@@ -353,22 +351,18 @@ const TradingChartAnimation = () => {
           }`}>
             {entryExecuted ? (
               <>
-                <CheckCircle2 className="h-5 w-5" />
                 <span className="font-medium">Entry Executed (Preview)</span>
               </>
             ) : alertTriggered ? (
               <>
-                <Zap className="h-5 w-5 animate-pulse" />
                 <span className="font-medium">Alert Triggered (Preview)</span>
               </>
             ) : patternDetected ? (
               <>
-                <Target className="h-5 w-5" />
                 <span className="font-medium">Pattern Detected (Preview)</span>
               </>
             ) : (
               <>
-                <Brain className="h-5 w-5" />
                 <span className="font-medium">AI Analyzing... (Preview)</span>
               </>
             )}
@@ -415,7 +409,6 @@ const TradingChartAnimation = () => {
       {alertTriggered && !entryExecuted && (
         <div className="absolute top-20 right-6 bg-yellow-500/20 border border-yellow-500/50 rounded-lg p-4 animate-pulse">
           <div className="flex items-center gap-3">
-            <Zap className="h-6 w-6 text-yellow-400" />
             <div>
               <div className="text-yellow-400 font-bold">Setup Alert!</div>
               <div className="text-yellow-300 text-sm">Bullish Flag - Entry imminent</div>

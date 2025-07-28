@@ -264,21 +264,6 @@ const IndexContent = () => {
                     </p>
                   </div>
                   
-                  {/* Modern stats or highlights */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-                    <div className="text-center group">
-                      <div className="text-3xl md:text-4xl font-bold text-stravesta-teal mb-2 group-hover:scale-110 transition-transform duration-300">2024</div>
-                      <div className="text-white/60 text-sm uppercase tracking-wide">Founded</div>
-                    </div>
-                    <div className="text-center group">
-                      <div className="text-3xl md:text-4xl font-bold text-blue-400 mb-2 group-hover:scale-110 transition-transform duration-300">AI</div>
-                      <div className="text-white/60 text-sm uppercase tracking-wide">Powered</div>
-                    </div>
-                    <div className="text-center group">
-                      <div className="text-3xl md:text-4xl font-bold text-green-400 mb-2 group-hover:scale-110 transition-transform duration-300">∞</div>
-                      <div className="text-white/60 text-sm uppercase tracking-wide">Possibilities</div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
