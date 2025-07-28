@@ -86,13 +86,13 @@ const IndexContent = () => {
                   </h2>
                   <div className="space-y-8 text-lg md:text-xl lg:text-2xl text-stravesta-lightGray/90 leading-relaxed">
                     <p className="opacity-0 translate-y-8 transition-all duration-700 delay-200" data-animate>
-                      Stravesta combines state-of-the-art AI technology with proven trading strategies to give you a decisive advantage in the markets.
+                      Stravesta is your intelligent trading assistant built to help you trade smarter, not harder.
                     </p>
                     <p className="opacity-0 translate-y-8 transition-all duration-700 delay-400" data-animate>
-                      Our platform learns from your trading style and helps you achieve consistent profits while minimizing risks.
+                      It learns from your unique trading behavior and spots your most successful patterns using AI.
                     </p>
                     <p className="opacity-0 translate-y-8 transition-all duration-700 delay-600" data-animate>
-                      From automatic setup recognition to intelligent trading bots - Stravesta is your personal trading assistant.
+                      From real-time setup recognition to fully personalized bots, Stravesta gives you clarity, structure, and a strategic edge.
                     </p>
                   </div>
                 </div>
