@@ -33,10 +33,6 @@ const SetupScannerSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Hero Header */}
         <div className="text-center mb-16" data-animate>
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-gradient-to-r from-stravesta-teal/20 to-blue-500/20 rounded-full border border-stravesta-teal/30">
-            <span className="text-sm font-medium text-stravesta-teal">AI-Powered Trading</span>
-          </div>
-          
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient">
             AI Setup Scanner
           </h2>

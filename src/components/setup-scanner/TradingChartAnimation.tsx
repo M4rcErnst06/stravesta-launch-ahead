@@ -323,15 +323,6 @@ const TradingChartAnimation = () => {
 
   return (
     <div className="relative w-full max-w-4xl mx-auto">
-      {/* Wireframe Preview Header */}
-      <div className="text-center mb-6">
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-lg mb-4">
-          <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse"></div>
-          <span className="text-yellow-400 text-sm font-medium">Preview - Coming Soon in English</span>
-        </div>
-        <p className="text-stravesta-lightGray text-sm">This shows how the AI scanner will work when completed</p>
-      </div>
-      
       {/* Chart Container */}
       <div className="bg-stravesta-navy/80 backdrop-blur-sm rounded-t-lg p-6 border border-dashed border-stravesta-teal/30">
         
