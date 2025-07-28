@@ -7,11 +7,10 @@ const AnalyticsProblemComparison = () => {
     <div className="mb-16" data-animate>
       <div className="text-center mb-12">
         <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-          The Problem: Superficial Self-Analysis
+          The Problem: Surface Level Self Analysis
         </h3>
         <p className="text-lg text-stravesta-lightGray max-w-2xl mx-auto">
-          Most traders analyze their trades only superficially and miss 
-          important patterns that make the difference between profit and loss.
+          Most traders repeat mistakes because they don't see the patterns in their own behavior.
         </p>
       </div>
 

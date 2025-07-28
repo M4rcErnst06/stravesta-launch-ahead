@@ -21,9 +21,7 @@ const TradeAnalyticsSection = () => {
               Automatic MetaTrader Integration
             </h3>
             <p className="text-stravesta-lightGray max-w-2xl mx-auto">
-              Watch how our seamless MetaTrader integration automatically imports all your trading data in real-time. 
-              Every trade is instantly synchronized with your Stravesta Journal and analyzed by our advanced AI algorithms 
-              to provide immediate insights into your trading performance and strategy effectiveness.
+              Instantly sync your trades from MetaTrader – and let AI turn them into insight.
             </p>
           </div>
           <div style={{ minHeight: '600px' }}>
@@ -38,9 +36,7 @@ const TradeAnalyticsSection = () => {
               AI Analysis in Action
             </h3>
             <p className="text-stravesta-lightGray max-w-3xl mx-auto">
-              Experience firsthand how our sophisticated AI engine processes your trading history to identify patterns, 
-              weaknesses, and opportunities. Watch as complex data transforms into clear, actionable insights that 
-              will revolutionize your trading approach and dramatically improve your success rate.
+              See how our AI turns your trade history into patterns, warnings, and strategic feedback – automatically.
             </p>
           </div>
           <div style={{ minHeight: '500px' }}>
