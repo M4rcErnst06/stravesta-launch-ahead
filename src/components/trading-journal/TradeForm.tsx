@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { PlusCircle } from 'lucide-react';
+
 import { toast } from '@/components/ui/use-toast';
 
 interface Trade {
@@ -99,10 +99,7 @@ const TradeForm: React.FC<TradeFormProps> = ({ onAddTrade }) => {
   return (
     <Card className="bg-stravesta-navy/60 backdrop-blur-sm border-stravesta-teal/30 max-w-4xl mx-auto">
       <CardHeader className="text-center">
-        <CardTitle className="text-white flex items-center justify-center gap-3 text-2xl">
-          <div className="p-3 bg-stravesta-teal/20 rounded-lg">
-            <PlusCircle className="h-7 w-7 text-stravesta-teal" />
-          </div>
+        <CardTitle className="text-white text-2xl text-center">
           Neuen Trade hinzufügen
         </CardTitle>
         <CardDescription className="text-stravesta-lightGray text-base mt-2">

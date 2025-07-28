@@ -1,12 +1,11 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertCircle, CheckCircle } from 'lucide-react';
+
 
 const ScannerProblemStatement = () => {
   const tradingScenarios = [
     {
-      icon: <AlertCircle className="h-5 w-5 text-red-400" />,
       title: "Without Stravesta",
       points: [
         "Setups are missed",
@@ -18,7 +17,6 @@ const ScannerProblemStatement = () => {
       borderColor: "border-red-500/30"
     },
     {
-      icon: <CheckCircle className="h-5 w-5 text-green-400" />,
       title: "With Stravesta",
       points: [
         "All setups captured",
@@ -50,8 +48,7 @@ const ScannerProblemStatement = () => {
             className={`${scenario.bgColor} ${scenario.borderColor} border-2`}
           >
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                {scenario.icon}
+              <CardTitle className="text-white">
                 {scenario.title}
               </CardTitle>
             </CardHeader>
