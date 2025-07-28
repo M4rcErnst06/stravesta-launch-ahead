@@ -34,11 +34,10 @@ const SetupScannerSection = () => {
         {/* Hero Header */}
         <div className="text-center mb-16" data-animate>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient">
-            AI Setup Scanner
+            Meet your AI Trading Assistant
           </h2>
           <p className="text-xl text-stravesta-lightGray max-w-3xl mx-auto mb-8">
-            Never miss profitable trading setups again. Our AI monitors the markets 24/7 
-            and automatically recognizes your individual trading strategies.
+            Stravesta scans the markets 24/7 finds your best setups and keeps you ahead.
           </p>
           
         </div>
