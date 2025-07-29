@@ -77,9 +77,12 @@ const TradeAnalyticsSection = () => {
       </div>
 
       {/* Adjusted alignment for consistency */}
-      <div className="w-full max-w-6xl mx-auto px-4">
-        <AnalyticsProblemComparison />
-      </div>
+ <div className="w-full max-w-full px-4">
+  <div className="max-w-6xl mx-auto">
+    <AnalyticsProblemComparison />
+  </div>
+</div>
+
     </section>
   );
 };
