@@ -259,6 +259,8 @@ return (
       <div className="flex justify-center mt-6 space-x-3">
         {[0, 1, 2, 3, 4].map(step => <div key={step} className={`w-3 h-3 rounded-full transition-all duration-300 ${currentStep >= step ? 'bg-stravesta-teal' : 'bg-stravesta-darkGray'}`} />)}
       </div>
-    </div>;
+    </div>
+  </div>
+  );
 };
 export default MetaTraderSyncAnimation;
