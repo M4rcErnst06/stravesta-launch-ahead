@@ -5,39 +5,29 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 const AnalyticsProblemComparison = () => {
   return (
     <div className="mb-16" data-animate>
-      <div className="text-center mb-12">
-        <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-          The Real Problem: You Don't Know What You Don't See.
-        </h3>
-        <p className="text-lg text-stravesta-lightGray max-w-2xl mx-auto">
-          Most traders repeat mistakes not because they're undisciplined, but because they never see the patterns behind them.
-        </p>
-      </div>
-
       <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         <Card className="bg-red-500/10 border-red-500/30 border-2">
           <CardHeader>
-            <CardTitle className="text-white">
-              Without Stravesta
+            <CardTitle className="text-white text-lg mb-2">
+              The Problem
             </CardTitle>
+            <h4 className="text-white font-semibold">
+              Why Most Traders Struggle
+            </h4>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-2">
-              <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0"></div>
-                Emotional trades
+            <ul className="space-y-3">
+              <li className="text-stravesta-lightGray text-sm">
+                They miss great setups because they can't watch their watchlist 24/7.
               </li>
-              <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0"></div>
-                No strategy improvement
+              <li className="text-stravesta-lightGray text-sm">
+                Emotions take over fear, doubt, hesitation.
               </li>
-              <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0"></div>
-                Vague notes, forgotten trades
+              <li className="text-stravesta-lightGray text-sm">
+                Inconsistent execution ruins performance.
               </li>
-              <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0"></div>
-                Same mistakes again & again
+              <li className="text-stravesta-lightGray text-sm">
+                Even solid strategies fail without structure, timing and discipline.
               </li>
             </ul>
           </CardContent>
@@ -45,27 +35,29 @@ const AnalyticsProblemComparison = () => {
 
         <Card className="bg-green-500/10 border-green-500/30 border-2">
           <CardHeader>
-            <CardTitle className="text-white">
-              With Stravesta
+            <CardTitle className="text-white text-lg mb-2">
+              The Solution
             </CardTitle>
+            <h4 className="text-white font-semibold">
+              How Stravesta Helps You Win
+            </h4>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-2">
-              <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0"></div>
-                Deep pattern recognition
+            <ul className="space-y-3">
+              <li className="text-stravesta-lightGray text-sm">
+                AI scans all markets constantly – no missed setups.
               </li>
-              <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0"></div>
-                Concrete action recommendations
+              <li className="text-stravesta-lightGray text-sm">
+                Instant alerts based on your criteria – no second-guessing.
               </li>
-              <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0"></div>
-                Continuous optimization
+              <li className="text-stravesta-lightGray text-sm">
+                Data-driven decisions, not emotions.
               </li>
-              <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0"></div>
-                Emotional control
+              <li className="text-stravesta-lightGray text-sm">
+                Learns from your best trades and improves over time.
+              </li>
+              <li className="text-stravesta-lightGray text-sm">
+                With Stravesta, you trade with confidence – not chaos.
               </li>
             </ul>
           </CardContent>
