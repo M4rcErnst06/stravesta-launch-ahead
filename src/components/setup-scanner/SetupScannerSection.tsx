@@ -31,7 +31,7 @@ const SetupScannerSection = () => {
         </div>
 
         {/* Feature Cards */}
-        <div className="grid md:grid-cols-2 gap-6 container mx-auto px-4 mb-20" data-animate>
+        <div className="grid md:grid-cols-2 gap-6 w-full mb-20" data-animate>
           {features.map((feature, index) => (
             <Card
               key={index}
