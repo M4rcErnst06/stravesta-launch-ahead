@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 import JournalAnalyticsAnimation from './JournalAnalyticsAnimation';
@@ -6,12 +5,11 @@ import MetaTraderSyncAnimation from './MetaTraderSyncAnimation';
 import AnalyticsHeader from './AnalyticsHeader';
 import AnalyticsProblemComparison from './AnalyticsProblemComparison';
 
-
 const TradeAnalyticsSection = () => {
   return (
     <section className="py-20 relative overflow-hidden">
       {/* Removed background effects from here as they are now handled by the parent section */}
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="w-full max-w-6xl mx-auto px-4 relative z-10">
         <AnalyticsHeader />
 
         {/* MetaTrader Integration Demo */}
@@ -39,9 +37,9 @@ const TradeAnalyticsSection = () => {
               See how our AI turns your trade history into patterns, warnings, and strategic feedback – automatically.
             </p>
           </div>
-          
+
           {/* Feature boxes */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" data-animate>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 w-full" data-animate>
             <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/20 to-stravesta-teal/20 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center">
@@ -71,15 +69,17 @@ const TradeAnalyticsSection = () => {
               </CardHeader>
             </Card>
           </div>
-          
+
           <div style={{ minHeight: '600px' }}>
             <JournalAnalyticsAnimation />
           </div>
         </div>
-
       </div>
-      
-      <AnalyticsProblemComparison />
+
+      {/* Adjusted alignment for consistency */}
+      <div className="w-full max-w-6xl mx-auto px-4">
+        <AnalyticsProblemComparison />
+      </div>
     </section>
   );
 };

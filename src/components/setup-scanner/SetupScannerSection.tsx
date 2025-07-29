@@ -1,155 +1,86 @@
-
 import React from 'react';
-import { AlertCircle, CheckCircle2 } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import TradingChartAnimation from './TradingChartAnimation';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import JournalAnalyticsAnimation from './JournalAnalyticsAnimation';
+import MetaTraderSyncAnimation from './MetaTraderSyncAnimation';
+import AnalyticsHeader from './AnalyticsHeader';
+import AnalyticsProblemComparison from './AnalyticsProblemComparison';
 
-const SetupScannerSection = () => {
-  const features = [
-    {
-      title: "Automatic Setup Detection", 
-      description: "Stravesta finds your best patterns. You stay focused.",
-      color: "from-stravesta-teal/20 to-stravesta-teal/20",
-      iconColor: "#17E6C8"
-    },
-    {
-      title: "Real-Time Alerts",
-      description: "Get notified the second your strategy conditions are met.", 
-      color: "from-stravesta-teal/20 to-stravesta-teal/20",
-      iconColor: "#17E6C8"
-    }
-  ];
-
-
+const TradeAnalyticsSection = () => {
   return (
     <section className="py-20 relative overflow-hidden">
-      <div className="container mx-auto px-4 relative z-10">
-        {/* Hero Header */}
-        <div className="text-center mb-16" data-animate>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient">
-            Meet your AI Trading Assistant
-          </h2>
-          <p className="text-xl text-stravesta-lightGray max-w-3xl mx-auto mb-8">
-            Let AI monitor the charts while you focus on execution
-          </p>
-          
-        </div>
+      <div className="container mx-auto px-4 max-w-6xl relative z-10">
+        <AnalyticsHeader />
 
-        {/* Features Grid */}
-        <div className="mb-16" data-animate>
-          <div className="grid md:grid-cols-2 gap-8">
-            {features.map((feature, index) => (
-              <Card 
-                key={index}
-                className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group"
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
-                
-                <CardHeader className="relative z-10 text-center">
-                  <CardTitle className="text-xl text-white mb-2">
-                    {feature.title}
-                  </CardTitle>
-                  <CardDescription className="text-stravesta-lightGray">
-                    {feature.description}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Chart Animation */}
+        {/* MetaTrader Integration Demo */}
         <div className="mb-20" data-animate>
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-white mb-4">
-              See the AI in Action
+            <h3 className="text-2xl font-bold text-white">
+              Automatic MetaTrader Integration
             </h3>
             <p className="text-stravesta-lightGray max-w-2xl mx-auto">
-              This animation shows how our AI recognizes profitable setups in real-time and notifies you instantly
+              Instantly sync your trades from MetaTrader – and let AI turn them into insight.
             </p>
           </div>
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal/5 to-blue-500/5 rounded-2xl blur-xl"></div>
-            <div className="relative bg-stravesta-navy/50 backdrop-blur-sm rounded-2xl p-8 border border-stravesta-teal/20">
-              <div style={{ minHeight: '500px' }}>
-                <TradingChartAnimation />
-              </div>
-            </div>
+          <div className="container mx-auto px-4 max-w-6xl">
+            <MetaTraderSyncAnimation />
           </div>
         </div>
 
-        {/* Problem/Solution Section */}
+        {/* Live Analytics Demo */}
         <div className="mb-20" data-animate>
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Problem */}
-            <Card className="bg-red-500/10 border-red-500/30 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 to-orange-500"></div>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-red-300">
-                  <AlertCircle className="h-6 w-6" />
-                  The Problem
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <h3 className="text-lg font-semibold text-white mb-3">
-                  Why Most Traders Struggle
-                </h3>
-                 <div className="space-y-4 text-stravesta-lightGray leading-relaxed">
-                   <p>
-                     They miss great setups because they can't watch their watchlist 24/7.
-                   </p>
-                   <p>
-                     Emotions take over fear, doubt, hesitation.
-                   </p>
-                   <p>
-                     Inconsistent execution ruins performance.
-                   </p>
-                   <p>
-                     Even solid strategies fail without structure, timing and discipline.
-                   </p>
-                 </div>
-              </CardContent>
-            </Card>
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-white mb-2">
+              AI Analysis in Action
+            </h3>
+            <p className="text-stravesta-lightGray max-w-3xl mx-auto">
+              See how our AI turns your trade history into patterns, warnings, and strategic feedback – automatically.
+            </p>
+          </div>
 
-            {/* Solution */}
-            <Card className="bg-green-500/10 border-green-500/30 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-emerald-500"></div>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-green-300">
-                  <CheckCircle2 className="h-6 w-6" />
-                  The Solution
-                </CardTitle>
+          {/* Feature boxes */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 container mx-auto px-4 max-w-6xl" data-animate>
+            <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/20 to-stravesta-teal/20 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
+              <CardHeader className="relative z-10 text-center">
+                <CardTitle className="text-xl text-white mb-2">AI Pattern Recognition</CardTitle>
+                <CardDescription className="text-stravesta-lightGray">Automatic analysis of your trading habits and success patterns</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <h3 className="text-lg font-semibold text-white mb-3">
-                  How Stravesta Helps You Win
-                </h3>
-                 <div className="space-y-4 text-stravesta-lightGray leading-relaxed">
-                   <p>
-                     AI scans all markets constantly – no missed setups.
-                   </p>
-                   <p>
-                     Instant alerts based on your criteria – no second-guessing.
-                   </p>
-                   <p>
-                     Data-driven decisions, not emotions.
-                   </p>
-                   <p>
-                     Learns from your best trades and improves over time.
-                   </p>
-                   <p>
-                     With Stravesta, you trade with confidence – not chaos.
-                   </p>
-                 </div>
-              </CardContent>
+            </Card>
+            <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/20 to-stravesta-teal/20 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
+              <CardHeader className="relative z-10 text-center">
+                <CardTitle className="text-xl text-white mb-2">Emotion Tracking</CardTitle>
+                <CardDescription className="text-stravesta-lightGray">Correlation between emotions and trading performance</CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/20 to-stravesta-teal/20 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
+              <CardHeader className="relative z-10 text-center">
+                <CardTitle className="text-xl text-white mb-2">Performance Optimization</CardTitle>
+                <CardDescription className="text-stravesta-lightGray">Concrete action recommendations to improve your results</CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/20 to-stravesta-teal/20 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
+              <CardHeader className="relative z-10 text-center">
+                <CardTitle className="text-xl text-white mb-2">Predictive Analytics</CardTitle>
+                <CardDescription className="text-stravesta-lightGray">AI-based predictions for future trading decisions</CardDescription>
+              </CardHeader>
             </Card>
           </div>
-        </div>
 
+          <div className="container mx-auto px-4 max-w-6xl">
+            <JournalAnalyticsAnimation />
+          </div>
+        </div>
+      </div>
+
+      {/* Ensure Problem Comparison matches layout */}
+      <div className="container mx-auto px-4 max-w-6xl">
+        <AnalyticsProblemComparison />
       </div>
     </section>
   );
 };
 
-export default SetupScannerSection;
+export default TradeAnalyticsSection;
