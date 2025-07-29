@@ -5,7 +5,7 @@ import JournalAnalyticsAnimation from './JournalAnalyticsAnimation';
 import MetaTraderSyncAnimation from './MetaTraderSyncAnimation';
 import AnalyticsHeader from './AnalyticsHeader';
 import AnalyticsProblemComparison from './AnalyticsProblemComparison';
-import AnalyticsFeatures from './AnalyticsFeatures';
+
 
 const TradeAnalyticsSection = () => {
   return (
@@ -66,7 +66,6 @@ const TradeAnalyticsSection = () => {
         </div>
 
         <AnalyticsProblemComparison />
-        <AnalyticsFeatures />
       </div>
     </section>
   );
