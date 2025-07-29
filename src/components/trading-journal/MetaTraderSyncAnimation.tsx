@@ -129,7 +129,7 @@ const MetaTraderSyncAnimation = () => {
     return () => clearInterval(interval);
   }, []);
 return (
-  <div className="container mx-auto px-4 max-w-6xl">
+    <div className="container mx-auto px-4 max-w-6xl" data-animate>
     <div className="w-full bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 p-8 backdrop-blur-sm border border-stravesta-teal/20 rounded-2xl">
 
       {/* Optimized layout for better proportions */}
