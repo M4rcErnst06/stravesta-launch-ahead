@@ -42,19 +42,19 @@ const TradeAnalyticsSection = () => {
           
           {/* Feature boxes */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" data-animate>
-            <div className="bg-card border border-border rounded-lg p-6">
+            <div className="bg-stravesta-darkGray/50 border border-stravesta-lightGray/20 rounded-lg p-6">
               <h4 className="text-white font-semibold mb-2">AI Pattern Recognition</h4>
               <p className="text-stravesta-lightGray text-sm">Automatic analysis of your trading habits and success patterns</p>
             </div>
-            <div className="bg-card border border-border rounded-lg p-6">
+            <div className="bg-stravesta-darkGray/50 border border-stravesta-lightGray/20 rounded-lg p-6">
               <h4 className="text-white font-semibold mb-2">Emotion Tracking</h4>
               <p className="text-stravesta-lightGray text-sm">Correlation between emotions and trading performance</p>
             </div>
-            <div className="bg-card border border-border rounded-lg p-6">
+            <div className="bg-stravesta-darkGray/50 border border-stravesta-lightGray/20 rounded-lg p-6">
               <h4 className="text-white font-semibold mb-2">Performance Optimization</h4>
               <p className="text-stravesta-lightGray text-sm">Concrete action recommendations to improve your results</p>
             </div>
-            <div className="bg-card border border-border rounded-lg p-6">
+            <div className="bg-stravesta-darkGray/50 border border-stravesta-lightGray/20 rounded-lg p-6">
               <h4 className="text-white font-semibold mb-2">Predictive Analytics</h4>
               <p className="text-stravesta-lightGray text-sm">AI-based predictions for future trading decisions</p>
             </div>
