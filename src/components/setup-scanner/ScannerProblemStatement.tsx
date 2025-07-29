@@ -41,7 +41,7 @@ const ScannerProblemStatement = () => {
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <div className="grid md:grid-cols-2 gap-8 w-full mx-auto">
         {tradingScenarios.map((scenario, index) => (
           <Card 
             key={index}

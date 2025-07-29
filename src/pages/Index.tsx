@@ -9,6 +9,7 @@ import SetupScannerSection from '@/components/setup-scanner/SetupScannerSection'
 import TradeAnalyticsSection from '@/components/trading-journal/TradeAnalyticsSection';
 import BackgroundChartAnimation from '@/components/BackgroundChartAnimation';
 const IndexContent = () => {
+  console.log('Index page rendering...');
 
   useEffect(() => {
     // Smooth scrolling for all links
