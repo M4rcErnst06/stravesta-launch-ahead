@@ -4,9 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const AnalyticsProblemComparison = () => {
   return (
-    <div className="mb-16" data-animate>
-      <div className="w-full bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-dashed border-stravesta-teal/30">
-        <div className="grid md:grid-cols-2 gap-8">
+    <div className="mb-16 container mx-auto px-4" data-animate>
+      <div className="grid md:grid-cols-2 gap-8">
         <Card className="bg-red-500/10 border-red-500/30 border-2">
           <CardHeader>
             <CardTitle className="text-white">
@@ -68,7 +67,6 @@ const AnalyticsProblemComparison = () => {
             </ul>
           </CardContent>
         </Card>
-        </div>
       </div>
     </div>
   );
