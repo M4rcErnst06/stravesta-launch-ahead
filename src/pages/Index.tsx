@@ -70,7 +70,7 @@ const IndexContent = () => {
           <div className="container mx-auto px-4 relative z-10">
             {/* Modern glassmorphism container */}
             <div className="max-w-6xl mx-auto">
-              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-12 shadow-2xl">
+              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-12 shadow-2xl w-full">
                 <div className="text-center">
                   <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
                     What is Stravesta
