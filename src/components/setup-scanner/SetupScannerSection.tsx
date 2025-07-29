@@ -1,4 +1,4 @@
-""import React from 'react';
+import React from 'react';
 import { AlertCircle, CheckCircle2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -57,7 +57,7 @@ const SetupScannerSection = () => {
         </div>
 
         {/* Chart Animation */}
-        <div className="mb-20" data-animate>
+        <div className="mb-20 max-w-3xl mx-auto px-4" data-animate>
           <div className="text-center mb-8">
             <h3 className="text-2xl font-bold text-white mb-4">
               See the AI in Action
@@ -77,7 +77,7 @@ const SetupScannerSection = () => {
         </div>
 
         {/* Problem/Solution Section */}
-        <div className="mb-20" data-animate>
+        <div className="mb-20 max-w-3xl mx-auto px-4" data-animate>
           <div className="grid md:grid-cols-2 gap-8">
             {/* Problem */}
             <Card className="bg-red-500/10 border-red-500/30 relative overflow-hidden">
