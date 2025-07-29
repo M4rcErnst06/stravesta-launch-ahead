@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { AlertCircle, CheckCircle2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,19 +7,18 @@ import TradingChartAnimation from './TradingChartAnimation';
 const SetupScannerSection = () => {
   const features = [
     {
-      title: "Automatic Setup Detection", 
+      title: "Automatic Setup Detection",
       description: "Stravesta finds your best patterns. You stay focused.",
       color: "from-stravesta-teal/20 to-stravesta-teal/20",
       iconColor: "#17E6C8"
     },
     {
       title: "Real-Time Alerts",
-      description: "Get notified the second your strategy conditions are met.", 
+      description: "Get notified the second your strategy conditions are met.",
       color: "from-stravesta-teal/20 to-stravesta-teal/20",
       iconColor: "#17E6C8"
     }
   ];
-
 
   return (
     <section className="py-20 relative overflow-hidden">
@@ -33,19 +31,18 @@ const SetupScannerSection = () => {
           <p className="text-xl text-stravesta-lightGray max-w-3xl mx-auto mb-8">
             Let AI monitor the charts while you focus on execution
           </p>
-          
         </div>
 
         {/* Features Grid */}
         <div className="mb-16" data-animate>
           <div className="grid md:grid-cols-2 gap-8">
             {features.map((feature, index) => (
-              <Card 
+              <Card
                 key={index}
                 className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group"
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
-                
+
                 <CardHeader className="relative z-10 text-center">
                   <CardTitle className="text-xl text-white mb-2">
                     {feature.title}
@@ -91,24 +88,16 @@ const SetupScannerSection = () => {
                   The Problem
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent>
                 <h3 className="text-lg font-semibold text-white mb-3">
                   Why Most Traders Struggle
                 </h3>
-                 <div className="space-y-4 text-stravesta-lightGray leading-relaxed">
-                   <p>
-                     They miss great setups because they can't watch their watchlist 24/7.
-                   </p>
-                   <p>
-                     Emotions take over fear, doubt, hesitation.
-                   </p>
-                   <p>
-                     Inconsistent execution ruins performance.
-                   </p>
-                   <p>
-                     Even solid strategies fail without structure, timing and discipline.
-                   </p>
-                 </div>
+                <ul className="list-disc list-inside space-y-3 text-stravesta-lightGray leading-relaxed marker:text-red-400">
+                  <li>They miss great setups because they can't watch their watchlist 24/7.</li>
+                  <li>Emotions take over fear, doubt, hesitation.</li>
+                  <li>Inconsistent execution ruins performance.</li>
+                  <li>Even solid strategies fail without structure, timing and discipline.</li>
+                </ul>
               </CardContent>
             </Card>
 
@@ -121,32 +110,21 @@ const SetupScannerSection = () => {
                   The Solution
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent>
                 <h3 className="text-lg font-semibold text-white mb-3">
                   How Stravesta Helps You Win
                 </h3>
-                 <div className="space-y-4 text-stravesta-lightGray leading-relaxed">
-                   <p>
-                     AI scans all markets constantly – no missed setups.
-                   </p>
-                   <p>
-                     Instant alerts based on your criteria – no second-guessing.
-                   </p>
-                   <p>
-                     Data-driven decisions, not emotions.
-                   </p>
-                   <p>
-                     Learns from your best trades and improves over time.
-                   </p>
-                   <p>
-                     With Stravesta, you trade with confidence – not chaos.
-                   </p>
-                 </div>
+                <ul className="list-disc list-inside space-y-3 text-stravesta-lightGray leading-relaxed marker:text-green-400">
+                  <li>AI scans all markets constantly – no missed setups.</li>
+                  <li>Instant alerts based on your criteria – no second-guessing.</li>
+                  <li>Data-driven decisions, not emotions.</li>
+                  <li>Learns from your best trades and improves over time.</li>
+                  <li>With Stravesta, you trade with confidence – not chaos.</li>
+                </ul>
               </CardContent>
             </Card>
           </div>
         </div>
-
       </div>
     </section>
   );
