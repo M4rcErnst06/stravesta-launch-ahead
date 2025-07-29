@@ -125,7 +125,7 @@ const IndexContent = () => {
             <div className="max-w-6xl mx-auto">
               {/* Modern section header */}
               <div className="text-center mb-20">
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
                   About Us
                 </h2>
                 <div className="w-24 h-1 bg-gradient-to-r from-stravesta-teal to-blue-400 mx-auto rounded-full opacity-0 translate-y-8 transition-all duration-700 delay-200" data-animate></div>
