@@ -1,4 +1,4 @@
-import React from 'react';
+""import React from 'react';
 import { AlertCircle, CheckCircle2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -22,7 +22,7 @@ const SetupScannerSection = () => {
 
   return (
     <section className="py-20 relative overflow-hidden">
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-10 max-w-5xl">
         {/* Hero Header */}
         <div className="text-center mb-16" data-animate>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient">
@@ -58,7 +58,7 @@ const SetupScannerSection = () => {
 
         {/* Chart Animation */}
         <div className="mb-20" data-animate>
-          <div className="text-center mb-8 max-w-5xl mx-auto px-4">
+          <div className="text-center mb-8">
             <h3 className="text-2xl font-bold text-white mb-4">
               See the AI in Action
             </h3>
@@ -66,7 +66,7 @@ const SetupScannerSection = () => {
               This animation shows how our AI recognizes profitable setups in real-time and notifies you instantly
             </p>
           </div>
-          <div className="relative max-w-5xl mx-auto px-4">
+          <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal/5 to-blue-500/5 rounded-2xl blur-xl"></div>
             <div className="relative bg-stravesta-navy/50 backdrop-blur-sm rounded-2xl p-8 border border-stravesta-teal/20">
               <div style={{ minHeight: '500px' }}>
@@ -78,7 +78,7 @@ const SetupScannerSection = () => {
 
         {/* Problem/Solution Section */}
         <div className="mb-20" data-animate>
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-8">
             {/* Problem */}
             <Card className="bg-red-500/10 border-red-500/30 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 to-orange-500"></div>
