@@ -72,7 +72,7 @@ const IndexContent = () => {
             <div className="max-w-6xl mx-auto">
               <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-12 shadow-2xl w-full">
                 <div className="text-center">
-                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
+                  <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gradient opacity-0 translate-y-8 transition-all duration-700" data-animate>
                     What is Stravesta
                   </h2>
                   <div className="space-y-8 text-lg md:text-xl lg:text-2xl text-stravesta-lightGray/90 leading-relaxed">
