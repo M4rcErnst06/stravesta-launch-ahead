@@ -5,6 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 const AnalyticsProblemComparison = () => {
   return (
     <div className="mb-16" data-animate>
+      <div className="text-center mb-12">
+        <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+          The Real Problem: You Don't Know What You Don't See.
+        </h3>
+        <p className="text-lg text-stravesta-lightGray max-w-2xl mx-auto">
+          Most traders repeat mistakes not because they're undisciplined, but because they never see the patterns behind them.
+        </p>
+      </div>
+
       <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         <Card className="bg-red-500/10 border-red-500/30 border-2">
           <CardHeader>
