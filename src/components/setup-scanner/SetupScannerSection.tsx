@@ -22,7 +22,7 @@ const SetupScannerSection = () => {
 
   return (
     <section className="py-20 relative overflow-hidden">
-      <div className="container mx-auto px-4 relative z-10 max-w-5xl">
+      <div className="container mx-auto px-4 relative z-10">
         {/* Hero Header */}
         <div className="text-center mb-16" data-animate>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient">
@@ -34,7 +34,7 @@ const SetupScannerSection = () => {
         </div>
 
         {/* Features Grid */}
-        <div className="mb-16" data-animate>
+        <div className="mb-16 max-w-4xl mx-auto" data-animate>
           <div className="grid md:grid-cols-2 gap-8">
             {features.map((feature, index) => (
               <Card
@@ -42,7 +42,6 @@ const SetupScannerSection = () => {
                 className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group"
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
-
                 <CardHeader className="relative z-10 text-center">
                   <CardTitle className="text-xl text-white mb-2">
                     {feature.title}
@@ -57,7 +56,7 @@ const SetupScannerSection = () => {
         </div>
 
         {/* Chart Animation */}
-        <div className="mb-20 max-w-3xl mx-auto px-4" data-animate>
+        <div className="mb-20 max-w-4xl mx-auto" data-animate>
           <div className="text-center mb-8">
             <h3 className="text-2xl font-bold text-white mb-4">
               See the AI in Action
@@ -77,7 +76,7 @@ const SetupScannerSection = () => {
         </div>
 
         {/* Problem/Solution Section */}
-        <div className="mb-20 max-w-3xl mx-auto px-4" data-animate>
+        <div className="mb-20 max-w-4xl mx-auto" data-animate>
           <div className="grid md:grid-cols-2 gap-8">
             {/* Problem */}
             <Card className="bg-red-500/10 border-red-500/30 relative overflow-hidden">
@@ -92,11 +91,23 @@ const SetupScannerSection = () => {
                 <h3 className="text-lg font-semibold text-white mb-3">
                   Why Most Traders Struggle
                 </h3>
-                <ul className="list-disc list-inside space-y-3 text-stravesta-lightGray leading-relaxed marker:text-red-400">
-                  <li>They miss great setups because they can't watch their watchlist 24/7.</li>
-                  <li>Emotions take over fear, doubt, hesitation.</li>
-                  <li>Inconsistent execution ruins performance.</li>
-                  <li>Even solid strategies fail without structure, timing and discipline.</li>
+                <ul className="space-y-3">
+                  <li className="text-stravesta-lightGray text-sm flex items-start gap-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0 mt-1.5"></div>
+                    They miss great setups because they can't watch their watchlist 24/7.
+                  </li>
+                  <li className="text-stravesta-lightGray text-sm flex items-start gap-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0 mt-1.5"></div>
+                    Emotions take over fear, doubt, hesitation.
+                  </li>
+                  <li className="text-stravesta-lightGray text-sm flex items-start gap-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0 mt-1.5"></div>
+                    Inconsistent execution ruins performance.
+                  </li>
+                  <li className="text-stravesta-lightGray text-sm flex items-start gap-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0 mt-1.5"></div>
+                    Even solid strategies fail without structure, timing and discipline.
+                  </li>
                 </ul>
               </CardContent>
             </Card>
@@ -114,12 +125,27 @@ const SetupScannerSection = () => {
                 <h3 className="text-lg font-semibold text-white mb-3">
                   How Stravesta Helps You Win
                 </h3>
-                <ul className="list-disc list-inside space-y-3 text-stravesta-lightGray leading-relaxed marker:text-green-400">
-                  <li>AI scans all markets constantly – no missed setups.</li>
-                  <li>Instant alerts based on your criteria – no second-guessing.</li>
-                  <li>Data-driven decisions, not emotions.</li>
-                  <li>Learns from your best trades and improves over time.</li>
-                  <li>With Stravesta, you trade with confidence – not chaos.</li>
+                <ul className="space-y-3">
+                  <li className="text-stravesta-lightGray text-sm flex items-start gap-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0 mt-1.5"></div>
+                    AI scans all markets constantly – no missed setups.
+                  </li>
+                  <li className="text-stravesta-lightGray text-sm flex items-start gap-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0 mt-1.5"></div>
+                    Instant alerts based on your criteria – no second-guessing.
+                  </li>
+                  <li className="text-stravesta-lightGray text-sm flex items-start gap-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0 mt-1.5"></div>
+                    Data-driven decisions, not emotions.
+                  </li>
+                  <li className="text-stravesta-lightGray text-sm flex items-start gap-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0 mt-1.5"></div>
+                    Learns from your best trades and improves over time.
+                  </li>
+                  <li className="text-stravesta-lightGray text-sm flex items-start gap-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0 mt-1.5"></div>
+                    With Stravesta, you trade with confidence – not chaos.
+                  </li>
                 </ul>
               </CardContent>
             </Card>
