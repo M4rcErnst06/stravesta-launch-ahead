@@ -1,9 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-
 interface MetaTraderTrade {
   ticket: string;
   time: string;
@@ -15,7 +13,6 @@ interface MetaTraderTrade {
   tp: number;
   profit: number;
 }
-
 interface JournalEntry {
   id: string;
   symbol: string;
@@ -27,55 +24,48 @@ interface JournalEntry {
   session: string;
   status: 'syncing' | 'complete';
 }
-
 const MetaTraderSyncAnimation = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [syncingTrades, setSyncingTrades] = useState<string[]>([]);
   const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([]);
 
   // Limit to 3 trades to maintain consistent size
-  const metaTraderTrades: MetaTraderTrade[] = [
-    {
-      ticket: 'mt5_trade_001',
-      time: '08:30:15',
-      type: 'buy',
-      size: 0.04,
-      symbol: 'XAUUSD',
-      price: 2034.56,
-      sl: 2030.00,
-      tp: 2040.00,
-      profit: 4.72
-    },
-    {
-      ticket: 'mt5_trade_002',
-      time: '14:15:42',
-      type: 'sell',
-      size: 0.24,
-      symbol: 'AUDUSD',
-      price: 0.6523,
-      sl: 0.6540,
-      tp: 0.6510,
-      profit: 2.64
-    },
-    {
-      ticket: 'mt5_trade_003',
-      time: '16:45:33',
-      type: 'sell',
-      size: 0.42,
-      symbol: 'NZDCAD',
-      price: 0.8234,
-      sl: 0.8250,
-      tp: 0.8220,
-      profit: 2.46
-    }
-  ];
-
+  const metaTraderTrades: MetaTraderTrade[] = [{
+    ticket: 'mt5_trade_001',
+    time: '08:30:15',
+    type: 'buy',
+    size: 0.04,
+    symbol: 'XAUUSD',
+    price: 2034.56,
+    sl: 2030.00,
+    tp: 2040.00,
+    profit: 4.72
+  }, {
+    ticket: 'mt5_trade_002',
+    time: '14:15:42',
+    type: 'sell',
+    size: 0.24,
+    symbol: 'AUDUSD',
+    price: 0.6523,
+    sl: 0.6540,
+    tp: 0.6510,
+    profit: 2.64
+  }, {
+    ticket: 'mt5_trade_003',
+    time: '16:45:33',
+    type: 'sell',
+    size: 0.42,
+    symbol: 'NZDCAD',
+    price: 0.8234,
+    sl: 0.8250,
+    tp: 0.8220,
+    profit: 2.46
+  }];
   const getCategory = (symbol: string) => {
     if (symbol.includes('XAU') || symbol.includes('XAG')) return 'Precious Metals';
     if (symbol.includes('AUD') || symbol.includes('NZD') || symbol.includes('CAD')) return 'Commodity Currencies';
     return 'Major Pairs';
   };
-
   const getSession = (time: string) => {
     const hour = parseInt(time.split(':')[0]);
     if (hour >= 8 && hour < 12) return 'London Open';
@@ -83,7 +73,6 @@ const MetaTraderSyncAnimation = () => {
     if (hour >= 20 && hour < 24) return 'New York Session';
     return 'Asian Session';
   };
-
   useEffect(() => {
     const runAnimation = async () => {
       // Step 1: Show MetaTrader history
@@ -113,16 +102,15 @@ const MetaTraderSyncAnimation = () => {
           session: getSession(trade.time),
           status: 'syncing'
         };
-
         setJournalEntries(prev => [...prev, journalEntry]);
         await new Promise(resolve => setTimeout(resolve, 500));
 
         // Mark as complete
-        setJournalEntries(prev => prev.map(entry => 
-          entry.id === trade.ticket ? { ...entry, status: 'complete' } : entry
-        ));
+        setJournalEntries(prev => prev.map(entry => entry.id === trade.ticket ? {
+          ...entry,
+          status: 'complete'
+        } : entry));
       }
-
       setSyncingTrades([]);
 
       // Step 4: Complete
@@ -135,15 +123,14 @@ const MetaTraderSyncAnimation = () => {
       setSyncingTrades([]);
       setJournalEntries([]);
     };
-
     const interval = setInterval(runAnimation, 15000);
     runAnimation(); // Start immediately
 
     return () => clearInterval(interval);
   }, []);
-
-  return (
-    <div className="w-full bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-stravesta-teal/20">
+return (
+  <div className="container mx-auto px-4 max-w-6xl">
+    <div className="w-full bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 p-8 backdrop-blur-sm border border-stravesta-teal/20 rounded-2xl">
 
       {/* Optimized layout for better proportions */}
       <div className="grid lg:grid-cols-5 gap-8 h-[550px]">
@@ -173,16 +160,13 @@ const MetaTraderSyncAnimation = () => {
               </div>
               
               <div className="space-y-3 flex-1">
-                {metaTraderTrades.map((trade, index) => (
-                  <div 
-                    key={trade.ticket}
-                    className={`
+                {metaTraderTrades.map((trade, index) => <div key={trade.ticket} className={`
                       grid grid-cols-7 gap-2 text-xs py-3 px-2 rounded transition-all duration-500
                       ${syncingTrades.includes(trade.ticket) ? 'bg-stravesta-teal/20 border border-stravesta-teal/50' : 'bg-stravesta-navy/30'}
                       ${currentStep >= 1 ? 'opacity-100' : 'opacity-0'}
-                    `}
-                    style={{ transitionDelay: `${index * 200}ms` }}
-                  >
+                    `} style={{
+                transitionDelay: `${index * 200}ms`
+              }}>
                     <span className="text-stravesta-lightGray text-xs">{trade.time}</span>
                     <span className={`font-semibold text-xs ${trade.type === 'buy' ? 'text-green-400' : 'text-red-400'}`}>
                       {trade.type.toUpperCase()}
@@ -194,8 +178,7 @@ const MetaTraderSyncAnimation = () => {
                     <span className={`font-bold text-sm ${trade.profit > 0 ? 'text-green-400' : 'text-red-400'}`}>
                       ${trade.profit}
                     </span>
-                  </div>
-                ))}
+                  </div>)}
               </div>
             </div>
           </div>
@@ -208,43 +191,30 @@ const MetaTraderSyncAnimation = () => {
               <h3 className="text-xl font-bold text-white">Stravesta Journal</h3>
               <p className="text-stravesta-lightGray">Automatically synchronized</p>
             </div>
-            {currentStep >= 3 && (
-              <Badge className="ml-auto bg-green-500/20 text-green-400 border-green-500/30">
+            {currentStep >= 3 && <Badge className="ml-auto bg-green-500/20 text-green-400 border-green-500/30">
                 {Math.min(journalEntries.length, 3)} Trades imported
-              </Badge>
-            )}
+              </Badge>}
           </div>
 
           {/* Journal entries - Compact container */}
           <div className="h-full space-y-2 overflow-hidden flex flex-col justify-start">
-            {journalEntries.slice(0, 3).map((entry, index) => (
-              <div 
-                key={entry.id}
-                className={`
+            {journalEntries.slice(0, 3).map((entry, index) => <div key={entry.id} className={`
                   bg-stravesta-dark/50 border border-stravesta-darkGray rounded-lg p-2.5 transition-all duration-700
                   ${entry.status === 'syncing' ? 'border-stravesta-teal shadow-lg shadow-stravesta-teal/20' : ''}
                   opacity-0 translate-x-8 animate-[fade-in_0.5s_ease-out_forwards] h-[70px] flex flex-col justify-between
-                `}
-                style={{ animationDelay: `${index * 300}ms` }}
-              >
+                `} style={{
+            animationDelay: `${index * 300}ms`
+          }}>
                 <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center gap-2">
                     <span className="font-bold text-white text-sm">{entry.symbol}</span>
-                    <Badge 
-                      className={`text-xs px-1.5 py-0.5 ${
-                        entry.type === 'buy' 
-                          ? 'bg-green-500/20 text-green-400 border-green-500/30' 
-                          : 'bg-red-500/20 text-red-400 border-red-500/30'
-                      }`}
-                    >
+                    <Badge className={`text-xs px-1.5 py-0.5 ${entry.type === 'buy' ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-red-500/20 text-red-400 border-red-500/30'}`}>
                       {entry.type.toUpperCase()}
                     </Badge>
                     <span className="text-xs text-stravesta-lightGray">{entry.time}</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    {entry.status === 'complete' && (
-                      <div className="h-3 w-3 bg-green-500 rounded-full"></div>
-                    )}
+                    {entry.status === 'complete' && <div className="h-3 w-3 bg-green-500 rounded-full"></div>}
                   </div>
                 </div>
                 
@@ -258,8 +228,7 @@ const MetaTraderSyncAnimation = () => {
                     ${entry.profit}
                   </span>
                 </div>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </div>
@@ -288,17 +257,8 @@ const MetaTraderSyncAnimation = () => {
 
       {/* Progress Indicator */}
       <div className="flex justify-center mt-6 space-x-3">
-        {[0, 1, 2, 3, 4].map((step) => (
-          <div
-            key={step}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              currentStep >= step ? 'bg-stravesta-teal' : 'bg-stravesta-darkGray'
-            }`}
-          />
-        ))}
+        {[0, 1, 2, 3, 4].map(step => <div key={step} className={`w-3 h-3 rounded-full transition-all duration-300 ${currentStep >= step ? 'bg-stravesta-teal' : 'bg-stravesta-darkGray'}`} />)}
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default MetaTraderSyncAnimation;
