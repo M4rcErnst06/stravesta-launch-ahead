@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const AnalyticsProblemComparison = () => {
   return (
-    <div className="w-full px-4" data-animate>
+    <div className="w-full" data-animate>
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-x-6 gap-y-10">
           <Card className="bg-red-500/10 border-red-500/30 border-2 p-6">
