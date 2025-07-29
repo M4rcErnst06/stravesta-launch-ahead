@@ -144,11 +144,6 @@ const MetaTraderSyncAnimation = () => {
 
   return (
     <div className="w-full bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-stravesta-teal/20">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-white mb-2">
-          See live how your MetaTrader trades are automatically synchronized to the Stravesta Journal and analyzed by our AI
-        </h2>
-      </div>
 
       {/* Optimized layout for better proportions */}
       <div className="grid lg:grid-cols-5 gap-8 h-[550px]">
