@@ -129,7 +129,7 @@ const JournalAnalyticsAnimation = () => {
   }, []);
 
   return (
-    <div className="max-w-6xl mx-auto bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-dashed border-stravesta-teal/30">
+    <div className="max-w-4xl mx-auto bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-dashed border-stravesta-teal/30">
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Trading Journal */}
         <div className="space-y-4">
