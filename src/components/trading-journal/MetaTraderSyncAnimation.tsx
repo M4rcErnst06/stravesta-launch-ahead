@@ -1,86 +1,304 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import JournalAnalyticsAnimation from './JournalAnalyticsAnimation';
-import MetaTraderSyncAnimation from './MetaTraderSyncAnimation';
-import AnalyticsHeader from './AnalyticsHeader';
-import AnalyticsProblemComparison from './AnalyticsProblemComparison';
 
-const TradeAnalyticsSection = () => {
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+
+interface MetaTraderTrade {
+  ticket: string;
+  time: string;
+  type: 'buy' | 'sell';
+  size: number;
+  symbol: string;
+  price: number;
+  sl: number;
+  tp: number;
+  profit: number;
+}
+
+interface JournalEntry {
+  id: string;
+  symbol: string;
+  type: 'buy' | 'sell';
+  size: number;
+  profit: number;
+  time: string;
+  category: string;
+  session: string;
+  status: 'syncing' | 'complete';
+}
+
+const MetaTraderSyncAnimation = () => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [syncingTrades, setSyncingTrades] = useState<string[]>([]);
+  const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([]);
+
+  // Limit to 3 trades to maintain consistent size
+  const metaTraderTrades: MetaTraderTrade[] = [
+    {
+      ticket: 'mt5_trade_001',
+      time: '08:30:15',
+      type: 'buy',
+      size: 0.04,
+      symbol: 'XAUUSD',
+      price: 2034.56,
+      sl: 2030.00,
+      tp: 2040.00,
+      profit: 4.72
+    },
+    {
+      ticket: 'mt5_trade_002',
+      time: '14:15:42',
+      type: 'sell',
+      size: 0.24,
+      symbol: 'AUDUSD',
+      price: 0.6523,
+      sl: 0.6540,
+      tp: 0.6510,
+      profit: 2.64
+    },
+    {
+      ticket: 'mt5_trade_003',
+      time: '16:45:33',
+      type: 'sell',
+      size: 0.42,
+      symbol: 'NZDCAD',
+      price: 0.8234,
+      sl: 0.8250,
+      tp: 0.8220,
+      profit: 2.46
+    }
+  ];
+
+  const getCategory = (symbol: string) => {
+    if (symbol.includes('XAU') || symbol.includes('XAG')) return 'Precious Metals';
+    if (symbol.includes('AUD') || symbol.includes('NZD') || symbol.includes('CAD')) return 'Commodity Currencies';
+    return 'Major Pairs';
+  };
+
+  const getSession = (time: string) => {
+    const hour = parseInt(time.split(':')[0]);
+    if (hour >= 8 && hour < 12) return 'London Open';
+    if (hour >= 14 && hour < 17) return 'London Session';
+    if (hour >= 20 && hour < 24) return 'New York Session';
+    return 'Asian Session';
+  };
+
+  useEffect(() => {
+    const runAnimation = async () => {
+      // Step 1: Show MetaTrader history
+      setCurrentStep(1);
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // Step 2: Start sync process
+      setCurrentStep(2);
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Step 3: Sync trades one by one
+      setCurrentStep(3);
+      for (let i = 0; i < metaTraderTrades.length; i++) {
+        const trade = metaTraderTrades[i];
+        setSyncingTrades(prev => [...prev, trade.ticket]);
+        await new Promise(resolve => setTimeout(resolve, 800));
+
+        // Add to journal
+        const journalEntry: JournalEntry = {
+          id: trade.ticket,
+          symbol: trade.symbol,
+          type: trade.type,
+          size: trade.size,
+          profit: trade.profit,
+          time: trade.time,
+          category: getCategory(trade.symbol),
+          session: getSession(trade.time),
+          status: 'syncing'
+        };
+
+        setJournalEntries(prev => [...prev, journalEntry]);
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // Mark as complete
+        setJournalEntries(prev => prev.map(entry => 
+          entry.id === trade.ticket ? { ...entry, status: 'complete' } : entry
+        ));
+      }
+
+      setSyncingTrades([]);
+
+      // Step 4: Complete
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setCurrentStep(4);
+
+      // Reset after 5 seconds
+      await new Promise(resolve => setTimeout(resolve, 5000));
+      setCurrentStep(0);
+      setSyncingTrades([]);
+      setJournalEntries([]);
+    };
+
+    const interval = setInterval(runAnimation, 15000);
+    runAnimation(); // Start immediately
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <section className="py-20 relative overflow-hidden">
-      <div className="container mx-auto px-4 max-w-6xl relative z-10">
-        <AnalyticsHeader />
+    <div className="w-full bg-gradient-to-br from-stravesta-navy/80 to-stravesta-dark/90 rounded-2xl p-8 backdrop-blur-sm border border-stravesta-teal/20">
 
-        {/* MetaTrader Integration Demo */}
-        <div className="mb-20" data-animate>
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-white">
-              Automatic MetaTrader Integration
-            </h3>
-            <p className="text-stravesta-lightGray max-w-2xl mx-auto">
-              Instantly sync your trades from MetaTrader – and let AI turn them into insight.
-            </p>
+      {/* Optimized layout for better proportions */}
+      <div className="grid lg:grid-cols-5 gap-8 h-[550px]">
+        {/* MetaTrader History - Left Side (2 columns) */}
+        <div className="lg:col-span-2 space-y-4 h-full flex flex-col">
+          <div className="flex items-center gap-4">
+            <div>
+              <h3 className="text-xl font-bold text-white">MetaTrader 5 History</h3>
+              <p className="text-stravesta-lightGray">Your closed trades</p>
+            </div>
           </div>
-          <div className="container mx-auto px-4 max-w-6xl">
-            <MetaTraderSyncAnimation />
+
+          {/* MetaTrader Table - Fixed size */}
+          <div className={`
+            bg-stravesta-dark/80 rounded-lg border border-stravesta-darkGray p-4 h-full transition-all duration-700 overflow-hidden
+            ${currentStep >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+          `}>
+            <div className="h-full flex flex-col">
+              <div className="grid grid-cols-7 gap-2 text-xs text-stravesta-lightGray font-medium border-b border-stravesta-darkGray pb-2 mb-3">
+                <span>Time</span>
+                <span>Type</span>
+                <span>Size</span>
+                <span>Symbol</span>
+                <span>Price</span>
+                <span>S/L</span>
+                <span>Profit</span>
+              </div>
+              
+              <div className="space-y-3 flex-1">
+                {metaTraderTrades.map((trade, index) => (
+                  <div 
+                    key={trade.ticket}
+                    className={`
+                      grid grid-cols-7 gap-2 text-xs py-3 px-2 rounded transition-all duration-500
+                      ${syncingTrades.includes(trade.ticket) ? 'bg-stravesta-teal/20 border border-stravesta-teal/50' : 'bg-stravesta-navy/30'}
+                      ${currentStep >= 1 ? 'opacity-100' : 'opacity-0'}
+                    `}
+                    style={{ transitionDelay: `${index * 200}ms` }}
+                  >
+                    <span className="text-stravesta-lightGray text-xs">{trade.time}</span>
+                    <span className={`font-semibold text-xs ${trade.type === 'buy' ? 'text-green-400' : 'text-red-400'}`}>
+                      {trade.type.toUpperCase()}
+                    </span>
+                    <span className="text-white text-xs">{trade.size}</span>
+                    <span className="text-white font-bold text-sm">{trade.symbol}</span>
+                    <span className="text-stravesta-lightGray text-xs">{trade.price}</span>
+                    <span className="text-stravesta-lightGray text-xs">{trade.sl}</span>
+                    <span className={`font-bold text-sm ${trade.profit > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                      ${trade.profit}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Live Analytics Demo */}
-        <div className="mb-20" data-animate>
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-white mb-2">
-              AI Analysis in Action
-            </h3>
-            <p className="text-stravesta-lightGray max-w-3xl mx-auto">
-              See how our AI turns your trade history into patterns, warnings, and strategic feedback – automatically.
-            </p>
+        {/* Stravesta Journal - Right Side (3 columns for more space) */}
+        <div className="lg:col-span-3 space-y-4 h-full flex flex-col">
+          <div className="flex items-center gap-4">
+            <div>
+              <h3 className="text-xl font-bold text-white">Stravesta Journal</h3>
+              <p className="text-stravesta-lightGray">Automatically synchronized</p>
+            </div>
+            {currentStep >= 3 && (
+              <Badge className="ml-auto bg-green-500/20 text-green-400 border-green-500/30">
+                {Math.min(journalEntries.length, 3)} Trades imported
+              </Badge>
+            )}
           </div>
 
-          {/* Feature boxes */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 container mx-auto px-4 max-w-6xl" data-animate>
-            <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/20 to-stravesta-teal/20 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-              <CardHeader className="relative z-10 text-center">
-                <CardTitle className="text-xl text-white mb-2">AI Pattern Recognition</CardTitle>
-                <CardDescription className="text-stravesta-lightGray">Automatic analysis of your trading habits and success patterns</CardDescription>
-              </CardHeader>
-            </Card>
-            <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/20 to-stravesta-teal/20 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-              <CardHeader className="relative z-10 text-center">
-                <CardTitle className="text-xl text-white mb-2">Emotion Tracking</CardTitle>
-                <CardDescription className="text-stravesta-lightGray">Correlation between emotions and trading performance</CardDescription>
-              </CardHeader>
-            </Card>
-            <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/20 to-stravesta-teal/20 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-              <CardHeader className="relative z-10 text-center">
-                <CardTitle className="text-xl text-white mb-2">Performance Optimization</CardTitle>
-                <CardDescription className="text-stravesta-lightGray">Concrete action recommendations to improve your results</CardDescription>
-              </CardHeader>
-            </Card>
-            <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/20 to-stravesta-teal/20 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-              <CardHeader className="relative z-10 text-center">
-                <CardTitle className="text-xl text-white mb-2">Predictive Analytics</CardTitle>
-                <CardDescription className="text-stravesta-lightGray">AI-based predictions for future trading decisions</CardDescription>
-              </CardHeader>
-            </Card>
-          </div>
-
-          <div className="container mx-auto px-4 max-w-6xl">
-            <JournalAnalyticsAnimation />
+          {/* Journal entries - Compact container */}
+          <div className="h-full space-y-2 overflow-hidden flex flex-col justify-start">
+            {journalEntries.slice(0, 3).map((entry, index) => (
+              <div 
+                key={entry.id}
+                className={`
+                  bg-stravesta-dark/50 border border-stravesta-darkGray rounded-lg p-2.5 transition-all duration-700
+                  ${entry.status === 'syncing' ? 'border-stravesta-teal shadow-lg shadow-stravesta-teal/20' : ''}
+                  opacity-0 translate-x-8 animate-[fade-in_0.5s_ease-out_forwards] h-[70px] flex flex-col justify-between
+                `}
+                style={{ animationDelay: `${index * 300}ms` }}
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-white text-sm">{entry.symbol}</span>
+                    <Badge 
+                      className={`text-xs px-1.5 py-0.5 ${
+                        entry.type === 'buy' 
+                          ? 'bg-green-500/20 text-green-400 border-green-500/30' 
+                          : 'bg-red-500/20 text-red-400 border-red-500/30'
+                      }`}
+                    >
+                      {entry.type.toUpperCase()}
+                    </Badge>
+                    <span className="text-xs text-stravesta-lightGray">{entry.time}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    {entry.status === 'complete' && (
+                      <div className="h-3 w-3 bg-green-500 rounded-full"></div>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="flex items-center text-xs">
+                  <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs px-1.5 py-0.5">
+                    {entry.category}
+                  </Badge>
+                  <span className="text-stravesta-lightGray text-xs ml-2">{entry.session}</span>
+                  <span className="text-stravesta-lightGray text-xs ml-4">Size: {entry.size}</span>
+                  <span className={`font-bold text-xs ml-4 ${entry.profit >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                    ${entry.profit}
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Ensure Problem Comparison matches layout */}
-      <div className="container mx-auto px-4 max-w-6xl">
-        <AnalyticsProblemComparison />
+      {/* Sync Indicator */}
+      <div className="flex justify-center items-center mt-8 pt-6 border-t border-stravesta-darkGray">
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3 text-base text-stravesta-lightGray">
+            <div className="w-4 h-4 rounded-lg bg-blue-500/20"></div>
+            MetaTrader 5
+          </div>
+          
+          <div className={`transition-all duration-1000 ${currentStep >= 2 ? 'animate-pulse' : ''}`}>
+            <div className="w-6 h-6 flex items-center justify-center">
+              <div className="w-3 h-0.5 bg-stravesta-teal"></div>
+              <div className="w-0 h-0 border-l-[6px] border-l-stravesta-teal border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent"></div>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-3 text-base text-stravesta-lightGray">
+            <div className="w-4 h-4 rounded-lg bg-gradient-to-r from-stravesta-teal to-blue-500"></div>
+            Stravesta Journal
+          </div>
+        </div>
       </div>
-    </section>
+
+      {/* Progress Indicator */}
+      <div className="flex justify-center mt-6 space-x-3">
+        {[0, 1, 2, 3, 4].map((step) => (
+          <div
+            key={step}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              currentStep >= step ? 'bg-stravesta-teal' : 'bg-stravesta-darkGray'
+            }`}
+          />
+        ))}
+      </div>
+    </div>
   );
 };
 
-export default TradeAnalyticsSection;
+export default MetaTraderSyncAnimation;
