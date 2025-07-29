@@ -77,8 +77,9 @@ const TradeAnalyticsSection = () => {
           </div>
         </div>
 
-        <AnalyticsProblemComparison />
       </div>
+      
+      <AnalyticsProblemComparison />
     </section>
   );
 };
