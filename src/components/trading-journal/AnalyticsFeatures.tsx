@@ -29,14 +29,6 @@ const AnalyticsFeatures = () => {
 
   return (
     <div className="mb-16" data-animate>
-      <div className="text-center mb-12">
-        <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-          Intelligent Journal Analysis
-        </h3>
-        <p className="text-lg text-stravesta-lightGray max-w-2xl mx-auto">
-          Our AI recognizes patterns in your trades that are invisible to the human eye.
-        </p>
-      </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {analyticsFeatures.map((feature, index) => (
