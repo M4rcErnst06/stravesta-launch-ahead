@@ -47,7 +47,7 @@ const SetupScannerSection = () => {
         </div>
 
         {/* Animation */}
-        <div className="mb-20 container mx-auto px-4" data-animate>
+        <div className="mb-20 w-full" data-animate>
           <div className="text-center mb-8">
             <h3 className="text-2xl font-bold text-white mb-4">See the AI in Action</h3>
             <p className="text-stravesta-lightGray max-w-2xl mx-auto">
