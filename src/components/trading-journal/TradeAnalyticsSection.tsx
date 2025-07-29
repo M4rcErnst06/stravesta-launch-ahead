@@ -60,7 +60,7 @@ const TradeAnalyticsSection = () => {
             </div>
           </div>
           
-          <div style={{ minHeight: '600px', width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ minHeight: '600px' }}>
             <JournalAnalyticsAnimation />
           </div>
         </div>
