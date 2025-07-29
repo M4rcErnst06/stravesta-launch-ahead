@@ -60,9 +60,9 @@ const AnalyticsProblemComparison = () => {
                 <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0 mt-1.5"></div>
                 Learns from your best trades and improves over time.
               </li>
-              <li className="text-stravesta-lightGray text-sm flex items-start gap-3 mt-4 pt-2 border-t border-green-500/20">
+              <li className="text-stravesta-lightGray text-sm flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0 mt-1.5"></div>
-                <span className="font-medium">With Stravesta, you trade with confidence – not chaos.</span>
+                With Stravesta, you trade with confidence – not chaos.
               </li>
             </ul>
           </CardContent>
