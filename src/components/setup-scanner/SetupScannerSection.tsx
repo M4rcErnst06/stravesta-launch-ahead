@@ -83,7 +83,7 @@ const SetupScannerSection = () => {
         <div className="mb-20" data-animate>
           <div className="grid md:grid-cols-2 gap-8">
             {/* Problem */}
-            <Card className="bg-red-500/10 border-red-500/30 relative overflow-hidden">
+            <Card className="bg-red-500/10 border-red-300/30 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 to-orange-500"></div>
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-red-300">
