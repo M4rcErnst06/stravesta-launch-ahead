@@ -42,21 +42,33 @@ const TradeAnalyticsSection = () => {
           
           {/* Feature boxes */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" data-animate>
-            <div className="bg-stravesta-darkGray/50 border border-stravesta-lightGray/20 rounded-lg p-6">
-              <h4 className="text-white font-semibold mb-2">AI Pattern Recognition</h4>
-              <p className="text-stravesta-lightGray text-sm">Automatic analysis of your trading habits and success patterns</p>
+            <div className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden rounded-lg" style={{ backdropFilter: 'blur(10px)' }}>
+              <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal/0 via-stravesta-teal/10 to-stravesta-teal/0 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative z-10 p-6">
+                <h4 className="text-lg font-semibold text-white mb-2">AI Pattern Recognition</h4>
+                <p className="text-stravesta-lightGray text-sm">Automatic analysis of your trading habits and success patterns</p>
+              </div>
             </div>
-            <div className="bg-stravesta-darkGray/50 border border-stravesta-lightGray/20 rounded-lg p-6">
-              <h4 className="text-white font-semibold mb-2">Emotion Tracking</h4>
-              <p className="text-stravesta-lightGray text-sm">Correlation between emotions and trading performance</p>
+            <div className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden rounded-lg" style={{ backdropFilter: 'blur(10px)' }}>
+              <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal/0 via-stravesta-teal/10 to-stravesta-teal/0 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative z-10 p-6">
+                <h4 className="text-lg font-semibold text-white mb-2">Emotion Tracking</h4>
+                <p className="text-stravesta-lightGray text-sm">Correlation between emotions and trading performance</p>
+              </div>
             </div>
-            <div className="bg-stravesta-darkGray/50 border border-stravesta-lightGray/20 rounded-lg p-6">
-              <h4 className="text-white font-semibold mb-2">Performance Optimization</h4>
-              <p className="text-stravesta-lightGray text-sm">Concrete action recommendations to improve your results</p>
+            <div className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden rounded-lg" style={{ backdropFilter: 'blur(10px)' }}>
+              <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal/0 via-stravesta-teal/10 to-stravesta-teal/0 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative z-10 p-6">
+                <h4 className="text-lg font-semibold text-white mb-2">Performance Optimization</h4>
+                <p className="text-stravesta-lightGray text-sm">Concrete action recommendations to improve your results</p>
+              </div>
             </div>
-            <div className="bg-stravesta-darkGray/50 border border-stravesta-lightGray/20 rounded-lg p-6">
-              <h4 className="text-white font-semibold mb-2">Predictive Analytics</h4>
-              <p className="text-stravesta-lightGray text-sm">AI-based predictions for future trading decisions</p>
+            <div className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden rounded-lg" style={{ backdropFilter: 'blur(10px)' }}>
+              <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal/0 via-stravesta-teal/10 to-stravesta-teal/0 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative z-10 p-6">
+                <h4 className="text-lg font-semibold text-white mb-2">Predictive Analytics</h4>
+                <p className="text-stravesta-lightGray text-sm">AI-based predictions for future trading decisions</p>
+              </div>
             </div>
           </div>
           
