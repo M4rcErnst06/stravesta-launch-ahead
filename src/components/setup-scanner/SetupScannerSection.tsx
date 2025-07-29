@@ -41,8 +41,7 @@ const SetupScannerSection = () => {
                 key={index}
                 className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group"
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
-
+                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
                 <CardHeader className="relative z-10 text-center">
                   <CardTitle className="text-xl text-white mb-2">
                     {feature.title}
@@ -62,4 +61,72 @@ const SetupScannerSection = () => {
             <h3 className="text-2xl font-bold text-white mb-4">
               See the AI in Action
             </h3>
-            <p className="text-stravesta-lightGray max-w-2x
+            <p className="text-stravesta-lightGray max-w-2xl mx-auto">
+              This animation shows how our AI recognizes profitable setups in real-time and notifies you instantly
+            </p>
+          </div>
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal/5 to-blue-500/5 rounded-2xl blur-xl" />
+            <div className="relative bg-stravesta-navy/50 backdrop-blur-sm rounded-2xl p-8 border border-stravesta-teal/20">
+              <div style={{ minHeight: '500px' }}>
+                <TradingChartAnimation />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Problem/Solution Section */}
+        <div className="mb-20 max-w-4xl mx-auto" data-animate>
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Problem */}
+            <Card className="bg-red-500/10 border-red-500/30 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 to-orange-500" />
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3 text-red-300">
+                  <AlertCircle className="h-6 w-6" />
+                  The Problem
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <h3 className="text-lg font-semibold text-white mb-3">
+                  Why Most Traders Struggle
+                </h3>
+                <ul className="list-disc list-inside space-y-3 text-stravesta-lightGray leading-relaxed marker:text-red-400">
+                  <li>They miss great setups because they can't watch their watchlist 24/7.</li>
+                  <li>Emotions take over fear, doubt, hesitation.</li>
+                  <li>Inconsistent execution ruins performance.</li>
+                  <li>Even solid strategies fail without structure, timing and discipline.</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Solution */}
+            <Card className="bg-green-500/10 border-green-500/30 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-emerald-500" />
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3 text-green-300">
+                  <CheckCircle2 className="h-6 w-6" />
+                  The Solution
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <h3 className="text-lg font-semibold text-white mb-3">
+                  How Stravesta Helps You Win
+                </h3>
+                <ul className="list-disc list-inside space-y-3 text-stravesta-lightGray leading-relaxed marker:text-green-400">
+                  <li>AI scans all markets constantly – no missed setups.</li>
+                  <li>Instant alerts based on your criteria – no second-guessing.</li>
+                  <li>Data-driven decisions, not emotions.</li>
+                  <li>Learns from your best trades and improves over time.</li>
+                  <li>With Stravesta, you trade with confidence – not chaos.</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default SetupScannerSection;
