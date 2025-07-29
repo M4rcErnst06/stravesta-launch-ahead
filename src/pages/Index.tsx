@@ -249,23 +249,30 @@ const IndexContent = () => {
               </div>
               
               {/* Modern mission statement */}
-              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-12 shadow-2xl opacity-0 translate-y-8 transition-all duration-700 delay-800" data-animate>
-                <div className="text-center space-y-8">
-                  <div className="text-xl md:text-2xl text-white/90 leading-relaxed font-light">
-                    <p className="mb-6 hover:text-white transition-colors duration-300">
-                      Meet the visionary team behind Stravesta, passionate about combining innovative technology 
-                      with smart trading solutions. Our founders are dedicated to democratizing advanced trading 
-                      tools and making sophisticated market analysis accessible to traders worldwide.
-                    </p>
-                    <p className="hover:text-white transition-colors duration-300">
-                      We believe that every trader deserves access to institutional-grade technology and insights. 
-                      Our mission is to level the playing field by combining deep market knowledge with cutting-edge AI, 
-                      transforming how retail traders analyze markets and execute profitable strategies.
-                    </p>
-                  </div>
-                  
-                </div>
-              </div>
+           <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-12 shadow-2xl opacity-0 translate-y-8 transition-all duration-700 delay-800" data-animate>
+  <div className="text-center space-y-8">
+    
+    {/* Add Headline here */}
+    <h2 className="text-3xl md:text-4xl font-bold text-white">
+      Built by Traders. For Traders.
+    </h2>
+
+    <div className="text-xl md:text-2xl text-white/90 leading-relaxed font-light">
+      <p className="mb-6 hover:text-white transition-colors duration-300">
+        Meet the visionary team behind Stravesta, passionate about combining innovative technology 
+        with smart trading solutions. Our founders are dedicated to democratizing advanced trading 
+        tools and making sophisticated market analysis accessible to traders worldwide.
+      </p>
+      <p className="hover:text-white transition-colors duration-300">
+        We believe that every trader deserves access to institutional-grade technology and insights. 
+        Our mission is to level the playing field by combining deep market knowledge with cutting-edge AI, 
+        transforming how retail traders analyze markets and execute profitable strategies.
+      </p>
+    </div>
+
+  </div>
+</div>
+
             </div>
           </div>
         </section>
