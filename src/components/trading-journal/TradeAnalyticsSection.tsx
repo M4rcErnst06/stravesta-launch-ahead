@@ -1,5 +1,5 @@
 
-import React from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 import JournalAnalyticsAnimation from './JournalAnalyticsAnimation';
 import MetaTraderSyncAnimation from './MetaTraderSyncAnimation';
@@ -42,34 +42,34 @@ const TradeAnalyticsSection = () => {
           
           {/* Feature boxes */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" data-animate>
-            <div className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
+            <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/20 to-stravesta-teal/20 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-              <div className="relative z-10 text-center p-6">
-                <h4 className="text-xl text-white mb-2">AI Pattern Recognition</h4>
-                <p className="text-stravesta-lightGray">Automatic analysis of your trading habits and success patterns</p>
-              </div>
-            </div>
-            <div className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
+              <CardHeader className="relative z-10 text-center">
+                <CardTitle className="text-xl text-white mb-2">AI Pattern Recognition</CardTitle>
+                <CardDescription className="text-stravesta-lightGray">Automatic analysis of your trading habits and success patterns</CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/20 to-stravesta-teal/20 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-              <div className="relative z-10 text-center p-6">
-                <h4 className="text-xl text-white mb-2">Emotion Tracking</h4>
-                <p className="text-stravesta-lightGray">Correlation between emotions and trading performance</p>
-              </div>
-            </div>
-            <div className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
+              <CardHeader className="relative z-10 text-center">
+                <CardTitle className="text-xl text-white mb-2">Emotion Tracking</CardTitle>
+                <CardDescription className="text-stravesta-lightGray">Correlation between emotions and trading performance</CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/20 to-stravesta-teal/20 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-              <div className="relative z-10 text-center p-6">
-                <h4 className="text-xl text-white mb-2">Performance Optimization</h4>
-                <p className="text-stravesta-lightGray">Concrete action recommendations to improve your results</p>
-              </div>
-            </div>
-            <div className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
+              <CardHeader className="relative z-10 text-center">
+                <CardTitle className="text-xl text-white mb-2">Performance Optimization</CardTitle>
+                <CardDescription className="text-stravesta-lightGray">Concrete action recommendations to improve your results</CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="bg-stravesta-navy/50 border-stravesta-teal/20 hover:border-stravesta-teal/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-stravesta-teal/20 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-stravesta-teal/20 to-stravesta-teal/20 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-              <div className="relative z-10 text-center p-6">
-                <h4 className="text-xl text-white mb-2">Predictive Analytics</h4>
-                <p className="text-stravesta-lightGray">AI-based predictions for future trading decisions</p>
-              </div>
-            </div>
+              <CardHeader className="relative z-10 text-center">
+                <CardTitle className="text-xl text-white mb-2">Predictive Analytics</CardTitle>
+                <CardDescription className="text-stravesta-lightGray">AI-based predictions for future trading decisions</CardDescription>
+              </CardHeader>
+            </Card>
           </div>
           
           <div style={{ minHeight: '600px' }}>
