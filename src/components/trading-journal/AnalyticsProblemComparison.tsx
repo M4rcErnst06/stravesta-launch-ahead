@@ -7,10 +7,10 @@ const AnalyticsProblemComparison = () => {
     <div className="mb-16" data-animate>
       <div className="text-center mb-12">
         <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-          The Real Problem: You Don't Know What You Don't See.
+          The Problem: Surface Level Self Analysis
         </h3>
         <p className="text-lg text-stravesta-lightGray max-w-2xl mx-auto">
-          Most traders repeat mistakes not because they're undisciplined, but because they never see the patterns behind them.
+          Most traders repeat mistakes because they don't see the patterns in their own behavior.
         </p>
       </div>
 
@@ -18,26 +18,26 @@ const AnalyticsProblemComparison = () => {
         <Card className="bg-red-500/10 border-red-500/30 border-2">
           <CardHeader>
             <CardTitle className="text-white">
-              Without Stravesta
+              Without AI Analysis
             </CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
               <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0"></div>
-                Emotional trades
+                Vague notes without insights
               </li>
               <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0"></div>
-                No strategy improvement
+                Repeating the same mistakes
               </li>
               <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0"></div>
-                Vague notes, forgotten trades
+                No strategic optimization
               </li>
               <li className="text-stravesta-lightGray text-sm flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0"></div>
-                Same mistakes again & again
+                Emotional decisions
               </li>
             </ul>
           </CardContent>
@@ -46,7 +46,7 @@ const AnalyticsProblemComparison = () => {
         <Card className="bg-green-500/10 border-green-500/30 border-2">
           <CardHeader>
             <CardTitle className="text-white">
-              With Stravesta
+              With Stravesta AI
             </CardTitle>
           </CardHeader>
           <CardContent>
