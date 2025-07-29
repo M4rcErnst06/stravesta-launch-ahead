@@ -57,8 +57,8 @@ const SetupScannerSection = () => {
         </div>
 
         {/* Chart Animation */}
-        <div className="mb-20 max-w-5xl mx-auto px-4" data-animate>
-          <div className="text-center mb-8">
+        <div className="mb-20" data-animate>
+          <div className="text-center mb-8 max-w-5xl mx-auto px-4">
             <h3 className="text-2xl font-bold text-white mb-4">
               See the AI in Action
             </h3>
@@ -66,7 +66,7 @@ const SetupScannerSection = () => {
               This animation shows how our AI recognizes profitable setups in real-time and notifies you instantly
             </p>
           </div>
-          <div className="relative">
+          <div className="relative max-w-5xl mx-auto px-4">
             <div className="absolute inset-0 bg-gradient-to-r from-stravesta-teal/5 to-blue-500/5 rounded-2xl blur-xl"></div>
             <div className="relative bg-stravesta-navy/50 backdrop-blur-sm rounded-2xl p-8 border border-stravesta-teal/20">
               <div style={{ minHeight: '500px' }}>
@@ -77,8 +77,8 @@ const SetupScannerSection = () => {
         </div>
 
         {/* Problem/Solution Section */}
-        <div className="mb-20 max-w-5xl mx-auto px-4" data-animate>
-          <div className="grid md:grid-cols-2 gap-8">
+        <div className="mb-20" data-animate>
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto px-4">
             {/* Problem */}
             <Card className="bg-red-500/10 border-red-500/30 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 to-orange-500"></div>
