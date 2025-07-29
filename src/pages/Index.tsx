@@ -94,15 +94,19 @@ const IndexContent = () => {
         
         {/* KI Setup Scanner Section - Navy Blue Background */}
         <section id="setup-scanner" className="scroll-mt-20 bg-[#081624] relative">
-          <div className="relative z-10">
-            <SetupScannerSection />
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-6xl mx-auto">
+              <SetupScannerSection />
+            </div>
           </div>
         </section>
         
         {/* KI Trading Journal Analytics Section - Dark Navy Blue Background */}
         <section id="journal-analytics" className="scroll-mt-20 bg-[#0a1b2e] relative">
-          <div className="relative z-10">
-            <TradeAnalyticsSection />
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-6xl mx-auto">
+              <TradeAnalyticsSection />
+            </div>
           </div>
         </section>
         
@@ -263,7 +267,11 @@ const IndexContent = () => {
 
         {/* Early Access Section - Same background as AI Setup Scanner */}
         <section id="early-access" className="scroll-mt-20 bg-[#0b1e35]">
-          <CTASection />
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-6xl mx-auto">
+              <CTASection />
+            </div>
+          </div>
         </section>
 
         {/* Footer - Dark Background */}
