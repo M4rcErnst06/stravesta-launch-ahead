@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
@@ -9,7 +8,6 @@ import SetupScannerSection from '@/components/setup-scanner/SetupScannerSection'
 import TradeAnalyticsSection from '@/components/trading-journal/TradeAnalyticsSection';
 import BackgroundChartAnimation from '@/components/BackgroundChartAnimation';
 const IndexContent = () => {
-
   useEffect(() => {
     // Smooth scrolling for all links
     const handleSmoothScroll = (e: Event) => {
@@ -19,45 +17,38 @@ const IndexContent = () => {
         const id = target.getAttribute('href')?.substring(1);
         const element = document.getElementById(id || '');
         if (element) {
-          element.scrollIntoView({ 
+          element.scrollIntoView({
             behavior: 'smooth',
-            block: 'start' 
+            block: 'start'
           });
         }
       }
     };
-
     document.addEventListener('click', handleSmoothScroll);
     return () => document.removeEventListener('click', handleSmoothScroll);
   }, []);
-
   useEffect(() => {
     // Animation for About Section
     const observerOptions = {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
     };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('animate-fade-in');
           entry.target.classList.remove('opacity-0', 'translate-y-8');
         }
       });
     }, observerOptions);
-
     const animatedElements = document.querySelectorAll('[data-animate]');
-    animatedElements.forEach((el) => observer.observe(el));
-
+    animatedElements.forEach(el => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
   // Empty featureGroups array to remove the sections
   const featureGroups: any[] = [];
-
-  return (
-    <div className="min-h-screen relative bg-stravesta-dark">
+  return <div className="min-h-screen relative bg-stravesta-dark">
       <div className="relative z-20">
         <Navigation />
         
@@ -116,20 +107,13 @@ const IndexContent = () => {
         </section>
         
         {/* Features Section - Hidden since featureGroups is empty */}
-        {featureGroups.length > 0 && (
-          <section id="features" className="scroll-mt-20 bg-stravesta-dark">
+        {featureGroups.length > 0 && <section id="features" className="scroll-mt-20 bg-stravesta-dark">
             <div className="flex justify-center">
               <div className="w-full max-w-7xl">
-                <GroupedFeatureSection
-                  title="Revolutionary Trading Tools"
-                  subtitle="Everything you need for successful trading - powered by AI"
-                  featureGroups={featureGroups}
-                  className="bg-stravesta-dark"
-                />
+                <GroupedFeatureSection title="Revolutionary Trading Tools" subtitle="Everything you need for successful trading - powered by AI" featureGroups={featureGroups} className="bg-stravesta-dark" />
               </div>
             </div>
-          </section>
-        )}
+          </section>}
 
         {/* About Us Section - Modern Card Design */}
         <section id="about-us" className="py-32 scroll-mt-20 bg-[#081624] relative overflow-hidden">
@@ -151,11 +135,7 @@ const IndexContent = () => {
                     <div className="text-center">
                       <div className="relative mb-8">
                         <div className="w-40 h-40 mx-auto rounded-3xl overflow-hidden bg-gradient-to-br from-stravesta-teal/30 to-blue-500/30 border-2 border-stravesta-teal/50 shadow-xl">
-                          <img 
-                            src="/lovable-uploads/9382c705-a077-40ee-bc08-9311467ad362.png" 
-                            alt="Gabriel Suter"
-                            className="w-full h-full object-cover object-center"
-                          />
+                          <img src="/lovable-uploads/9382c705-a077-40ee-bc08-9311467ad362.png" alt="Gabriel Suter" className="w-full h-full object-cover object-center" />
                         </div>
                         {/* Floating accent */}
                         <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-br from-stravesta-teal to-blue-400 rounded-full shadow-lg animate-pulse"></div>
@@ -168,39 +148,35 @@ const IndexContent = () => {
                         </div>
                         
                         {/* LinkedIn and Mail buttons */}
-                        <div className="flex flex-col space-y-3 items-center">
-                          <a 
-                            href="https://www.linkedin.com/in/gabriel-suter-18973329a" 
-                            className="flex items-center space-x-2 bg-gradient-to-r from-stravesta-teal/30 to-blue-500/30 border border-stravesta-teal/50 rounded-xl px-6 py-3"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <svg className="h-5 w-5 text-stravesta-teal" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                            </svg>
-                            <span className="text-white text-sm font-medium">LinkedIn</span>
-                          </a>
-                          
-                          <a 
-                            href="mailto:gabriel@stravesta.com" 
-                            className="flex items-center space-x-2 bg-gradient-to-r from-stravesta-teal/30 to-blue-500/30 border border-stravesta-teal/50 rounded-xl px-6 py-3"
-                          >
-                            <svg className="h-5 w-5 text-stravesta-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                            <span className="text-white text-sm font-medium">Mail</span>
-                          </a>
-                        </div>
+                     <div className="flex flex-col space-y-3 items-center">
+  {/* LinkedIn Button */}
+  <a
+    href="https://www.linkedin.com/in/gabriel-suter-18973329a"
+    className="w-40 flex justify-center items-center space-x-2 bg-gradient-to-r from-stravesta-teal/30 to-blue-500/30 border border-stravesta-teal/50 rounded-xl px-6 py-3"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <svg className="h-5 w-5 text-stravesta-teal" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
+    <span className="text-white text-sm font-medium">LinkedIn</span>
+  </a>
+
+  {/* Mail Button */}
+  <a
+    href="mailto:gabriel@stravesta.com"
+    className="w-40 flex justify-center items-center space-x-2 bg-gradient-to-r from-stravesta-teal/30 to-blue-500/30 border border-stravesta-teal/50 rounded-xl px-6 py-3"
+  >
+    <svg className="h-5 w-5 text-stravesta-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    </svg>
+    <span className="text-white text-sm font-medium">Mail</span>
+  </a>
+</div>
+
                         
                         {/* Contact info */}
-                        <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 backdrop-blur-sm">
-                          <div className="flex items-center justify-center space-x-2">
-                            <svg className="h-4 w-4 text-stravesta-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                            <span className="text-white/80 text-sm font-medium">gabriel@stravesta.com</span>
-                          </div>
-                        </div>
+                        
                       </div>
                     </div>
                   </div>
@@ -212,14 +188,12 @@ const IndexContent = () => {
                     <div className="text-center">
                       <div className="relative mb-8">
                         <div className="w-40 h-40 mx-auto rounded-3xl overflow-hidden bg-gradient-to-br from-blue-500/30 to-purple-500/30 border-2 border-blue-400/50 shadow-xl">
-                          <img 
-                            src="/lovable-uploads/07991bd6-28dc-4eeb-944c-a1db9d21a001.png" 
-                            alt="Marc Ernst"
-                            className="w-full h-full object-cover object-center"
-                          />
+                          <img src="/lovable-uploads/07991bd6-28dc-4eeb-944c-a1db9d21a001.png" alt="Marc Ernst" className="w-full h-full object-cover object-center" />
                         </div>
                         {/* Floating accent */}
-                        <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full shadow-lg animate-pulse" style={{animationDelay: '0.5s'}}></div>
+                        <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full shadow-lg animate-pulse" style={{
+                        animationDelay: '0.5s'
+                      }}></div>
                       </div>
                       
                       <div className="space-y-6">
@@ -230,22 +204,14 @@ const IndexContent = () => {
                         
                         {/* LinkedIn and Mail buttons */}
                         <div className="flex flex-col space-y-3 items-center">
-                          <a 
-                            href="https://www.linkedin.com/in/marc-ernst-213a76351" 
-                            className="flex items-center space-x-2 bg-gradient-to-r from-blue-500/30 to-purple-500/30 border border-blue-400/50 rounded-xl px-6 py-3"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
+                          <a href="https://www.linkedin.com/in/marc-ernst-213a76351" className="flex items-center space-x-2 bg-gradient-to-r from-blue-500/30 to-purple-500/30 border border-blue-400/50 rounded-xl px-6 py-3" target="_blank" rel="noopener noreferrer">
                             <svg className="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                             </svg>
                             <span className="text-white text-sm font-medium">LinkedIn</span>
                           </a>
                           
-                          <a 
-                            href="mailto:marc@stravesta.com" 
-                            className="flex items-center space-x-2 bg-gradient-to-r from-blue-500/30 to-purple-500/30 border border-blue-400/50 rounded-xl px-6 py-3"
-                          >
+                          <a href="mailto:marc@stravesta.com" className="flex items-center space-x-2 bg-gradient-to-r from-blue-500/30 to-purple-500/30 border border-blue-400/50 rounded-xl px-6 py-3">
                             <svg className="h-5 w-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
@@ -254,14 +220,7 @@ const IndexContent = () => {
                         </div>
                         
                         {/* Contact info */}
-                        <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 backdrop-blur-sm">
-                          <div className="flex items-center justify-center space-x-2">
-                            <svg className="h-4 w-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                            <span className="text-white/80 text-sm font-medium">marc@stravesta.com</span>
-                          </div>
-                        </div>
+                        
                       </div>
                     </div>
                   </div>
@@ -301,12 +260,9 @@ const IndexContent = () => {
           <Footer />
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 const Index = () => {
   return <IndexContent />;
 };
-
 export default Index;
