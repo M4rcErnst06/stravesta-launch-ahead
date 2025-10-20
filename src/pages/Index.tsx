@@ -50,21 +50,18 @@ const IndexContent = () => {
   const featureGroups: any[] = [];
   return <div className="min-h-screen relative bg-stravesta-dark">
       {/* Temporarily Paused Overlay */}
-      <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center">
+      <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center bg-black/70 backdrop-blur-sm">
         <div className="text-center space-y-6">
           <div className="flex items-center justify-center space-x-6">
-            <svg className="w-16 h-16 text-white/40 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-20 h-20 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div>
-              <p className="text-6xl md:text-8xl font-bold text-white/40 drop-shadow-2xl">
-                Projekt vorübergehend pausiert
-              </p>
-              <p className="text-3xl md:text-5xl text-white/30 font-medium mt-4">
+              <p className="text-7xl md:text-9xl font-bold text-white drop-shadow-2xl">
                 Project Temporarily Paused
               </p>
             </div>
-            <svg className="w-16 h-16 text-white/40 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-20 h-20 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
