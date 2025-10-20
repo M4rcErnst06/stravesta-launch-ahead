@@ -45,37 +45,38 @@ const BackgroundChartAnimation = () => {
     setCandles(initialCandles);
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCandles(prevCandles => {
-        // Move all candles to the left smoothly
-        const movedCandles = prevCandles.map(candle => ({
-          ...candle,
-          x: candle.x - 0.8
-        }));
-        
-        // Instead of removing candles, reposition them when they go off-screen
-        const updatedCandles = movedCandles.map(candle => {
-          // If candle moved off the left side, move it to the right side
-          if (candle.x < -60) {
-            const maxX = Math.max(...movedCandles.map(c => c.x), 0);
-            const lastCandle = movedCandles.find(c => c.x === maxX);
-            const newCandle = generateCandle(
-              Date.now() + Math.random(),
-              lastCandle ? lastCandle.close : 100
-            );
-            newCandle.x = maxX + 35;
-            return newCandle;
-          }
-          return candle;
-        });
-        
-        return updatedCandles;
-      });
-    }, 50); // Smooth 20fps animation
+  // Animation paused
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCandles(prevCandles => {
+  //       // Move all candles to the left smoothly
+  //       const movedCandles = prevCandles.map(candle => ({
+  //         ...candle,
+  //         x: candle.x - 0.8
+  //       }));
+  //       
+  //       // Instead of removing candles, reposition them when they go off-screen
+  //       const updatedCandles = movedCandles.map(candle => {
+  //         // If candle moved off the left side, move it to the right side
+  //         if (candle.x < -60) {
+  //           const maxX = Math.max(...movedCandles.map(c => c.x), 0);
+  //           const lastCandle = movedCandles.find(c => c.x === maxX);
+  //           const newCandle = generateCandle(
+  //             Date.now() + Math.random(),
+  //             lastCandle ? lastCandle.close : 100
+  //           );
+  //           newCandle.x = maxX + 35;
+  //           return newCandle;
+  //         }
+  //         return candle;
+  //       });
+  //       
+  //       return updatedCandles;
+  //     });
+  //   }, 50); // Smooth 20fps animation
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">

@@ -49,29 +49,29 @@ const IndexContent = () => {
   // Empty featureGroups array to remove the sections
   const featureGroups: any[] = [];
   return <div className="min-h-screen relative bg-stravesta-dark">
-      {/* Temporarily Paused Banner */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-amber-500/95 to-orange-500/95 backdrop-blur-sm border-b-2 border-amber-400/50 shadow-2xl">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-center space-x-4">
-            <svg className="w-8 h-8 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      {/* Temporarily Paused Overlay */}
+      <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center">
+        <div className="text-center space-y-6">
+          <div className="flex items-center justify-center space-x-6">
+            <svg className="w-16 h-16 text-white/40 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <div className="text-center">
-              <p className="text-xl md:text-2xl font-bold text-white drop-shadow-lg">
+            <div>
+              <p className="text-6xl md:text-8xl font-bold text-white/40 drop-shadow-2xl">
                 Projekt vorübergehend pausiert
               </p>
-              <p className="text-sm md:text-base text-white/90 font-medium">
+              <p className="text-3xl md:text-5xl text-white/30 font-medium mt-4">
                 Project Temporarily Paused
               </p>
             </div>
-            <svg className="w-8 h-8 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-16 h-16 text-white/40 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
         </div>
       </div>
       
-      <div className="relative z-20 pt-20">
+      <div className="relative z-20">
         <Navigation />
         
         {/* Hero Section with Chart Background */}
