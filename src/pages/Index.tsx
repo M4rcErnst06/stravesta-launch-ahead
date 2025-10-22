@@ -49,11 +49,11 @@ const IndexContent = () => {
   // Empty featureGroups array to remove the sections
   const featureGroups: any[] = [];
   return <div className="min-h-screen relative bg-stravesta-dark">
-      {/* Website in Arbeit Overlay */}
+      {/* Under Development Overlay */}
       <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center bg-black/70 backdrop-blur-sm">
         <div className="text-center space-y-6">
           <p className="text-7xl md:text-9xl font-bold text-white drop-shadow-2xl">
-            Website aktuell in Arbeit
+            Currently Under Development
           </p>
         </div>
       </div>
