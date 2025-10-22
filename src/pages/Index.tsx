@@ -50,9 +50,9 @@ const IndexContent = () => {
   const featureGroups: any[] = [];
   return <div className="min-h-screen relative bg-stravesta-dark">
       {/* Under Development Overlay */}
-      <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center bg-black/70 backdrop-blur-sm">
-        <div className="text-center space-y-6">
-          <p className="text-7xl md:text-9xl font-bold text-white drop-shadow-2xl">
+      <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
+        <div className="text-center space-y-6 max-w-7xl mx-auto">
+          <p className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-white drop-shadow-2xl leading-tight">
             The website is currently under development
           </p>
         </div>
