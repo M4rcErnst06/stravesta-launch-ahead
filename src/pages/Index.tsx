@@ -49,22 +49,12 @@ const IndexContent = () => {
   // Empty featureGroups array to remove the sections
   const featureGroups: any[] = [];
   return <div className="min-h-screen relative bg-stravesta-dark">
-      {/* Temporarily Paused Overlay */}
+      {/* Website in Arbeit Overlay */}
       <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center bg-black/70 backdrop-blur-sm">
         <div className="text-center space-y-6">
-          <div className="flex items-center justify-center space-x-6">
-            <svg className="w-20 h-20 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <div>
-              <p className="text-7xl md:text-9xl font-bold text-white drop-shadow-2xl">
-                Project Temporarily Paused
-              </p>
-            </div>
-            <svg className="w-20 h-20 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
+          <p className="text-7xl md:text-9xl font-bold text-white drop-shadow-2xl">
+            Website aktuell in Arbeit
+          </p>
         </div>
       </div>
       
