@@ -53,7 +53,7 @@ const IndexContent = () => {
       <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center bg-black/70 backdrop-blur-sm">
         <div className="text-center space-y-6">
           <p className="text-7xl md:text-9xl font-bold text-white drop-shadow-2xl">
-            Currently Under Development
+            The website is currently under development
           </p>
         </div>
       </div>
